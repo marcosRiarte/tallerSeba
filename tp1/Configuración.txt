@@ -1,7 +1,7 @@
-Configuración:
+Configuracion:
 1| Abrir Eclipse y realizar un "Check out as" y elegimos "C++ Proyect" (seleccionando a "MinGW C++") desde SVN.
 2| Pararse sobre el proyecto e ir a "Properties" --> "C/C++ General" --> "Path and Symbols"
-3| En la solapa "includes" --> Add y elegimos la carpeta de nuestro proyecto.
+3| En la solapa "includes" --> Add y elegimos la carpeta "rsc" de nuestro proyecto.
 4| En la solapa "Libraries" --> Add 
 	4.1| Escribimos "mingw32", y ponemos "Apply"
 	4.2| Escribimos "SDL2main", y ponemos "Apply"

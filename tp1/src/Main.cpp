@@ -2,6 +2,7 @@
 #include <Box2D/Box2D.h>
 #include <stdio.h>
 #include <iostream>
+#include <json/json.h>
 
 int main(int argc, char* argv[]) {
 
@@ -57,7 +58,19 @@ int main(int argc, char* argv[]) {
 		printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
 	}
 
-	std::cout << "FUNCIONA!";
+	/*
+	 *	ACA ARRANCA EL EJEMPLO DE JSONCPP
+	 */
+	std::string example =
+			"{\"array\":[\"item1\", \"item2\"], \"not an array\":\"asdf\"}";
+	Json::Value value;
+	Json::Reader reader;
+
+	bool parsed = reader.parse(example, value, false);
+	if (parsed)
+		std::cout << "Paso la validación";
+	else
+		std::cout << "No paso la validación";
 
 	return 0;
 }
