@@ -15,7 +15,7 @@
  * misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  */
-/*
+
 #include "Render.h"
 #include "Test.h"
 #include "glui/glui.h"
@@ -431,4 +431,4 @@ int main(int argc, char** argv) {
 
 	return 0;
 }
-*/
+
