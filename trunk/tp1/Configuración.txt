@@ -12,6 +12,7 @@ Configuracion:
 	4.6| Escribimos "glaux", y ponemos "Apply"
 	4.7| Escribimos "gdi32", y ponemos "Apply"
 	4.8| Escribimos "winmm", y ponemos "Apply"
+	4.9| Escribimos "SDL2_image", y ponemos "Apply"
 5| En la solapa "Libraries Paths" --> Add y elegimos la carpeta "lib" de nuestro proyecto y le damos "Ok".
 6| Compilamos y corremos el programa de prueba. Tiene que aparecer una ventanita, luego cerrarse y aparecer numeros en consola ya que es un mix entre el Hello World de Box2D y un ejemplo básico de SDL2.
 
