@@ -74,6 +74,7 @@
 #include "VaryingRestitution.h"
 #include "VerticalStack.h"
 #include "Web.h"
+#include "pruebaTP.h"
 
 TestEntry g_testEntries[] =
 {
@@ -124,6 +125,7 @@ TestEntry g_testEntries[] =
 	{"Dynamic Tree", DynamicTreeTest::Create},
 	{"Sensor Test", SensorTest::Create},
 	{"Slider Crank", SliderCrank::Create},
+	{"pruebaTP", pruebaTP::Create},
 	{"Varying Friction", VaryingFriction::Create},
 	{"Add Pair Stress Test", AddPair::Create},
 	{NULL, NULL}
