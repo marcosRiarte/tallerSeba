@@ -1,6 +1,9 @@
 #include "json/json.h"
 #include <iostream>
 #include <fstream>
+#include <sstream>
+
+
 
 int main(){
 
@@ -15,13 +18,19 @@ int main(){
                << "\n";
     }
 
-    std::cout<< "parseo correcto";
-    //En esta parte hay que desarrollar, después de que json parsea en root, como
-    //levantamos los objetos dentro de root, ya que están escritos como objetos
-    //anidados (ver prueba.json), las llaves son objetos anidados.
-    //las referencias están en http://json.org/
-    //Si ven eso, en este caso un object es: {string:value,string:value,etc}
+    std::string escenario;
+    std::string imagen_fondo;
+    Json::Value un_Escenario;
+    un_Escenario = root["escenario"];
+       /* Busca imagen_fondo en el archivo json, si no lo encuentra crea un null
+      	por defecto.*/
+       imagen_fondo = un_Escenario.get("imagen_fondo", "imagen no encontrada").asString();
+       std::cout << imagen_fondo <<"\n";
+       int alto_px = un_Escenario.get("alto-px", 0).asInt();
+       int ancho_px = un_Escenario.get("ancho-px", 0).asInt();
+       int alto_un = un_Escenario.get("alto-un", 0).asInt();
+       int ancho_un = un_Escenario.get("ancho-un", 0).asInt();
 
-    return 0;
+       return 0;
 
 }
