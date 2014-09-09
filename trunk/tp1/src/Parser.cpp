@@ -3,22 +3,37 @@
 #include <fstream>
 #include <sstream>
 #include <Parser.h>
+#include <Log.h>
+#include <String>
 
 Parser::Parser() {
 	Json::Value raiz;
 	Json::Reader reader;
+	std::string nombreArchivo;
+	nombreArchivo = "prueba.json";
+
 	std::ifstream prueba("prueba.json", std::ifstream::binary);
 	bool parseoExitoso = reader.parse(prueba, raiz, false);
 	if (!parseoExitoso) {
-
+		Log::Loguear(reader.getFormatedErrorMessages(), nombreArchivo);
 		std::cout << reader.getFormatedErrorMessages() << "\n";
 	}
 
 	std::string escenario;
 	Json::Value un_Escenario;
+
+	// Se asume que todos los archivos json para el juego deben comenzar con la palabra escenario,
+	// sino el archivo es inválido.
 	un_Escenario = raiz["escenario"];
 
-	/* Busca imagen_fondo en el archivo json, si no lo encuentra crea un null
+	if (un_Escenario.isNull()){
+		std::string mensajeError = "No hay escenario, fallo el parseo";
+		Log::Loguear(mensajeError, nombreArchivo);
+
+		std::cout << mensajeError << "\n";
+	}
+	else{
+	/* Busca el nombre de la imagen_fondo en el archivo json, si no lo encuentra crea un null
 	 por defecto.*/
 	std::string imagen_fondo =
 			un_Escenario.get("imagen_fondo", "fondo1.png").asString();
@@ -48,6 +63,7 @@ Parser::Parser() {
 		int masa = objetos[i].get("masa", 1).asInt();
 		bool estatico = objetos[i].get("estatico", false).asBool();
 		float escala = objetos[i].get("escala", 1).asFloat();
+	}
 	}
 }
 
