@@ -7,14 +7,15 @@ Configuracion:
 	4.1| Escribimos "mingw32", y ponemos "Apply"
 	4.2| Escribimos "SDL2main", y ponemos "Apply"
 	4.3| Escribimos "SDL2", y ponemos "Apply"
-	4.4| Escribimos "glu32", y ponemos "Apply"
+	4.4| Escribimos "SDL2_image", y ponemos "Apply"
 	4.5| Escribimos "opengl32", y ponemos "Apply"
 	4.6| Escribimos "glaux", y ponemos "Apply"
 	4.7| Escribimos "gdi32", y ponemos "Apply"
 	4.8| Escribimos "winmm", y ponemos "Apply"
-	4.9| Escribimos "SDL2_image", y ponemos "Apply"
+	4.9| Escribimos "glu32", y ponemos "Apply"
 5| En la solapa "Libraries Paths" --> Add y elegimos la carpeta "lib" de nuestro proyecto y le damos "Ok".
-6| Compilamos y corremos el programa de prueba. Tiene que aparecer una ventanita, luego cerrarse y aparecer numeros en consola ya que es un mix entre el Hello World de Box2D y un ejemplo básico de SDL2.
+6| Pararse sobre el proyecto e ir a "Properties" --> "C/C++ Build" --> "Settings" --> "GCC C++ Compiler" --> "Miscellaneous" y agregamos al final de "Other Flags" lo siguiente: " -std=gnu++11", y damos "Ok".
+7| Compilamos y corremos el programa de prueba. Tiene que aparecer una ventanita, luego cerrarse y aparecer numeros en consola ya que es un mix entre el Hello World de Box2D y un ejemplo básico de SDL2.
 
 Observaciones:
 ----------------------------------------------------------------

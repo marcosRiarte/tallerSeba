@@ -1,7 +1,7 @@
 #include <Box2D/Box2D.h>
 #include <stdio.h>
 
-int runBox2DTest() {
+void runBox2DTest() {
 	b2Vec2 gravity(0.0f, -10.0f);
 	b2World world(gravity);
 	b2BodyDef groundBodyDef;
@@ -31,5 +31,4 @@ int runBox2DTest() {
 		printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
 	}
 	printf("FUNCIONA BOX2D \n");
-	return 0;
 }

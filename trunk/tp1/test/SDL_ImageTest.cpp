@@ -114,7 +114,7 @@ SDL_Surface* loadSurface(std::string path) {
 	return optimizedSurface;
 }
 
-int runSDL_ImageTest() {
+void runSDL_ImageTest() {
 	//Start up SDL and create window
 	if (!init()) {
 		printf("Failed to initialize!\n");
@@ -151,5 +151,4 @@ int runSDL_ImageTest() {
 	//Free resources and close SDL
 	close();
 	printf("FUNCIONA SDL \n");
-	return 0;
 }
