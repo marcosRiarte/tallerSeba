@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-int runJsonTest() {
+void runJsonTest() {
 
 	std::string example =
 			"{\"array\":[\"item1\", \"item2\"], \"not an array\":\"asdf\"}";
@@ -14,6 +14,4 @@ int runJsonTest() {
 		std::cout << "FUNCIONA JSON \n";
 	else
 		std::cout << "NO FUNCIONA JSON \n";
-
-	return 0;
 }
