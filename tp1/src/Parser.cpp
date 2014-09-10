@@ -5,6 +5,7 @@
 #include <Parser.h>
 #include <Log.h>
 #include <String>
+#include <CreadorObjetos.h>
 
 Parser::Parser() {
 	Json::Value raiz;
@@ -27,7 +28,7 @@ Parser::Parser() {
 	un_Escenario = raiz["escenario"];
 
 	if (un_Escenario.isNull()){
-		std::string mensajeError = "No hay escenario, fallo el parseo";
+		std::string mensajeError = "No hay escenario, fallo el parseo del archivo ";
 		Log::Loguear(mensajeError, nombreArchivo);
 
 		std::cout << mensajeError << "\n";
@@ -57,12 +58,13 @@ Parser::Parser() {
 		int y = objetos[i].get("y", 90).asInt();
 		int ancho = objetos[i].get("ancho", 2).asInt();
 		int alto = objetos[i].get("alto", 1).asInt();
-		int lados = objetos[i].get("lados", 2).asInt();
+		int lados = objetos[i].get("lados", 0).asInt();
 		std::string color = objetos[i].get("color", "#FF0000").asString();
-		int rot = objetos[i].get("rot", 0).asInt();
+		int rotacion = objetos[i].get("rot", 0).asInt();
 		int masa = objetos[i].get("masa", 1).asInt();
 		bool estatico = objetos[i].get("estatico", false).asBool();
 		float escala = objetos[i].get("escala", 1).asFloat();
+		CreadorObjetos::Crear(tipo,x,y,ancho,alto,escala,rotacion,color,masa,estatico,lados);
 	}
 	}
 }
