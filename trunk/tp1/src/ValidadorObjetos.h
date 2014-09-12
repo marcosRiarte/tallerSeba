@@ -3,13 +3,12 @@
 
 class ValidadorObjetos {
 public:
-	ValidarBasicos(int x, int y,std::string color);
-	ValidarPoligono(int lados, int escala, int rotacion,int masa,bool estatico);
-	ValidarRectangulo();
-	ValidarCirculo();
-	ValidarParalelogramo();
-	ValidarTrapecio();
-	virtual ~ValidadorObjetos();
+	static bool ValidarBasicos(int x, int y, std::string color, int rotacion, int masa, bool estatico);
+	static bool ValidarPoligono(int lados, int escala);
+	static bool ValidarRectangulo(int ancho, int alto);
+	static bool ValidarCirculo(int diametro);
+	static bool ValidarParalelogramoNoRectangulo(int base, int ladoaltura, int alfa);
+	static bool ValidarTrapecio(int base, int altura, int alfa, int beta);
 };
 
 #endif /* VALIDADOROBJETOS_H_ */
