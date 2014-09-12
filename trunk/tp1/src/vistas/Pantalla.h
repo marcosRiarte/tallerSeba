@@ -11,11 +11,11 @@ using namespace std;
 
 class Pantalla {
 private:
-	int altoPx;
-	int anchoPx;
-	int alto;
-	int ancho;
-	string dirImg; // Dirección de la imagen de fondo
+	int altoPx;		// Alto en pixeles
+	int anchoPx;	// Ancho en pixeles
+	int alto;		// Alto para escalar las dimensiones
+	int ancho;		// Ancho para escalar las dimensiones
+	string dirImg;	// Dirección de la imagen de fondo
 public:
 	Pantalla(int altoPx, int anchoPx, int alto, int ancho, string dirImg);
 
