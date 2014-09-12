@@ -6,6 +6,7 @@
 #include <Log.h>
 #include <String>
 #include <CreadorObjetos.h>
+#include <ValidadorObjetos.h>
 
 Parser::Parser() {
 	Json::Value raiz;
@@ -53,22 +54,58 @@ Parser::Parser() {
 
 	//En esta parte parseamos todos los objetos que haya, y creamos los objetos correspondientes
 	for (size_t i = 0; i < objetos.size(); i++) {
-		std::string tipo = objetos[i].get("tipo", "rect").asString();
+		std::string tipo = objetos[i].get("tipo", "rectangulo").asString();
 		int x = objetos[i].get("x", 5).asInt();
 		int y = objetos[i].get("y", 90).asInt();
+		int diametro = objetos[i].get("diametro", 1).asInt();
 		int ancho = objetos[i].get("ancho", 2).asInt();
 		int alto = objetos[i].get("alto", 1).asInt();
+
+		int base = objetos[i].get("alto", 1).asInt();
+		int altura = objetos[i].get("alto", 1).asInt();
+		int alfa = objetos[i].get("alto", 1).asInt();
+		int beta = objetos[i].get("alto", 1).asInt();
+
 		int lados = objetos[i].get("lados", 0).asInt();
 		std::string color = objetos[i].get("color", "#FF0000").asString();
 		int rotacion = objetos[i].get("rot", 0).asInt();
 		int masa = objetos[i].get("masa", 1).asInt();
 		bool estatico = objetos[i].get("estatico", false).asBool();
 		float escala = objetos[i].get("escala", 1).asFloat();
-		CreadorObjetos::Crear(tipo,x,y,ancho,alto,escala,rotacion,color,masa,estatico,lados);
-	}
-	}
-}
 
-Parser::~Parser() {
-	// Destructor auto-generado
+
+		if (ValidadorObjetos::ValidarBasicos(tipo,x,y,color,rotacion,masa,estatico))
+			switch (tipo){
+					case  "poligono":
+					if (ValidadorObjetos::ValidarPoligono(lados,escala))
+						CreadorObjetos::CrearPoligono(x,y,lados,escala,rotacion,color,masa,estatico);
+					break;
+
+					case "rectangulo":
+					if (ValidadorObjetos::ValidarRectangulo(ancho,alto))
+					CreadorObjetos::CrearRectangulo(x,y,ancho,alto,rotacion,color,masa,estatico);
+					break;
+
+					case "circulo":
+					if (ValidadorObjetos::ValidarCirculo(diametro))
+						CreadorObjetos::CrearCirculo(x,y,diametro,rotacion,color,masa,estatico);
+					break;
+
+					case "paralelogramo":
+					if (ValidadorObjetos::ValidarParalelogramo(base,altura,alfa))
+						CreadorObjetos::CrearParalelogramo(x,y,base,altura,alfa,rotacion,color,masa,estatico);
+					break;
+
+					case "trapecio":
+					if (ValidadorObjetos::ValidarTrapecio(base,altura,alfa,beta))
+						CreadorObjetos::CrearTrapecio(x,y,base,altura,alfa,beta,rotacion,color,masa,estatico);
+						break;
+
+					case "personaje":
+					if (ValidadorObjetos::ValidarRectangulo(ancho,alto))
+						CreadorObjetos::CrearRectangulo(x,y,ancho,alto,rotacion,color,masa,estatico);
+					break;
+			}
+		}
+	}
 }
