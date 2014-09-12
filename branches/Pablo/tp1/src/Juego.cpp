@@ -68,6 +68,7 @@ int main(int argc, char* argv[]) {
 		Pantalla *pantalla = configuracion->getPantalla();
 		try{
 			pantalla->inicializar();
+
 		}catch(exception *e){
 			finalizar();
 			cout << e->what();

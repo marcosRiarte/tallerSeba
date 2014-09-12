@@ -3,7 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include "Parser.h"
-#include "Log.h"
+#include "logs/Log.h"
 #include <String>
 #include "CreadorObjetos.h"
 

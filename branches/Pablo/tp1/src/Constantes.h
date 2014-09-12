@@ -9,9 +9,11 @@
 #define CONSTANTES_H_
 
 // Salida del main
-#define RES_OK	          0
-#define RES_AYUDA		  1
-#define RES_ERR			 -1
+#define RES_OK	          			0
+#define RES_AYUDA		  			1
+#define RES_ERR						-1
 
+// Path de los archivos del Log
+#define PATH_LOG				 	".\\logs\\";
 
 #endif /* CONSTANTES_H_ */
