@@ -1,9 +1,6 @@
-/*
- * Pantalla.cpp
- *
- *  Created on: 6/9/2014
- *      Author: pablo_000
+/* Contiene las características de la configuración de la pantalla
  */
+
 
 #include "Pantalla.h"
 
@@ -16,6 +13,7 @@ Pantalla::Pantalla(int altoPx, int anchoPx, int alto, int ancho,
 	this->dirImg = dirImg;
 }
 
+// Devuelve un vector que contiene [alto,ancho]
 vector<int> Pantalla::getDimensionesPx() {
 	vector<int> dimensiones(2);
 	dimensiones[0] = altoPx;
@@ -23,6 +21,7 @@ vector<int> Pantalla::getDimensionesPx() {
 	return dimensiones;
 }
 
+// Devuelve un vector que contiene [altoPx,anchoPx]
 vector<int> Pantalla::getDimensiones() {
 	vector<int> dimensiones(2);
 	dimensiones[0] = alto;
@@ -30,6 +29,7 @@ vector<int> Pantalla::getDimensiones() {
 	return dimensiones;
 }
 
+// Devuelve la dirección donde se encuentra la imagen de fondo
 string Pantalla::getFondo() {
 	return dirImg;
 }
