@@ -10,8 +10,8 @@
 
 #include <vector>
 #include <map>
-#include "../Pos.h"
-#include "../Color.h"
+#include "Pos.h"
+#include "Color.h"
 
 using namespace std;
 /**
