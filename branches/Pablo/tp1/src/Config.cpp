@@ -7,6 +7,7 @@
 
 #include "Config.h"
 
+
 Config::Config(string dirArchivoConfiguracion) {
 	this->dirArchivoConfiguracion = dirArchivoConfiguracion;
 	this->pantalla = NULL;
@@ -15,17 +16,11 @@ Config::Config(string dirArchivoConfiguracion) {
 }
 
 void Config::reset() {
-
+	pantalla = new Pantalla(480, 640, 70, 100, "SDL_ImageTest.jpg");
 }
 
 Pantalla* Config::getPantalla() {
-	/*Pantalla *p = new Pantalla();
-	vector<int> dim = pantalla->getDimensionesPx();
-	p->setDimensionesPx(dim[0], dim[1]);
-	dim = pantalla->getDimensiones();
-	p->setDimensiones(dim[0], dim[1]);
-	p->setFondo(pantalla->getFondo());
-	return p;*/
+	return pantalla;
 }
 
 vector<Personaje>* Config::getPersonajes() {

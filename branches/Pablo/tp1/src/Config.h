@@ -12,10 +12,7 @@
 #include <vector>
 #include "objetos/ObjetoMapa.h"
 #include "personajes/Personaje.h"
-
-class Pantalla;
-
-using namespace std;
+#include "Pantalla.h"
 
 class Config {
 

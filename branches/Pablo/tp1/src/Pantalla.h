@@ -10,6 +10,8 @@
 
 #include <string>
 #include <vector>
+#include <SDL2/SDL.h>
+#include "excepciones/SDL_Excepcion.h"
 
 using namespace std;
 
@@ -20,9 +22,10 @@ private:
 	int alto;
 	int ancho;
 	string dirImg;
+	SDL_Window *ventana;
 public:
 	Pantalla(int altoPx, int anchoPx, int alto, int ancho, string dirImg);
-	void inicializar();
+	void inicializar()throw(SDL_Excepcion);
 	virtual ~Pantalla();
 };
 

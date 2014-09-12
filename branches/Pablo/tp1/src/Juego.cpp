@@ -7,7 +7,6 @@
 
 const string DIR_LOG = "./Log.txt";
 
-using namespace std;
 
 void ayuda() {
 	cout << "Ayuda: \n";
@@ -69,7 +68,11 @@ int main(int argc, char* argv[]) {
 		Pantalla *pantalla = configuracion->getPantalla();
 		try{
 			pantalla->inicializar();
-		catch(){}
+		}catch(exception *e){
+			finalizar();
+			cout << e->what();
+			return RES_ERR;
+		}
 
 		//Se inicia el juego
 		if (gameloop() == 0)
