@@ -61,10 +61,10 @@ Parser::Parser() {
 		int ancho = objetos[i].get("ancho", 2).asInt();
 		int alto = objetos[i].get("alto", 1).asInt();
 
-		int base = objetos[i].get("alto", 1).asInt();
-		int altura = objetos[i].get("alto", 1).asInt();
-		int alfa = objetos[i].get("alto", 1).asInt();
-		int beta = objetos[i].get("alto", 1).asInt();
+		int base = objetos[i].get("base", 1).asInt();
+		int altura = objetos[i].get("altura", 1).asInt();
+		int alfa = objetos[i].get("alfa", 1).asInt();
+		int beta = objetos[i].get("beta", 1).asInt();
 
 		int lados = objetos[i].get("lados", 0).asInt();
 		std::string color = objetos[i].get("color", "#FF0000").asString();

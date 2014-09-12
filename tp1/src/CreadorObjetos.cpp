@@ -1,7 +1,8 @@
 #include <CreadorObjetos.h>
+#include <ObjetoMapa.h>
 
 void CreadorObjetos::CrearRectangulo(int x, int y, int ancho, int alto,int rotacion,std::string color,int masa,bool estatico) {
-
+	Rectangulo *unRectangulo = new Rectangulo(x,y,ancho,alto,rotacion,color,masa,estatico);
 }
 
 void CreadorObjetos::CrearPoligono(int x, int y, int lados, int escala, int rotacion,std::string color,int masa,bool estatico) {
