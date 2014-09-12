@@ -5,6 +5,9 @@
 #define ESCENARIO_H_
 
 #include <vector>
+#include "../entrada/Evento.h"
+#include "../personajes/Personaje.h"
+#include "../objetos/ObjetoMapa.h"
 
 using namespace std;
 
@@ -23,4 +26,4 @@ public:
 };
 
 
-#endif /* PANTALLA_H_ */
+#endif /* ESCENARIO_H_ */

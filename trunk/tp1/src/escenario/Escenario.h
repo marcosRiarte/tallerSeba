@@ -23,4 +23,4 @@ public:
 };
 
 
-#endif /* PANTALLA_H_ */
+#endif /* ESCENARIO_H_ */
