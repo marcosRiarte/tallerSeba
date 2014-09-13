@@ -2,17 +2,16 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <Parser.h>
+#include <string>
+#include "Parser.h"
 #include "../log/Log.h"
-#include <String>
-#include <CreadorObjetos.h>
-#include <ValidadorObjetos.h>
+#include "CreadorObjetos.h"
+#include "ValidadorObjetos.h"
 
 Parser::Parser() {
 	Json::Value raiz;
 	Json::Reader reader;
-	std::string nombreArchivo;
-	nombreArchivo = "prueba.json";
+	std::string nombreArchivo = "prueba.json";
 
 	std::ifstream prueba("prueba.json", std::ifstream::binary);
 	bool parseoExitoso = reader.parse(prueba, raiz, false);
@@ -74,7 +73,8 @@ Parser::Parser() {
 		float escala = objetos[i].get("escala", 1).asFloat();
 
 
-		if (ValidadorObjetos::ValidarBasicos(tipo,x,y,color,rotacion,masa,estatico))
+		/*
+		 if (ValidadorObjetos::ValidarBasicos(tipo,x,y,color,rotacion,masa,estatico))
 			switch (tipo){
 					case  "poligono":
 					if (ValidadorObjetos::ValidarPoligono(lados,escala))
@@ -106,6 +106,11 @@ Parser::Parser() {
 						CreadorObjetos::CrearRectangulo(x,y,ancho,alto,rotacion,color,masa,estatico);
 					break;
 			}
+			*/
 		}
 	}
+}
+
+Parser::~Parser(){
+
 }
