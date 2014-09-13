@@ -2,12 +2,12 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <Parser.h>
-#include "../log/Log.h"
-#include <String>
-#include <CreadorObjetos.h>
-#include <ValidadorObjetos.h>
+#include <string>
 #include <stdexcept>
+#include "Parser.h"
+#include "../log/Log.h"
+#include "CreadorObjetos.h"
+#include "ValidadorObjetos.h"
 
 Parser::Parser() {
 	Json::Value raiz;
@@ -18,7 +18,7 @@ Parser::Parser() {
 	std::ifstream prueba("prueba.json", std::ifstream::binary);
 	bool parseoExitoso = reader.parse(prueba, raiz, false);
 	if (!parseoExitoso) {
-		Log::Loguear(reader.getFormatedErrorMessages(), nombreArchivo);
+//		Log::Loguear(reader.getFormatedErrorMessages(), nombreArchivo);
 		std::cout << reader.getFormatedErrorMessages() << "\n";
 	}
 
@@ -31,7 +31,7 @@ Parser::Parser() {
 
 	if (un_Escenario.isNull()){
 		std::string mensajeError = "No hay escenario, fallo el parseo del archivo ";
-		Log::Loguear(mensajeError, nombreArchivo);
+//		Log::Loguear(mensajeError, nombreArchivo);
 
 		std::cout << mensajeError << "\n";
 	}
@@ -101,3 +101,8 @@ Parser::Parser() {
 			}
 		}
 	}
+}
+
+Parser::~Parser(){
+
+}
