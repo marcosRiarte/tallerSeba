@@ -1,10 +1,3 @@
-/*
- * Config.h
- *
- *  Created on: 6/9/2014
- *      Author: pablo_000
- */
-
 #ifndef CONFIG_H_
 #define CONFIG_H_
 
@@ -12,8 +5,7 @@
 #include <vector>
 #include "../objetos/ObjetoMapa.h"
 #include "../personajes/Personaje.h"
-
-class Pantalla;
+#include "../vistas/Pantalla.h"
 
 using namespace std;
 
