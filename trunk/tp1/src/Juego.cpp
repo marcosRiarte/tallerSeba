@@ -1,12 +1,14 @@
-#include "../test/Tests.h"
 #include <iostream>
+#include <SDL2/SDL.h>
+#include "Constantes.h"
+#include "../test/Tests.h"
 #include "parseo/Config.h"
 #include "objetos/ObjetoMapa.h"
+
 const string DIR_LOG = "./Log.txt";
 
-using namespace std;
 
-void helpMenu() {
+void ayuda() {
 	cout << "Ayuda: \n";
 	cout
 			<< "\t Para ejecutar SnowBross ingresar dirección del archivo de configuración. \n";
@@ -19,7 +21,7 @@ void helpMenu() {
  * @return 0 si el juego terminó.
  * @return 1 si el juego debe resetearse.
  */
-bool gameloop() {
+int gameloop() {
 	/*
 	 while (true) {
 	 double start = getCurrentTime();
@@ -32,11 +34,20 @@ bool gameloop() {
 	return 0;
 }
 
+/**
+ * Se encarga de liberar la memoria que ya no se va a usar
+ */
+void finalizar() {
+}
+
+/**
+ * @return devuele 0 (si resultado Ok) y distinto de 0 si hubo error.
+ */
 int main(int argc, char* argv[]) {
 	//Pequeña validacion de los argumentos pasados.
 	if (argc != 2) {
-		helpMenu();
-		return 0;
+		ayuda();
+		return RES_AYUDA;
 	}
 	string dirArchivoConfiguracion = argv[1];
 	Config* configuracion = new Config(dirArchivoConfiguracion);
@@ -49,14 +60,26 @@ int main(int argc, char* argv[]) {
 
 		//Se crean las vistas de los objetos y personajes
 
+
+
+
 		//Se crea la pantalla y se inicia SDL
 
+		Pantalla *pantalla = configuracion->getPantalla();
+		try{
+			pantalla->inicializar();
+
+		}catch(exception *e){
+			finalizar();
+			cout << e->what();
+			return RES_ERR;
+		}
+
 		//Se inicia el juego
-		gameloop();
-
+		if (gameloop() == 0)
+			fin = true;
 		//Se debe liberar lo que ya no se usa
-
+		finalizar();
 	}
-
-	return 0;
+	return RES_OK;
 }
