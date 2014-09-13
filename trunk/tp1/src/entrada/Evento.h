@@ -6,6 +6,7 @@
 #define EVENTO_H_
 
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -15,7 +16,7 @@ private:
 	// arriba, derecha, izquierda.
 	string teclaIngresada;
 public:
-	void Evento();
+	//void Evento();
 
 	// geter y seter para la tecla
 	void setTecla(string tecla);
