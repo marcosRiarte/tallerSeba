@@ -2,16 +2,18 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <string>
-#include "Parser.h"
+#include <Parser.h>
 #include "../log/Log.h"
-#include "CreadorObjetos.h"
-#include "ValidadorObjetos.h"
+#include <String>
+#include <CreadorObjetos.h>
+#include <ValidadorObjetos.h>
+#include <stdexcept>
 
 Parser::Parser() {
 	Json::Value raiz;
 	Json::Reader reader;
-	std::string nombreArchivo = "prueba.json";
+	std::string nombreArchivo;
+	nombreArchivo = "prueba.json";
 
 	std::ifstream prueba("prueba.json", std::ifstream::binary);
 	bool parseoExitoso = reader.parse(prueba, raiz, false);
@@ -73,44 +75,29 @@ Parser::Parser() {
 		float escala = objetos[i].get("escala", 1).asFloat();
 
 
-		/*
-		 if (ValidadorObjetos::ValidarBasicos(tipo,x,y,color,rotacion,masa,estatico))
-			switch (tipo){
-					case  "poligono":
+		if (ValidadorObjetos::ValidarBasicos(tipo,x,y,color,rotacion,masa,estatico))
+			if (tipo=="poligono"){
 					if (ValidadorObjetos::ValidarPoligono(lados,escala))
 						CreadorObjetos::CrearPoligono(x,y,lados,escala,rotacion,color,masa,estatico);
-					break;
-
-					case "rectangulo":
+			}
+			else if(tipo=="rectangulo")
 					if (ValidadorObjetos::ValidarRectangulo(ancho,alto))
 					CreadorObjetos::CrearRectangulo(x,y,ancho,alto,rotacion,color,masa,estatico);
-					break;
 
-					case "circulo":
+			else if(tipo=="circulo")
 					if (ValidadorObjetos::ValidarCirculo(diametro))
 						CreadorObjetos::CrearCirculo(x,y,diametro,rotacion,color,masa,estatico);
-					break;
-
-					case "paralelogramo":
+			else if(tipo=="paralelogramo")
 					if (ValidadorObjetos::ValidarParalelogramo(base,altura,alfa))
 						CreadorObjetos::CrearParalelogramo(x,y,base,altura,alfa,rotacion,color,masa,estatico);
-					break;
 
-					case "trapecio":
+			else if(tipo=="trapecio")
 					if (ValidadorObjetos::ValidarTrapecio(base,altura,alfa,beta))
 						CreadorObjetos::CrearTrapecio(x,y,base,altura,alfa,beta,rotacion,color,masa,estatico);
-						break;
 
-					case "personaje":
+			else if(tipo=="personaje")
 					if (ValidadorObjetos::ValidarRectangulo(ancho,alto))
 						CreadorObjetos::CrearRectangulo(x,y,ancho,alto,rotacion,color,masa,estatico);
-					break;
 			}
-			*/
 		}
 	}
-}
-
-Parser::~Parser(){
-
-}
