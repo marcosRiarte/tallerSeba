@@ -4,6 +4,7 @@
 #include "../test/Tests.h"
 #include "parseo/Config.h"
 #include "objetos/ObjetoMapa.h"
+#include "parseo/Parser.h"
 
 const string DIR_LOG = "./Log.txt";
 
@@ -57,7 +58,7 @@ int main(int argc, char* argv[]) {
 		// con lo necesario para crear el mapa y los personajes
 		configuracion->reset();
 		//Se crean los objetos y personajes
-
+		configuracion->CrearObjetos();
 		//Se crean las vistas de los objetos y personajes
 
 

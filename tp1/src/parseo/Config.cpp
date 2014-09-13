@@ -6,6 +6,8 @@
  */
 
 #include "Config.h"
+#include "../src/Constantes.h"
+#include "Parser.h"
 
 Config::Config(string dirArchivoConfiguracion) {
 	this->dirArchivoConfiguracion = dirArchivoConfiguracion;
@@ -16,6 +18,10 @@ Config::Config(string dirArchivoConfiguracion) {
 
 void Config::reset() {
 
+}
+
+void Config::CrearObjetos(){
+	Parser *unParser = new Parser("prueba.json");
 }
 
 Pantalla* Config::getPantalla() {

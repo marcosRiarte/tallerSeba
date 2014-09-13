@@ -3,19 +3,16 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-#include <stdexcept>
 #include "Parser.h"
 #include "../log/Log.h"
 #include "CreadorObjetos.h"
 #include "ValidadorObjetos.h"
 
-Parser::Parser() {
+Parser::Parser(std::string nombreArchivo) {
 	Json::Value raiz;
 	Json::Reader reader;
-	std::string nombreArchivo;
-	nombreArchivo = "prueba.json";
 
-	std::ifstream prueba("prueba.json", std::ifstream::binary);
+	std::ifstream prueba(nombreArchivo, std::ifstream::binary);
 	bool parseoExitoso = reader.parse(prueba, raiz, false);
 	if (!parseoExitoso) {
 //		Log::Loguear(reader.getFormatedErrorMessages(), nombreArchivo);
