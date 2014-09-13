@@ -1,15 +1,9 @@
-/*
- * ObjetoMapa.h
- *
- *  Created on: 6/9/2014
- *      Author: pablo_000
- */
-
 #ifndef OBJETOMAPA_H_
 #define OBJETOMAPA_H_
 
 #include <vector>
 #include <map>
+#include <string>
 #include "Pos.h"
 #include "Color.h"
 
