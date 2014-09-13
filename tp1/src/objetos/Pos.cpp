@@ -17,6 +17,10 @@ Pos::Pos(const Pos* p) {
 
 }
 
+bool Pos::esIgual(Pos posicion){
+	return true;
+}
+
 Pos::~Pos() {
 	// TODO Auto-generated destructor stub
 }
