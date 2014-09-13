@@ -16,7 +16,7 @@ private:
 	vector<Personaje> personajes;
 	vector<ObjetoMapa> objetos;
 public:
-	void Escenario(vector<Personaje> personajes,vector<ObjetoMapa> objetos);
+	//void Escenario(vector<Personaje> personajes,vector<ObjetoMapa> objetos);
 
 	// Genera un nuevo de step, pone a los personajes en sus nuevas posiciones,
 	// avisando si cambiar en relacion a su posicion anterior.
