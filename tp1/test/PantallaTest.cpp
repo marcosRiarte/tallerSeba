@@ -1,4 +1,4 @@
-#include "../src/Pantalla.h"
+#include "../src/vistas/Pantalla.h"
 #include <iostream>
 
 void runPantallaTest() {
