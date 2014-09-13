@@ -1,10 +1,3 @@
-/*
- * Pantalla.h
- *
- *  Created on: 6/9/2014
- *      Author: pablo_000
- */
-
 #ifndef PANTALLA_H_
 #define PANTALLA_H_
 

@@ -1,9 +1,3 @@
-/*
- * Pantalla.cpp
- *
- *  Created on: 6/9/2014
- *      Author: pablo_000
- */
 #include <iostream>
 #include "Pantalla.h"
 
