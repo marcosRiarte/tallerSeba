@@ -1,15 +1,16 @@
 #include "ValidadorObjetos.h"
 #include <regex>
 #include <iostream>
+#include <string>
 
 bool ValidadorObjetos::ValidarBasicos(std::string tipo, int x, int y, std::string color, int rotacion, int masa, bool estatico) {
 
-	std::regex e ("/^#[a-fA-F0-9]{6}$/");
-/*
-	if ((tipo == ("poligono" || "rectangulo" || "circulo" || "paralelogramo" || "trapecio" || "personaje") )  ^ 0<x<100 ^ 0<y<100 ^ std::regex_match(color,e) ^ (rotacion>=0) ^ (masa>0 || (masa==0 ^ estatico ==true))){
-		return true;
+	std::regex e ("(sub)(.*)");
+
+
+	if (((tipo=="poligono") || (tipo=="rectangulo") || (tipo=="circulo") || (tipo=="paralelogramo") || (tipo=="trapecio") || (tipo=="personaje"))  ^ (0<x<100) ^ (0<y<100) ^ (std::regex_match(color,e)) ^ (rotacion>=0) ^ (masa>0 || (masa==0 ^ estatico ==true))){
+	return true;
 	}
-*/
 	return false;
 }
 
