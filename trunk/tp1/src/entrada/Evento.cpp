@@ -2,28 +2,21 @@
  * Representa un evento de entrada
  */
 
-#ifndef EVENTO_H_
-#define EVENTO_H_
+#include "Evento.h"
+#include <iostream>
 
-#include <vector>
-#include <string>
+Evento::Evento() {
+	this->teclaIngresada="nada";
+}
 
-using namespace std;
+// geter y seter para la tecla
+void Evento::setTecla(string tecla) {
+	this->teclaIngresada = tecla;
+}
 
-class Evento {
-private:
-	// No vali la pensa hacer mas clases, aca ponemos los valores posibles:
-	// arriba, derecha, izquierda.
-	string teclaIngresada;
-public:
-	//void Evento();
+string Evento::getTecla() {
+	return this->teclaIngresada;
+}
 
-	// geter y seter para la tecla
-	void setTecla(string tecla);
-	void getTecla(string tecla);
-
-	virtual ~Evento();
-};
-
-
-#endif /* EVENTO_H_ */
+Evento::~Evento() {
+}

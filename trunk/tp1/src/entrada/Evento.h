@@ -5,22 +5,21 @@
 #ifndef EVENTO_H_
 #define EVENTO_H_
 
-#include <vector>
-#include <string>
+#include <iostream>
 
 using namespace std;
 
 class Evento {
 private:
-	// No vali la pensa hacer mas clases, aca ponemos los valores posibles:
-	// arriba, derecha, izquierda.
+	// No valía la pena hacer mas clases, acá ponemos los valores posibles:
+	// arriba, derecha, izquierda, nada.
 	string teclaIngresada;
 public:
-	//void Evento();
+	Evento();
 
 	// geter y seter para la tecla
 	void setTecla(string tecla);
-	void getTecla(string tecla);
+	string getTecla();
 
 	virtual ~Evento();
 };
