@@ -12,10 +12,11 @@
 
 class ErrorLog: public Log {
 private:
+	static ErrorLog* instance;
 	ErrorLog();
 public:
-	ErrorLog* getInstance();
-	void Loguear(char * mensaje, int tipo);
+	static ErrorLog* getInstance();
+	void loguear(const char* mensaje, int LOG_TIPO) throw (LogExcepcion);
 	virtual ~ErrorLog();
 };
 

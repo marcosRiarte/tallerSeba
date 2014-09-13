@@ -13,7 +13,7 @@
 #define RES_AYUDA		  			1
 #define RES_ERR						-1
 
-// Path de los archivos del Log
+// Log
 #define PATH_LOG				 	".\\logs\\";
 
 #endif /* CONSTANTES_H_ */

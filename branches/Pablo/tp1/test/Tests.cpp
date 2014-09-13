@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int mainnn(){
-	runPantallaTest();
+int main(){
+	runLogsTest();
 	return 0;
 }

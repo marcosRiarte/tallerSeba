@@ -43,7 +43,7 @@ void finalizar() {
 /**
  * @return devuele 0 (si resultado Ok) y distinto de 0 si hubo error.
  */
-int main(int argc, char* argv[]) {
+int mainnnn(int argc, char* argv[]) {
 	//Pequeña validacion de los argumentos pasados.
 	if (argc != 2) {
 		ayuda();

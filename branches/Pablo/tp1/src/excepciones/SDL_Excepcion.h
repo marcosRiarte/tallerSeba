@@ -1,10 +1,3 @@
-/*
- * SDLExcepcion.h
- *
- *  Created on: 11/9/2014
- *      Author: pablo_000
- */
-
 #ifndef SDLEXCEPCION_H_
 #define SDLEXCEPCION_H_
 
