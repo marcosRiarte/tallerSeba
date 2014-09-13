@@ -1,9 +1,10 @@
 #ifndef PARSER_H_
 #define PARSER_H_
+#include <string>
 
 class Parser {
 public:
-	Parser();
+	Parser(std::string nombre);
 	virtual ~Parser();
 };
 
