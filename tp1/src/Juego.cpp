@@ -1,6 +1,6 @@
 #include "../test/Tests.h"
 #include <iostream>
-#include "Config.h"
+#include "parseo/Config.h"
 #include "objetos/ObjetoMapa.h"
 const string DIR_LOG = "./Log.txt";
 
