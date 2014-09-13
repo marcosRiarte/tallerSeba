@@ -16,7 +16,7 @@ private:
 	DebugLog();
 public:
 	static DebugLog* getInstance();
-	void loguear(const char* mensaje, int LOG_TIPO) throw (LogExcepcion);
+	void loguear(const char* mensaje, Log::LOG_TIPO tipo) throw (LogExcepcion);
 	virtual ~DebugLog();
 };
 

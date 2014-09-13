@@ -69,7 +69,6 @@ int main(int argc, char* argv[]) {
 		Pantalla *pantalla = configuracion->getPantalla();
 		try{
 			pantalla->inicializar();
-
 		}catch(exception *e){
 			finalizar();
 			cout << e->what();
@@ -77,7 +76,7 @@ int main(int argc, char* argv[]) {
 		}
 
 		//Se inicia el juego
-		if (gameloop() == 0)
+		if (gameloop() == FIN_DEL_JUEGO)
 			fin = true;
 		//Se debe liberar lo que ya no se usa
 		finalizar();
