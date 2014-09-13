@@ -5,15 +5,15 @@ Personaje::Personaje(Pos posicion) {
 }
 
 // getter y setter de la posicion
-void setPosicion(Pos posicion) {
+void Personaje::setPosicion(Pos posicion) {
 	this->pos = posicion;
 }
-Pos getPosicion(){
+Pos Personaje::getPosicion(){
 	return this->pos;
 }
 
 // devuelve verdadero si esta en esa posicion
-bool estaEnPos(Pos posicion) {
+bool Personaje::estaEnPos(Pos posicion) {
 	return this->pos.esIgual(posicion);
 }
 
