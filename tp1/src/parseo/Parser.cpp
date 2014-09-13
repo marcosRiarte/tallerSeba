@@ -100,8 +100,8 @@ Parser::Parser() {
 						CreadorObjetos::CrearRectangulo(x,y,ancho,alto,rotacion,color,masa,estatico);
 			}
 		}
-	}
 }
+
 
 Parser::~Parser(){
 
