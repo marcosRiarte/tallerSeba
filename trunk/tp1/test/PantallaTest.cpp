@@ -2,6 +2,7 @@
 #include <iostream>
 
 void runPantallaTest() {
+	/*
 	Pantalla* p = new Pantalla(768, 1024, 50, 90, "unaDireccionCualquiera");
 	vector<int> dimensiones = p->getDimensionesPx();
 	if ((dimensiones[0] != 768) || (dimensiones[1] != 1024)) {
@@ -18,4 +19,5 @@ void runPantallaTest() {
 		return;
 	}
 	cout << "RES_OK - PantallaTest \n";
+	*/
 }
