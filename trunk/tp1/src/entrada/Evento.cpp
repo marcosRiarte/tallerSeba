@@ -3,18 +3,21 @@
  */
 
 #include "Evento.h"
-#include <iostream>
 
 Evento::Evento() {
-	this->teclaIngresada="nada";
+	this->teclaIngresada=teclaNada;
+}
+
+Evento::Evento(int tecla) {
+	this->teclaIngresada=tecla;
 }
 
 // geter y seter para la tecla
-void Evento::setTecla(string tecla) {
+void Evento::setTecla(int tecla) {
 	this->teclaIngresada = tecla;
 }
 
-string Evento::getTecla() {
+int Evento::getTecla() {
 	return this->teclaIngresada;
 }
 

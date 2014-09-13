@@ -4,6 +4,10 @@
 #ifndef ESCENARIO_H_
 #define ESCENARIO_H_
 
+#include "../personajes/Personaje.h"
+#include "../objetos/ObjetoMapa.h"
+#include "../entrada/Evento.h"
+
 class Escenario {
 private:
 	std::vector<Personaje> personajes;
