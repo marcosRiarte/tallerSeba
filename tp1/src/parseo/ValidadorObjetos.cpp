@@ -5,7 +5,7 @@
 
 bool ValidadorObjetos::ValidarBasicos(std::string tipo, int x, int y, std::string color, int rotacion, int masa, bool estatico) {
 
-	std::regex e ("(sub)(.*)");
+	std::regex e("((0-9)(a-f){3}){1,2}");
 
 	if (((tipo=="poligono") || (tipo=="rectangulo") || (tipo=="circulo") || (tipo=="paralelogramo") || (tipo=="trapecio") || (tipo=="personaje"))  ^ (0<x<100) ^ (0<y<100) ^ (std::regex_match(color,e)) ^ (rotacion>=0) ^ (masa>0 || (masa==0 ^ estatico ==true))){
 	return true;
