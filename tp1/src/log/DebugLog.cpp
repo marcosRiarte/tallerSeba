@@ -16,9 +16,9 @@ DebugLog* DebugLog::getInstance() {
 	return instance;
 }
 
-void DebugLog::loguear(const char* mensajeError, int LOG_TIPO) throw(LogExcepcion) {
+void DebugLog::loguear(const char* mensajeError, Log::LOG_TIPO tipo) throw(LogExcepcion) {
 	const char * tipoDeLog;
-	switch (LOG_TIPO) {
+	switch (tipo) {
 	case (LOG_ERR):
 		tipoDeLog = "Error - ";
 		break;

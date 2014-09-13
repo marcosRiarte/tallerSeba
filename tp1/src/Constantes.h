@@ -1,19 +1,21 @@
-/*
- * Constantes.h
- *
- *  Created on: 11/9/2014
- *      Author: pgotuzzo
- */
-
 #ifndef CONSTANTES_H_
 #define CONSTANTES_H_
+#include "log/Log.h"
+#include "log/DebugLog.h"
+#include "log/WarningLog.h"
+#include "log/ErrorLog.h"
 
 // Salida del main
 #define RES_OK	          			0
 #define RES_AYUDA		  			1
 #define RES_ERR						-1
 
+// Salida del gameloop
+#define FIN_DEL_JUEGO				0
+#define REINICIAR					1
+
 // Log
 #define PATH_LOG				 	".\\logs\\";
+static Log* loguer = (Log*) DebugLog::getInstance();
 
 #endif /* CONSTANTES_H_ */

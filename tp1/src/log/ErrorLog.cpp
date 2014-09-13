@@ -17,8 +17,8 @@ ErrorLog* ErrorLog::getInstance() {
 	return instance;
 }
 
-void ErrorLog::loguear(const char* mensajeError, int LOG_TIPO) throw (LogExcepcion) {
-	if (LOG_TIPO == LOG_ERR) {
+void ErrorLog::loguear(const char* mensajeError, Log::LOG_TIPO tipo) throw (LogExcepcion) {
+	if (tipo == LOG_ERR) {
 		std::ofstream salida(archivo, std::ios::out | std::ios::app);
 		if (!salida.is_open())
 			throw new LogExcepcion("No se puede abrir el archivo de Log para Errores \n");
