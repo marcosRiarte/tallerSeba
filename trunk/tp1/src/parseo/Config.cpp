@@ -25,19 +25,15 @@ void Config::CrearObjetos(){
 }
 
 Pantalla* Config::getPantalla() {
-	/*Pantalla *p = new Pantalla();
-	vector<int> dim = pantalla->getDimensionesPx();
-	p->setDimensionesPx(dim[0], dim[1]);
-	dim = pantalla->getDimensiones();
-	p->setDimensiones(dim[0], dim[1]);
-	p->setFondo(pantalla->getFondo());
-	return p;*/
+	return pantalla;
 }
 
 vector<Personaje>* Config::getPersonajes() {
+	return nullptr;
 }
 
 vector<ObjetoMapa>* Config::getObjetos() {
+	return nullptr;
 }
 
 Config::~Config() {

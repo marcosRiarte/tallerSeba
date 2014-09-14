@@ -6,9 +6,6 @@
 #include "objetos/ObjetoMapa.h"
 #include "parseo/Parser.h"
 
-const string DIR_LOG = "./Log.txt";
-
-
 void ayuda() {
 	cout << "Ayuda: \n";
 	cout

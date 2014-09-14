@@ -10,11 +10,11 @@
 
 class Escenario {
 private:
-	std::vector<Personaje> personajes;
-	std::vector<ObjetoMapa> objetos;
+	std::vector<Personaje>* personajes;
+	std::vector<ObjetoMapa>* objetos;
 
 public:
-	Escenario(std::vector<Personaje> e_personajes,std::vector<ObjetoMapa> e_objetos);
+	Escenario(std::vector<Personaje>* e_personajes, std::vector<ObjetoMapa>* e_objetos);
 
 	// Genera un nuevo de step, pone a los personajes en sus nuevas posiciones,
 	// avisando si cambiar en relación a su posición anterior.

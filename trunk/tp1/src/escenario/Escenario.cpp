@@ -4,11 +4,15 @@
 #include <vector>
 #include "Escenario.h"
 
-Escenario::Escenario(std::vector<Personaje> e_personajes,std::vector<ObjetoMapa> e_objetos) {
+Escenario::Escenario(std::vector<Personaje>* e_personajes, std::vector<ObjetoMapa>* e_objetos) {
 	this->objetos = e_objetos;
 	this->personajes = e_personajes;
 }
 
 void cambiar(Evento evento) {
+
+}
+
+Escenario::~Escenario(){
 
 }
