@@ -3,12 +3,12 @@
 
 #include "ObjetoMapa.h"
 
-class Rectangulo: ObjetoMapa {
+class Rectangulo: public ObjetoMapa {
 private:
 	int alto;
 	int ancho;
 public:
-	Rectangulo(bool esEstatico, Color color, Pos pos_cm, int rotacion, float masa, int alto, int ancho);
+	Rectangulo(bool esEstatico, std::string color, Pos pos_cm, int rotacion, int masa, int alto, int ancho);
 	std::vector<Pos>* getContorno();
 	virtual ~Rectangulo();
 };
