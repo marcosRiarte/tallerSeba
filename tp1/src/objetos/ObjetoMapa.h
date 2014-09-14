@@ -7,7 +7,6 @@
 #include "Pos.h"
 #include "Color.h"
 
-using namespace std;
 /**
  * Clase Abrstracta (no se pueden crear instancias de la misma) que sirve de base para
  * 	los demas objetos que hereden de ella. Es una interfaz
@@ -21,7 +20,7 @@ protected:
 	int rot;
 	float masa;
 	//este atributo es el que va a variar para las distintas clases que hereden de esta.
-	map<string, int> desc; //
+	std::map<std::string, int> desc; //
 
 public:
 	void initialice(bool esEstatico, Color color, Pos pos_cm, int rotacion,
@@ -50,7 +49,7 @@ public:
 	float getMasa(){
 		return masa;
 	}
-	virtual vector<Pos> getContorno() = 0; //este método debe redefinirse en las clases que heredan. Devuelve los vertices en caso de no ser un circulo
+	virtual std::vector<Pos>* getContorno() = 0; //este método debe redefinirse en las clases que heredan. Devuelve los vertices en caso de no ser un circulo
 	virtual ~ObjetoMapa() {
 	}
 	;
