@@ -9,6 +9,9 @@
 #include "ValidadorObjetos.h"
 
 Parser::Parser(std::string nombreArchivo) {
+
+	this->objetos = std::vector<ObjetoMapa*>();
+
 	Json::Value raiz;
 	Json::Reader reader;
 
@@ -71,35 +74,32 @@ Parser::Parser(std::string nombreArchivo) {
 		bool estatico = objetos[i].get("estatico", false).asBool();
 		float escala = objetos[i].get("escala", 1).asFloat();
 
-
-		if (ValidadorObjetos::ValidarBasicos(tipo,x,y,color,rotacion,masa,estatico))
-			if (tipo=="poligono"){
+		if (ValidadorObjetos::ValidarBasicos(tipo,x,y,color,rotacion,masa,estatico)){
+			if(tipo=="rectangulo"){
+					if (ValidadorObjetos::ValidarRectangulo(ancho,alto)){
+						this->objetos.at(i)= CreadorObjetos::CrearRectangulo(x, y, ancho, alto,rotacion,color,masa,estatico);
+					}
+			}else if (tipo=="poligono"){
 					if (ValidadorObjetos::ValidarPoligono(lados,escala))
-						CreadorObjetos::CrearPoligono(x,y,lados,escala,rotacion,color,masa,estatico);
+						this->objetos.at(i) = CreadorObjetos::CrearPoligono(x,y,lados,escala,rotacion,color,masa,estatico);
 			}
-			else if(tipo=="rectangulo")
-					if (ValidadorObjetos::ValidarRectangulo(ancho,alto))
-					CreadorObjetos::CrearRectangulo(x,y,ancho,alto,rotacion,color,masa,estatico);
-
-			else if(tipo=="circulo")
+			else if(tipo=="circulo"){
 					if (ValidadorObjetos::ValidarCirculo(diametro))
-						CreadorObjetos::CrearCirculo(x,y,diametro,rotacion,color,masa,estatico);
-			else if(tipo=="paralelogramo")
-					if (ValidadorObjetos::ValidarParalelogramo(base,altura,alfa))
-						CreadorObjetos::CrearParalelogramo(x,y,base,altura,alfa,rotacion,color,masa,estatico);
-
-			else if(tipo=="trapecio")
-					if (ValidadorObjetos::ValidarTrapecio(base,altura,alfa,beta))
-						CreadorObjetos::CrearTrapecio(x,y,base,altura,alfa,beta,rotacion,color,masa,estatico);
-
-			else if(tipo=="personaje")
-					if (ValidadorObjetos::ValidarRectangulo(ancho,alto))
-						CreadorObjetos::CrearRectangulo(x,y,ancho,alto,rotacion,color,masa,estatico);
+						this->objetos.at(i) = CreadorObjetos::CrearCirculo(x,y,diametro,rotacion,color,masa,estatico);
 			}
+			else if(tipo=="paralelogramo"){
+					if (ValidadorObjetos::ValidarParalelogramo(base,altura,alfa))
+						this->objetos.at(i) = CreadorObjetos::CrearParalelogramo(x,y,base,altura,alfa,rotacion,color,masa,estatico);
+			}
+			else if(tipo=="trapecio"){
+					if (ValidadorObjetos::ValidarTrapecio(base,altura,alfa,beta))
+						this->objetos.at(i) = CreadorObjetos::CrearTrapecio(x,y,base,altura,alfa,beta,rotacion,color,masa,estatico);
+			}
+			}
+		}
 		}
 }
 
-
-Parser::~Parser(){
-
+std::vector<ObjetoMapa*> Parser::getObjetos(){
+	return this->objetos;
 }

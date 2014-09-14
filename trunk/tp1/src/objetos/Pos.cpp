@@ -7,9 +7,17 @@
 
 #include "Pos.h"
 
-Pos::Pos() {
-	// TODO Auto-generated constructor stub
+Pos::Pos(int x, int y) {
+	this->x = x;
+	this->y= y;
+}
 
+int Pos::getX(){
+	return this->x;
+}
+
+int Pos::getY(){
+	return this->y;
 }
 
 Pos::Pos(const Pos* p) {

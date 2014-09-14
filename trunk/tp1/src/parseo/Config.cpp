@@ -12,8 +12,8 @@
 Config::Config(string dirArchivoConfiguracion) {
 	this->dirArchivoConfiguracion = dirArchivoConfiguracion;
 	this->pantalla = NULL;
-	this->objetos = new vector<ObjetoMapa>();
-	this->personajes = new vector<Personaje>();
+	this->objetos = new vector<ObjetoMapa*>();
+	this->personajes = new vector<Personaje*>();
 }
 
 void Config::reset() {
@@ -28,11 +28,11 @@ Pantalla* Config::getPantalla() {
 	return pantalla;
 }
 
-vector<Personaje>* Config::getPersonajes() {
+vector<Personaje*> Config::getPersonajes() {
 	return nullptr;
 }
 
-vector<ObjetoMapa>* Config::getObjetos() {
+vector<ObjetoMapa*> Config::getObjetos() {
 	return nullptr;
 }
 

@@ -1,16 +1,14 @@
-/*
- * Pos.h
- *
- *  Created on: 9/9/2014
- *      Author: pablo_000
- */
-
 #ifndef POS_H_
 #define POS_H_
 
 class Pos {
+private:
+	int x;
+	int y;
 public:
-	Pos();
+	Pos(int x, int y);
+	int getX();
+	int getY();
 	Pos(const Pos *p);
 	// Devuelve verdadero si la posicion es la misma
 	bool esIgual(Pos posicion);
