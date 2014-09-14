@@ -12,6 +12,7 @@
 
 class ErrorLog: public Log {
 private:
+	const char* fecha;
 	static ErrorLog* instance;
 	ErrorLog();
 public:

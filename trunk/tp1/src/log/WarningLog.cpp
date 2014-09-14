@@ -1,10 +1,12 @@
 #include "WarningLog.h"
 #include "../Constantes.h"
 #include <fstream>
+#include <time.h>
 
 WarningLog::WarningLog() {
 	std::string dir = PATH_LOG;
 	this->archivo = dir.append("warning_log.txt").c_str();
+	fecha = nullptr;
 }
 
 WarningLog* WarningLog::instance = nullptr;
@@ -18,6 +20,15 @@ WarningLog* WarningLog::getInstance() {
 
 void WarningLog::loguear(const char* mensajeError, Log::LOG_TIPO tipo) throw(LogExcepcion) {
 	const char * tipoDeLog;
+	time_t t;
+	struct tm * timestamp;
+
+	time(&t);
+	timestamp = localtime(&t);
+	std::string fechaAux = asctime(timestamp);
+	fechaAux.pop_back();
+	fecha = fechaAux.c_str();
+
 	switch (tipo) {
 	case (LOG_ERR):
 		tipoDeLog = "Error - ";

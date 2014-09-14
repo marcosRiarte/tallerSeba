@@ -9,9 +9,6 @@ class Log {
 protected:
 	const char* archivo;
 public:
-/*	static const int LOG_ERR = 0;
-	static const int LOG_WAR = 1;
-	static const int LOG_DEB = 2;*/
 	enum LOG_TIPO {LOG_ERR, LOG_WAR, LOG_DEB};
 
 	virtual void loguear(const char* mensaje, LOG_TIPO tipo) throw (LogExcepcion) = 0;
