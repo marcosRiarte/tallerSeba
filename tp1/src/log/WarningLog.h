@@ -1,10 +1,3 @@
-/*
- * WarningLog.h
- *
- *  Created on: 12/9/2014
- *      Author: pablo_000
- */
-
 #ifndef WARNINGLOG_H_
 #define WARNINGLOG_H_
 
@@ -12,6 +5,7 @@
 
 class WarningLog: public Log {
 private:
+	const char* fecha;
 	static WarningLog* instance;
 	WarningLog();
 public:

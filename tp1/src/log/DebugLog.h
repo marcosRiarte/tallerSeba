@@ -12,6 +12,7 @@
 
 class DebugLog: public Log {
 private:
+	const char * fecha;
 	static DebugLog* instance;
 	DebugLog();
 public:
