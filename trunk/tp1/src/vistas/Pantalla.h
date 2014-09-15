@@ -3,7 +3,9 @@
 
 #include <vector>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include "../excepciones/SDL_Excepcion.h"
+#include "ObjetoMapaVista.h"
 
 class Pantalla {
 private:
@@ -12,10 +14,12 @@ private:
 	int alto;
 	int ancho;
 	const char* dirImg;
-	SDL_Window *ventana;
+	SDL_Window* ventana;
+	SDL_Renderer* renderer;
 public:
 	Pantalla(int altoPx, int anchoPx, int alto, int ancho, const char* dirImg);
 	void inicializar() throw (SDL_Excepcion);
+	void agregarObjeto(ObjetoMapaVista* o);
 	virtual ~Pantalla();
 };
 
