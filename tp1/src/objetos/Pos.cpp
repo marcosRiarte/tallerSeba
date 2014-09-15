@@ -25,7 +25,7 @@ Pos::Pos(const Pos* p) {
 
 }
 
-bool Pos::esIgual(Pos posicion){
+bool Pos::esIgual(Pos* posicion){
 	return true;
 }
 

@@ -5,7 +5,7 @@
  *      Author: Seba
  */
 
-#include <objetos/Paralelogramo.h>
+#include "Paralelogramo.h"
 
 Paralelogramo::Paralelogramo(Pos posicion, int base, int altura, int alfa, int rotacion,std::string color,int masa,bool estatico) {
 	this->base = base;
