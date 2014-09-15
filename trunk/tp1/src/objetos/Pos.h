@@ -9,9 +9,9 @@ public:
 	Pos(int x, int y);
 	int getX();
 	int getY();
-	Pos(const Pos *p);
+	Pos(const Pos* p);
 	// Devuelve verdadero si la posicion es la misma
-	bool esIgual(Pos posicion);
+	bool esIgual(Pos* posicion);
 	//hay que definir el operador =
 	virtual ~Pos();
 };

@@ -5,7 +5,7 @@
  *      Author: Seba
  */
 
-#include <objetos/Trapecio.h>
+#include "Trapecio.h"
 
 Trapecio::Trapecio(Pos posicion, int base, int altura, int alfa, int beta,int rotacion,std::string color,int masa,bool estatico){
 	this->base = base;

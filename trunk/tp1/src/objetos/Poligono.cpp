@@ -5,7 +5,7 @@
  *      Author: Seba
  */
 
-#include <objetos/Poligono.h>
+#include "Poligono.h"
 
 Poligono::Poligono(Pos posicion, int lados, int escala, int rotacion,std::string color,int masa,bool estatico) {
 	this->lados = lados;
