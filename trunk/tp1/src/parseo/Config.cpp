@@ -28,11 +28,11 @@ Pantalla* Config::getPantalla() {
 	return pantalla;
 }
 
-vector<Personaje*> Config::getPersonajes() {
+vector<Personaje*>* Config::getPersonajes() {
 	return nullptr;
 }
 
-vector<ObjetoMapa*> Config::getObjetos() {
+vector<ObjetoMapa*>* Config::getObjetos() {
 	return nullptr;
 }
 
