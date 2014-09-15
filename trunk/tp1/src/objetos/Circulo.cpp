@@ -5,7 +5,7 @@
  *      Author: Seba
  */
 
-#include <objetos/Circulo.h>
+#include "Circulo.h"
 
 Circulo::Circulo(Pos posicion, int diametro,int rotacion,std::string color,int masa,bool estatico){
 	this->diametro = diametro;
