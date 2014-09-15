@@ -1,8 +1,8 @@
 #include "CreadorObjetos.h"
 #include "../objetos/ObjetoMapa.h"
-#include "objetos/Pos.h"
-#include "objetos/Rectangulo.h"
-#include "objetos/Circulo.h"
+#include "../objetos/Pos.h"
+#include "../objetos/Rectangulo.h"
+#include "../objetos/Circulo.h"
 
 Rectangulo * CreadorObjetos::CrearRectangulo(int x, int y, int ancho, int alto,int rotacion,std::string color,int masa,bool estatico) {
 	Pos *posicion = new Pos(x,y);

@@ -13,9 +13,9 @@ class Config {
 
 private:
 	string dirArchivoConfiguracion;
-	Pantalla *pantalla;
-	vector<Personaje*> personajes;
-	vector<ObjetoMapa*> objetos;
+	Pantalla* pantalla;
+	vector<Personaje*>* personajes;
+	vector<ObjetoMapa*>* objetos;
 
 public:
 	Config(string dirArchivoConfiguracion);
@@ -26,8 +26,8 @@ public:
 	void reset();
 	void CrearObjetos();
 	Pantalla* getPantalla();
-	vector<Personaje*> getPersonajes();
-	vector<ObjetoMapa*> getObjetos();
+	vector<Personaje*>* getPersonajes();
+	vector<ObjetoMapa*>* getObjetos();
 	virtual ~Config();
 };
 
