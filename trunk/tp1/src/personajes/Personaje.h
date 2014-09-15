@@ -5,17 +5,17 @@
 
 class Personaje {
 private:
-	Pos pos;
+	Pos* pos;
 
 public:
-	Personaje(Pos posicion);
+	Personaje(Pos* posicion);
 
 	// getter y setter de la posicion
-	void setPosicion(Pos posicion);
+	void setPosicion(Pos* posicion);
 	Pos getPosicion();
 
 	// devuelve verdadero si esta en esa posicion
-	bool estaEnPos(Pos posicion);
+	bool estaEnPos(Pos* posicion);
 
 	virtual ~Personaje();
 };
