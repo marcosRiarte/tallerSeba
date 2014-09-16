@@ -12,7 +12,10 @@ Circulo::Circulo(Pos posicion, int diametro,int rotacion,std::string color,int m
 	this->initialice(estatico, color, posicion, rotacion, masa);
 
 }
-
+/*
+ * @return Devuelve un vector con una sola posición (p). De esta manera, se puede calcular
+ * 			su radio, haciendo | getPos() - p |
+ */
 std::vector<Pos>* Circulo::getContorno() {
 	return nullptr;
 }

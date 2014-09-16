@@ -23,8 +23,7 @@ protected:
 	std::map<std::string, int> desc; //
 
 public:
-	void initialice(bool esEstatico, std::string color, Pos pos_cm, int rotacion,
-			int masa) {
+	void initialice(bool esEstatico, std::string color, Pos pos_cm, int rotacion, int masa) {
 		this->estatico = esEstatico;
 		this->color = color;
 		this->pos = new Pos(pos_cm);
@@ -50,9 +49,7 @@ public:
 		return masa;
 	}
 	virtual std::vector<Pos>* getContorno() = 0; //este método debe redefinirse en las clases que heredan. Devuelve los vertices en caso de no ser un circulo
-	virtual ~ObjetoMapa() {
-	}
-	;
+	virtual ~ObjetoMapa() {};
 };
 
 #endif /* OBJETOMAPA_H_ */
