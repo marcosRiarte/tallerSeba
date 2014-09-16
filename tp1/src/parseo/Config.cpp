@@ -20,7 +20,7 @@ void Config::reset() {
 
 }
 
-void Config::CrearObjetos(){
+void Config::crearObjetos(){
 	Parser *unParser = new Parser("prueba.json");
 }
 
