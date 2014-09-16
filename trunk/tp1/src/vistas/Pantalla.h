@@ -16,9 +16,11 @@ private:
 	const char* dirImg;
 	SDL_Window* ventana;
 	SDL_Renderer* renderer;
+	std::vector<ObjetoMapaVista*>* objetos;
 public:
 	Pantalla(int altoPx, int anchoPx, int alto, int ancho, const char* dirImg);
 	void inicializar() throw (SDL_Excepcion);
+	void update();
 	void agregarObjeto(ObjetoMapaVista* o);
 	virtual ~Pantalla();
 };

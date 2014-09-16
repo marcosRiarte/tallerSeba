@@ -33,11 +33,31 @@ void Pantalla::inicializar() throw (SDL_Excepcion){
 		const char* msg = ((std::string)"Error creando el renderer: ").append(SDL_GetError()).c_str();
 		throw new SDL_Excepcion(msg);
 	}
-	SDL_Texture* textura = IMG_LoadTexture(renderer, dirImg);
-	if (textura == nullptr)
-		loguer->loguear("No se encontró imagen de fondo", Log::LOG_WAR);
+}
+
+void Pantalla::agregarObjeto(ObjetoMapaVista * o){
+
+}
+
+
+void Pantalla::update(){
+	//Limpio la pantalla
 	SDL_RenderClear(renderer);
-	SDL_RenderCopy(renderer, textura, NULL, NULL);
+
+	//Se carga el fondo de pantalla
+	SDL_Texture* fondo = IMG_LoadTexture(renderer, dirImg);
+	if (fondo == nullptr)
+		loguer->loguear("No se encontró imagen de fondo", Log::LOG_WAR);
+	SDL_RenderCopy(renderer, fondo, NULL, NULL);
+	SDL_DestroyTexture(fondo);
+	//Se cargan los objetos
+	for(int i = 0; i+1 < objetos->size(); i++ ){
+		SDL_Texture* textura = objetos->at(i)->getVista();
+		SDL_RenderCopy(renderer, textura, NULL, NULL);
+		SDL_DestroyTexture(textura);
+	}
+
+	//Se actualiza la pantalla
 	SDL_RenderPresent(renderer);
 }
 
