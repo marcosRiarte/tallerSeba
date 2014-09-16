@@ -1,15 +1,15 @@
 #ifndef OBJETOMAPAVISTA_H_
 #define OBJETOMAPAVISTA_H_
 
-#include <SDL2/SDL.h>
+#include "Vista.h"
 #include "../objetos/ObjetoMapa.h"
 
-class ObjetoMapaVista {
+class ObjetoMapaVista : public Vista{
 private:
 	ObjetoMapa* objeto;
 public:
 	ObjetoMapaVista(ObjetoMapa* o);
-	SDL_Surface* getVista();
+	SDL_Texture* getVista();
 	virtual ~ObjetoMapaVista();
 };
 

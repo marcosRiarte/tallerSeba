@@ -4,9 +4,11 @@ ObjetoMapaVista::ObjetoMapaVista(ObjetoMapa* o){
 	objeto = o;
 }
 
-SDL_Surface* ObjetoMapaVista::getVista(){
+SDL_Texture* ObjetoMapaVista::getVista(){
 	std::vector<Pos>* vertices = objeto->getContorno();
-
+	//Si se trata de un circulo...
+	if (vertices == nullptr){
+	}
 	return nullptr;
 }
 
