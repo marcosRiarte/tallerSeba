@@ -24,7 +24,7 @@ public:
 	 * 	del archivo de configuracion.
 	 */
 	void reset();
-	void CrearObjetos();
+	void crearObjetos();
 	Pantalla* getPantalla();
 	vector<Personaje*>* getPersonajes();
 	vector<ObjetoMapa*>* getObjetos();
