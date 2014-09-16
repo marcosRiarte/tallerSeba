@@ -1,15 +1,13 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include "Constantes.h"
-#include "../test/Tests.h"
 #include "parseo/Config.h"
 #include "objetos/ObjetoMapa.h"
-#include "parseo/Parser.h"
+#include "vistas/PersonajeVista.h"
 
 void ayuda() {
 	cout << "Ayuda: \n";
-	cout
-			<< "\t Para ejecutar SnowBross ingresar dirección del archivo de configuración. \n";
+	cout << "\t Para ejecutar SnowBross ingresar dirección del archivo de configuración. \n";
 	cout << "Ejemplo: \n";
 	cout << "\t > SnowBross 'c:\\configuracion.json' \n";
 }
@@ -53,24 +51,42 @@ int main(int argc, char* argv[]) {
 	while (!fin) {
 		//Se crea un objeto de configuracion
 		// con lo necesario para crear el mapa y los personajes
-		configuracion->reset();
-		//Se crean los objetos y personajes
-		configuracion->CrearObjetos();
+		configuracion->crearObjetos();
+		std::vector<ObjetoMapa*> *objetos = configuracion->getObjetos();
+		std::vector<Personaje*> *personajes = configuracion->getPersonajes();
+		//Se crea el escenario con los objetos y personajes
+
 		//Se crean las vistas de los objetos y personajes
-
-
-
-
+		std::vector<Vista*> *vistas = new vector<Vista*>();
+		for(int i = 0; i+1 < objetos->size(); i++){
+			Vista* v = new ObjetoMapaVista(objetos->at(i));
+			vistas->push_back(v);
+		}
+		for(int i = 0; i+1 < personajes->size(); i++){
+			Vista* v = new PersonajeVista(personajes->at(i));
+			vistas->push_back(v);
+		}
 		//Se crea la pantalla y se inicia SDL
-
 		Pantalla *pantalla = configuracion->getPantalla();
+
+		/*
+		 * Solo para utilizar en las pruebas...
+		 * Pantalla * pantalla = new Pantalla(768, 1024, 768, 1024, "img/Fondo.jpg");
+		 */
+
+
 		try{
 			pantalla->inicializar();
-		}catch(exception *e){
+		}catch(SDL_Excepcion *e){
 			finalizar();
-			cout << e->what();
+			loguer->loguear(e->what(), Log::LOG_ERR);
 			return RES_ERR;
 		}
+		/*
+		 * Solo para utilizar en las pruebas...
+		 * pantalla->update();
+		 * SDL_Delay(5000);
+		*/
 
 		//Se inicia el juego
 		if (gameloop() == FIN_DEL_JUEGO)
