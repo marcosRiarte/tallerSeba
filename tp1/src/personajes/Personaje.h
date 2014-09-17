@@ -6,13 +6,16 @@
 class Personaje {
 private:
 	Pos* pos;
+	float rot;
 
 public:
-	Personaje(Pos* posicion);
+	Personaje(Pos* posicion,float rotacion);
 
 	// getter y setter de la posicion
 	void setPosicion(Pos* posicion);
-	Pos getPosicion();
+	Pos* getPosicion();
+
+	float getRotacion();
 
 	// devuelve verdadero si esta en esa posicion
 	bool estaEnPos(Pos* posicion);
