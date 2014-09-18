@@ -10,7 +10,7 @@
 
 Parser::Parser(std::string nombreArchivo) {
 
-	this->objetos = std::vector<ObjetoMapa*>();
+	this->objetosMapa = std::vector<ObjetoMapa*>();
 
 	Json::Value raiz;
 	Json::Reader reader;
@@ -76,30 +76,31 @@ Parser::Parser(std::string nombreArchivo) {
 
 		if (ValidadorObjetos::ValidarBasicos(tipo,x,y,color,rotacion,masa,estatico)){
 			if(tipo=="rectangulo"){
-					if (ValidadorObjetos::ValidarRectangulo(ancho,alto)){
-						this->objetos.at(i)= CreadorObjetos::CrearRectangulo(x, y, ancho, alto,rotacion,color,masa,estatico);
+					if (ValidadorObjetos::ValidarRectangulo(x,y)){
+						this->objetosMapa.push_back(CreadorObjetos::CrearRectangulo(x, y, ancho, alto,rotacion,color,masa,estatico));
 					}
 			}else if (tipo=="poligono"){
 					if (ValidadorObjetos::ValidarPoligono(lados,escala))
-						this->objetos.at(i) = CreadorObjetos::CrearPoligono(x,y,lados,escala,rotacion,color,masa,estatico);
+						this->objetosMapa.push_back(CreadorObjetos::CrearPoligono(x,y,lados,escala,rotacion,color,masa,estatico));
 			}
 			else if(tipo=="circulo"){
 					if (ValidadorObjetos::ValidarCirculo(diametro))
-						this->objetos.at(i) = CreadorObjetos::CrearCirculo(x,y,diametro,rotacion,color,masa,estatico);
+						this->objetosMapa.push_back(CreadorObjetos::CrearCirculo(x,y,diametro,rotacion,color,masa,estatico));
 			}
 			else if(tipo=="paralelogramo"){
-					if (ValidadorObjetos::ValidarParalelogramo(base,altura,alfa))
-						this->objetos.at(i) = CreadorObjetos::CrearParalelogramo(x,y,base,altura,alfa,rotacion,color,masa,estatico);
+					if (ValidadorObjetos::ValidarParalelogramo(alfa))
+						this->objetosMapa.push_back(CreadorObjetos::CrearParalelogramo(x,y,base,altura,alfa,rotacion,color,masa,estatico));
 			}
 			else if(tipo=="trapecio"){
-					if (ValidadorObjetos::ValidarTrapecio(base,altura,alfa,beta))
-						this->objetos.at(i) = CreadorObjetos::CrearTrapecio(x,y,base,altura,alfa,beta,rotacion,color,masa,estatico);
+					if (ValidadorObjetos::ValidarTrapecio(alfa,beta))
+						this->objetosMapa.push_back(CreadorObjetos::CrearTrapecio(x,y,base,altura,alfa,beta,rotacion,color,masa,estatico));
 			}
 			}
 		}
 		}
 }
 
-std::vector<ObjetoMapa*> Parser::getObjetos(){
-	return this->objetos;
+std::vector<ObjetoMapa*>* Parser::getObjetos(){
+	std::vector<ObjetoMapa*>* objetos = &objetosMapa;
+	return objetos;
 }

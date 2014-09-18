@@ -6,6 +6,7 @@
 #include "../objetos/ObjetoMapa.h"
 #include "../personajes/Personaje.h"
 #include "../vistas/Pantalla.h"
+#include "parseo/Parser.h"
 
 using namespace std;
 
@@ -16,6 +17,7 @@ private:
 	Pantalla* pantalla;
 	vector<Personaje*>* personajes;
 	vector<ObjetoMapa*>* objetos;
+	Parser * unParser;
 
 public:
 	Config(string dirArchivoConfiguracion);

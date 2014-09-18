@@ -3,39 +3,68 @@
 #include <iostream>
 #include <string>
 
-bool ValidadorObjetos::ValidarBasicos(std::string tipo, int x, int y, std::string color, int rotacion, int masa, bool estatico) {
+bool ValidadorObjetos::ValidarBasicos(std::string tipo, int x, int y,
+		std::string color, int rotacion, int masa, bool estatico) {
 
-	std::regex e("((0-9)(a-f){3}){1,2}");
+	std::regex e("(#)((0-9)(a-f)(A-F){3}){1,2}");
 
-	if (((tipo=="poligono") || (tipo=="rectangulo") || (tipo=="circulo") || (tipo=="paralelogramo") || (tipo=="trapecio") || (tipo=="personaje"))  ^ (0<x<100) ^ (0<y<100) ^ (std::regex_match(color,e)) ^ (rotacion>=0) ^ (masa>0 || (masa==0 ^ estatico ==true))){
-	return true;
+	std::string str1(tipo);
+	if ((((str1.compare(0, 10, "rectangulo")) == 0)
+			|| ((str1.compare(0, 8, "poligono")) == 0)
+			|| ((str1.compare(0, 13, "paralelogramo")) == 0)
+			|| ((str1.compare(0, 7, "circulo")) == 0)
+			|| ((str1.compare(0, 8, "trapecio")) == 0
+					|| ((str1.compare(0, 7, "circulo")) == 0))
+			|| ((str1.compare(0, 9, "personaje")) == 0)) && (x >= 0) && (x < 51)
+			&& (y > -101) && (y <= 0) && (rotacion >= 0)
+			&& (masa > 0 || (masa == 0 && estatico == true))) {
+		return true;
+	} else {
+		return false;
 	}
-	return false;
 }
 
-bool ValidadorObjetos::ValidarPoligono(int lados, int escala){
+bool ValidadorObjetos::ValidarPoligono(int lados, int escala) {
 
-	if (4<=lados<=6 ^ escala>=1){return true;}
+	if (((lados >= 3) && (lados <= 6)) && (escala >= 1)) {
+		return true;
+	}
+	else{
 	return false;
+	}
 }
 
-bool ValidadorObjetos::ValidarRectangulo(int ancho, int alto){
-	if (0<=ancho<=100 ^ 0<=alto<=100){return true;}
-	return false;
+bool ValidadorObjetos::ValidarRectangulo(int x, int y) {
+	if ((x >= 0) && (x <= 50) && (y >= -100) && (y <= 0)) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
-bool ValidadorObjetos::ValidarCirculo(int diametro){
-	if (0<=diametro<=100){return true;}
+bool ValidadorObjetos::ValidarCirculo(int diametro) {
+	if (0 <= diametro) {
+		return true;
+	}
+	else{
 	return false;
-
+	}
 }
 
-bool ValidadorObjetos::ValidarParalelogramo(int base, int ladoaltura, int alfa){
-	if (0<=base<=10 ^ 0<=ladoaltura<=10 ^ 0<=alfa<90 ){return true;}
+bool ValidadorObjetos::ValidarParalelogramo(int alfa) {
+	if (alfa < 90) {
+		return true;
+	}
+	else{
 	return false;
+	}
 }
 
-bool ValidadorObjetos::ValidarTrapecio(int base, int altura, int alfa, int beta){
-	if (0<=base<=10 ^ 0<=altura<=10 ^ 0<=alfa<90 ^ 0<=beta<90 ){return true;}
+bool ValidadorObjetos::ValidarTrapecio(int alfa,int beta) {
+	if ((alfa < 90) && (beta < 90)) {
+		return true;
+	}
+	else{
 	return false;
+	}
 }

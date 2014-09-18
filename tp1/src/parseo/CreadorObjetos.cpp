@@ -6,7 +6,8 @@
 
 Rectangulo * CreadorObjetos::CrearRectangulo(int x, int y, int ancho, int alto,int rotacion,std::string color,int masa,bool estatico) {
 	Pos *posicion = new Pos(x,y);
-	return new Rectangulo(estatico, color, posicion, rotacion, masa, alto, ancho);
+	Rectangulo * unRectangulo = new Rectangulo(estatico, color, posicion, rotacion, masa, alto, ancho);
+	return unRectangulo;
 }
 
 Poligono * CreadorObjetos::CrearPoligono(int x, int y, int lados, int escala, int rotacion,std::string color,int masa,bool estatico) {

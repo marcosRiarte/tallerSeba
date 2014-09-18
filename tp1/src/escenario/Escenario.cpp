@@ -54,7 +54,6 @@ Escenario::Escenario(std::vector<Personaje>* e_personajes, std::vector<ObjetoMap
 
 		// Setea posición y angulo
 		bodyDef.position.Set(personajes->at(i).getPosicion()->getX(), personajes->at(i).getPosicion()->getY());
-		bodyDef.angle = personajes->at(i).getRotacion();
 		b2Body* body = world.CreateBody(&bodyDef);
 
 		// El personaje es un rectangulo

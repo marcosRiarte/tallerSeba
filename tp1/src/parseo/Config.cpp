@@ -14,6 +14,7 @@ Config::Config(string dirArchivoConfiguracion) {
 	this->pantalla = NULL;
 	this->objetos = new vector<ObjetoMapa*>();
 	this->personajes = new vector<Personaje*>();
+	this->unParser = NULL;
 }
 
 void Config::reset() {
@@ -22,6 +23,7 @@ void Config::reset() {
 
 void Config::crearObjetos(){
 	Parser *unParser = new Parser("prueba.json");
+	this->unParser = unParser;
 }
 
 Pantalla* Config::getPantalla() {
@@ -33,7 +35,7 @@ vector<Personaje*>* Config::getPersonajes() {
 }
 
 vector<ObjetoMapa*>* Config::getObjetos() {
-	return nullptr;
+	return this->unParser->getObjetos();
 }
 
 Config::~Config() {

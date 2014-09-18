@@ -7,10 +7,10 @@
 
 class Parser {
 private:
-	std::vector<ObjetoMapa*> objetos;
+	std::vector<ObjetoMapa*> objetosMapa;
 public:
 	Parser(std::string nombre);
-	std::vector<ObjetoMapa*> getObjetos();
+	std::vector<ObjetoMapa*>* getObjetos();
 };
 
 #endif /* PARSER_H_ */

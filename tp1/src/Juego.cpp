@@ -53,6 +53,7 @@ int main(int argc, char* argv[]) {
 		// con lo necesario para crear el mapa y los personajes
 		configuracion->crearObjetos();
 		std::vector<ObjetoMapa*> *objetos = configuracion->getObjetos();
+
 		std::vector<Personaje*> *personajes = configuracion->getPersonajes();
 		//Se crea el escenario con los objetos y personajes
 
