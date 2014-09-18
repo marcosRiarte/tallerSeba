@@ -1,8 +1,7 @@
 #include "Personaje.h"
 
-Personaje::Personaje(Pos* posicion,float rotacion) {
+Personaje::Personaje(Pos* posicion) {
 	pos = posicion;
-	rot = rotacion;
 }
 
 // getter y setter de la posicion
@@ -13,9 +12,6 @@ Pos* Personaje::getPosicion(){
 	return pos;
 }
 
-float Personaje::getRotacion(){
-	return rot;
-}
 
 // devuelve verdadero si esta en esa posicion
 bool Personaje::estaEnPos(Pos* posicion) {
