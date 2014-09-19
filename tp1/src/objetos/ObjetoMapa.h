@@ -6,6 +6,7 @@
 #include <string>
 #include "Pos.h"
 #include "Color.h"
+#include <Box2D/Box2D.h>
 
 /**
  * Clase Abrstracta (no se pueden crear instancias de la misma) que sirve de base para
@@ -20,6 +21,7 @@ protected:
 	int rot;
 	int masa;
 	bool circulo;
+	b2Body* linkAMundo;
 	//este atributo es el que va a variar para las distintas clases que hereden de esta.
 	std::map<std::string, int> desc; //
 
@@ -59,6 +61,16 @@ public:
 	int getMasa(){
 		return masa;
 	}
+
+	// getter y setter de link a mundo
+	void setLinkAMundo(b2Body* link){
+		linkAMundo = link;
+	}
+
+	b2Body* getLinkAMundo(){
+		return linkAMundo;
+	}
+
 	virtual std::vector<Pos>* getContorno() = 0; //este método debe redefinirse en las clases que heredan. Devuelve los vertices en caso de no ser un circulo
 	virtual ~ObjetoMapa() {};
 };

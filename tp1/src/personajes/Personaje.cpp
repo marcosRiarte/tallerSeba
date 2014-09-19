@@ -22,3 +22,11 @@ Personaje::~Personaje() {
 	// TODO Auto-generated destructor stub
 }
 
+// getter y setter de link a mundo
+void Personaje::setLinkAMundo(b2Body* link){
+	linkAMundo = link;
+}
+
+b2Body* Personaje::getLinkAMundo(){
+	return linkAMundo;
+}
