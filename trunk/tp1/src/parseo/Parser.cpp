@@ -48,11 +48,15 @@ Parser::Parser(std::string nombreArchivo) {
 	int alto_un = un_Escenario.get("alto_un", 100).asInt();
 	int ancho_un = un_Escenario.get("ancho_un", 50).asInt();
 
+	//Paso a const char* el string del nombre de la imagen.
+	const char * c = imagen_fondo.c_str();
+	Pantalla* unaPantalla = new Pantalla(alto_px,ancho_px,alto_un,ancho_un,c);
+	this->pantalla= unaPantalla;
 	int personaje_x = un_Escenario["personaje"].get("x", 0).asInt();
 	int personaje_y = un_Escenario["personaje"].get("y", -100).asInt();
 
 	if (ValidadorObjetos::ValidarPersonaje(personaje_x,personaje_y))
-							this->personajes.push_back(CreadorObjetos::CrearPersonaje(personaje_x,personaje_y));
+			this->personajes.push_back(CreadorObjetos::CrearPersonaje(personaje_x,personaje_y));
 
 	Json::Value objetos;
 	objetos = un_Escenario["objetos"];
@@ -112,4 +116,8 @@ std::vector<ObjetoMapa*>* Parser::getObjetos(){
 std::vector<Personaje*>* Parser::getPersona(){
 	std::vector<Personaje*>* persona = &personajes;
 	return persona;
+}
+
+Pantalla* Parser::getPantalla() {
+	return this->pantalla;
 }

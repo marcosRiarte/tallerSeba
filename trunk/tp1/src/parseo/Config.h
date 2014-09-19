@@ -14,9 +14,6 @@ class Config {
 
 private:
 	string dirArchivoConfiguracion;
-	Pantalla* pantalla;
-	vector<Personaje*>* personajes;
-	vector<ObjetoMapa*>* objetos;
 	Parser * unParser;
 
 public:
