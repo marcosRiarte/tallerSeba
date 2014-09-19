@@ -8,6 +8,7 @@ class Personaje {
 private:
 	Pos* pos;
 	b2Body* linkAMundo;
+	float rot;
 
 public:
 	Personaje(Pos* posicion);
@@ -15,6 +16,9 @@ public:
 	// getter y setter de la posicion
 	void setPosicion(Pos* posicion);
 	Pos* getPosicion();
+
+
+	void setRotacion(float rotacion);
 
 	// getter y setter de link a mundo
 	void setLinkAMundo(b2Body* link);

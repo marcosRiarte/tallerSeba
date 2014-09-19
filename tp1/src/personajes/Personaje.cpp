@@ -2,6 +2,8 @@
 
 Personaje::Personaje(Pos* posicion) {
 	pos = posicion;
+	rot = 0;
+	linkAMundo = nullptr;
 }
 
 // getter y setter de la posicion
@@ -12,6 +14,9 @@ Pos* Personaje::getPosicion(){
 	return pos;
 }
 
+void Personaje::setRotacion(float rotacion){
+	rot = rotacion;
+}
 
 // devuelve verdadero si esta en esa posicion
 bool Personaje::estaEnPos(Pos* posicion) {
