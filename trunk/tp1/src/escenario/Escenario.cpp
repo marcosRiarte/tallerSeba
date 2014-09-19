@@ -142,7 +142,28 @@ Escenario::Escenario(Config* config) {
 }
 
 void Escenario::cambiar(Evento evento) {
+	// Avanza el mundo un step
 	mundo->Step(timeStep, velocityIterations, positionIterations);
+
+	//Recorre objetos y personajes seteandole las nuevas posiciones y ángulos
+	for(unsigned int i=0; i<personajes->size(); i++) {
+		b2Body* personaje = personajes->at(i)->getLinkAMundo();
+		// Creo q deberia borrar la pos anterior de alguna forma. No se si alcanza.
+		delete personajes->at(i)->getPosicion();
+
+		Pos* posicion = new Pos(personaje->GetPosition().x,personaje->GetPosition().y);
+		personajes->at(i)->setPosicion(posicion);
+		personajes->at(i)->setRotacion(personaje->GetAngle());
+	}
+	for(unsigned int i=0; i<objetos->size(); i++) {
+		b2Body* objeto = objetos->at(i)->getLinkAMundo();
+		// Creo q deberia borrar la pos anterior de alguna forma. No se si alcanza.
+		delete objetos->at(i)->getPos();
+
+		Pos* posicion = new Pos(objeto->GetPosition().x,objeto->GetPosition().y);
+		objetos->at(i)->setPos(posicion);
+		objetos->at(i)->setRotacion(objeto->GetAngle());
+	}
 }
 
 Escenario::~Escenario(){
