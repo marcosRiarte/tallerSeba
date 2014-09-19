@@ -18,7 +18,7 @@ private:
 	int beta;
 public:
 	Trapecio(Pos posicion, int base, int altura, int alfa, int beta,int rotacion,std::string color,int masa,bool estatico);
-	std::vector<Pos>* getContorno();
+	std::vector<Pos*>* getContorno();
 	virtual ~Trapecio();
 };
 

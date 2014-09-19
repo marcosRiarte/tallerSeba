@@ -78,7 +78,7 @@ public:
 		return linkAMundo;
 	}
 
-	virtual std::vector<Pos>* getContorno() = 0; //este método debe redefinirse en las clases que heredan. Devuelve los vertices en caso de no ser un circulo
+	virtual std::vector<Pos*>* getContorno() = 0; //este método debe redefinirse en las clases que heredan. Devuelve los vertices en caso de no ser un circulo
 	virtual ~ObjetoMapa() {};
 };
 
