@@ -4,6 +4,14 @@
 #include <sstream>
 #include <string>
 
+bool ValidadorObjetos::ValidarPersonaje(int x, int y) {
+        if ((x >= 0) && (x <= 50) && (y >= -100) && (y <= 0)) {
+                return true;
+        } else {
+                return false;
+        }
+}
+
 bool ValidadorObjetos::ValidarBasicos(std::string tipo, int x, int y, std::string color, int rotacion, int masa, bool estatico) {
 
         std::string str1(tipo);
