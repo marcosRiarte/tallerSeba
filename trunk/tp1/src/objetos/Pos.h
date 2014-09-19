@@ -3,8 +3,8 @@
 
 class Pos {
 private:
-	int x;
-	int y;
+	float x;
+	float y;
 public:
 	Pos(int x, int y);
 	int getX();

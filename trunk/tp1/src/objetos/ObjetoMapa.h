@@ -53,11 +53,18 @@ public:
 		this->color = c;
 	}
 	Pos* getPos(){
-		return new Pos(pos);
+		return pos;
+	}
+	void setPos(Pos* posicion){
+		pos = posicion;
 	}
 	int getRotacion(){
 		return rot;
 	}
+	void setRotacion(float rotacion){
+		rot = rotacion;
+	}
+
 	int getMasa(){
 		return masa;
 	}
