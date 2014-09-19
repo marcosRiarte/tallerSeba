@@ -1,14 +1,15 @@
 #ifndef CREADOROBJETOS_H_
 #define CREADOROBJETOS_H_
-#include <string>
 #include "../objetos/Rectangulo.h"
 #include "../objetos/Poligono.h"
 #include "../objetos/Circulo.h"
 #include "../objetos/Paralelogramo.h"
 #include "../objetos/Trapecio.h"
+#include "../personajes/Personaje.h"
 
 class CreadorObjetos {
 public:
+	static Personaje *CrearPersonaje(int personaje_x, int personaje_y);
 	static Rectangulo *CrearRectangulo(int x, int y, int ancho, int alto,int rotacion,std::string color,int masa,bool estatico);
 	static Poligono *CrearPoligono(int x, int y, int lados, int escala, int rotacion,std::string color,int masa,bool estatico);
 	static Circulo *CrearCirculo(int x, int y, int diametro,int rotacion,std::string color,int masa,bool estatico);

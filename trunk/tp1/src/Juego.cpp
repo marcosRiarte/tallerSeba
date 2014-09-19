@@ -1,4 +1,3 @@
-#include <iostream>
 #include <SDL2/SDL.h>
 #include "Constantes.h"
 #include "parseo/Config.h"
@@ -45,7 +44,7 @@ int main(int argc, char* argv[]) {
 		ayuda();
 		return RES_AYUDA;
 	}
-	string dirArchivoConfiguracion = argv[1];
+	std::string dirArchivoConfiguracion = argv[1];
 	Config* configuracion = new Config(dirArchivoConfiguracion);
 	bool fin = false;
 	while (!fin) {
