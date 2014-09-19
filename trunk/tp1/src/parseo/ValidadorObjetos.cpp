@@ -5,7 +5,7 @@
 #include <string>
 
 bool ValidadorObjetos::ValidarPersonaje(int x, int y) {
-        if ((x >= 0) && (x <= 50) && (y >= -100) && (y <= 0)) {
+        if ((x >= 0) && (x < 51) && (y > -101) && (y <= 0)) {
                 return true;
         } else {
                 return false;
