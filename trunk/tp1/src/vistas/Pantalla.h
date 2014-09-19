@@ -22,6 +22,10 @@ public:
 	void inicializar() throw (SDL_Excepcion);
 	void update();
 	void agregarObjeto(ObjetoMapaVista* o);
+
+	int getAlto();
+	int getAncho();
+
 	virtual ~Pantalla();
 };
 
