@@ -11,6 +11,7 @@
 Parser::Parser(std::string nombreArchivo) {
 
 	this->objetosMapa = std::vector<ObjetoMapa*>();
+	this->personajes = std::vector<Personaje*>();
 
 	Json::Value raiz;
 	Json::Reader reader;
@@ -103,4 +104,9 @@ Parser::Parser(std::string nombreArchivo) {
 std::vector<ObjetoMapa*>* Parser::getObjetos(){
 	std::vector<ObjetoMapa*>* objetos = &objetosMapa;
 	return objetos;
+}
+
+std::vector<Personaje*>* Parser::getPersona(){
+	std::vector<Personaje*>* persona = &personajes;
+	return persona;
 }

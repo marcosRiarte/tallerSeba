@@ -1,10 +1,10 @@
-#include "ValidadorObjetos.h"
+#include "parseo/ValidadorObjetos.h"
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
 
-
-bool ValidadorObjetos::ValidarBasicos(std::string tipo, int x, int y,
-                std::string color, int rotacion, int masa, bool estatico) {
-
-        std::regex e("(#)((0-9)(a-f)(A-F){3}){1,2}");
+bool ValidadorObjetos::ValidarBasicos(std::string tipo, int x, int y, std::string color, int rotacion, int masa, bool estatico) {
 
         std::string str1(tipo);
         if ((((str1.compare("rectangulo")) == 0)
