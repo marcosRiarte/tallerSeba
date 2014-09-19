@@ -1,8 +1,6 @@
 #include "CreadorObjetos.h"
 #include "../objetos/ObjetoMapa.h"
 #include "../objetos/Pos.h"
-#include "../objetos/Rectangulo.h"
-#include "../objetos/Circulo.h"
 #include "personajes/Personaje.h"
 
 Personaje * CreadorObjetos::CrearPersonaje(int personaje_x, int personaje_y){

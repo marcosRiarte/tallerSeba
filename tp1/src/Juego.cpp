@@ -1,4 +1,5 @@
 #include <SDL2/SDL.h>
+#include <iostream>
 #include "Constantes.h"
 #include "parseo/Config.h"
 #include "objetos/ObjetoMapa.h"
