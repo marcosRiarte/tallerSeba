@@ -4,15 +4,15 @@
 #include <sstream>
 #include <string>
 
-bool ValidadorObjetos::ValidarPersonaje(int x, int y) {
-        if ((x >= 0) && (x < 51) && (y > -101) && (y <= 0)) {
+bool ValidadorObjetos::ValidarPersonaje(int x, int y,int ancho_un,int alto_un) {
+        if ((x >= 0) && (x < ancho_un+1) && (y > -alto_un-1) && (y <= 0)) {
                 return true;
         } else {
                 return false;
         }
 }
 
-bool ValidadorObjetos::ValidarBasicos(std::string tipo, int x, int y, std::string color, int rotacion, int masa, bool estatico) {
+bool ValidadorObjetos::ValidarBasicos(std::string tipo, int x, int y, std::string color, int rotacion, int masa, bool estatico,int ancho_un,int alto_un) {
 
         std::string str1(tipo);
         if ((((str1.compare("rectangulo")) == 0)
@@ -21,8 +21,8 @@ bool ValidadorObjetos::ValidarBasicos(std::string tipo, int x, int y, std::strin
                         || ((str1.compare("circulo")) == 0)
                         || ((str1.compare("trapecio")) == 0
                                         || ((str1.compare("circulo")) == 0))
-                        || ((str1.compare("personaje")) == 0)) && (x >= 0) && (x < 51)
-                        && (y > -101) && (y <= 0) && (rotacion >= 0)
+                        || ((str1.compare("personaje")) == 0)) && (x >= 0) && (x < ancho_un+1)
+                        && (y > -alto_un-1) && (y <= 0) && (rotacion >= 0)
                         && (masa > 0 || (masa == 0 && estatico == true))) {
                 return true;
         } else {
@@ -37,14 +37,6 @@ bool ValidadorObjetos::ValidarPoligono(int lados, int escala) {
         }
         else{
         return false;
-        }
-}
-
-bool ValidadorObjetos::ValidarRectangulo(int x, int y) {
-        if ((x >= 0) && (x <= 50) && (y >= -100) && (y <= 0)) {
-                return true;
-        } else {
-                return false;
         }
 }
 

@@ -55,8 +55,11 @@ Parser::Parser(std::string nombreArchivo) {
 	int personaje_x = un_Escenario["personaje"].get("x", 0).asInt();
 	int personaje_y = un_Escenario["personaje"].get("y", -100).asInt();
 
-	if (ValidadorObjetos::ValidarPersonaje(personaje_x,personaje_y))
+	if (ValidadorObjetos::ValidarPersonaje(personaje_x,personaje_y,ancho_un,alto_un)){
 			this->personajes.push_back(CreadorObjetos::CrearPersonaje(personaje_x,personaje_y));
+	}else{
+			this->personajes.push_back(CreadorObjetos::CrearPersonaje(0,-alto_un));
+	}
 
 	Json::Value objetos;
 	objetos = un_Escenario["objetos"];
@@ -82,11 +85,9 @@ Parser::Parser(std::string nombreArchivo) {
 		bool estatico = objetos[i].get("estatico", false).asBool();
 		float escala = objetos[i].get("escala", 1).asFloat();
 
-		if (ValidadorObjetos::ValidarBasicos(tipo,x,y,color,rotacion,masa,estatico)){
+		if (ValidadorObjetos::ValidarBasicos(tipo,x,y,color,rotacion,masa,estatico,ancho_un,alto_un)){
 			if(tipo=="rectangulo"){
-					if (ValidadorObjetos::ValidarRectangulo(x,y)){
 						this->objetosMapa.push_back(CreadorObjetos::CrearRectangulo(x, y, ancho, alto,rotacion,color,masa,estatico));
-					}
 			}else if (tipo=="poligono"){
 					if (ValidadorObjetos::ValidarPoligono(lados,escala))
 						this->objetosMapa.push_back(CreadorObjetos::CrearPoligono(x,y,lados,escala,rotacion,color,masa,estatico));
