@@ -11,9 +11,6 @@
 
 Config::Config(string dirArchivoConfiguracion) {
 	this->dirArchivoConfiguracion = dirArchivoConfiguracion;
-	this->pantalla = NULL;
-	this->objetos = new vector<ObjetoMapa*>();
-	this->personajes = new vector<Personaje*>();
 	this->unParser = NULL;
 }
 
@@ -27,7 +24,7 @@ void Config::crearObjetos(){
 }
 
 Pantalla* Config::getPantalla() {
-	return pantalla;
+	return this->unParser->getPantalla();
 }
 
 vector<Personaje*>* Config::getPersonajes() {
