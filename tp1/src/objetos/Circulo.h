@@ -14,7 +14,7 @@ private:
 	int diametro;
 public:
 	Circulo(Pos posicion, int diametro,int rotacion,std::string color,int masa,bool estatico);
-	std::vector<Pos>* getContorno();
+	int getContorno();
 	virtual ~Circulo();
 };
 
