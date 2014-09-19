@@ -4,6 +4,7 @@
 #include <vector>
 #include "Escenario.h"
 #include "../objetos/Pos.h"
+#include "../vistas/Pantalla.h"
 #include <stdio.h>
 
 /*
@@ -30,82 +31,109 @@ float CalcularRadio(ObjetoMapa* circulo) {
 	return radio;
 }
 
-Escenario::Escenario(std::vector<Personaje>* e_personajes, std::vector<ObjetoMapa>* e_objetos) {
-	objetos = e_objetos;
-	personajes = e_personajes;
+Escenario::Escenario(Config* config) {
+	objetos = config->getObjetos();
+	personajes = config->getPersonajes();
+	pantalla = config->getPantalla();
 
 	// Se crea el mundo con la gravedad asignada en el .h
 	b2Vec2 gravity(gravedadX, gravedadY);
 	b2World world(gravity);
 
-	// Se crea el suelo en la posición y con el ancho y el alto que indica el .h
-	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(posSueloX, posSueloY);
-	b2Body* groundBody = world.CreateBody(&groundBodyDef);
-	b2PolygonShape groundBox;
-	groundBox.SetAsBox(medioAnchoSuelo, medioAltoSuelo);
+	// Se crea el suelo en la posición y con el ancho y el alto que indica la config
+	b2BodyDef sueloDef;
+	sueloDef.position.Set((pantalla->getAncho())/2, medioAltoSuelo-(pantalla->getAlto()));
+	b2Body* suelo = world.CreateBody(&sueloDef);
+	b2PolygonShape sueloForma;
+	sueloForma.SetAsBox((pantalla->getAncho())/2, medioAltoSuelo);
 	// El segundo parámetro es la densidad
-	groundBody->CreateFixture(&groundBox, 0.0f);
+	suelo->CreateFixture(&sueloForma, 0.0f);
+
+	// Se crea el techo en la posición y con el ancho y el alto que indica la config
+	b2BodyDef techoDef;
+	techoDef.position.Set((pantalla->getAncho())/2, -medioAltoTecho);
+	b2Body* techo = world.CreateBody(&techoDef);
+	b2PolygonShape techoForma;
+	techoForma.SetAsBox((pantalla->getAncho())/2, medioAltoTecho);
+	// El segundo parámetro es la densidad
+	techo->CreateFixture(&techoForma, 0.0f);
+
+	// Se crean las paredes en la posición y con el ancho y el alto que indica la config
+	b2BodyDef paredIzqDef;
+	paredIzqDef.position.Set(medioAnchoPared, -(pantalla->getAlto())/2);
+	b2Body* paredIzq = world.CreateBody(&paredIzqDef);
+	b2PolygonShape paredIzqForma;
+	paredIzqForma.SetAsBox(medioAnchoPared, (pantalla->getAlto())/2-2*(medioAltoTecho+medioAltoSuelo));
+	// El segundo parámetro es la densidad
+	paredIzq->CreateFixture(&paredIzqForma, 0.0f);
+	b2BodyDef paredDerDef;
+	paredDerDef.position.Set(medioAnchoPared, -(pantalla->getAlto())/2);
+	b2Body* paredDer = world.CreateBody(&paredDerDef);
+	b2PolygonShape paredDerForma;
+	paredDerForma.SetAsBox(medioAnchoPared, (pantalla->getAlto())/2-2*(medioAltoTecho+medioAltoSuelo));
+	// El segundo parámetro es la densidad
+	paredDer->CreateFixture(&paredDerForma, 0.0f);
 
 	// Crea los personajes (se supone que todos son dinámicos)
 	for(int i=0; i<personajes->size(); i++) {
-		b2BodyDef bodyDef;
-		bodyDef.type = b2_dynamicBody;
+		b2BodyDef peronajeDef;
+		peronajeDef.type = b2_dynamicBody;
 
 		// Setea posición y angulo
-		bodyDef.position.Set(personajes->at(i).getPosicion()->getX(), personajes->at(i).getPosicion()->getY());
-		b2Body* body = world.CreateBody(&bodyDef);
+		peronajeDef.position.Set(personajes->at(i)->getPosicion()->getX(), personajes->at(i)->getPosicion()->getY());
+		b2Body* personaje = world.CreateBody(&peronajeDef);
 
 		// El personaje es un rectangulo
-		b2FixtureDef fixtureDef;
+		b2FixtureDef caractDef;
 		b2PolygonShape forma;
 		forma.SetAsBox(medioAnchoPlayer, medioAltoPlayer);
-		fixtureDef.shape = &forma;
+		caractDef.shape = &forma;
+		caractDef.density = densidadDelPersonaje;
+		caractDef.friction = friccionDelPersonaje;
 
 		// La da la forma y la masa, determinando la densidad
-		body->CreateFixture(&fixtureDef);
-		b2MassData* datosDeMasa;
-		datosDeMasa->mass = masaDelPersonaje;
-		body->SetMassData(datosDeMasa);
+		personaje->CreateFixture(&caractDef);
 	}
 
 	// Crea los objetos (se supone que no todos son estáticos)
 	for(int i=0; i<objetos->size(); i++) {
-		b2BodyDef bodyDef;
+		b2BodyDef objetoDef;
 
 		// Determina si es o no estático
-		if (objetos->at(i).esEstatico()) {
-			bodyDef.type = b2_dynamicBody;
+		if (objetos->at(i)->esEstatico()) {
+			objetoDef.type = b2_dynamicBody;
 		}
 
 		// Setea posición y angulo
-		bodyDef.position.Set(objetos->at(i).getPos()->getX(), objetos->at(i).getPos()->getY());
-		bodyDef.angle = objetos->at(i).getRotacion();
-		b2Body* body = world.CreateBody(&bodyDef);
+		objetoDef.position.Set(objetos->at(i)->getPos()->getX(), objetos->at(i)->getPos()->getY());
+		objetoDef.angle = objetos->at(i)->getRotacion();
+		b2Body* objeto = world.CreateBody(&objetoDef);
 
 		// Determina la forma
-		b2FixtureDef fixtureDef;
-		if (true) {
+		b2FixtureDef caract;
+		if (objetos->at(i)->esCirculo()) {
 			b2PolygonShape poligono;
-			b2Vec2* vertices = PasarAVertices(objetos->at(i).getContorno());
-			int cantidadDePuntos = objetos->at(i).getContorno()->size();
+			b2Vec2* vertices = PasarAVertices(objetos->at(i)->getContorno());
+			int cantidadDePuntos = objetos->at(i)->getContorno()->size();
 			poligono.Set(vertices, cantidadDePuntos);
-			fixtureDef.shape = &poligono;
+			caract.shape = &poligono;
 		} else {
-			float radio = CalcularRadio(&objetos->at(i));
+			float radio = CalcularRadio(objetos->at(i));
 			b2CircleShape circulo;
 			circulo.m_radius = radio;
-			fixtureDef.shape = &circulo;
+			caract.shape = &circulo;
+		}
+
+		if (objetos->at(i)->esEstatico()) {
+			caract.density = objetos->at(i)->getDensidad();
+			caract.friction = friccionDeObjetos;
 		}
 
 		// La da la forma y la masa, determinando la densidad
-		body->CreateFixture(&fixtureDef);
-		b2MassData* datosDeMasa;
-		datosDeMasa->mass = objetos->at(i).getMasa();
-		body->SetMassData(datosDeMasa);
+		objeto->CreateFixture(&caract);
 	}
 
-	carla = &world;
+	mundo = &world;
 }
 
 void Escenario::cambiar(Evento evento) {
