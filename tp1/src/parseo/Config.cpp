@@ -31,7 +31,7 @@ Pantalla* Config::getPantalla() {
 }
 
 vector<Personaje*>* Config::getPersonajes() {
-	return nullptr;
+	return this->unParser->getPersona();
 }
 
 vector<ObjetoMapa*>* Config::getObjetos() {
