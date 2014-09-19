@@ -19,6 +19,7 @@ protected:
 	Pos* pos;
 	int rot;
 	int masa;
+	bool circulo;
 	//este atributo es el que va a variar para las distintas clases que hereden de esta.
 	std::map<std::string, int> desc; //
 
@@ -33,6 +34,16 @@ public:
 	bool esEstatico() {
 		return this->estatico;
 	}
+
+	bool esCirculo() {
+		return this->circulo;
+	}
+
+	//implementar
+	float getDensidad() {
+		return 10;
+	}
+
 	std::string getColor(){
 		return color;
 	}

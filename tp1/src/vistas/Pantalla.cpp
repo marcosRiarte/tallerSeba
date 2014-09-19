@@ -61,6 +61,14 @@ void Pantalla::update(){
 	SDL_RenderPresent(renderer);
 }
 
+
+int Pantalla::getAlto() {
+	return alto;
+}
+int Pantalla::getAncho(){
+	return ancho;
+}
+
 Pantalla::~Pantalla() {
 	SDL_Quit();
 }
