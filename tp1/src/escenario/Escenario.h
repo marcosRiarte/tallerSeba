@@ -20,6 +20,9 @@ static const float medioAltoPlayer = 10;
 static const float densidadDelPersonaje = 10;
 static const float friccionDelPersonaje = 10;
 static const float friccionDeObjetos = 10;
+static const float32 timeStep = 1.0f / 60.0f;
+static const int32 velocityIterations = 6;
+static const int32 positionIterations = 2;
 
 class Escenario {
 private:

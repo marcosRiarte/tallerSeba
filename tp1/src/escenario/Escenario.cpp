@@ -12,9 +12,11 @@
  *	de vértices que es la clase que maneja Box2D
  */
 b2Vec2* PasarAVertices(std::vector<Pos>* puntos) {
-	b2Vec2 vectorDePuntos[puntos->size()];
-	for(int i=0; i<puntos->size(); i++) {
-		vectorDePuntos[i].Set(puntos->at(i).getX(), puntos->at(i).getY());
+	b2Vec2* vectorDePuntos;
+	vectorDePuntos = new b2Vec2[puntos->size()];
+	for(unsigned int i=0; i<puntos->size(); i++) {
+		b2Vec2* v2= new b2Vec2(puntos->at(i).getX(), puntos->at(i).getY());
+		vectorDePuntos[i] = *v2;
 	}
 	// Seba dijo q los array dsp hay q eliminarlos, no encontre como D:
 	return vectorDePuntos;
@@ -75,7 +77,7 @@ Escenario::Escenario(Config* config) {
 	paredDer->CreateFixture(&paredDerForma, 0.0f);
 
 	// Crea los personajes (se supone que todos son dinámicos)
-	for(int i=0; i<personajes->size(); i++) {
+	for(unsigned int i=0; i<personajes->size(); i++) {
 		b2BodyDef peronajeDef;
 		peronajeDef.type = b2_dynamicBody;
 
@@ -93,10 +95,12 @@ Escenario::Escenario(Config* config) {
 
 		// La da la forma y la masa, determinando la densidad
 		personaje->CreateFixture(&caractDef);
+		// Guarda su referencia al mundo
+		personajes->at(i)->setLinkAMundo(personaje);
 	}
 
 	// Crea los objetos (se supone que no todos son estáticos)
-	for(int i=0; i<objetos->size(); i++) {
+	for(unsigned int i=0; i<objetos->size(); i++) {
 		b2BodyDef objetoDef;
 
 		// Determina si es o no estático
@@ -131,12 +135,14 @@ Escenario::Escenario(Config* config) {
 
 		// La da la forma y la masa, determinando la densidad
 		objeto->CreateFixture(&caract);
+		// Guarda su referencia al mundo
+		objetos->at(i)->setLinkAMundo(objeto);
 	}
-
-	mundo = &world;
+	this->mundo = &world;
 }
 
 void Escenario::cambiar(Evento evento) {
+	mundo->Step(timeStep, velocityIterations, positionIterations);
 }
 
 Escenario::~Escenario(){
