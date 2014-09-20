@@ -1,7 +1,7 @@
 #include "Rectangulo.h"
 
-Rectangulo::Rectangulo(bool esEstatico, std::string color, Pos pos_cm, int rotacion,
-		int masa, int alto, int ancho) {
+Rectangulo::Rectangulo(bool esEstatico, std::string color, Pos pos_cm,
+		int rotacion, int masa, int alto, int ancho) {
 
 	this->alto = alto;
 	this->ancho = ancho;
@@ -9,7 +9,27 @@ Rectangulo::Rectangulo(bool esEstatico, std::string color, Pos pos_cm, int rotac
 }
 
 std::vector<Pos*>* Rectangulo::getContorno() {
-	return nullptr;
+	std::vector<Pos*>* vertices = new std::vector<Pos*>();
+
+	int x1 = (pos->getX()) - (ancho / 2);
+	int y1 = (pos->getY()) - (alto / 2);
+	int x2 = x1 + ancho;
+	int y2 = y1;
+	int x3 = x2;
+	int y3 = y2 + alto;
+	int x4 = x1;
+	int y4 = y3;
+
+	Pos* posicion1 = new Pos(x1, y1);
+	Pos* posicion2 = new Pos(x2, y2);
+	Pos* posicion3 = new Pos(x3, y3);
+	Pos* posicion4 = new Pos(x4, y4);
+	vertices->push_back(posicion1);
+	vertices->push_back(posicion2);
+	vertices->push_back(posicion3);
+	vertices->push_back(posicion4);
+
+	return vertices;
 }
 
 
