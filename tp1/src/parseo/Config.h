@@ -6,7 +6,7 @@
 #include "../objetos/ObjetoMapa.h"
 #include "../personajes/Personaje.h"
 #include "../vistas/Pantalla.h"
-#include "parseo/Parser.h"
+#include "Parser.h"
 
 using namespace std;
 

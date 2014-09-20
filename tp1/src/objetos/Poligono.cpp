@@ -1,10 +1,3 @@
-/*
- * Poligono.cpp
- *
- *  Created on: 14/9/2014
- *      Author: Seba
- */
-
 #include "Poligono.h"
 
 Poligono::Poligono(Pos posicion, int lados, int escala, int rotacion,std::string color,int masa,bool estatico) {
@@ -13,7 +6,7 @@ Poligono::Poligono(Pos posicion, int lados, int escala, int rotacion,std::string
 	this->initialice(estatico, color, posicion, rotacion, masa);
 }
 
-std::vector<Pos>* Poligono::getContorno() {
+std::vector<Pos*>* Poligono::getContorno() {
 	return nullptr;
 }
 
