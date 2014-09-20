@@ -87,7 +87,7 @@ bool ValidadorObjetos::ValidarCirculo(int diametro) {
 }
 
 bool ValidadorObjetos::ValidarParalelogramo(int alfa) {
-	if ((alfa < 90) && (alfa >= 0)) {
+	if ((alfa < 181) && (alfa >= 0)) {
 		return true;
 	} else {
 		std::string mensaje = "Ángulo inválido";
