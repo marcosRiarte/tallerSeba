@@ -14,18 +14,17 @@ SDL_Surface* ObjetoMapaVista::getVista(){
 	Pos *pIzqSup = getPosIzqSup(vertices);
 	Pos *pDerInf = getPosDerInf(vertices);
 	int ancho = pDerInf->getX() - pIzqSup->getX();
-	int alto = pIzqSup->getY() - pDerInf->getY()  ;
+	int alto =  pDerInf->getY() - pIzqSup->getY()   ;
 
 	//Se crea la superficie y el renderer que va a trabajar sobre ella
 	SDL_Surface * sup = SDL_CreateRGBSurface(0, ancho, alto, 32, rmask, gmask, bmask, amask);
-	SDL_Renderer* renderer = SDL_CreateSoftwareRenderer(sup);
 
 	//Se dibuja la figura
 	short vx[cantVertices];
 	short vy[cantVertices];
 	for(int i = 0; i < cantVertices; i++){
 		vx[i] = vertices->at(i)->getX();
-		vy[i] = vertices->at(i)->getY();
+		vy[i] = -vertices->at(i)->getY();
 	}
 	filledPolygonColor(renderer, vx, vy, cantVertices, 0xAABB0000);
 	return sup;
@@ -50,9 +49,7 @@ Pos* ObjetoMapaVista::getPosIzqSup(std::vector<Pos*>* vPos){
 	Pos* p = vPos->at(0);
 	int Xmin = p->getX();
 	int Ymin = -p->getY();
-	int s = vPos->size();
-	int oiadf = s;
-	for(unsigned int i = 1; i < vPos->size(); i++){
+	for(unsigned i = 1; i < vPos->size(); i++){
 		p = vPos->at(i);
 		if (p->getX() < Xmin)
 			Xmin= p->getX();
@@ -77,7 +74,7 @@ Pos* ObjetoMapaVista::getPosDerInf(std::vector<Pos*>* vPos){
 	Pos* p = vPos->at(0);
 	int Xmax = p->getX();
 	int Ymax = -p->getY();
-	for(unsigned int i = 1; i < vPos->size(); i++){
+	for(unsigned i = 1; i < vPos->size(); i++){
 		p = vPos->at(i);
 		if (p->getX() > Xmax)
 			Xmax= p->getX();

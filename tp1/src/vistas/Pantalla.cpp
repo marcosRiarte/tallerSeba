@@ -2,6 +2,7 @@
 #include <string>
 #include "../Constantes.h"
 #include "Pantalla.h"
+#include <SDL2/SDL2_gfxPrimitives.h>
 #include <SDL2/SDL2_rotozoom.h>
 
 Pantalla::Pantalla(int altoPx, int anchoPx, int alto, int ancho, const char* dirImg) {
@@ -38,6 +39,7 @@ void Pantalla::inicializar() throw (SDL_Excepcion){
 }
 
 void Pantalla::agregarVista(Vista * v){
+	v->setRenderer(renderer);
 	vistas->push_back(v);
 }
 
@@ -60,7 +62,7 @@ void Pantalla::update(){
 		SDL_Surface* superficie = vistas->at(i)->getVista();
 
 		//Escalo la imagen a pixeles
-		shrinkSurface(superficie, anchoPx/ancho, altoPx/alto);
+		superficie = shrinkSurface(superficie, 50, 300);
 
 		//Convierto de superficie a textura (para el uso de GPU)
 		SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
