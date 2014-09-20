@@ -29,6 +29,6 @@ float Poligono::getArea(){
 	int n = this->lados;
 	float alfa = 2*PI/n;
 	int r = this->escala;
-	return (n*r*r*sin(alfa))/2;
+	return (n*r*r*sin(alfa* PI / 180))/2;
 }
 
