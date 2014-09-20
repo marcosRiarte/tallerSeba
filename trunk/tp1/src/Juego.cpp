@@ -80,7 +80,7 @@ int main(int argc, char* argv[]) {
 
 		//Se obtienen los personajes
 		std::vector<Personaje*> *personajes = config->getPersonajes();
-		std::sprintf(msg, "Se crearon: %d personajes", personajes->size());
+		snprintf(msg, 1000, "Se crearon: %d personajes", personajes->size());
 		loguer->loguear(msg, Log::LOG_DEB);
 
 		//Se crea el escenario Box2D con los objetos y personajes
