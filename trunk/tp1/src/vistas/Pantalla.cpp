@@ -52,14 +52,19 @@ void Pantalla::update(){
 		loguer->loguear("No se encontró imagen de fondo", Log::LOG_WAR);
 	SDL_RenderCopy(renderer, fondo, NULL, NULL);
 	SDL_DestroyTexture(fondo);
+
 	//Se cargan los objetos
 	for(unsigned i = 0; i < vistas->size(); i++ ){
+
 		//obtengo la imagen ya rotada con el tamanio en dimensiones Box2D
 		SDL_Surface* superficie = vistas->at(i)->getVista();
+
 		//Escalo la imagen a pixeles
 		shrinkSurface(superficie, anchoPx/ancho, altoPx/alto);
+
 		//Convierto de superficie a textura (para el uso de GPU)
 		SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
+
 		//La imprimo en la pantalla
 		//TODO hay que determinar en el rectángulo que debe ir ubicada la imagen
 		SDL_RenderCopy(renderer, textura, NULL, NULL);

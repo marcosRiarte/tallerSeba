@@ -4,7 +4,6 @@
 #include <vector>
 #include "Escenario.h"
 #include "../objetos/Pos.h"
-#include "../vistas/Pantalla.h"
 #include <stdio.h>
 
 /*
