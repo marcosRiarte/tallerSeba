@@ -10,7 +10,12 @@ Circulo::Circulo(Pos posicion, int diametro,int rotacion,std::string color,int m
  * 			su radio, haciendo | getPos() - p |
  */
 std::vector<Pos*>* Circulo::getContorno() {
-	return nullptr;
+
+	std::vector<Pos*>* vertices = new std::vector<Pos*>();
+	int x = pos->getX()+(diametro/2);
+	Pos* posicion = new Pos(x,pos->getY());
+	vertices->push_back(posicion);
+	return vertices;
 }
 
 

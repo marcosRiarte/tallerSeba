@@ -35,8 +35,8 @@ std::vector<Pos*>* Paralelogramo::getContorno() {
 		int y1 = ((this->pos->getY()))-((this->altura)*sin(beta* PI / 180.0)/2);
 		int x2 = x1+base;
 		int y2 = y1;
-		int x3 = x2 - ((this->altura)*cos(beta));
-		int y3 = y2 + ((this->altura)*sin(beta));
+		int x3 = x2 - ((this->altura)*cos(beta* PI / 180.0));
+		int y3 = y2 + ((this->altura)*sin(beta* PI / 180.0));
 		int x4 = x3 - (this->base);
 		int y4 = y3;
 		Pos* posicion1 = new Pos(x1,y1);
