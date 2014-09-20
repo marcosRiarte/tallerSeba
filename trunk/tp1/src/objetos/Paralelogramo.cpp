@@ -1,10 +1,3 @@
-/*
- * Paralelogramo.cpp
- *
- *  Created on: 14/9/2014
- *      Author: Seba
- */
-
 #include "Paralelogramo.h"
 #include <math.h>
 
@@ -13,11 +6,11 @@ Paralelogramo::Paralelogramo(Pos posicion, int base, int ladoaltura, int alfa, i
 	this->altura = ladoaltura;
 	this->alfa = alfa;
 	this->initialice(estatico, color, posicion, rotacion, masa);
-	this->vertices =  std::vector<Pos*>();
 }
 
 std::vector<Pos*>* Paralelogramo::getContorno() {
 	const double PI = 4.0*atan(1.0);
+	std::vector<Pos*>* vertices = new std::vector<Pos*>();
 	if ((this->alfa)<90){
 	int x1 = ((this->pos->getX())-(((this->base)+((this->altura)*cos(alfa * PI / 180.0)))/2));
 	int y1 = ((this->pos->getY()))-((this->altura)*sin(alfa* PI / 180.0)/2);
@@ -31,10 +24,10 @@ std::vector<Pos*>* Paralelogramo::getContorno() {
 	Pos* posicion2 = new Pos(x2,y2);
 	Pos* posicion3 = new Pos(x3,y3);
 	Pos* posicion4 = new Pos(x4,y4);
-	vertices.push_back(posicion1);
-	vertices.push_back(posicion2);
-	vertices.push_back(posicion3);
-	vertices.push_back(posicion4);
+	vertices->push_back(posicion1);
+	vertices->push_back(posicion2);
+	vertices->push_back(posicion3);
+	vertices->push_back(posicion4);
 	}
 	else{
 		int beta = 180 - alfa ;
@@ -50,12 +43,12 @@ std::vector<Pos*>* Paralelogramo::getContorno() {
 		Pos* posicion2 = new Pos(x2,y2);
 		Pos* posicion3 = new Pos(x3,y3);
 		Pos* posicion4 = new Pos(x4,y4);
-		vertices.push_back(posicion1);
-		vertices.push_back(posicion2);
-		vertices.push_back(posicion3);
-		vertices.push_back(posicion4);
+		vertices->push_back(posicion1);
+		vertices->push_back(posicion2);
+		vertices->push_back(posicion3);
+		vertices->push_back(posicion4);
 	}
-	return &vertices;
+	return vertices;
 }
 
 Paralelogramo::~Paralelogramo() {
