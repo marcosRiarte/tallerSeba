@@ -15,7 +15,6 @@ private:
 	int base;
 	int altura;
 	int alfa;
-	std::vector<Pos*> vertices;
 public:
 	Paralelogramo(Pos posicion, int base, int altura, int alfa, int rotacion,std::string color,int masa,bool estatico);
 	std::vector<Pos*>* getContorno();
