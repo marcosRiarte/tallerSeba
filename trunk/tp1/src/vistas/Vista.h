@@ -7,7 +7,7 @@ class Vista {
 protected:
 	SDL_Renderer* renderer;
 public:
-	virtual SDL_Surface* getVista() = 0;
+	virtual SDL_Texture* getVista() = 0;
 	void setRenderer(SDL_Renderer* r){
 		renderer = r;
 	};
