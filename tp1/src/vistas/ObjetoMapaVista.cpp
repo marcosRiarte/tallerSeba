@@ -6,7 +6,7 @@ ObjetoMapaVista::ObjetoMapaVista(ObjetoMapa* o){
 	objeto = o;
 }
 
-SDL_Surface* ObjetoMapaVista::getVista(){
+SDL_Texture* ObjetoMapaVista::getVista(){
 	std::vector<Pos*>* vertices = objeto->getContorno();
 	int cantVertices = vertices->size();
 
@@ -14,20 +14,22 @@ SDL_Surface* ObjetoMapaVista::getVista(){
 	Pos *pIzqSup = getPosIzqSup(vertices);
 	Pos *pDerInf = getPosDerInf(vertices);
 	int ancho = pDerInf->getX() - pIzqSup->getX();
-	int alto =  pDerInf->getY() - pIzqSup->getY()   ;
+	int alto =  pDerInf->getY() - pIzqSup->getY();
 
-	//Se crea la superficie y el renderer que va a trabajar sobre ella
-	SDL_Surface * sup = SDL_CreateRGBSurface(0, ancho, alto, 32, rmask, gmask, bmask, amask);
+	//Se crea la textura y sobre la cual se va a trabajar
+	SDL_Texture* t = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_UNKNOWN, SDL_TEXTUREACCESS_TARGET, ancho, alto);
 
 	//Se dibuja la figura
 	short vx[cantVertices];
 	short vy[cantVertices];
 	for(int i = 0; i < cantVertices; i++){
-		vx[i] = vertices->at(i)->getX();
-		vy[i] = -vertices->at(i)->getY();
+		vx[i] = vertices->at(i)->getX() - pIzqSup->getX();
+		vy[i] = -vertices->at(i)->getY() - pIzqSup->getY();
 	}
-	filledPolygonColor(renderer, vx, vy, cantVertices, 0xAABB0000);
-	return sup;
+
+	int res = SDL_SetRenderTarget(renderer, t);
+	res = filledPolygonColor(renderer, vx, vy, cantVertices, 0xAABB0000);
+	return t;
 }
 
 ObjetoMapaVista::~ObjetoMapaVista() {

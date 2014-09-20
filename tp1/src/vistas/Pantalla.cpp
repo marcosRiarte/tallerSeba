@@ -30,7 +30,7 @@ void Pantalla::inicializar() throw (SDL_Excepcion){
 		const char* msg = ((std::string)"Error creando ventana principal: ").append(SDL_GetError()).c_str();
 		throw new SDL_Excepcion(msg);
 	}
-	renderer =  SDL_CreateRenderer(ventana, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	renderer =  SDL_CreateRenderer(ventana, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE);
 	if (renderer == nullptr){
 		loguer->loguear("No se pudo crear el renderer", Log::LOG_ERR);
 		const char* msg = ((std::string)"Error creando el renderer: ").append(SDL_GetError()).c_str();
@@ -59,18 +59,24 @@ void Pantalla::update(){
 	for(unsigned i = 0; i < vistas->size(); i++ ){
 
 		//obtengo la imagen ya rotada con el tamanio en dimensiones Box2D
-		SDL_Surface* superficie = vistas->at(i)->getVista();
+		SDL_Texture* textura = vistas->at(i)->getVista();
 
 		//Escalo la imagen a pixeles
-		superficie = shrinkSurface(superficie, 50, 300);
+//		SDL_Surface* superficie2 = shrinkSurface(superficie, 2, 1);
 
 		//Convierto de superficie a textura (para el uso de GPU)
-		SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
+//		SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
 
 		//La imprimo en la pantalla
 		//TODO hay que determinar en el rectángulo que debe ir ubicada la imagen
-		SDL_RenderCopy(renderer, textura, NULL, NULL);
-		SDL_FreeSurface(superficie);
+		SDL_Rect r;
+		r.h = 300;
+		r.w = 100;
+		r.x = 100;
+		r.y = 200;
+		SDL_SetRenderTarget(renderer, NULL);
+		SDL_RenderCopy(renderer, textura, NULL, &r);
+//		SDL_FreeSurface(superficie);
 		SDL_DestroyTexture(textura);
 	}
 
