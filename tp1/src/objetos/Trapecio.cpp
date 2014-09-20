@@ -9,13 +9,35 @@ Trapecio::Trapecio(Pos posicion, int base, int altura, int alfa, int beta,int ro
 }
 
 std::vector<Pos*>* Trapecio::getContorno() {
-	return nullptr;
+	const double PI = 4.0*atan(1.0);
+	std::vector<Pos*>* vertices = new std::vector<Pos*>();
+
+	int x1 = pos->getX()-((this->base)/2);
+	int y1 = pos->getY()-((this->altura)/2);
+	int x2 = x1+base;
+	int y2 = y1;
+	int x3 = x2-((this->altura)/tan(beta * PI / 180));
+	int y3 =  y1+altura;
+	int x4 = x1+((this->altura)/tan(alfa * PI / 180));
+	int y4 = y3;
+
+	Pos* posicion1 = new Pos(x1, y1);
+	Pos* posicion2 = new Pos(x2, y2);
+	Pos* posicion3 = new Pos(x3, y3);
+	Pos* posicion4 = new Pos(x4, y4);
+	vertices->push_back(posicion1);
+	vertices->push_back(posicion2);
+	vertices->push_back(posicion3);
+	vertices->push_back(posicion4);
+
+	return vertices;
 }
 
 float Trapecio::getArea(){
+	const double PI = 4.0*atan(1.0);
 	double h = this->altura;
-	double  b1 = h/tan(this->alfa);
-	double b3 = h/tan(this->beta);
+	double  b1 = h/tan(this->alfa * PI / 180);
+	double b3 = h/tan(this->beta * PI / 180);
 	double b2 = (this->base - (b1 + b3));
 	return ((b1*h/2) + (b2*h) + (b3*h/2));
 }
