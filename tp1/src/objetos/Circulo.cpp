@@ -18,6 +18,9 @@ std::vector<Pos*>* Circulo::getContorno() {
 	return vertices;
 }
 
+float Circulo::getArea(){
+	return 1,5;
+}
 
 Circulo::~Circulo() {
 	// TODO Auto-generated destructor stub
