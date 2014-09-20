@@ -13,13 +13,15 @@ std::vector<Pos*>* Circulo::getContorno() {
 
 	std::vector<Pos*>* vertices = new std::vector<Pos*>();
 	int x = pos->getX()+(diametro/2);
-	Pos* posicion = new Pos(x,pos->getY());
+	int y = pos->getY();
+	Pos* posicion = new Pos(x,y);
 	vertices->push_back(posicion);
 	return vertices;
 }
 
 float Circulo::getArea(){
-	return 1,5;
+	const double PI = 4.0*atan(1.0);
+	return PI*(diametro*diametro)/4;
 }
 
 Circulo::~Circulo() {
