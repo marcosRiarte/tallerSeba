@@ -4,8 +4,10 @@
 #include <SDL2/SDL.h>
 
 class Vista {
+protected:
+	SDL_Renderer* renderer;
 public:
-	virtual SDL_Texture* getVista() = 0;
+	virtual SDL_Surface* getVista() = 0;
 	virtual ~Vista(){};
 };
 

@@ -10,9 +10,8 @@ public:
 	int getX();
 	int getY();
 	Pos(const Pos* p);
-	// Devuelve verdadero si la posicion es la misma
 	bool esIgual(Pos* posicion);
-	//hay que definir el operador =
+	float getNorma();
 	virtual ~Pos();
 };
 

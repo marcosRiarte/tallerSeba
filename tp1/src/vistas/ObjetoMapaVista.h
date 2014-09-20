@@ -7,9 +7,11 @@
 class ObjetoMapaVista : public Vista{
 private:
 	ObjetoMapa* objeto;
+	Pos* getPosDerInf(std::vector<Pos*>* vPos);
+	Pos* getPosIzqSup(std::vector<Pos*>* vPos);
 public:
 	ObjetoMapaVista(ObjetoMapa* o);
-	SDL_Texture* getVista();
+	SDL_Surface* getVista();
 	virtual ~ObjetoMapaVista();
 };
 

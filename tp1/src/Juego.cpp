@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include <iostream>
+#include <stdio.h>
 #include "Constantes.h"
 #include "parseo/Config.h"
 #include "objetos/ObjetoMapa.h"
@@ -40,42 +41,62 @@ void finalizar() {
  * @return devuele 0 (si resultado Ok) y distinto de 0 si hubo error.
  */
 int main(int argc, char* argv[]) {
+	char msg[1000]; // Se usa para crear mensajes en el log
 	//Pequeña validacion de los argumentos pasados.
 	if (argc != 2) {
 		ayuda();
 		return RES_AYUDA;
 	}
+	loguer->loguear("INICIO DE LA APLICACION", Log::LOG_DEB);
 	std::string dirArchivoConfiguracion = argv[1];
 	Config* configuracion = new Config(dirArchivoConfiguracion);
 	bool fin = false;
 	while (!fin) {
-		//Se crea un objeto de configuracion
-		// con lo necesario para crear el mapa y los personajes
+
+		//Parseo y creacion de objetos
+		loguer->loguear("Se parsea y se procede a crear los objetos y personajes.", Log::LOG_DEB);
 		configuracion->crearObjetos();
+		loguer->loguear("Se terminan de crear los objetos y personajes.", Log::LOG_DEB);
+
+		//Se obtienen los objetos
 		std::vector<ObjetoMapa*> *objetos = configuracion->getObjetos();
+		snprintf(msg, 1000, "Se crearon: %d objetos", objetos->size());
+		loguer->loguear(msg, Log::LOG_DEB);
 
-		std::vector<Personaje*> *personajes = configuracion->getPersonajes();
-		//Se crea el escenario con los objetos y personajes
+/*	@Test Permite imprimir las posiciones que integran el contorno de un objeto
 
-		//Se crean las vistas de los objetos y personajes
-		std::vector<Vista*> *vistas = new vector<Vista*>();
-		for(int i = 0; i+1 < objetos->size(); i++){
-			Vista* v = new ObjetoMapaVista(objetos->at(i));
-			vistas->push_back(v);
+ 		std::vector<Pos*>* const contorno = objetos->at(0)->getContorno();
+ 		int cantidad = contorno->size();
+ 		snprintf(msg, 1000, "Contorno del primer objeto (%d vertices):", cantidad);
+ 		loguer->loguear(msg, Log::LOG_DEB);
+		for (unsigned i = 0; i < contorno->size(); i++) {
+			Pos* p = contorno->at(i);
+			int x = p->getX();
+			int y = p->getY();
+			std::sprintf(msg, "Pos%d:(%d,%d)", i, x, y);
+			loguer->loguear(msg, Log::LOG_DEB);
 		}
-		for(int i = 0; i+1 < personajes->size(); i++){
+ */
+
+		//Se obtienen los personajes
+		std::vector<Personaje*> *personajes = configuracion->getPersonajes();
+		std::sprintf(msg, "Se crearon: %d personajes", personajes->size());
+		loguer->loguear(msg, Log::LOG_DEB);
+
+		//Se crea el escenario Box2D con los objetos y personajes
+
+/*
+ * TODO Falta crear la clase vista de los personajes, así que por ahora solo comentarios
+
+  		for(unsigned int i = 0; i+1 < personajes->size(); i++){
 			Vista* v = new PersonajeVista(personajes->at(i));
 			vistas->push_back(v);
 		}
-		//Se crea la pantalla y se inicia SDL
+*/
+		//Se obtiene la pantalla
 		Pantalla *pantalla = configuracion->getPantalla();
 
-		/*
-		 * Solo para utilizar en las pruebas...
-		 * Pantalla * pantalla = new Pantalla(768, 1024, 768, 1024, "img/Fondo.jpg");
-		 */
-
-
+		//Se inicia SDL creando la ventana dela aplicación
 		try{
 			pantalla->inicializar();
 		}catch(SDL_Excepcion *e){
@@ -83,17 +104,36 @@ int main(int argc, char* argv[]) {
 			loguer->loguear(e->what(), Log::LOG_ERR);
 			return RES_ERR;
 		}
-		/*
-		 * Solo para utilizar en las pruebas...
-		 * pantalla->update();
-		 * SDL_Delay(5000);
-		*/
 
+		//Se crean las vistas de los objetos y se agregan a la pantalla
+		for (unsigned int i = 0; i < objetos->size(); i++) {
+			Vista* v = new ObjetoMapaVista(objetos->at(i));
+			pantalla->agregarVista(v);
+		}
+
+		//Se crean las vistas de los personajes y se agregan a la pantalla
+/*
+ * TODO Hay que hacer personajes desde cero, por ende esto no está hecho
+		 for (unsigned int i = 0; i < personajes->size(); i++) {
+			Vista* v = new PersonajeVista(objetos->at(i));
+			pantalla->agregarVista(v);
+		}
+*/
+
+/* TODO Hay que borrar esto porque es para testing nomas
+		  pantalla->update();
+		  SDL_Delay(5000);
+*/
+
+
+/*
+ * 	TODO Hay que crear el gameloop porque no está bien implementado aún, al igual que el método finalizar
 		//Se inicia el juego
 		if (gameloop() == FIN_DEL_JUEGO)
 			fin = true;
 		//Se debe liberar lo que ya no se usa
 		finalizar();
+*/
 	}
 	return RES_OK;
 }

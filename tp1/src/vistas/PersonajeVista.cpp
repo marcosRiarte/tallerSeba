@@ -4,7 +4,7 @@ PersonajeVista::PersonajeVista(Personaje* p) {
 	personaje = p;
 }
 
-SDL_Texture* PersonajeVista::getVista(){
+SDL_Surface* PersonajeVista::getVista(){
 	return nullptr;
 }
 
