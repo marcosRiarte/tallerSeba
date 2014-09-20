@@ -9,14 +9,17 @@ ObjetoMapaVista::ObjetoMapaVista(ObjetoMapa* o){
 SDL_Surface* ObjetoMapaVista::getVista(){
 	std::vector<Pos*>* vertices = objeto->getContorno();
 	int cantVertices = vertices->size();
+
 	//Se calcula la superficie que va a ocupa dicho objeto
 	Pos *pIzqSup = getPosIzqSup(vertices);
 	Pos *pDerInf = getPosDerInf(vertices);
 	int ancho = pDerInf->getX() - pIzqSup->getX();
 	int alto = pIzqSup->getY() - pDerInf->getY()  ;
+
 	//Se crea la superficie y el renderer que va a trabajar sobre ella
 	SDL_Surface * sup = SDL_CreateRGBSurface(0, ancho, alto, 32, rmask, gmask, bmask, amask);
 	SDL_Renderer* renderer = SDL_CreateSoftwareRenderer(sup);
+
 	//Se dibuja la figura
 	short vx[cantVertices];
 	short vy[cantVertices];

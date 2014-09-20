@@ -17,7 +17,7 @@ Rectangulo * CreadorObjetos::CrearRectangulo(int x, int y, int ancho, int alto,i
 
 Poligono * CreadorObjetos::CrearPoligono(int x, int y, int lados, int escala, int rotacion,std::string color,int masa,bool estatico) {
 	Pos *posicion = new Pos(x,y);
-	Poligono *unPoligono =new Poligono(posicion, lados, escala, rotacion, color, masa, estatico);
+	Poligono *unPoligono = new Poligono(posicion, lados, escala, rotacion, color, masa, estatico);
 	return unPoligono;
 
 }
@@ -31,7 +31,7 @@ Circulo * CreadorObjetos::CrearCirculo(int x, int y, int diametro,int rotacion,s
 
 Paralelogramo * CreadorObjetos::CrearParalelogramo(int x, int y, int base, int ladoaltura, int alfa,int rotacion,std::string color,int masa,bool estatico) {
 	Pos *posicion = new Pos(x,y);
-	Paralelogramo* unParalelogramo =new Paralelogramo(posicion,base,ladoaltura,alfa,rotacion,color,masa, estatico);
+	Paralelogramo* unParalelogramo = new Paralelogramo(posicion,base,ladoaltura,alfa,rotacion,color,masa, estatico);
 	return unParalelogramo;
 }
 

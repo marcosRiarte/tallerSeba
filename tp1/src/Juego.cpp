@@ -7,10 +7,10 @@
 #include "vistas/PersonajeVista.h"
 
 void ayuda() {
-	cout << "Ayuda: \n";
-	cout << "\t Para ejecutar SnowBross ingresar dirección del archivo de configuración. \n";
-	cout << "Ejemplo: \n";
-	cout << "\t > SnowBross 'c:\\configuracion.json' \n";
+	std::cout << "Ayuda: \n";
+	std::cout << "\t Para ejecutar SnowBross ingresar dirección del archivo de configuración. \n";
+	std::cout << "Ejemplo: \n";
+	std::cout << "\t > SnowBross 'c:\\configuracion.json' \n";
 }
 
 /**
@@ -49,17 +49,17 @@ int main(int argc, char* argv[]) {
 	}
 	loguer->loguear("INICIO DE LA APLICACION", Log::LOG_DEB);
 	std::string dirArchivoConfiguracion = argv[1];
-	Config* configuracion = new Config(dirArchivoConfiguracion);
+
+	//Parseo y creacion de objetos
+	loguer->loguear("Se parsea y se procede a crear los objetos y personajes.", Log::LOG_DEB);
+	Config* config = new Config(dirArchivoConfiguracion);
+	loguer->loguear("Se terminan de crear los objetos y personajes.", Log::LOG_DEB);
+
 	bool fin = false;
 	while (!fin) {
 
-		//Parseo y creacion de objetos
-		loguer->loguear("Se parsea y se procede a crear los objetos y personajes.", Log::LOG_DEB);
-		configuracion->crearObjetos();
-		loguer->loguear("Se terminan de crear los objetos y personajes.", Log::LOG_DEB);
-
 		//Se obtienen los objetos
-		std::vector<ObjetoMapa*> *objetos = configuracion->getObjetos();
+		std::vector<ObjetoMapa*> *objetos = config->getObjetos();
 		snprintf(msg, 1000, "Se crearon: %d objetos", objetos->size());
 		loguer->loguear(msg, Log::LOG_DEB);
 
@@ -79,7 +79,7 @@ int main(int argc, char* argv[]) {
  */
 
 		//Se obtienen los personajes
-		std::vector<Personaje*> *personajes = configuracion->getPersonajes();
+		std::vector<Personaje*> *personajes = config->getPersonajes();
 		std::sprintf(msg, "Se crearon: %d personajes", personajes->size());
 		loguer->loguear(msg, Log::LOG_DEB);
 
@@ -94,7 +94,7 @@ int main(int argc, char* argv[]) {
 		}
 */
 		//Se obtiene la pantalla
-		Pantalla *pantalla = configuracion->getPantalla();
+		Pantalla *pantalla = config->getPantalla();
 
 		//Se inicia SDL creando la ventana dela aplicación
 		try{
