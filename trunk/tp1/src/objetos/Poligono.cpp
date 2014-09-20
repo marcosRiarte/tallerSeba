@@ -25,8 +25,9 @@ Poligono::~Poligono() {
 }
 
 float Poligono::getArea(){
+	const double PI = 4.0*atan(1.0);
 	int n = this->lados;
-	float alfa = 2*M_PI/n;
+	float alfa = 2*PI/n;
 	int r = this->escala;
 	return (n*r*r*sin(alfa))/2;
 }

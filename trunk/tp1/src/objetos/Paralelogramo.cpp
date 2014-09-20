@@ -53,7 +53,14 @@ std::vector<Pos*>* Paralelogramo::getContorno() {
 
 
 float Paralelogramo::getArea(){
-	return (this->base*this->altura);
+	const double PI = 4.0*atan(1.0);
+	if ((this->alfa)<90){
+	return ((this->base)*(this->altura*sin(alfa* PI / 180)));
+	}
+	else{
+	int beta = 180 - alfa ;
+	return ((this->base)*(this->altura*sin(beta* PI / 180)));
+	}
 }
 
 Paralelogramo::~Paralelogramo() {
