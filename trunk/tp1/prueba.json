@@ -8,30 +8,43 @@
 		"imagen_fondo": "fondo1.png",
 		"personaje": 
 		{
-			"x": 0,
+			"x": 100,
 			"y": -100
 		},
 
 		"objetos": 
 		[
 			{
-				"tipo": "rectangulo",
+				"tipo": "rect",
 				"x": 5,
 				"y": -90,
 				"ancho": 2,
 				"alto": 1,
 				"color": "#00FF00",
 				"rot": 45,
-				"masa": 3,
+				"masa": 0,
 				"estatico": false
 			},
 
 			{
+				"tipo": "paralelogramo",
+				"base": 15,
+				"altura": 27,
+				"alfa": 130,
+				"x": 20,
+				"y": -20,
+				"color": "#FF0000",
+				"rot": 90,
+				"masa": 1,
+				"estatico": true
+			},
+			
+			{
 				"tipo": "poligono",
-				"lados": 3,
-				"x": 50,
+				"lados": 6,
+				"escala": 15,
+				"x": 25,
 				"y": -50,
-				"escala": 3.5,
 				"color": "#FF0000",
 				"rot": 90,
 				"masa": 1,
