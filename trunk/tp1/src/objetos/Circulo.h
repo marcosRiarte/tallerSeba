@@ -8,6 +8,7 @@ private:
 public:
 	Circulo(Pos posicion, int diametro,int rotacion,std::string color,int masa,bool estatico);
 	std::vector<Pos*>* getContorno();
+	float getArea();
 	virtual ~Circulo();
 };
 

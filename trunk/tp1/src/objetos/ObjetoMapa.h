@@ -8,6 +8,9 @@
 #include "Color.h"
 #include <Box2D/Box2D.h>
 
+#ifndef M_PI
+#define M_PI           3.14159265358979323846
+#endif
 /**
  * Clase Abrstracta (no se pueden crear instancias de la misma) que sirve de base para
  * 	los demas objetos que hereden de ella. Es una interfaz
@@ -20,6 +23,7 @@ protected:
 	Pos* pos;
 	int rot;
 	int masa;
+	float area;
 	bool circulo;
 	b2Body* linkAMundo;
 	//este atributo es el que va a variar para las distintas clases que hereden de esta.
@@ -41,10 +45,13 @@ public:
 		return this->circulo;
 	}
 
-	//implementar
+
 	float getDensidad() {
-		return 10;
+		return this->masa/this->getArea();
 	}
+
+	//implementar
+	virtual	float getArea() = 0;
 
 	std::string getColor(){
 		return color;

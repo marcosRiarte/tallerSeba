@@ -18,6 +18,7 @@ private:
 public:
 	Poligono(Pos posicion, int lados, int escala, int rotacion,std::string color,int masa,bool estatico);
 	std::vector<Pos*>* getContorno();
+	float getArea();
 	virtual ~Poligono();
 };
 

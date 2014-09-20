@@ -12,6 +12,11 @@ std::vector<Pos*>* Rectangulo::getContorno() {
 	return nullptr;
 }
 
+
+float Rectangulo::getArea(){
+	return (this->alto*this->ancho);
+}
+
 Rectangulo::~Rectangulo() {
 	// TODO Auto-generated destructor stub
 }

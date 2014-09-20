@@ -12,6 +12,14 @@ std::vector<Pos*>* Trapecio::getContorno() {
 	return nullptr;
 }
 
+float Trapecio::getArea(){
+	double h = this->altura;
+	double  b1 = h/tan(this->alfa);
+	double b3 = h/tan(this->beta);
+	double b2 = (this->base - (b1 + b3));
+	return ((b1*h/2) + (b2*h) + (b3*h/2));
+}
+
 Trapecio::~Trapecio() {
 	// TODO Auto-generated destructor stub
 }
