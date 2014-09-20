@@ -11,11 +11,11 @@
  *	Pasa los puntos de un vector de posiciones a uno
  *	de vértices que es la clase que maneja Box2D
  */
-b2Vec2* PasarAVertices(std::vector<Pos>* puntos) {
+b2Vec2* PasarAVertices(std::vector<Pos*>* puntos) {
 	b2Vec2* vectorDePuntos;
 	vectorDePuntos = new b2Vec2[puntos->size()];
 	for(unsigned int i=0; i<puntos->size(); i++) {
-		b2Vec2* v2= new b2Vec2(puntos->at(i).getX(), puntos->at(i).getY());
+		b2Vec2* v2= new b2Vec2(puntos->at(i)->getX(), puntos->at(i)->getY());
 		vectorDePuntos[i] = *v2;
 	}
 	// Seba dijo q los array dsp hay q eliminarlos, no encontre como D:
@@ -27,8 +27,8 @@ b2Vec2* PasarAVertices(std::vector<Pos>* puntos) {
  *	y la posicion en la que esta y devuelve su radio
  */
 float CalcularRadio(ObjetoMapa* circulo) {
-	float distX = circulo->getPos()->getX()-circulo->getContorno()->at(0).getX();
-	float distY = circulo->getPos()->getY()-circulo->getContorno()->at(0).getY();
+	float distX = circulo->getPos()->getX() - circulo->getContorno()->at(0)->getX();
+	float distY = circulo->getPos()->getY() - circulo->getContorno()->at(0)->getY();
 	float radio = sqrt(distX*distX+distY*distY);
 	return radio;
 }
