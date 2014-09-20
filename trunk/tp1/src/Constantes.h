@@ -18,4 +18,9 @@
 #define PATH_LOG				 	".\\logs\\";
 static Log* loguer = (Log*) DebugLog::getInstance();
 
+static int rmask = 0xff000000;
+static int gmask = 0x00ff0000;
+static int bmask = 0x0000ff00;
+static int amask = 0x000000ff;
+
 #endif /* CONSTANTES_H_ */

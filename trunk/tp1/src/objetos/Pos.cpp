@@ -1,17 +1,10 @@
-/*
- * Pos.cpp
- *
- *  Created on: 9/9/2014
- *      Author: pablo_000
- */
-
 #include "Pos.h"
+#include <Math.h>
 
 Pos::Pos(int x, int y) {
 	this->x = x;
 	this->y= y;
 }
-
 
 int Pos::getX(){
 	return this->x;
@@ -27,7 +20,14 @@ Pos::Pos(const Pos* p) {
 }
 
 bool Pos::esIgual(Pos* posicion){
-	return true;
+	if ( (posicion->x == x) && (posicion->y == y) )
+		return true;
+	else
+		return false;
+}
+
+float Pos::getNorma(){
+	return sqrt(x*x + y*y);
 }
 
 Pos::~Pos() {

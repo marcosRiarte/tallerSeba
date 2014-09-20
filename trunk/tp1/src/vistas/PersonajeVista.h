@@ -9,7 +9,7 @@ private:
 	Personaje* personaje;
 public:
 	PersonajeVista(Personaje* p);
-	SDL_Texture* getVista();
+	SDL_Surface* getVista();
 	virtual ~PersonajeVista();
 };
 

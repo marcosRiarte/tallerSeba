@@ -4,7 +4,6 @@
 #include <sstream>
 #include <string>
 #include "Parser.h"
-#include "../log/Log.h"
 #include "CreadorObjetos.h"
 #include "ValidadorObjetos.h"
 

@@ -2,6 +2,7 @@
 #include <string>
 #include "../Constantes.h"
 #include "Pantalla.h"
+#include <SDL2/SDL2_rotozoom.h>
 
 Pantalla::Pantalla(int altoPx, int anchoPx, int alto, int ancho, const char* dirImg) {
 	this->altoPx = altoPx;
@@ -11,6 +12,7 @@ Pantalla::Pantalla(int altoPx, int anchoPx, int alto, int ancho, const char* dir
 	this->dirImg = dirImg;
 	this->ventana = nullptr;
 	this->renderer = nullptr;
+	this->vistas = new std::vector<Vista*>;
 }
 /**
  * Se inicia SDL y se crea la pantalla principal.
@@ -35,8 +37,8 @@ void Pantalla::inicializar() throw (SDL_Excepcion){
 	}
 }
 
-void Pantalla::agregarObjeto(ObjetoMapaVista * o){
-
+void Pantalla::agregarVista(Vista * v){
+	vistas->push_back(v);
 }
 
 
@@ -51,9 +53,17 @@ void Pantalla::update(){
 	SDL_RenderCopy(renderer, fondo, NULL, NULL);
 	SDL_DestroyTexture(fondo);
 	//Se cargan los objetos
-	for(int i = 0; i+1 < objetos->size(); i++ ){
-		SDL_Texture* textura = objetos->at(i)->getVista();
+	for(unsigned i = 0; i < vistas->size(); i++ ){
+		//obtengo la imagen ya rotada con el tamanio en dimensiones Box2D
+		SDL_Surface* superficie = vistas->at(i)->getVista();
+		//Escalo la imagen a pixeles
+		shrinkSurface(superficie, anchoPx/ancho, altoPx/alto);
+		//Convierto de superficie a textura (para el uso de GPU)
+		SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
+		//La imprimo en la pantalla
+		//TODO hay que determinar en el rectángulo que debe ir ubicada la imagen
 		SDL_RenderCopy(renderer, textura, NULL, NULL);
+		SDL_FreeSurface(superficie);
 		SDL_DestroyTexture(textura);
 	}
 

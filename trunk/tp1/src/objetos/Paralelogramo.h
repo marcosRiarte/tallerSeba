@@ -1,10 +1,3 @@
-/*
- * Paralelogramo.h
- *
- *  Created on: 14/9/2014
- *      Author: Seba
- */
-
 #ifndef PARALELOGRAMO_H_
 #define PARALELOGRAMO_H_
 
