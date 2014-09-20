@@ -51,6 +51,11 @@ std::vector<Pos*>* Paralelogramo::getContorno() {
 	return vertices;
 }
 
+
+float Paralelogramo::getArea(){
+	return (this->base*this->altura);
+}
+
 Paralelogramo::~Paralelogramo() {
 	// TODO Auto-generated destructor stub
 }

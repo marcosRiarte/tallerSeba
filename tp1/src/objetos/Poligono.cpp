@@ -24,3 +24,10 @@ Poligono::~Poligono() {
 	// TODO Auto-generated destructor stub
 }
 
+float Poligono::getArea(){
+	int n = this->lados;
+	float alfa = 2*M_PI/n;
+	int r = this->escala;
+	return (n*r*r*sin(alfa))/2;
+}
+

@@ -10,6 +10,7 @@ private:
 public:
 	Rectangulo(bool esEstatico, std::string color, Pos pos_cm, int rotacion, int masa, int alto, int ancho);
 	std::vector<Pos*>* getContorno();
+	float getArea();
 	virtual ~Rectangulo();
 };
 
