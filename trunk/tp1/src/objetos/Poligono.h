@@ -15,6 +15,7 @@ class Poligono : public ObjetoMapa {
 private:
 	int lados;
 	int escala;
+	std::vector<Pos*> vertices;
 public:
 	Poligono(Pos posicion, int lados, int escala, int rotacion,std::string color,int masa,bool estatico);
 	std::vector<Pos*>* getContorno();

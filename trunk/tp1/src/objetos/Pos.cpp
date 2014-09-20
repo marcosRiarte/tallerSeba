@@ -12,6 +12,7 @@ Pos::Pos(int x, int y) {
 	this->y= y;
 }
 
+
 int Pos::getX(){
 	return this->x;
 }
@@ -21,8 +22,8 @@ int Pos::getY(){
 }
 
 Pos::Pos(const Pos* p) {
-	// TODO Auto-generated constructor stub
-
+	x = p->x;
+	y = p->y;
 }
 
 bool Pos::esIgual(Pos* posicion){
