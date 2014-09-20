@@ -1,10 +1,3 @@
-/*
- * Circulo.cpp
- *
- *  Created on: 14/9/2014
- *      Author: Seba
- */
-
 #include "Circulo.h"
 
 Circulo::Circulo(Pos posicion, int diametro,int rotacion,std::string color,int masa,bool estatico){
@@ -16,8 +9,8 @@ Circulo::Circulo(Pos posicion, int diametro,int rotacion,std::string color,int m
  * @return Devuelve un vector con una sola posición (p). De esta manera, se puede calcular
  * 			su radio, haciendo | getPos() - p |
  */
-int Circulo::getContorno() {
-	return (diametro/2);
+std::vector<Pos*>* Circulo::getContorno() {
+	return nullptr;
 }
 
 

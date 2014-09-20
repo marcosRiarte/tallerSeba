@@ -1,7 +1,7 @@
 #include "CreadorObjetos.h"
 #include "../objetos/ObjetoMapa.h"
 #include "../objetos/Pos.h"
-#include "personajes/Personaje.h"
+#include "../personajes/Personaje.h"
 
 Personaje * CreadorObjetos::CrearPersonaje(int personaje_x, int personaje_y){
 	Pos *posicion = new Pos(personaje_x,personaje_y);

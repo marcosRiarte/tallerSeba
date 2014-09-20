@@ -1,10 +1,3 @@
-/*
- * Trapecio.h
- *
- *  Created on: 14/9/2014
- *      Author: Seba
- */
-
 #ifndef TRAPECIO_H_
 #define TRAPECIO_H_
 

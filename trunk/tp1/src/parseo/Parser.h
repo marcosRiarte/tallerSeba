@@ -1,10 +1,9 @@
 #ifndef PARSER_H_
 #define PARSER_H_
-#include <string>
 #include "../objetos/ObjetoMapa.h"
 #include <vector>
 #include <string>
-#include "personajes/Personaje.h"
+#include "../personajes/Personaje.h"
 #include "../vistas/Pantalla.h"
 
 class Parser {

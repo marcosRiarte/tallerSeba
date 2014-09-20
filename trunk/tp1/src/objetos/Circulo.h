@@ -1,10 +1,3 @@
-/*
- * Circulo.h
- *
- *  Created on: 14/9/2014
- *      Author: Seba
- */
-
 #ifndef CIRCULO_H_
 #define CIRCULO_H_
 #include "ObjetoMapa.h"
@@ -14,7 +7,7 @@ private:
 	int diametro;
 public:
 	Circulo(Pos posicion, int diametro,int rotacion,std::string color,int masa,bool estatico);
-	int getContorno();
+	std::vector<Pos*>* getContorno();
 	virtual ~Circulo();
 };
 

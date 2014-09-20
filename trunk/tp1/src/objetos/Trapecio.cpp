@@ -1,10 +1,3 @@
-/*
- * Trapecio.cpp
- *
- *  Created on: 14/9/2014
- *      Author: Seba
- */
-
 #include "Trapecio.h"
 
 Trapecio::Trapecio(Pos posicion, int base, int altura, int alfa, int beta,int rotacion,std::string color,int masa,bool estatico){
@@ -15,7 +8,7 @@ Trapecio::Trapecio(Pos posicion, int base, int altura, int alfa, int beta,int ro
 	this->initialice(estatico, color, posicion, rotacion, masa);
 }
 
-std::vector<Pos>* Trapecio::getContorno() {
+std::vector<Pos*>* Trapecio::getContorno() {
 	return nullptr;
 }
 

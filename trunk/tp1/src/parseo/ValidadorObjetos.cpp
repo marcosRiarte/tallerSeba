@@ -1,9 +1,8 @@
-#include "parseo/ValidadorObjetos.h"
+#include "ValidadorObjetos.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
-#include "log/Log.h"
 #include "../src/Constantes.h"
 
 bool ValidadorObjetos::ValidarPersonaje(int x, int y,int ancho_un,int alto_un) {

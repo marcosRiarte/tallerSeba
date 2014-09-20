@@ -1,10 +1,3 @@
-/*
- * Rectangulo.cpp
- *
- *  Created on: 9/9/2014
- *      Author: pablo_000
- */
-
 #include "Rectangulo.h"
 
 Rectangulo::Rectangulo(bool esEstatico, std::string color, Pos pos_cm, int rotacion,
@@ -15,7 +8,7 @@ Rectangulo::Rectangulo(bool esEstatico, std::string color, Pos pos_cm, int rotac
 	this->initialice(esEstatico, color, pos_cm, rotacion, masa);
 }
 
-std::vector<Pos>* Rectangulo::getContorno() {
+std::vector<Pos*>* Rectangulo::getContorno() {
 	return nullptr;
 }
 
