@@ -158,6 +158,14 @@ int main(int argc, char* argv[]) {
 					std::cout<<"tecla izquierda";
 				Evento* izquierda = new Evento(1);
 				}
+				else if(teclaT==SDLK_DOWN){
+					std::cout<<"tecla abajo";
+				Evento* abajo = new Evento(4);
+				}
+				else if(teclaT==SDLK_r){
+					std::cout<<"tecla R";
+				Evento* erre = new Evento(5);
+				}
 				else if (teclaT==SDLK_ESCAPE) {
 					std::cout<<"sale programa";
 				}
