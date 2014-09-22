@@ -16,6 +16,8 @@ public:
 	static const int teclaIzquierda = 1;
 	static const int teclaDerecha = 2;
 	static const int teclaArriba = 3;
+	static const int teclaAbajo = 4;
+	static const int teclaR = 5;
 
 	// se crea por defecto con "teclaNada"
 	Evento();
