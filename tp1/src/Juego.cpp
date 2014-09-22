@@ -5,6 +5,7 @@
 #include "parseo/Config.h"
 #include "objetos/ObjetoMapa.h"
 #include "vistas/PersonajeVista.h"
+#include "entrada/Evento.h"
 
 void ayuda() {
 	std::cout << "Ayuda: \n";
@@ -134,6 +135,51 @@ int main(int argc, char* argv[]) {
 		//Se debe liberar lo que ya no se usa
 		finalizar();
 */
+
+		//eventos
+
+		while(!fin){
+
+			SDL_Event evento;
+
+			while(SDL_PollEvent(&evento)){
+
+				SDL_Keycode teclaT=evento.key.keysym.sym;
+
+				switch(teclaT){
+					case SDLK_UP:
+						std::cout<<"tecla arriba";
+						Evento arriba = new Evento(3);
+						break;
+
+					case SDLK_RIGHT:
+						std::cout<< "tecla derecha";
+						Evento derecha = new Evento(2);
+						break;
+
+					case SDLK_LEFT:
+						std::cout<<"tecla izquierda";
+						Evento izquierda = new Evento(1);
+						break;
+
+					case SDLK_ESCAPE:
+						std::cout<<"sale programa";
+						break;
+
+					default:
+						std::cout<<"tecla no valida";
+					}
+
+
+
+			//Evento eventoT= new Evento(teclaT);
+			//eventoT.procesarTecla();
+
+
+
+		}
+		}
+		fin= true;
 	}
 	return RES_OK;
 }
