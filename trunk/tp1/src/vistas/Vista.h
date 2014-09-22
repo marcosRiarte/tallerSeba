@@ -8,6 +8,7 @@ protected:
 	SDL_Renderer* renderer;
 public:
 	virtual SDL_Texture* getVista() = 0;
+	virtual SDL_Rect* getVentana() = 0;
 	void setRenderer(SDL_Renderer* r){
 		renderer = r;
 	};
