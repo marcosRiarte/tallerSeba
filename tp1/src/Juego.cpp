@@ -146,29 +146,21 @@ int main(int argc, char* argv[]) {
 
 				SDL_Keycode teclaT=evento.key.keysym.sym;
 
-				switch(teclaT){
-					case SDLK_UP:
+				if(teclaT==SDLK_UP){
 						std::cout<<"tecla arriba";
-						Evento arriba = new Evento(3);
-						break;
-
-					case SDLK_RIGHT:
+						Evento *arriba = new Evento(3);
+				}
+				else if (teclaT==SDLK_RIGHT){
 						std::cout<< "tecla derecha";
-						Evento derecha = new Evento(2);
-						break;
-
-					case SDLK_LEFT:
-						std::cout<<"tecla izquierda";
-						Evento izquierda = new Evento(1);
-						break;
-
-					case SDLK_ESCAPE:
-						std::cout<<"sale programa";
-						break;
-
-					default:
-						std::cout<<"tecla no valida";
-					}
+						Evento* derecha = new Evento(2);
+				}
+				else if(teclaT==SDLK_LEFT){
+					std::cout<<"tecla izquierda";
+				Evento* izquierda = new Evento(1);
+				}
+				else if (teclaT==SDLK_ESCAPE) {
+					std::cout<<"sale programa";
+				}
 
 
 
