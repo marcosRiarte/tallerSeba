@@ -11,9 +11,9 @@ Pantalla::Pantalla(int altoPx, int anchoPx, int alto, int ancho, const char* dir
 	this->alto = alto;
 	this->ancho = ancho;
 	this->dirImg = dirImg;
+	this->vistas = new std::vector<Vista*>;
 	this->ventana = nullptr;
 	this->renderer = nullptr;
-	this->vistas = new std::vector<Vista*>;
 }
 /**
  * Se inicia SDL y se crea la pantalla principal.
@@ -36,10 +36,21 @@ void Pantalla::inicializar() throw (SDL_Excepcion){
 		const char* msg = ((std::string)"Error creando el renderer: ").append(SDL_GetError()).c_str();
 		throw new SDL_Excepcion(msg);
 	}
+	this->fondo = IMG_LoadTexture(renderer, dirImg);
+	if (fondo == nullptr) {
+		loguer->loguear("No se encontró imagen de fondo", Log::LOG_ERR);
+		const char* msg =
+				((std::string) "Error cargando el fondo de pantalla: ").append(
+						SDL_GetError()).c_str();
+		throw new SDL_Excepcion(msg);
+	}
+}
+
+SDL_Renderer* Pantalla::getRenderer(){
+	return renderer;
 }
 
 void Pantalla::agregarVista(Vista * v){
-	v->setRenderer(renderer);
 	vistas->push_back(v);
 }
 
@@ -47,37 +58,23 @@ void Pantalla::agregarVista(Vista * v){
 void Pantalla::update(){
 	//Limpio la pantalla
 	SDL_RenderClear(renderer);
-
-	//Se carga el fondo de pantalla
-	SDL_Texture* fondo = IMG_LoadTexture(renderer, dirImg);
-	if (fondo == nullptr)
-		loguer->loguear("No se encontró imagen de fondo", Log::LOG_WAR);
+	//Cargo el fondo de pantalla
 	SDL_RenderCopy(renderer, fondo, NULL, NULL);
-	SDL_DestroyTexture(fondo);
 
 	//Se cargan los objetos
 	for(unsigned i = 0; i < vistas->size(); i++ ){
-
+		Vista* vista = vistas->at(i);
 		//obtengo la imagen ya rotada con el tamanio en dimensiones Box2D
-		SDL_Texture* textura = vistas->at(i)->getVista();
-
-		//Escalo la imagen a pixeles
-//		SDL_Surface* superficie2 = shrinkSurface(superficie, 2, 1);
-
-		//Convierto de superficie a textura (para el uso de GPU)
-//		SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
+		SDL_Texture* textura = vista->getVista();
 
 		//La imprimo en la pantalla
-		//TODO hay que determinar en el rectángulo que debe ir ubicada la imagen
-		SDL_Rect r;
-		r.h = 300;
-		r.w = 100;
-		r.x = 100;
-		r.y = 200;
+		SDL_Rect* r = vista->getVentana();
+		r->h = r->h*altoPx/alto;
+		r->w = r->w*anchoPx/ancho;
+		r->x = r->x*anchoPx/ancho;
+		r->y = r->y*altoPx/alto;
 		SDL_SetRenderTarget(renderer, NULL);
-		SDL_RenderCopy(renderer, textura, NULL, &r);
-//		SDL_FreeSurface(superficie);
-		SDL_DestroyTexture(textura);
+		SDL_RenderCopy(renderer, textura, NULL, r);
 	}
 
 	//Se actualiza la pantalla
