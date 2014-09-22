@@ -4,7 +4,8 @@
 
 #ifndef EVENTO_H_
 #define EVENTO_H_
-
+#include <string>
+#include <SDL2/SDL.h>
 
 class Evento {
 private:
@@ -23,6 +24,8 @@ public:
 	// geter y seter para la tecla
 	void setTecla(int tecla);
 	int getTecla();
+	void procesarTecla(int tecla);
+
 
 	virtual ~Evento();
 };
