@@ -5,6 +5,7 @@
 #include "parseo/Config.h"
 #include "objetos/ObjetoMapa.h"
 #include "vistas/PersonajeVista.h"
+#include <entrada/Evento.h>
 
 void ayuda() {
 	std::cout << "Ayuda: \n";
@@ -24,28 +25,64 @@ int gameloop(Pantalla* p, std::vector<ObjetoMapa*>* o) {
 	int i = 0;
 	SDL_Delay(100);
 	while (!fin) {
+		SDL_PollEvent(&event);
+
 		 //double start = getCurrentTime();
-		 //processInput(); 									//Se Obtienen los input del teclado
-		 //update();											//Se realizan las modificaciones en los objetos
+		 //processInput(event); 						//Se Obtienen los input del teclado
+		 //update();							//Se realizan las modificaciones en los objetos
 		i++;
 		Pos* pos = o->at(0)->getPos();
 		pos = new Pos(pos->getX()+1, pos->getY()+1);
 		o->at(0)->setPos(pos);
 		p->update();								//Se procesan las imágenes
 		//sleep(start + MS_PER_FRAME - getCurrentTime());
-		SDL_PollEvent(&event);
+
 		if (i==1000 || event.type == SDL_QUIT)
 		fin = true;
 	}
 	return FIN_DEL_JUEGO;
 }
 
+void processInput(SDL_Event event){
+	SDL_Keycode teclaT=event.key.keysym.sym;
+
+	                                if(teclaT==SDLK_UP){
+	                                       std::cout<<"tecla arriba";
+	                                Evento *arriba = new Evento(3);
+	                                }
+	                                else if (teclaT==SDLK_RIGHT){
+	                                        std::cout<< "tecla derecha";
+	                                Evento* derecha = new Evento(2);
+	                                }
+	                                else if(teclaT==SDLK_LEFT){
+	                                        std::cout<<"tecla izquierda";
+	                                Evento* izquierda = new Evento(1);
+	                                }
+	                                else if(teclaT==SDLK_DOWN){
+	                                        std::cout<<"tecla abajo";
+	                                Evento* abajo = new Evento(4);
+	                                }
+	                                else if(teclaT==SDLK_r){
+	                                        std::cout<<"tecla R";
+	                                Evento* erre = new Evento(5);
+	                                }
+	                                else if (teclaT==SDLK_ESCAPE) {
+	                                        std::cout<<"sale programa";
+	                                }
+
+
+
+	                        //Evento eventoT= new Evento(teclaT);
+	                        //eventoT.procesarTecla();
+}
 /**
  * Se encarga de liberar la memoria que ya no se va a usar
  */
 void finalizar() {
 	SDL_Quit();
 }
+
+
 
 /**
  * @return devuele 0 (si resultado Ok) y distinto de 0 si hubo error.
