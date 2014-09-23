@@ -20,7 +20,9 @@ void ayuda() {
  */
 int gameloop(Pantalla* p, std::vector<ObjetoMapa*>* o) {
 	bool fin = false;
+	SDL_Event event;
 	int i = 0;
+	SDL_Delay(100);
 	while (!fin) {
 		 //double start = getCurrentTime();
 		 //processInput(); 									//Se Obtienen los input del teclado
@@ -31,9 +33,9 @@ int gameloop(Pantalla* p, std::vector<ObjetoMapa*>* o) {
 		o->at(0)->setPos(pos);
 		p->update();								//Se procesan las imágenes
 		//sleep(start + MS_PER_FRAME - getCurrentTime());
-		SDL_Delay(200);
-		if (i==100)
-			fin = true;
+		SDL_PollEvent(&event);
+		if (i==1000 || event.type == SDL_QUIT)
+		fin = true;
 	}
 	return FIN_DEL_JUEGO;
 }
@@ -42,6 +44,7 @@ int gameloop(Pantalla* p, std::vector<ObjetoMapa*>* o) {
  * Se encarga de liberar la memoria que ya no se va a usar
  */
 void finalizar() {
+	SDL_Quit();
 }
 
 /**
@@ -109,6 +112,7 @@ int main(int argc, char* argv[]) {
 		//Se inicia SDL creando la ventana dela aplicación
 		try{
 			pantalla->inicializar();
+
 		}catch(SDL_Excepcion *e){
 			finalizar();
 			loguer->loguear(e->what(), Log::LOG_ERR);
@@ -122,6 +126,7 @@ int main(int argc, char* argv[]) {
 		}
 
 		//Se crean las vistas de los personajes y se agregan a la pantalla
+
 /*
  * TODO Hay que hacer personajes desde cero, por ende esto no está hecho
 		 for (unsigned int i = 0; i < personajes->size(); i++) {
