@@ -5,7 +5,6 @@
 #include "parseo/Config.h"
 #include "objetos/ObjetoMapa.h"
 #include "vistas/PersonajeVista.h"
-#include "entrada/Evento.h"
 
 void ayuda() {
 	std::cout << "Ayuda: \n";
@@ -19,17 +18,24 @@ void ayuda() {
  * @return 0 si el juego terminó.
  * @return 1 si el juego debe resetearse.
  */
-int gameloop() {
-	/*
-	 while (true) {
-	 double start = getCurrentTime();
-	 processInput(); //Se Obtienen los input del teclado
-	 update();	//Se realizan las modificaciones en los objetos
-	 render();	//Se procesan las imágenes
-	 sleep(start + MS_PER_FRAME - getCurrentTime());
-	 }
-	 */
-	return 0;
+int gameloop(Pantalla* p, std::vector<ObjetoMapa*>* o) {
+	bool fin = false;
+	int i = 0;
+	while (!fin) {
+		 //double start = getCurrentTime();
+		 //processInput(); 									//Se Obtienen los input del teclado
+		 //update();											//Se realizan las modificaciones en los objetos
+		i++;
+		Pos* pos = o->at(0)->getPos();
+		pos = new Pos(pos->getX()+1, pos->getY()+1);
+		o->at(0)->setPos(pos);
+		p->update();								//Se procesan las imágenes
+		//sleep(start + MS_PER_FRAME - getCurrentTime());
+		SDL_Delay(200);
+		if (i==100)
+			fin = true;
+	}
+	return FIN_DEL_JUEGO;
 }
 
 /**
@@ -66,16 +72,19 @@ int main(int argc, char* argv[]) {
 
 /*	@Test Permite imprimir las posiciones que integran el contorno de un objeto
 
- 		std::vector<Pos*>* const contorno = objetos->at(0)->getContorno();
- 		int cantidad = contorno->size();
- 		snprintf(msg, 1000, "Contorno del primer objeto (%d vertices):", cantidad);
- 		loguer->loguear(msg, Log::LOG_DEB);
-		for (unsigned i = 0; i < contorno->size(); i++) {
-			Pos* p = contorno->at(i);
-			int x = p->getX();
-			int y = p->getY();
-			std::sprintf(msg, "Pos%d:(%d,%d)", i, x, y);
+		for (unsigned i = 0; i < objetos->size(); i++) {
+			std::vector<Pos*>* const contorno = objetos->at(i)->getContorno();
+			int cantidad = contorno->size();
+			snprintf(msg, 1000, "Contorno del primer objeto (%d vertices):",
+					cantidad);
 			loguer->loguear(msg, Log::LOG_DEB);
+			for (unsigned i = 0; i < contorno->size(); i++) {
+				Pos* p = contorno->at(i);
+				int x = p->getX();
+				int y = p->getY();
+				std::sprintf(msg, "Pos%d:(%d,%d)", i, x, y);
+				loguer->loguear(msg, Log::LOG_DEB);
+			}
 		}
  */
 
@@ -108,7 +117,7 @@ int main(int argc, char* argv[]) {
 
 		//Se crean las vistas de los objetos y se agregan a la pantalla
 		for (unsigned int i = 0; i < objetos->size(); i++) {
-			Vista* v = new ObjetoMapaVista(objetos->at(i));
+			Vista* v = new ObjetoMapaVista(pantalla->getRenderer(), objetos->at(i));
 			pantalla->agregarVista(v);
 		}
 
@@ -120,66 +129,12 @@ int main(int argc, char* argv[]) {
 			pantalla->agregarVista(v);
 		}
 */
-
-/* TODO Hay que borrar esto porque es para testing nomas
-		  pantalla->update();
-		  SDL_Delay(5000);
-*/
-
-
-/*
- * 	TODO Hay que crear el gameloop porque no está bien implementado aún, al igual que el método finalizar
 		//Se inicia el juego
-		if (gameloop() == FIN_DEL_JUEGO)
+		if (gameloop(pantalla, objetos) == FIN_DEL_JUEGO)
 			fin = true;
 		//Se debe liberar lo que ya no se usa
 		finalizar();
-*/
 
-		//eventos
-
-		while(!fin){
-
-			SDL_Event evento;
-
-			while(SDL_PollEvent(&evento)){
-
-				SDL_Keycode teclaT=evento.key.keysym.sym;
-
-				if(teclaT==SDLK_UP){
-						std::cout<<"tecla arriba";
-						Evento *arriba = new Evento(3);
-				}
-				else if (teclaT==SDLK_RIGHT){
-						std::cout<< "tecla derecha";
-						Evento* derecha = new Evento(2);
-				}
-				else if(teclaT==SDLK_LEFT){
-					std::cout<<"tecla izquierda";
-				Evento* izquierda = new Evento(1);
-				}
-				else if(teclaT==SDLK_DOWN){
-					std::cout<<"tecla abajo";
-				Evento* abajo = new Evento(4);
-				}
-				else if(teclaT==SDLK_r){
-					std::cout<<"tecla R";
-				Evento* erre = new Evento(5);
-				}
-				else if (teclaT==SDLK_ESCAPE) {
-					std::cout<<"sale programa";
-				}
-
-
-
-			//Evento eventoT= new Evento(teclaT);
-			//eventoT.procesarTecla();
-
-
-
-		}
-		}
-		fin= true;
 	}
 	return RES_OK;
 }
