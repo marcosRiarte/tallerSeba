@@ -1,11 +1,11 @@
 {
 	"escenario": 
 	{
-		"alto­px": 768,
-		"ancho­px": 1024,
-		"alto­un": 100,
-		"ancho­un": 50,
-		"imagen_fondo": "fondo1.png",
+		"alto_px": 768,
+		"ancho_px": 1024,
+		"alto_un": 768,
+		"ancho_un": 1024,
+		"imagen_fondo": "img/SDL_ImageTest.jpg",
 		"personaje": 
 		{
 			"x": 100,
@@ -15,14 +15,14 @@
 		"objetos": 
 		[
 			{
-				"tipo": "rect",
-				"x": 5,
-				"y": -90,
-				"ancho": 2,
-				"alto": 1,
+				"tipo": "rectangulo",
+				"x": 30,
+				"y": -600,
+				"ancho": 20,
+				"alto": 80,
 				"color": "#00FF00",
 				"rot": 45,
-				"masa": 0,
+				"masa": 10,
 				"estatico": false
 			},
 
@@ -31,8 +31,8 @@
 				"base": 15,
 				"altura": 27,
 				"alfa": 130,
-				"x": 20,
-				"y": -20,
+				"x": 100,
+				"y": -100,
 				"color": "#FF0000",
 				"rot": 90,
 				"masa": 1,
@@ -42,9 +42,9 @@
 			{
 				"tipo": "poligono",
 				"lados": 6,
-				"escala": 15,
-				"x": 25,
-				"y": -50,
+				"escala": 100,
+				"x": 500,
+				"y": -300,
 				"color": "#FF0000",
 				"rot": 90,
 				"masa": 1,
