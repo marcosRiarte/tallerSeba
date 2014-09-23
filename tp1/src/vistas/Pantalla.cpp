@@ -14,6 +14,7 @@ Pantalla::Pantalla(int altoPx, int anchoPx, int alto, int ancho, const char* dir
 	this->vistas = new std::vector<Vista*>;
 	this->ventana = nullptr;
 	this->renderer = nullptr;
+	this->fondo = nullptr;
 }
 /**
  * Se inicia SDL y se crea la pantalla principal.
@@ -67,13 +68,12 @@ void Pantalla::update(){
 		//obtengo la imagen ya rotada con el tamanio en dimensiones Box2D
 		SDL_Texture* textura = vista->getVista();
 
-		//La imprimo en la pantalla
+		//La imprimo en la pantalla con la debida transformacion
 		SDL_Rect* r = vista->getVentana();
 		r->h = r->h*altoPx/alto;
 		r->w = r->w*anchoPx/ancho;
 		r->x = r->x*anchoPx/ancho;
 		r->y = r->y*altoPx/alto;
-		SDL_SetRenderTarget(renderer, NULL);
 		SDL_RenderCopy(renderer, textura, NULL, r);
 	}
 
