@@ -26,6 +26,7 @@ ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o) {
 
 	//Se pinta con pixeles transparentes a la textura
 	SDL_SetTextureBlendMode(textura, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderClear(renderer);
 
 	//Se dibuja la figura
