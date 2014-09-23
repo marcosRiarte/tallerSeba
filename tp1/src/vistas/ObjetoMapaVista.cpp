@@ -6,8 +6,6 @@ ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o) {
 	objeto = o;
 	this->setRenderer(r);
 	ventana = new SDL_Rect();
-	ventana->x = objeto->getPos()->getX();
-	ventana->y = -objeto->getPos()->getY();
 
 	std::vector<Pos*>* vertices = objeto->getContorno();
 	int cantVertices = vertices->size();
@@ -43,6 +41,8 @@ ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o) {
 }
 
 SDL_Texture* ObjetoMapaVista::getVista(){
+	ventana->x = objeto->getPos()->getX();
+	ventana->y = -objeto->getPos()->getY();
 	return textura;
 }
 
