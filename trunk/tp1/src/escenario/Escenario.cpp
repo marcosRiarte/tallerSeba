@@ -152,7 +152,6 @@ void Escenario::cambiar(Evento evento) {
 
 		Pos* posicion = new Pos(personaje->GetPosition().x,personaje->GetPosition().y);
 		personajes->at(i)->setPosicion(posicion);
-		personajes->at(i)->setRotacion(personaje->GetAngle());
 	}
 	for(unsigned int i=0; i<objetos->size(); i++) {
 		b2Body* objeto = objetos->at(i)->getLinkAMundo();

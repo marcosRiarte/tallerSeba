@@ -14,10 +14,6 @@ Pos* Personaje::getPosicion(){
 	return pos;
 }
 
-void Personaje::setRotacion(float rotacion){
-	rot = rotacion;
-}
-
 // devuelve verdadero si esta en esa posicion
 bool Personaje::estaEnPos(Pos* posicion) {
 	return pos->esIgual(posicion);

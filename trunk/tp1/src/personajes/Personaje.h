@@ -17,9 +17,6 @@ public:
 	void setPosicion(Pos* posicion);
 	Pos* getPosicion();
 
-
-	void setRotacion(float rotacion);
-
 	// getter y setter de link a mundo
 	void setLinkAMundo(b2Body* link);
 	b2Body* getLinkAMundo();
