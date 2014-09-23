@@ -5,7 +5,7 @@
 		"ancho_px": 1024,
 		"alto_un": 768,
 		"ancho_un": 1024,
-		"imagen_fondo": "img/SDL_ImageTest.jpg",
+		"imagen_fondo": "img/fondo1.png",
 		"personaje": 
 		{
 			"x": 100,
@@ -31,7 +31,7 @@
 				"base": 15,
 				"altura": 27,
 				"alfa": 130,
-				"x": 100,
+				"x": 20,
 				"y": -100,
 				"color": "#FF0000",
 				"rot": 90,
