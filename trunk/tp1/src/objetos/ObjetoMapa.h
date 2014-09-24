@@ -24,10 +24,8 @@ protected:
 	int rot;
 	int masa;
 	float area;
-	bool circulo;
+	bool circulo = false;
 	b2Body* linkAMundo;
-	//este atributo es el que va a variar para las distintas clases que hereden de esta.
-	std::map<std::string, int> desc; //
 
 public:
 	void initialice(bool esEstatico, std::string color, Pos pos_cm, int rotacion, int masa) {
