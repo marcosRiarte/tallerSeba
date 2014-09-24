@@ -10,6 +10,7 @@ private:
 public:
 	PersonajeVista(Personaje* p);
 	SDL_Texture* getVista();
+	const SDL_Rect* getVentana();
 	virtual ~PersonajeVista();
 };
 
