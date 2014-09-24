@@ -1,6 +1,7 @@
 #include "Circulo.h"
 
 Circulo::Circulo(Pos posicion, int diametro,int rotacion,std::string color,int masa,bool estatico){
+	this->circulo = true;
 	this->diametro = diametro;
 	this->initialice(estatico, color, posicion, rotacion, masa);
 
