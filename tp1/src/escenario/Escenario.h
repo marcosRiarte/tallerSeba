@@ -36,7 +36,7 @@ public:
 
 	// Genera un nuevo de step, pone a los personajes en sus nuevas posiciones,
 	// avisando si cambiar en relación a su posición anterior.
-	void cambiar(Evento evento);
+	void cambiar(std::vector<Evento*>* listaEventos);
 
 	virtual ~Escenario();
 };
