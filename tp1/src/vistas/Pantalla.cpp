@@ -58,6 +58,7 @@ void Pantalla::agregarVista(Vista * v){
 
 void Pantalla::update(){
 	//Limpio la pantalla
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderClear(renderer);
 	//Cargo el fondo de pantalla
 	SDL_RenderCopy(renderer, fondo, NULL, NULL);

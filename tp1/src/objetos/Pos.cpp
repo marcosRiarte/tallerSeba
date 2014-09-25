@@ -25,9 +25,28 @@ bool Pos::esIgual(Pos* posicion){
 	else
 		return false;
 }
-
+/*
+ * @return Distancia al origen de coordenadas (0,0).
+ */
 float Pos::getNorma(){
 	return sqrt(x*x + y*y);
+}
+
+/*
+ * @param p posición desde la cual se mide la distancia.
+ * @return Distancia a p.
+ */
+float Pos::getDistancia(Pos* p){
+	int x = this->x - p->x;
+	int y = this->y - p->y;
+	return sqrt(x*x + y*y);
+}
+
+/*
+ * @return posición simétrica a this respecto del eje Y.
+ */
+Pos* Pos::ySimetrico(){
+	return new Pos(x, -y);
 }
 
 Pos::~Pos() {
