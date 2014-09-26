@@ -21,18 +21,19 @@ void ayuda() {
  * @return 1 si el juego debe resetearse.
  */
 
-std::vector<Evento*>* processInput(SDL_Event event, std::vector<bool> * teclas) {
+std::vector<Evento*>* processInput(SDL_Event event) {
 
+	const Uint8 *state = SDL_GetKeyboardState(NULL);
 	std::vector<Evento*>* listaEventos = new std::vector<Evento*>();
 
-	if (event.key.keysym.sym == SDLK_LEFT && (teclas->at(0)==true)) {
-		if (teclas->at(1) && teclas->at(2)) {
+	if (event.key.keysym.sym == SDLK_LEFT && (state[SDL_SCANCODE_LEFT])) {
+		if (state[SDL_SCANCODE_RIGHT] && state[SDL_SCANCODE_UP]) {
 			Evento* der = new Evento(2);
 			Evento* arriba = new Evento(3);
 			listaEventos->push_back(der);
 			listaEventos->push_back(arriba);
 			return listaEventos;
-		} else if (teclas->at(1)) {
+		} else if (state[SDL_SCANCODE_RIGHT]) {
 			Evento* der = new Evento(2);
 			listaEventos->push_back(der);
 			return listaEventos;
@@ -44,15 +45,15 @@ std::vector<Evento*>* processInput(SDL_Event event, std::vector<bool> * teclas) 
 
 	}
 
-	else if (event.key.keysym.sym == SDLK_RIGHT && (teclas->at(1)==true)) {
-		if (teclas->at(0) && teclas->at(2)) {
+	else if (event.key.keysym.sym == SDLK_RIGHT && (state[SDL_SCANCODE_RIGHT])) {
+		if (state[SDL_SCANCODE_LEFT] && state[SDL_SCANCODE_UP]) {
 			Evento* izq = new Evento(1);
 			Evento* arriba = new Evento(3);
 			listaEventos->push_back(izq);
 			listaEventos->push_back(arriba);
 			return listaEventos;
 
-		} else if (teclas->at(0)) {
+		} else if (state[SDL_SCANCODE_LEFT]) {
 			Evento* izq = new Evento(1);
 			listaEventos->push_back(izq);
 			return listaEventos;
@@ -63,20 +64,20 @@ std::vector<Evento*>* processInput(SDL_Event event, std::vector<bool> * teclas) 
 		}
 	}
 
-	else if (event.key.keysym.sym == SDLK_UP && (teclas->at(2)==true)) {
+	else if (event.key.keysym.sym == SDLK_UP && (state[SDL_SCANCODE_UP])) {
 
-		if (teclas->at(0) && teclas->at(2)){
+		if (state[SDL_SCANCODE_LEFT] && state[SDL_SCANCODE_UP]){
 			Evento* arriba = new Evento(3);
 			listaEventos->push_back(arriba);
 			return listaEventos;
 
-		} else if (teclas->at(0)) {
+		} else if (state[SDL_SCANCODE_LEFT]) {
 			Evento* izq = new Evento(1);
 			Evento* arriba = new Evento(3);
 			listaEventos->push_back(izq);
 			listaEventos->push_back(arriba);
 			return listaEventos;
-		} else if (teclas->at(1)) {
+		} else if (state[SDL_SCANCODE_RIGHT]) {
 			Evento* der = new Evento(2);
 			Evento* arriba = new Evento(3);
 			listaEventos->push_back(der);
@@ -92,7 +93,7 @@ std::vector<Evento*>* processInput(SDL_Event event, std::vector<bool> * teclas) 
 
 		}
 
-	else if (event.key.keysym.sym == SDLK_r && (teclas->at(3)==true)) {
+	else if (event.key.keysym.sym == SDLK_r && (state[SDL_SCANCODE_R])) {
 		Evento* reset = new Evento(4);
 		listaEventos->push_back(reset);
 		return listaEventos;
@@ -105,9 +106,10 @@ std::vector<Evento*>* processInput(SDL_Event event, std::vector<bool> * teclas) 
 
 }
 
-int gameloop(Pantalla* p, std::vector<ObjetoMapa*>* o, std::vector<bool> * teclas) {
+int gameloop(Pantalla* p, std::vector<ObjetoMapa*>* o) {
 	bool fin = false;
 	SDL_Event event;
+
 	while (!fin) {
 		SDL_PollEvent(&event);
 
@@ -119,29 +121,9 @@ int gameloop(Pantalla* p, std::vector<ObjetoMapa*>* o, std::vector<bool> * tecla
 
 		//update();							//Se realizan las modificaciones en los objetos
 
-	if (event.type == SDL_KEYDOWN) {
-			if(event.key.keysym.sym == SDLK_LEFT){
-			teclas->at(0) = true;
-			}else if(event.key.keysym.sym == SDLK_RIGHT){
-			teclas->at(1) = true;
-			}else if(event.key.keysym.sym == SDLK_UP){
-			teclas->at(2) = true;
-			}else if(event.key.keysym.sym == SDLK_r){
-			teclas->at(3) = true;
-			}
 
-		} else if (event.type == SDL_KEYUP) {
-			if(event.key.keysym.sym == SDLK_LEFT){
-						teclas->at(0) = false;
-			}else if(event.key.keysym.sym == SDLK_RIGHT){
-						teclas->at(1) = false;
-			}else if(event.key.keysym.sym == SDLK_UP){
-						teclas->at(2) = false;
-		    }else if(event.key.keysym.sym == SDLK_r){
-						teclas->at(3) = false;
-		}
-		}
-		std::vector<Evento*>* eventosRealizados = processInput(event,teclas);
+
+		std::vector<Evento*>* eventosRealizados = processInput(event);
 		Pos* pos = o->at(0)->getPos();
 
 		if(eventosRealizados->at(0)->getTecla() == 0){
@@ -152,7 +134,7 @@ int gameloop(Pantalla* p, std::vector<ObjetoMapa*>* o, std::vector<bool> * tecla
 		} else if (eventosRealizados->at(0)->getTecla() == 2) {
 			pos = new Pos(pos->getX() + 5, pos->getY());
 		} else if (eventosRealizados->at(0)->getTecla() == 3) {
-			pos = new Pos(pos->getX(), pos->getY() + 8);
+			pos = new Pos(pos->getX(), pos->getY() + 5);
 		}
 
 		o->at(0)->setPos(pos);
@@ -267,12 +249,7 @@ int main(int argc, char* argv[]) {
 		//Se inicia el juego
 
 		//vector auxiliar para teclas
-		std::vector<bool> *teclas = new std::vector<bool>;
-		for (int i = 0; i < 3; i++) { // se inicializa todos en falso
-			teclas->push_back(false);
-		}
-
-		if (gameloop(pantalla, objetos, teclas) == FIN_DEL_JUEGO)
+		if (gameloop(pantalla, objetos) == FIN_DEL_JUEGO)
 			fin = true;
 		//Se debe liberar lo que ya no se usa
 		finalizar();
