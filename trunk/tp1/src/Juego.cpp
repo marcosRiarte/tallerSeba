@@ -25,7 +25,7 @@ std::vector<Evento*>* processInput(SDL_Event event, std::vector<bool> * teclas) 
 
 	std::vector<Evento*>* listaEventos = new std::vector<Evento*>();
 
-	if (event.key.keysym.sym == SDLK_LEFT) {
+	if (event.key.keysym.sym == SDLK_LEFT && (teclas->at(0)==true)) {
 		if (teclas->at(1) && teclas->at(2)) {
 			Evento* der = new Evento(2);
 			Evento* arriba = new Evento(3);
@@ -44,7 +44,7 @@ std::vector<Evento*>* processInput(SDL_Event event, std::vector<bool> * teclas) 
 
 	}
 
-	else if (event.key.keysym.sym == SDLK_RIGHT) {
+	else if (event.key.keysym.sym == SDLK_RIGHT && (teclas->at(1)==true)) {
 		if (teclas->at(0) && teclas->at(2)) {
 			Evento* izq = new Evento(1);
 			Evento* arriba = new Evento(3);
@@ -63,7 +63,7 @@ std::vector<Evento*>* processInput(SDL_Event event, std::vector<bool> * teclas) 
 		}
 	}
 
-	else if (event.key.keysym.sym == SDLK_UP) {
+	else if (event.key.keysym.sym == SDLK_UP && (teclas->at(2)==true)) {
 
 		if (teclas->at(0) && teclas->at(2)){
 			Evento* arriba = new Evento(3);
@@ -92,7 +92,7 @@ std::vector<Evento*>* processInput(SDL_Event event, std::vector<bool> * teclas) 
 
 		}
 
-	else if (event.key.keysym.sym == SDLK_r) {
+	else if (event.key.keysym.sym == SDLK_r && (teclas->at(3)==true)) {
 		Evento* reset = new Evento(4);
 		listaEventos->push_back(reset);
 		return listaEventos;
@@ -108,7 +108,6 @@ std::vector<Evento*>* processInput(SDL_Event event, std::vector<bool> * teclas) 
 int gameloop(Pantalla* p, std::vector<ObjetoMapa*>* o, std::vector<bool> * teclas) {
 	bool fin = false;
 	SDL_Event event;
-	SDL_Delay(100);
 	while (!fin) {
 		SDL_PollEvent(&event);
 
@@ -134,11 +133,11 @@ int gameloop(Pantalla* p, std::vector<ObjetoMapa*>* o, std::vector<bool> * tecla
 		} else if (event.type == SDL_KEYUP) {
 			if(event.key.keysym.sym == SDLK_LEFT){
 						teclas->at(0) = false;
-						}else if(event.key.keysym.sym == SDLK_RIGHT){
+			}else if(event.key.keysym.sym == SDLK_RIGHT){
 						teclas->at(1) = false;
-						}else if(event.key.keysym.sym == SDLK_UP){
+			}else if(event.key.keysym.sym == SDLK_UP){
 						teclas->at(2) = false;
-						}else if(event.key.keysym.sym == SDLK_r){
+		    }else if(event.key.keysym.sym == SDLK_r){
 						teclas->at(3) = false;
 		}
 		}
@@ -149,11 +148,11 @@ int gameloop(Pantalla* p, std::vector<ObjetoMapa*>* o, std::vector<bool> * tecla
 			pos = new Pos(pos->getX(), pos->getY());
 		}
 		else if (eventosRealizados->at(0)->getTecla() == 1) {
-			pos = new Pos(pos->getX() - 1, pos->getY());
+			pos = new Pos(pos->getX() - 5, pos->getY());
 		} else if (eventosRealizados->at(0)->getTecla() == 2) {
-			pos = new Pos(pos->getX() + 1, pos->getY());
+			pos = new Pos(pos->getX() + 5, pos->getY());
 		} else if (eventosRealizados->at(0)->getTecla() == 3) {
-			pos = new Pos(pos->getX(), pos->getY() + 1);
+			pos = new Pos(pos->getX(), pos->getY() + 8);
 		}
 
 		o->at(0)->setPos(pos);
