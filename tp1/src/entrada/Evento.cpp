@@ -17,8 +17,8 @@ Evento::Evento() {
 	this->teclaIngresada=teclaNada;
 }
 
-Evento::Evento(int tecla) {
-	this->teclaIngresada=tecla;
+Evento::Evento(int evento) {
+	this->teclaIngresada=evento;
 }
 
 // geter y seter para la tecla
