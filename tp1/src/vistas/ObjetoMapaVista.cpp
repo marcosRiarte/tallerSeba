@@ -25,13 +25,12 @@ ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o) {
 		Pos *pDerInf = getPosDerInf(vertices);
 		diametro = pIzqSup->getDistancia(pDerInf);
 	}
-
 	ventana->w = diametro;
 	ventana->h = diametro;
 }
 
 /**
- * @return Se devuelve una textura, cuyo tamaño y posición se puede adquirir por medio del método
+ * \return	Textura, cuyo tamaño y posición se puede adquirir por medio del método
  * 			getVentana(). Observar que la textura debe ser liberada por el objeto que la recibe, ya
  * 			que se genera una textura por cada vez que se llama a este método.
  */
@@ -48,9 +47,6 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 	//Se crea la textura y sobre la cual se va a trabajar
 	SDL_Texture* textura = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_UNKNOWN, SDL_TEXTUREACCESS_TARGET, ventana->w, ventana->h);
 
-	//En esta variable se guarda el punto sobre el cual se rotara la imagen
-	SDL_Point* centro = new SDL_Point();
-
 	//Se pone a la textura como target del render
 	SDL_SetRenderTarget(renderer, textura);
 
@@ -66,36 +62,32 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 		int radio = pos->getDistancia(vertices->at(0));
 		filledCircleColor(renderer, radio, radio, radio, 0xFF0000FF);
 		filledCircleColor(renderer, radio, radio + radio / 2, radio / 4, 0xBBAA00FF);
-		centro->x = radio;
-		centro->y = radio;
 	}
 	//Si no es circulo
 	else {
 		short vx[cantVertices];
 		short vy[cantVertices];
-		Pos *pIzqSup = getPosIzqSup(vertices);
+		Pos* centroFigura = getPosCentro(vertices);
+		Pos* centroVentana = new Pos(ventana->w / 2, ventana->w / 2);
 		for (int i = 0; i < cantVertices; i++) {
-			vx[i] = vertices->at(i)->getX() - pIzqSup->getX();
-			vy[i] = vertices->at(i)->getY() - pIzqSup->getY();
+			vx[i] = vertices->at(i)->getX() - centroFigura->getX() + centroVentana->getX();
+			vy[i] = vertices->at(i)->getY() - centroFigura->getY() + centroVentana->getY();
 		}
 		filledPolygonColor(renderer, vx, vy, cantVertices, 0xFF0000FF);
-		Pos* posCentro = getPosCentro(vertices);
-		centro->x = posCentro->getX();
-		centro->y = posCentro->getY();
 	}
 
 	//Se modifica el target del renderer para que ahora apunte a la ventana (valor por defecto)
 	SDL_SetRenderTarget(renderer, NULL);
 
-	SDL_Texture* texturaRotada = this->rotar(textura, objeto->getRotacion(), centro);
+	SDL_Texture* texturaRotada = this->rotar(textura, objeto->getRotacion());
 
 	SDL_DestroyTexture(textura);
 
 	return texturaRotada;
 }
 
-/**
- * @return SDL_Rect para obtener la posicion y el tamaño de la textura obtenida por el
+/*
+ * \return 	SDL_Rect para obtener la posicion y el tamaño de la textura obtenida por el
  * 			método getVista(). Se devuelve un objeto de tipo "const" ya que no debe (ni se puede) modificar
  * 			su contenido, pero si puede consultarse.
  */
@@ -110,15 +102,17 @@ ObjetoMapaVista::~ObjetoMapaVista() {
 	// TODO Auto-generated destructor stub
 }
 
-/*
- * @param	vPos vector de posiciones.
- * @return 	Posición (Xmin, Ymin), siendo Xmin el mínimo 'x'
+/**
+ * \param	vPos 	vector de posiciones.
+ *
+ * \return 	Posición (Xmin, Ymin), siendo Xmin el mínimo 'x'
  * 			dentro de entre todas posiciones que integran al vector vPos
  * 			y siendo Ymin el mínimo 'y' dentro de entre todas las posiciones
  * 			que integran al vector vPos.
  * 			Observar que Xmin, Ymin no tienen que pertenecer al mismo elemento
  * 			dentro del vector vPos.
- * @obs		Se llama getPosInzSup ya que en SDL el punto (0,0) u origen de
+ *
+ * \obs		Se llama getPosInzSup ya que en SDL el punto (0,0) u origen de
  * 			coordenadas se encuentra arriba a la izquierda
  */
 Pos* ObjetoMapaVista::getPosIzqSup(std::vector<Pos*>* vPos) {
@@ -135,15 +129,17 @@ Pos* ObjetoMapaVista::getPosIzqSup(std::vector<Pos*>* vPos) {
 	return new Pos(Xmin, Ymin);
 }
 
-/*
- * @param	vPos vector de posiciones.
- * @return 	Posición (Xmax, Ymax), siendo Xmax el maximo 'x'
+/**
+ * \param	vPos 	vector de posiciones.
+ *
+ * \return 	Posición (Xmax, Ymax), siendo Xmax el maximo 'x'
  * 			dentro de entre todas posiciones que integran al vector vPos
  * 			y siendo Ymax el maximo 'y' dentro de entre todas las posiciones
  * 			que integran al vector vPos.
  * 			Observar que Xmax, Ymax no tienen que pertenecer al mismo elemento
  * 			dentro del vector vPos.
- * @obs		Se llama getPosDerInf ya que en SDL el punto (0,0) u origen de
+ *
+ * \obs		Se llama getPosDerInf ya que en SDL el punto (0,0) u origen de
  * 			coordenadas se encuentra arriba a la izquierda
  */
 Pos* ObjetoMapaVista::getPosDerInf(std::vector<Pos*>* vPos) {
@@ -160,18 +156,33 @@ Pos* ObjetoMapaVista::getPosDerInf(std::vector<Pos*>* vPos) {
 	return new Pos(Xmax, Ymax);
 }
 
+/**
+ * \brief	Calcula el rectángulo de mínima área que puede contener al contorno generado por
+ * 				los vertices pasados por parametro \vPos y luego calcula la posición que ocupa
+ * 				el centro de dicho rectágulo
+ *
+ * \param 	vPos 	vector de posiciones (contorno).
+ *
+ * \return	Pos		centro del contorno.
+ */
 Pos* ObjetoMapaVista::getPosCentro(std::vector<Pos*>* vPos){
 	Pos* pIzqSup = getPosIzqSup(vPos);
 	Pos* pDerInf = getPosDerInf(vPos);
-	int x = pDerInf->getX() - pIzqSup->getX();
-	int y = pDerInf->getY() - pIzqSup->getY();
+	int x = ( pDerInf->getX() + pIzqSup->getX() ) /2;
+	int y = ( pDerInf->getY() + pIzqSup->getY() ) /2;
 	return new Pos(x,y);
 }
 
-/*
+/**
+ * \brief	Se genera una nueva textura de igual tamaño que la recibida \t, pero rotada una
+ * 				cantidad de grados determinados por \grados, con respecto a su centro.
  *
+ * \param	\t			Textura a rotar. No se modifica esta textura.
+ * \param	\grados		Cantidad de gados que se debe rotar la textura.
+ *
+ * \obs		\t no se modifica ni se destruye. Esto debe hacerse de forma externa.
  */
-SDL_Texture* ObjetoMapaVista::rotar(SDL_Texture* t, float grados, SDL_Point* centro){
+SDL_Texture* ObjetoMapaVista::rotar(SDL_Texture* t, float grados){
 	//Se crea una textura donde se guardara la imagen rotada
 	SDL_Texture* texturaRotada = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_UNKNOWN, SDL_TEXTUREACCESS_TARGET, ventana->w, ventana->h);
 
@@ -184,7 +195,7 @@ SDL_Texture* ObjetoMapaVista::rotar(SDL_Texture* t, float grados, SDL_Point* cen
 	SDL_RenderClear(renderer);
 
 	//Se rota la imagen
-	SDL_RenderCopyEx(renderer, t, NULL, NULL, objeto->getRotacion(), centro, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(renderer, t, NULL, NULL, objeto->getRotacion(), NULL, SDL_FLIP_NONE);
 
 	//Se modifica el target del renderer para que ahora apunte a la ventana (valor por defecto)
 	SDL_SetRenderTarget(renderer, NULL);
