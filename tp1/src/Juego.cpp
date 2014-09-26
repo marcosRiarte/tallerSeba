@@ -99,6 +99,18 @@ std::vector<Evento*>* processInput(SDL_Event event) {
 		return listaEventos;
 	}
 
+	if (state[SDL_SCANCODE_LEFT]){
+		Evento* izq = new Evento(1);
+		listaEventos->push_back(izq);
+		return listaEventos;
+	}
+
+	if (state[SDL_SCANCODE_RIGHT]){
+		Evento* der = new Evento(2);
+		listaEventos->push_back(der);
+		return listaEventos;
+	}
+
 	Evento* nada= new Evento(0);
 	listaEventos->push_back(nada);
 	return listaEventos;
