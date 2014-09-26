@@ -140,9 +140,7 @@ Escenario::Escenario(Config* config) {
 	this->mundo = &world;
 }
 
-void Escenario::cambiar(Evento* listaEventos) {
-
-
+void Escenario::cambiar(std::vector<Evento*>* ListaDeEventos) {
 	// Avanza el mundo un step
 	mundo->Step(timeStep, velocityIterations, positionIterations);
 

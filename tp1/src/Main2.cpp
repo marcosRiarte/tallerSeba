@@ -18,7 +18,7 @@ MVC* creacionDelModelo(char*);
 void gameLoop(MVC*);
 void terminar(MVC*);
 
-int main2(int argc, char* argv[]) {
+void main2(int argc, char* argv[]) {
 	MVC* mvc = creacionDelModelo(argv[1]);
 	gameLoop(mvc);
 	terminar(mvc);
@@ -41,8 +41,8 @@ MVC* creacionDelModelo(char* direccionDeLaConfiguracion) {
 // Ejecuta el modelo
 void gameLoop(MVC* mvc) {
 	// es un arreglo estatico para que todo sea mas facil
-	Evento* listaDeEventos;
-	listaDeEventos = new Evento[5];
+	std::vector<Evento*>* listaDeEventos;
+	listaDeEventos = new std::vector<Evento*>;
 
 	bool fin = false;
 	while (!fin) {
