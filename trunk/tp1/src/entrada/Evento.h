@@ -10,18 +10,19 @@
 class Evento {
 private:
 	int teclaIngresada;
+	bool teclasPresiondas;
+
 public:
 	// Valores posibles para la tecla ingresada:
 	static const int teclaNada = 0;
 	static const int teclaIzquierda = 1;
 	static const int teclaDerecha = 2;
 	static const int teclaArriba = 3;
-	static const int teclaAbajo = 4;
-	static const int teclaR = 5;
+	static const int teclaR = 4;
 
 	// se crea por defecto con "teclaNada"
 	Evento();
-	Evento(int tecla);
+	Evento(int evento);
 
 	// geter y seter para la tecla
 	void setTecla(int tecla);
