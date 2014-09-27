@@ -3,10 +3,46 @@
 #include <math.h>
 #include <exception>
 
+/**
+ * \brief	Toma un string, con caracteres representables por un número hexadecimal [1-9 A-F]
+ * 			y devuelve un valor entero que lo representa.
+ * 			Por ejemplo: stringToHexa("AA123F") retorna 0xAA123F
+ *
+ * \param	s	String del tipo 0xAAVVRR.
+ *
+ * \return	valor entero que representa s.
+ */
+long stringToHexa(std::string s){
+	long longValue = 0;
+		for( unsigned i = 0; i < s.length(); i++ ){
+			switch( s[ s.length() - 1 - i ] ){
+			case('0'): break;
+			case('1'): longValue = longValue + pow(16, i); break;
+			case('2'): longValue = longValue + pow(16, i) * 2; break;
+			case('3'): longValue = longValue + pow(16, i) * 3; break;
+			case('4'): longValue = longValue + pow(16, i) * 4; break;
+			case('5'): longValue = longValue + pow(16, i) * 5; break;
+			case('6'): longValue = longValue + pow(16, i) * 6; break;
+			case('7'): longValue = longValue + pow(16, i) * 7; break;
+			case('8'): longValue = longValue + pow(16, i) * 8; break;
+			case('9'): longValue = longValue + pow(16, i) * 9; break;
+			case('A'):case('a'): longValue = longValue + pow(16, i) * 10; break;
+			case('B'):case('b'): longValue = longValue + pow(16, i) * 11; break;
+			case('C'):case('c'): longValue = longValue + pow(16, i) * 12; break;
+			case('D'):case('d'): longValue = longValue + pow(16, i) * 13; break;
+			case('E'):case('e'): longValue = longValue + pow(16, i) * 14; break;
+			case('F'):case('f'): longValue = longValue + pow(16, i) * 15; break;
+			default:
+				throw;
+			}
+		}
+		return longValue;
+}
+
 
 void ObjetoMapa::initialice(bool esEstatico, std::string color, Pos pos_cm, int rotacion, int masa) {
 		this->estatico = esEstatico;
-		this->color = color;
+		this->color = stringToHexa( color.substr(1, color.npos) );
 		this->pos = new Pos(pos_cm);
 		this->rot = rotacion;
 		this->masa = masa;
@@ -25,34 +61,11 @@ float ObjetoMapa::getDensidad() {
 }
 
 long ObjetoMapa::getColor(){
-	long colorInt = 0;
-	for( unsigned i = 0; i < color.length() - 1 ; i++ ){
-		switch( color[ color.length() - 1 - i ] ){
-		case('0'): break;
-		case('1'): colorInt = colorInt + pow(16, i); break;
-		case('2'): colorInt = colorInt + pow(16, i) * 2; break;
-		case('3'): colorInt = colorInt + pow(16, i) * 3; break;
-		case('4'): colorInt = colorInt + pow(16, i) * 4; break;
-		case('5'): colorInt = colorInt + pow(16, i) * 5; break;
-		case('6'): colorInt = colorInt + pow(16, i) * 6; break;
-		case('7'): colorInt = colorInt + pow(16, i) * 7; break;
-		case('8'): colorInt = colorInt + pow(16, i) * 8; break;
-		case('9'): colorInt = colorInt + pow(16, i) * 9; break;
-		case('A'):case('a'): colorInt = colorInt + pow(16, i) * 10; break;
-		case('B'):case('b'): colorInt = colorInt + pow(16, i) * 11; break;
-		case('C'):case('c'): colorInt = colorInt + pow(16, i) * 12; break;
-		case('D'):case('d'): colorInt = colorInt + pow(16, i) * 13; break;
-		case('E'):case('e'): colorInt = colorInt + pow(16, i) * 14; break;
-		case('F'):case('f'): colorInt = colorInt + pow(16, i) * 15; break;
-		default:
-			throw;
-		}
-	}
-	return colorInt;
+	return color;
 }
 
-void ObjetoMapa::setColor(std::string c) {
-	this->color = c;
+void ObjetoMapa::setColor(std::string color) {
+	this->color = stringToHexa( color.substr(1, color.npos) );
 }
 
 Pos* ObjetoMapa::getPos() {
@@ -83,4 +96,3 @@ void ObjetoMapa::setLinkAMundo(b2Body* link) {
 b2Body* ObjetoMapa::getLinkAMundo() {
 	return linkAMundo;
 }
-
