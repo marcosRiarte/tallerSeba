@@ -6,6 +6,7 @@
 #include <SDL2/SDL_image.h>
 #include "../excepciones/SDL_Excepcion.h"
 #include "ObjetoMapaVista.h"
+#include "../parseo/Config.h"
 
 class Pantalla {
 private:
@@ -19,7 +20,7 @@ private:
 	SDL_Texture * fondo;
 	std::vector<Vista*>* vistas;
 public:
-	Pantalla(int altoPx, int anchoPx, int alto, int ancho, const char* dirImg);
+	Pantalla(Config* config);
 	void inicializar() throw (SDL_Excepcion);
 	void update();
 	SDL_Renderer* getRenderer();
