@@ -36,7 +36,7 @@ MVC* creacionDelModelo(char* direccionDeLaConfiguracion) {
 	mvc->escenario = new Escenario(mvc->config);
 	Controlador::iniciarSDL();
 	// Creo que la vista necesitaba confif para crearse, pero ni idea...
-/*	mvc->pantalla = new Pantalla(mvc->config);*/
+	mvc->pantalla = new Pantalla(mvc->config);
 
 	return mvc;
 }
