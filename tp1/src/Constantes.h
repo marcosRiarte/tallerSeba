@@ -1,5 +1,10 @@
 #ifndef CONSTANTES_H_
 #define CONSTANTES_H_
+
+#ifndef M_PI
+#define M_PI           3.14159265358979323846
+#endif
+
 #include "log/Log.h"
 #include "log/DebugLog.h"
 #include "log/WarningLog.h"
