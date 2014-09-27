@@ -5,7 +5,7 @@
 #include "parseo/Config.h"
 #include "objetos/ObjetoMapa.h"
 #include "vistas/PersonajeVista.h"
-#include <entrada/Evento.h>
+#include "entrada/Evento.h"
 
 void ayuda() {
 	std::cout << "Ayuda: \n";
@@ -195,24 +195,6 @@ int main(int argc, char* argv[]) {
 		std::vector<ObjetoMapa*> *objetos = config->getObjetos();
 		snprintf(msg, 1000, "Se crearon: %d objetos", objetos->size());
 		loguer->loguear(msg, Log::LOG_DEB);
-
-		/*	@Test Permite imprimir las posiciones que integran el contorno de un objeto
-
-		 for (unsigned i = 0; i < objetos->size(); i++) {
-		 std::vector<Pos*>* const contorno = objetos->at(i)->getContorno();
-		 int cantidad = contorno->size();
-		 snprintf(msg, 1000, "Contorno del primer objeto (%d vertices):",
-		 cantidad);
-		 loguer->loguear(msg, Log::LOG_DEB);
-		 for (unsigned i = 0; i < contorno->size(); i++) {
-		 Pos* p = contorno->at(i);
-		 int x = p->getX();
-		 int y = p->getY();
-		 std::sprintf(msg, "Pos%d:(%d,%d)", i, x, y);
-		 loguer->loguear(msg, Log::LOG_DEB);
-		 }
-		 }
-		 */
 
 		//Se obtienen los personajes
 		std::vector<Personaje*> *personajes = config->getPersonajes();
