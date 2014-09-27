@@ -5,19 +5,20 @@
 #include <SDL2/SDL2_gfxPrimitives.h>
 #include <SDL2/SDL2_rotozoom.h>
 
-Pantalla::Pantalla(int altoPx, int anchoPx, int alto, int ancho, const char* dirImg) {
-	this->altoPx = altoPx;
-	this->anchoPx = anchoPx;
-	this->alto = alto;
-	this->ancho = ancho;
-	this->dirImg = dirImg;
+Pantalla::Pantalla(Config* config) {
+	this->altoPx = config->getAltoPx();
+	this->anchoPx = config->getAnchoPx();
+	this->alto = config->getAlto();
+	this->ancho = config->getAncho();
+	this->dirImg = config->getFondo();
 	this->vistas = new std::vector<Vista*>;
 	this->ventana = nullptr;
 	this->renderer = nullptr;
 	this->fondo = nullptr;
 }
+
 /**
- * Se inicia SDL y se crea la pantalla principal.
+ * obs		Necesita que SDL este iniciado.
  */
 void Pantalla::inicializar() throw (SDL_Excepcion){
 	ventana = SDL_CreateWindow("SnowBross", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, anchoPx, altoPx, SDL_WINDOW_SHOWN);
