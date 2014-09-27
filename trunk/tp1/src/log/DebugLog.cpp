@@ -4,8 +4,8 @@
 #include <time.h>
 
 DebugLog::DebugLog() {
-	std::string dir = PATH_LOG;
-	archivo = dir.append("debug_log.txt").c_str();
+//	std::string dir = PATH_LOG;
+//	archivo = dir.append("debug_log.txt").c_str();
 	fecha = nullptr;
 }
 
@@ -42,6 +42,7 @@ void DebugLog::loguear(const char* mensajeError, Log::LOG_TIPO tipo) throw(LogEx
 	default:
 		return;
 	}
+	archivo = "./logs/debug.txt";
 	std::ofstream salida(archivo, std::ios::out | std::ios::app);
 	if (!salida.is_open())
 		throw new LogExcepcion("No se puede abrir el archivo de Log para Debug \n");
