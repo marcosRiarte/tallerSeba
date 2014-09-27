@@ -16,13 +16,15 @@ MVC* creacionDelModelo(char*);
 int gameLoop(MVC*);
 void terminar(MVC*);
 
-void main2(int argc, char* argv[]) {
+int main(int argc, char* argv[]) {
 	int fin = REINICIAR;
 	while (FIN_DEL_JUEGO != fin) {
 		MVC* mvc = creacionDelModelo(argv[1]);
 		fin = gameLoop(mvc);
 		terminar(mvc);
 	}
+
+	return RES_OK;
 }
 
 // Crea todas las partes del modelo
