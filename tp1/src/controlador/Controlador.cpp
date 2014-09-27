@@ -1,6 +1,10 @@
 #include "Controlador.h"
 #include "../Constantes.h"
+#include <SDL2/SDL.h>
 
+/* Se eliminan los eventos de la lista y se lo completa con los nuevos
+ * Obtenidos por el teclado.
+ */
 int Controlador::cambiar(std::vector<Evento*>* listaEventos) {
 	for(unsigned i=0; i<listaEventos->size(); i++) {
 		delete listaEventos->at(i);
@@ -98,10 +102,5 @@ int Controlador::cambiar(std::vector<Evento*>* listaEventos) {
 	Evento* nada= new Evento(0);
 	listaEventos->push_back(nada);
 	return CONTINUAR;
-}
-
-
-Controlador::~Controlador() {
-	// TODO Auto-generated destructor stub
 }
 
