@@ -36,6 +36,8 @@ ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o) {
  */
 SDL_Texture* ObjetoMapaVista::getVista() {
 
+	long color = ( objeto->getColor() ) + 0xFF000000;
+
 	//Obtengo los vértices, transformando cada vertice en su simétrico respecto del eje Y
 	std::vector<Pos*>* vertices = objeto->getContorno();
 	for (unsigned i = 0; i < vertices->size(); i++) {
@@ -60,8 +62,8 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 	if (objeto->esCirculo()) {
 		Pos* pos = objeto->getPos()->ySimetrico();
 		int radio = pos->getDistancia(vertices->at(0));
-		filledCircleColor(renderer, radio, radio, radio, 0xFF0000FF);
-		filledCircleColor(renderer, radio, radio + radio / 2, radio / 4, 0xBBAA00FF);
+		filledCircleColor(renderer, radio, radio, radio, color);
+		filledCircleColor(renderer, radio, radio + radio / 2, radio / 4, color + 0x100);
 	}
 	//Si no es circulo
 	else {
@@ -73,7 +75,7 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 			vx[i] = vertices->at(i)->getX() - centroFigura->getX() + centroVentana->getX();
 			vy[i] = vertices->at(i)->getY() - centroFigura->getY() + centroVentana->getY();
 		}
-		filledPolygonColor(renderer, vx, vy, cantVertices, 0xFF0000FF);
+		filledPolygonColor(renderer, vx, vy, cantVertices, color);
 	}
 
 	//Se modifica el target del renderer para que ahora apunte a la ventana (valor por defecto)
