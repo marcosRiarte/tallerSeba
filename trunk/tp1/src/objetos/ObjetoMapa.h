@@ -14,7 +14,7 @@
 class ObjetoMapa {
 protected:
 	bool estatico;
-	std::string color;
+	long color;
 	Pos* pos;
 	int rot;
 	int masa;
