@@ -10,7 +10,6 @@
 class Evento {
 private:
 	int teclaIngresada;
-	bool teclasPresiondas;
 
 public:
 	// Valores posibles para la tecla ingresada:
