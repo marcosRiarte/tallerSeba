@@ -18,9 +18,10 @@
 // Salida del gameloop
 #define FIN_DEL_JUEGO				0
 #define REINICIAR					1
+#define CONTINUAR					2
 
 // Log
-#define PATH_LOG				 	".\\logs\\";
+#define PATH_LOG				 	"C:\\Users\\Seba\\workspace\\tp1 - Trunk\\logs\\";
 static Log* loguer = (Log*) DebugLog::getInstance();
 
 #endif /* CONSTANTES_H_ */
