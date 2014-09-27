@@ -4,18 +4,25 @@
 #include <vector>
 #include <string>
 #include "../personajes/Personaje.h"
-#include "../vistas/Pantalla.h"
 
 class Config {
 private:
 	std::vector<ObjetoMapa*>* objetosMapa;
 	std::vector<Personaje*>* personajes;
-	Pantalla* pantalla;
+	int altoPx;
+	int anchoPx;
+	int alto;
+	int ancho;
+	const char * fondo;
 public:
 	Config(std::string nombre);
 	std::vector<ObjetoMapa*>* getObjetos();
 	std::vector<Personaje*>* getPersonajes();
-	Pantalla* getPantalla();
+	int getAltoPx();
+	int getAnchoPx();
+	int getAlto();
+	int getAncho();
+	const char* getFondo();
 };
 
 #endif /* CONFIG_H_ */
