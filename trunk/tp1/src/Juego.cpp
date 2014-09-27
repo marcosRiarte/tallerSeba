@@ -17,7 +17,6 @@ int gameLoop(MVC*);
 void terminar(MVC*);
 
 int main(int argc, char* argv[]) {
-	loguer->loguear("PUTO", Log::LOG_DEB);
 	int fin = REINICIAR;
 	while (FIN_DEL_JUEGO != fin) {
 		MVC* mvc = creacionDelModelo(argv[1]);
