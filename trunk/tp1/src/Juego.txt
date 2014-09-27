@@ -41,7 +41,7 @@ int gameloop(Pantalla* p, std::vector<ObjetoMapa*>* o) {
 
 		//std::vector<Evento*>* eventosRealizados = Controlador::processInput(event);
 		Pos* pos = o->at(0)->getPos();
-
+/*
 		if(eventosRealizados->at(0)->getTecla() == 0){
 			pos = new Pos(pos->getX(), pos->getY());
 		}
@@ -59,10 +59,9 @@ int gameloop(Pantalla* p, std::vector<ObjetoMapa*>* o) {
 
 		if (event.type == SDL_QUIT)
 			fin = true;
-	}
+	}*/
 	return FIN_DEL_JUEGO;
 }
-
 
 
 /**
