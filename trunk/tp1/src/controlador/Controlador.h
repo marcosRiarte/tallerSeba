@@ -9,7 +9,7 @@
 #define CONTROLADOR_H_
 #include <SDL2/SDL.h>
 #include <vector>
-#include "entrada/Evento.h"
+#include "../entrada/Evento.h"
 
 class Controlador {
 public:
