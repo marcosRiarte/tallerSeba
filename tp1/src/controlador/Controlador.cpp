@@ -1,5 +1,5 @@
-#include <Controlador/Controlador.h>
-#include "Constantes.h"
+#include "Controlador.h"
+#include "../Constantes.h"
 
 int Controlador::cambiar(std::vector<Evento*>* listaEventos) {
 	for(unsigned i=0; i<listaEventos->size(); i++) {
