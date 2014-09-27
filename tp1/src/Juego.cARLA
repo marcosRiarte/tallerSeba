@@ -6,6 +6,7 @@
 #include "objetos/ObjetoMapa.h"
 #include "vistas/PersonajeVista.h"
 #include "entrada/Evento.h"
+#include "Controlador/Controlador.h"
 
 void ayuda() {
 	std::cout << "Ayuda: \n";
@@ -20,103 +21,6 @@ void ayuda() {
  * @return 0 si el juego terminó.
  * @return 1 si el juego debe resetearse.
  */
-
-std::vector<Evento*>* processInput(SDL_Event event) {
-
-	const Uint8 *state = SDL_GetKeyboardState(NULL);
-	std::vector<Evento*>* listaEventos = new std::vector<Evento*>();
-
-	if (event.key.keysym.sym == SDLK_LEFT && (state[SDL_SCANCODE_LEFT])) {
-		if (state[SDL_SCANCODE_RIGHT] && state[SDL_SCANCODE_UP]) {
-			Evento* der = new Evento(2);
-			Evento* arriba = new Evento(3);
-			listaEventos->push_back(der);
-			listaEventos->push_back(arriba);
-			return listaEventos;
-		} else if (state[SDL_SCANCODE_RIGHT]) {
-			Evento* der = new Evento(2);
-			listaEventos->push_back(der);
-			return listaEventos;
-		} else {
-			Evento* izq = new Evento(1);
-			listaEventos->push_back(izq);
-			return listaEventos;
-		}
-
-	}
-
-	else if (event.key.keysym.sym == SDLK_RIGHT && (state[SDL_SCANCODE_RIGHT])) {
-		if (state[SDL_SCANCODE_LEFT] && state[SDL_SCANCODE_UP]) {
-			Evento* izq = new Evento(1);
-			Evento* arriba = new Evento(3);
-			listaEventos->push_back(izq);
-			listaEventos->push_back(arriba);
-			return listaEventos;
-
-		} else if (state[SDL_SCANCODE_LEFT]) {
-			Evento* izq = new Evento(1);
-			listaEventos->push_back(izq);
-			return listaEventos;
-		} else {
-			Evento* der = new Evento(2);
-			listaEventos->push_back(der);
-			return listaEventos;
-		}
-	}
-
-	else if (event.key.keysym.sym == SDLK_UP && (state[SDL_SCANCODE_UP])) {
-
-		if (state[SDL_SCANCODE_LEFT] && state[SDL_SCANCODE_UP]){
-			Evento* arriba = new Evento(3);
-			listaEventos->push_back(arriba);
-			return listaEventos;
-
-		} else if (state[SDL_SCANCODE_LEFT]) {
-			Evento* izq = new Evento(1);
-			Evento* arriba = new Evento(3);
-			listaEventos->push_back(izq);
-			listaEventos->push_back(arriba);
-			return listaEventos;
-		} else if (state[SDL_SCANCODE_RIGHT]) {
-			Evento* der = new Evento(2);
-			Evento* arriba = new Evento(3);
-			listaEventos->push_back(der);
-			listaEventos->push_back(arriba);
-			return listaEventos;
-
-		}else{
-
-		Evento* arriba = new Evento(3);
-		listaEventos->push_back(arriba);
-		return listaEventos;
-		}
-
-		}
-
-	else if (event.key.keysym.sym == SDLK_r && (state[SDL_SCANCODE_R])) {
-		Evento* reset = new Evento(4);
-		listaEventos->push_back(reset);
-		return listaEventos;
-	}
-
-	if (state[SDL_SCANCODE_LEFT]){
-		Evento* izq = new Evento(1);
-		listaEventos->push_back(izq);
-		return listaEventos;
-	}
-
-	if (state[SDL_SCANCODE_RIGHT]){
-		Evento* der = new Evento(2);
-		listaEventos->push_back(der);
-		return listaEventos;
-	}
-
-	Evento* nada= new Evento(0);
-	listaEventos->push_back(nada);
-	return listaEventos;
-
-
-}
 
 int gameloop(Pantalla* p, std::vector<ObjetoMapa*>* o) {
 	bool fin = false;
@@ -135,7 +39,7 @@ int gameloop(Pantalla* p, std::vector<ObjetoMapa*>* o) {
 
 
 
-		std::vector<Evento*>* eventosRealizados = processInput(event);
+		//std::vector<Evento*>* eventosRealizados = Controlador::processInput(event);
 		Pos* pos = o->at(0)->getPos();
 
 		if(eventosRealizados->at(0)->getTecla() == 0){

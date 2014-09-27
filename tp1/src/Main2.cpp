@@ -1,27 +1,28 @@
 #include "escenario/Escenario.h"
-#include "vistas/Vista.h"
+#include "vistas/Pantalla.h"
 #include "parseo/Config.h"
-/*#include "../controlador/Controlador.h"*/
+#include "Constantes.h"
+#include "Controlador/Controlador.h"
 
 // Estructura del modelo
 struct MVC {
 	Escenario* escenario;
-	Vista* vista;
-	// El controlador todavia no existe es la clase q manejaria la entra da telcado (seba y lei la ibana  hacer)
-/*	Controlador* controlador;*/
-	// La config no deberia estar aca, pero nose como esta implementado y capaz es necesario que siga existiendo hasta el ginal
+	Pantalla* pantalla;
 	Config* config;
 };
 
 // Momentos de la ejecucion
 MVC* creacionDelModelo(char*);
-void gameLoop(MVC*);
+int gameLoop(MVC*);
 void terminar(MVC*);
 
 void main2(int argc, char* argv[]) {
-	MVC* mvc = creacionDelModelo(argv[1]);
-	gameLoop(mvc);
-	terminar(mvc);
+	int fin = REINICIAR;
+	while (FIN_DEL_JUEGO != fin) {
+		MVC* mvc = creacionDelModelo(argv[1]);
+		fin = gameLoop(mvc);
+		terminar(mvc);
+	}
 }
 
 // Crea todas las partes del modelo
@@ -31,35 +32,33 @@ MVC* creacionDelModelo(char* direccionDeLaConfiguracion) {
 	mvc->config = new Config(direccionDeLaConfiguracion);
 	mvc->escenario = new Escenario(mvc->config);
 	// Creo que la vista necesitaba confif para crearse, pero ni idea...
-/*	mvc->vista = new Vista(mvc->config);*/
-	// No se si necesitan algo para crear el controlador.
-/*	mvc->controlador = new Controlador();*/
+/*	mvc->pantalla = new Pantalla(mvc->config);*/
 
 	return mvc;
 }
 
 // Ejecuta el modelo
-void gameLoop(MVC* mvc) {
-	// es un arreglo estatico para que todo sea mas facil
+int gameLoop(MVC* mvc) {
 	std::vector<Evento*>* listaDeEventos;
-	listaDeEventos = new std::vector<Evento*>;
+	listaDeEventos = new std::vector<Evento*>();
 
-	bool fin = false;
-	while (!fin) {
-		// Cada evento que se crea deberias borrarlo, igual calculo q se sobreescribe sino o algo asi
-/*		fin = mvc->controlador->cambiar(listaDeEventos);*/
+	int fin = false;
+	while (FIN_DEL_JUEGO != fin && REINICIAR != fin) {
+		// Responsabilidades> ...
+		fin = Controlador::cambiar(listaDeEventos);
 		mvc->escenario->cambiar(listaDeEventos);
-/*		mvc->vista->cambiar(listaDeEventos);*/
+/*		mvc->pantalla->cambiar();*/
 	}
 
 	delete listaDeEventos;
+
+	return fin;
 }
 
 // Libera la memoria
 void terminar(MVC* mvc){
-/*	delete mvc->controlador;*/
 	delete mvc->escenario;
-	delete mvc->vista;
+	delete mvc->pantalla;
 	delete mvc->config;
 	delete mvc;
 }
