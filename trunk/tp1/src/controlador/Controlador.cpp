@@ -1,6 +1,7 @@
 #include "Controlador.h"
 #include "../Constantes.h"
 #include <SDL2/SDL.h>
+#include "../excepciones/SDL_Excepcion.h"
 
 /* Se eliminan los eventos de la lista y se lo completa con los nuevos
  * Obtenidos por el teclado.
@@ -104,3 +105,11 @@ int Controlador::cambiar(std::vector<Evento*>* listaEventos) {
 	return CONTINUAR;
 }
 
+//Inicia SDL para el resto del juego
+void Controlador::iniciarSDL(){
+	if (SDL_Init(SDL_INIT_EVERYTHING) != 0){
+		loguer->loguear("No se pudo iniciar SDL",Log::LOG_ERR);
+		const char* msg = ((std::string)"Error iniciando SDL: ").append(SDL_GetError()).c_str();
+		throw new SDL_Excepcion(msg);
+	}
+}

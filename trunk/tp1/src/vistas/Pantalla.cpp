@@ -20,11 +20,6 @@ Pantalla::Pantalla(int altoPx, int anchoPx, int alto, int ancho, const char* dir
  * Se inicia SDL y se crea la pantalla principal.
  */
 void Pantalla::inicializar() throw (SDL_Excepcion){
-	if (SDL_Init(SDL_INIT_EVERYTHING) != 0){
-		loguer->loguear("No se pudo iniciar SDL",Log::LOG_ERR);
-		const char* msg = ((std::string)"Error iniciando SDL: ").append(SDL_GetError()).c_str();
-		throw new SDL_Excepcion(msg);
-	}
 	ventana = SDL_CreateWindow("SnowBross", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, anchoPx, altoPx, SDL_WINDOW_SHOWN);
 	if (ventana == nullptr){
 		loguer->loguear("No se pudo crear la ventana principal", Log::LOG_ERR);
