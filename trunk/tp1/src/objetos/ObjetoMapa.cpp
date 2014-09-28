@@ -57,7 +57,7 @@ bool ObjetoMapa::esEstatico() {
 }
 
 float ObjetoMapa::getDensidad() {
-	return this->masa / this->getArea();
+	return (this->masa / this->getArea());
 }
 
 long ObjetoMapa::getColor(){
