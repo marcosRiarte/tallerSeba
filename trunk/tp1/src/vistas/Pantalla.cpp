@@ -11,7 +11,7 @@ Pantalla::Pantalla(Config* config) {
 	this->alto = config->getAlto();
 	this->ancho = config->getAncho();
 	this->dirImg = config->getFondo();
-	this->vistas = new std::vector<Vista*>;
+	this->agregarVistas(config->getObjetos());
 	this->ventana = nullptr;
 	this->renderer = nullptr;
 	this->fondo = nullptr;
@@ -47,8 +47,13 @@ SDL_Renderer* Pantalla::getRenderer(){
 	return renderer;
 }
 
-void Pantalla::agregarVista(Vista * v){
-	vistas->push_back(v);
+void Pantalla::agregarVistas(std::vector<ObjetoMapa*>* objetos){
+	vistas = new std::vector<Vista*>;
+	Vista* v;
+	for(unsigned i = 0; i < objetos->size(); i++){
+		v = new ObjetoMapaVista(objetos->at(i));
+		vistas->push_back(v);
+	}
 }
 
 
@@ -87,7 +92,5 @@ int Pantalla::getAncho(){
 	return ancho;
 }
 
-Pantalla::~Pantalla() {
-	SDL_Quit();
-}
+Pantalla::~Pantalla() {}
 
