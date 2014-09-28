@@ -11,10 +11,12 @@ Pantalla::Pantalla(Config* config) {
 	this->alto = config->getAlto();
 	this->ancho = config->getAncho();
 	this->dirImg = config->getFondo();
-	this->agregarVistas(config->getObjetos());
+	this->vistas = nullptr;
 	this->ventana = nullptr;
 	this->renderer = nullptr;
 	this->fondo = nullptr;
+	inicializar();
+	this->agregarVistas(config->getObjetos());
 }
 
 /**
@@ -33,7 +35,11 @@ void Pantalla::inicializar() throw (SDL_Excepcion){
 		const char* msg = ((std::string)"Error creando el renderer: ").append(SDL_GetError()).c_str();
 		throw new SDL_Excepcion(msg);
 	}
-	this->fondo = IMG_LoadTexture(renderer, dirImg);
+
+	//Paso a const char* el string del nombre de la imagen.
+			const char* dirFondo = dirImg.c_str();
+
+	this->fondo = IMG_LoadTexture(renderer, dirFondo);
 	if (fondo == nullptr) {
 		loguer->loguear("No se encontró imagen de fondo", Log::LOG_ERR);
 		const char* msg =
@@ -51,13 +57,13 @@ void Pantalla::agregarVistas(std::vector<ObjetoMapa*>* objetos){
 	vistas = new std::vector<Vista*>;
 	Vista* v;
 	for(unsigned i = 0; i < objetos->size(); i++){
-		v = new ObjetoMapaVista(objetos->at(i));
+		v = new ObjetoMapaVista(renderer, objetos->at(i));
 		vistas->push_back(v);
 	}
 }
 
 
-void Pantalla::update(){
+void Pantalla::cambiar(){
 	//Limpio la pantalla
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderClear(renderer);

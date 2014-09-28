@@ -60,12 +60,12 @@ int gameLoop(MVC* mvc) {
 	std::vector<Evento*>* listaDeEventos;
 	listaDeEventos = new std::vector<Evento*>();
 
-	int fin = false;
+	int fin = CONTINUAR;
 	while (FIN_DEL_JUEGO != fin && REINICIAR != fin) {
 		// Responsabilidades> ...
 		fin = Controlador::cambiar(listaDeEventos);
 		mvc->escenario->cambiar(listaDeEventos);
-/*		mvc->pantalla->cambiar();*/
+		mvc->pantalla->cambiar();
 	}
 
 	delete listaDeEventos;

@@ -7,10 +7,10 @@
  * Obtenidos por el teclado.
  */
 int Controlador::cambiar(std::vector<Evento*>* listaEventos) {
-	for(unsigned i=0; i<listaEventos->size(); i++) {
+/*	for(unsigned i=0; i<listaEventos->size(); i++) {
 		delete listaEventos->at(i);
 	}
-
+*/
 	SDL_Event event;
 	SDL_PollEvent(&event);
 	const Uint8 *state = SDL_GetKeyboardState(NULL);
@@ -85,7 +85,7 @@ int Controlador::cambiar(std::vector<Evento*>* listaEventos) {
 	else if (event.key.keysym.sym == SDLK_r && (state[SDL_SCANCODE_R])) {
 		Evento* reset = new Evento(4);
 		listaEventos->push_back(reset);
-		return CONTINUAR;
+		return REINICIAR;
 	}
 
 	if (state[SDL_SCANCODE_LEFT]){
