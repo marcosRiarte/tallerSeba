@@ -17,7 +17,7 @@
 			{
 				"tipo": "rectangulo",
 				"x": 30,
-				"y": -600,
+				"y": -20,
 				"ancho": 20,
 				"alto": 80,
 				"color": "#00FF00",
