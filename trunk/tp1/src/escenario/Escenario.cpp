@@ -102,7 +102,7 @@ Escenario::Escenario(Config* config) {
 		b2BodyDef objetoDef;
 
 		// Determina si es o no estático
-		if (objetos->at(i)->esEstatico()) {
+		if (!objetos->at(i)->esEstatico()) {
 			objetoDef.type = b2_dynamicBody;
 		}
 
