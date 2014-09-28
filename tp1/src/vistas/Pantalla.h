@@ -14,7 +14,7 @@ private:
 	int anchoPx;
 	int alto;
 	int ancho;
-	const char* dirImg;
+	std::string dirImg;
 	SDL_Window* ventana;
 	SDL_Renderer* renderer;
 	SDL_Texture * fondo;
@@ -24,7 +24,7 @@ private:
 public:
 	Pantalla(Config* config);
 	void inicializar() throw (SDL_Excepcion);
-	void update();
+	void cambiar();
 	SDL_Renderer* getRenderer();
 	void agregarVista(Vista* v);
 

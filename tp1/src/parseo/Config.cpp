@@ -41,24 +41,23 @@ Config::Config(std::string nombreArchivo) {
 		std::string imagen_fondo = un_Escenario.get("imagen_fondo",
 				"fondo1.png").asString();
 		std::cout << imagen_fondo << "\n";
+		this->fondo = imagen_fondo;
 
 		altoPx = un_Escenario.get("alto_px", 768).asInt();
 		anchoPx = un_Escenario.get("ancho_px", 1024).asInt();
-		alto = un_Escenario.get("alto_un", 100).asInt();
-		ancho = un_Escenario.get("ancho_un", 50).asInt();
+		alto_un = un_Escenario.get("alto_un", 100).asInt();
+		ancho_un = un_Escenario.get("ancho_un", 50).asInt();
 
-		//Paso a const char* el string del nombre de la imagen.
-		fondo = imagen_fondo.c_str();
+
 
 		int personaje_x = un_Escenario["personaje"].get("x", 0).asInt();
 		int personaje_y = un_Escenario["personaje"].get("y", -100).asInt();
-		if (ValidadorObjetos::ValidarPersonaje(personaje_x, personaje_y, ancho,
-				alto)) {
+		if (ValidadorObjetos::ValidarPersonaje(personaje_x, personaje_y, ancho_un,alto_un)) {
 			this->personajes->push_back(
 					CreadorObjetos::CrearPersonaje(personaje_x, personaje_y));
 		} else {
 			this->personajes->push_back(
-					CreadorObjetos::CrearPersonaje(0, -alto));
+					CreadorObjetos::CrearPersonaje(0, -alto_un));
 		}
 
 		Json::Value objetos;
@@ -86,7 +85,7 @@ Config::Config(std::string nombreArchivo) {
 			float escala = objetos[i].get("escala", 1).asFloat();
 
 			if (ValidadorObjetos::ValidarBasicos(tipo, x, y, color, rotacion,
-					masa, estatico, ancho, alto)) {
+					masa, estatico, ancho_un, alto_un)) {
 				if (tipo == "rectangulo") {
 					this->objetosMapa->push_back(
 							CreadorObjetos::CrearRectangulo(x, y, ancho, alto,
@@ -137,13 +136,13 @@ int Config::getAnchoPx() {
 }
 
 int Config::getAlto() {
-	return alto;
+	return alto_un;
 }
 
 int Config::getAncho() {
-	return ancho;
+	return ancho_un;
 }
 
-const char* Config::getFondo() {
+std::string Config::getFondo() {
 	return fondo;
 }

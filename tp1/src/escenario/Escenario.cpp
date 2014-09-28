@@ -38,12 +38,12 @@ Escenario::Escenario(Config* config) {
 
 	// Se crea el mundo con la gravedad asignada en el .h
 	b2Vec2 gravity(GRAVEDAD_X, GRAVEDAD_Y);
-	b2World world(gravity);
+	b2World* world = new b2World(gravity);
 
 	// Se crea el suelo en la posición y con el ancho y el alto que indica la config
 	b2BodyDef sueloDef;
 	sueloDef.position.Set((config->getAncho())/2, MEDIO_ALTO_SUELO-(config->getAlto()));
-	b2Body* suelo = world.CreateBody(&sueloDef);
+	b2Body* suelo = world->CreateBody(&sueloDef);
 	b2PolygonShape sueloForma;
 	sueloForma.SetAsBox((config->getAncho())/2, MEDIO_ALTO_SUELO);
 	// El segundo parámetro es la densidad
@@ -52,7 +52,7 @@ Escenario::Escenario(Config* config) {
 	// Se crea el techo en la posición y con el ancho y el alto que indica la config
 	b2BodyDef techoDef;
 	techoDef.position.Set((config->getAncho())/2, -MEDIO_ALTO_TECHO);
-	b2Body* techo = world.CreateBody(&techoDef);
+	b2Body* techo = world->CreateBody(&techoDef);
 	b2PolygonShape techoForma;
 	techoForma.SetAsBox((config->getAncho())/2, MEDIO_ALTO_TECHO);
 	// El segundo parámetro es la densidad
@@ -61,14 +61,14 @@ Escenario::Escenario(Config* config) {
 	// Se crean las paredes en la posición y con el ancho y el alto que indica la config
 	b2BodyDef paredIzqDef;
 	paredIzqDef.position.Set(MEDIO_ANCHO_PARED, -(config->getAlto())/2);
-	b2Body* paredIzq = world.CreateBody(&paredIzqDef);
+	b2Body* paredIzq = world->CreateBody(&paredIzqDef);
 	b2PolygonShape paredIzqForma;
 	paredIzqForma.SetAsBox(MEDIO_ANCHO_PARED, (config->getAlto())/2-2*(MEDIO_ALTO_TECHO+MEDIO_ALTO_SUELO));
 	// El segundo parámetro es la densidad
 	paredIzq->CreateFixture(&paredIzqForma, 0.0f);
 	b2BodyDef paredDerDef;
 	paredDerDef.position.Set(MEDIO_ANCHO_PARED, -(config->getAlto())/2);
-	b2Body* paredDer = world.CreateBody(&paredDerDef);
+	b2Body* paredDer = world->CreateBody(&paredDerDef);
 	b2PolygonShape paredDerForma;
 	paredDerForma.SetAsBox(MEDIO_ANCHO_PARED, (config->getAlto())/2-2*(MEDIO_ALTO_TECHO+MEDIO_ALTO_SUELO));
 	// El segundo parámetro es la densidad
@@ -81,7 +81,7 @@ Escenario::Escenario(Config* config) {
 
 		// Setea posición y angulo
 		peronajeDef.position.Set(personajes->at(i)->getPosicion()->getX(), personajes->at(i)->getPosicion()->getY());
-		b2Body* personaje = world.CreateBody(&peronajeDef);
+		b2Body* personaje = world->CreateBody(&peronajeDef);
 
 		// El personaje es un rectangulo
 		b2FixtureDef caractDef;
@@ -109,7 +109,7 @@ Escenario::Escenario(Config* config) {
 		// Setea posición y angulo
 		objetoDef.position.Set(objetos->at(i)->getPos()->getX(), objetos->at(i)->getPos()->getY());
 		objetoDef.angle = objetos->at(i)->getRotacion();
-		b2Body* objeto = world.CreateBody(&objetoDef);
+		b2Body* objeto = world->CreateBody(&objetoDef);
 
 		// Determina la forma
 		b2FixtureDef caract;
@@ -119,24 +119,37 @@ Escenario::Escenario(Config* config) {
 			int cantidadDePuntos = objetos->at(i)->getContorno()->size();
 			poligono.Set(vertices, cantidadDePuntos);
 			caract.shape = &poligono;
+
+
+			if (!objetos->at(i)->esEstatico()) {
+				caract.density = objetos->at(i)->getDensidad();
+				caract.friction = FRICCION_DE_OBJETO;
+			}
+
+			// La da la forma y la masa, determinando la densidad
+			objeto->CreateFixture(&caract);
+
 		} else {
 			float radio = CalcularRadio(objetos->at(i));
 			b2CircleShape circulo;
 			circulo.m_radius = radio;
 			caract.shape = &circulo;
+
+
+
+			if (!objetos->at(i)->esEstatico()) {
+				caract.density = objetos->at(i)->getDensidad();
+				caract.friction = FRICCION_DE_OBJETO;
+			}
+
+			// La da la forma y la masa, determinando la densidad
+			objeto->CreateFixture(&caract);
 		}
 
-		if (objetos->at(i)->esEstatico()) {
-			caract.density = objetos->at(i)->getDensidad();
-			caract.friction = FRICCION_DE_OBJETO;
-		}
-
-		// La da la forma y la masa, determinando la densidad
-		objeto->CreateFixture(&caract);
 		// Guarda su referencia al mundo
 		objetos->at(i)->setLinkAMundo(objeto);
 	}
-	this->mundo = &world;
+	this->mundo = world;
 }
 
 void Escenario::cambiar(std::vector<Evento*>* ListaDeEventos) {

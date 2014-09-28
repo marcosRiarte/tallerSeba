@@ -11,9 +11,9 @@ private:
 	std::vector<Personaje*>* personajes;
 	int altoPx;
 	int anchoPx;
-	int alto;
-	int ancho;
-	const char * fondo;
+	int alto_un;
+	int ancho_un;
+	std::string fondo;
 public:
 	Config(std::string nombre);
 	std::vector<ObjetoMapa*>* getObjetos();
@@ -22,7 +22,7 @@ public:
 	int getAnchoPx();
 	int getAlto();
 	int getAncho();
-	const char* getFondo();
+	std::string getFondo();
 };
 
 #endif /* CONFIG_H_ */
