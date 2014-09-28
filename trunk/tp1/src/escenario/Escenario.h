@@ -21,9 +21,9 @@ static const float DENSIDAD_DEL_PERSONAJE = 10;
 static const float FRICCION_DEL_PERSONAJE = 10;
 static const float FRICCION_DE_OBJETO = 10;
 static const float DENSIDAD_CERO = 0;
-static const float32 TIME_STEP = 1.0f / 60.0f;
-static const int32 VELOCITY_ITERATIONS = 6;
-static const int32 POSITION_ITERATIONS = 2;
+static const float32 TIME_STEP = 1/10.0;
+static const int32 VELOCITY_ITERATIONS = 8;
+static const int32 POSITION_ITERATIONS = 3;
 
 class Escenario {
 private:
