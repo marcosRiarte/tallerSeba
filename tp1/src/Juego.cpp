@@ -66,6 +66,7 @@ int gameLoop(MVC* mvc) {
 		fin = Controlador::cambiar(listaDeEventos);
 		mvc->escenario->cambiar(listaDeEventos);
 		mvc->pantalla->cambiar();
+		SDL_Delay(10);
 	}
 
 	delete listaDeEventos;
