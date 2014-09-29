@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "Escenario.h"
+#include "../entrada/Evento.h"
 #include "../objetos/Pos.h"
 #include <stdio.h>
 
@@ -120,7 +121,6 @@ Escenario::Escenario(Config* config) {
 			poligono.Set(vertices, cantidadDePuntos);
 			caract.shape = &poligono;
 
-
 			if (!objetos->at(i)->esEstatico()) {
 				caract.density = objetos->at(i)->getDensidad();
 				caract.friction = FRICCION_DE_OBJETO;
@@ -128,14 +128,11 @@ Escenario::Escenario(Config* config) {
 
 			// La da la forma y la masa, determinando la densidad
 			objeto->CreateFixture(&caract);
-
 		} else {
 			float radio = CalcularRadio(objetos->at(i));
 			b2CircleShape circulo;
 			circulo.m_radius = radio;
 			caract.shape = &circulo;
-
-
 
 			if (!objetos->at(i)->esEstatico()) {
 				caract.density = objetos->at(i)->getDensidad();
@@ -153,11 +150,23 @@ Escenario::Escenario(Config* config) {
 }
 
 void Escenario::cambiar(std::vector<Evento*>* ListaDeEventos) {
-	// Avanza el mundo un step
+	// Evalua si algun evento es un impulso.
+	for(unsigned i=0; i<ListaDeEventos->size(); i++) {
+		if (ListaDeEventos->at(i)->getTecla() == TECLA_IZQUIERDA) {
+			b2Vec2 impulsoIzquierda(IMPULSO_IZQ_X, IMPULSO_IZQ_Y);
+			personajes->at(0)->getLinkAMundo()->ApplyLinearImpulse(impulsoIzquierda,personajes->at(0)->getLinkAMundo()->GetPosition(),true);
+		} else if (ListaDeEventos->at(i)->getTecla() == TECLA_DERECHA) {
+			b2Vec2 impulsoDerecha(IMPULSO_DER_X, IMPULSO_DER_Y);
+			personajes->at(0)->getLinkAMundo()->ApplyLinearImpulse(impulsoDerecha,personajes->at(0)->getLinkAMundo()->GetPosition(),true);
+		} else if (ListaDeEventos->at(i)->getTecla() == TECLA_ARRIBA) {
+			b2Vec2 impulsoArriba(IMPULSO_ARR_X, IMPULSO_ARR_Y);
+			personajes->at(0)->getLinkAMundo()->ApplyLinearImpulse(impulsoArriba,personajes->at(0)->getLinkAMundo()->GetPosition(),true);
+		}
+	}
+
+	// Avanza el mundo dos step
 	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-
-
 
 	//Recorre objetos y personajes seteandole las nuevas posiciones y ángulos
 	for(unsigned i=0; i<personajes->size(); i++) {
