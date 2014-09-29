@@ -23,6 +23,7 @@ int Personaje::getAncho(){
 // getter y setter de la posicion
 void Personaje::setPosicion(Pos* posicion) {
 	pos = posicion;
+	rectanguloPersonaje->setPos(posicion);
 }
 Pos* Personaje::getPosicion(){
 	return pos;
