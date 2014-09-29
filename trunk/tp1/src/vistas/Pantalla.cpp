@@ -19,7 +19,7 @@ Pantalla::Pantalla(Config* config) {
 	this->listaDeCuadros = nullptr;
 	this->HojaDeSpritesDeTextura= new CreadorDeTexturas();
 	inicializar();
-	this->agregarVistas(config->getObjetos());
+	this->agregarVistas(config->getObjetos(),config->getPersonajes());
 }
 
 /**
@@ -65,13 +65,18 @@ SDL_Renderer* Pantalla::getRenderer(){
 	return renderer;
 }
 
-void Pantalla::agregarVistas(std::vector<ObjetoMapa*>* objetos){
+void Pantalla::agregarVistas(std::vector<ObjetoMapa*>* objetos, std::vector<Personaje*>* personajes){
 	vistas = new std::vector<Vista*>;
 	Vista* v;
 	for(unsigned i = 0; i < objetos->size(); i++){
 		v = new ObjetoMapaVista(renderer, objetos->at(i));
 		vistas->push_back(v);
 	}
+
+	for(unsigned i = 0; i < personajes->size(); i++){
+			v = new ObjetoMapaVista(renderer, personajes->at(i)->getRectangulo());
+			vistas->push_back(v);
+		}
 }
 
 

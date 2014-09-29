@@ -93,6 +93,7 @@ SDL_Texture* ObjetoMapaVista::getVista() {
  * 			método getVista(). Se devuelve un objeto de tipo "const" ya que no debe (ni se puede) modificar
  * 			su contenido, pero si puede consultarse.
  */
+
 const SDL_Rect* ObjetoMapaVista::getVentana() {
 	Pos* p = objeto->getPos()->ySimetrico();
 	ventana->x = p->getX() - ventana->w / 2;

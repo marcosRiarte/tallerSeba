@@ -4,6 +4,9 @@ Personaje::Personaje(Pos* posicion) {
 	pos = posicion;
 	rot = 0;
 	linkAMundo = nullptr;
+	ancho = 60;
+	alto = 80;
+	rectanguloPersonaje = new Rectangulo(false, "#00F0A0", pos, 0, 80, alto, ancho);
 }
 
 // getter y setter de la posicion
@@ -14,9 +17,16 @@ Pos* Personaje::getPosicion(){
 	return pos;
 }
 
+std::vector<Pos*>* Personaje::getContorno() {
+	return rectanguloPersonaje->getContorno();
+}
 // devuelve verdadero si esta en esa posicion
 bool Personaje::estaEnPos(Pos* posicion) {
 	return pos->esIgual(posicion);
+}
+
+Rectangulo* Personaje::getRectangulo() {
+	return rectanguloPersonaje;
 }
 
 Personaje::~Personaje() {

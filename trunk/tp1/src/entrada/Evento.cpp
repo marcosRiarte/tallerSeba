@@ -11,7 +11,6 @@
 #include <string>
 #include "../Constantes.h"
 #include "../objetos/ObjetoMapa.h"
-#include "../vistas/PersonajeVista.h"
 
 Evento::Evento() {
 	this->teclaIngresada=teclaNada;
