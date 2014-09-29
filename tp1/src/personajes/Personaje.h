@@ -23,29 +23,10 @@ private:
 	float rot;
 	b2Body* linkAMundo;
 	Estado estado;
-
 	Rectangulo *rectanguloPersonaje; //Solo para pruebas
-
-	bool miraALaIzq;
-	int estado;
-	bool vaParaArriba;
-	// Estados posibles:
-	#define QUIETO				0
-	#define SALTANDO			1
-	#define EN_MOVIMIENTO		2
-
 
 public:
 	Personaje(Pos* posicion);
-
-	//getters y setters del estado
-	bool getMiraALaIzq();
-	int getEstado();
-	bool getVaParaArriba();
-	void setMiraALaIzq(bool);
-	void setEstado(int);
-	void setVaParaArriba(bool);
-
 
 	// getters de dimensiones
 	int getAlto();
