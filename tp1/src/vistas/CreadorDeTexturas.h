@@ -7,7 +7,7 @@
 #include "../src/Constantes.h"
 
 
-	//Clase wrapper para texturas
+//Clase wrapper para texturas
 
 class CreadorDeTexturas {
 	private:
