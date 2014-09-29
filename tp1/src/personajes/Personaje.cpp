@@ -26,7 +26,7 @@ void Personaje::setPosicion(Pos* posicion) {
 	rectanguloPersonaje->setPos(posicion);
 }
 Pos* Personaje::getPosicion(){
-	return pos;
+	return rectanguloPersonaje->getPos();
 }
 
 std::vector<Pos*>* Personaje::getContorno() {
