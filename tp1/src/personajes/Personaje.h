@@ -10,6 +10,11 @@ public:
 	enum E_PERFIL {DERECHA, IZQUIERDA};
 	enum E_MOVIMIENTO {QUIETO, MOVIMIENTO, SALTANDO_SUBIENDO, SALTANDO_BAJANDO};
 	enum E_ACCION {NINGUNA, EMPUJANDO};
+	struct Estado{
+		E_PERFIL perfil;
+		E_MOVIMIENTO movimiento;
+		E_ACCION accion;
+	};
 
 private:
 	int ancho;
@@ -17,9 +22,7 @@ private:
 	Pos* pos;
 	float rot;
 	b2Body* linkAMundo;
-	E_PERFIL estadoPerfil;
-	E_MOVIMIENTO estadoMovimiento;
-	E_ACCION estadoAccion;
+	Estado estado;
 
 	Rectangulo *rectanguloPersonaje; //Solo para pruebas
 
@@ -43,9 +46,8 @@ public:
 	// getter y setter de estado
 	void setEstado(E_PERFIL p, E_MOVIMIENTO m, E_ACCION a);
 	void setEstado(E_PERFIL p, E_MOVIMIENTO m);
-	E_PERFIL getPerfil();
-	E_MOVIMIENTO getMovimiento();
-	E_ACCION getAccion();
+	void setEstado(Estado estado);
+	Estado getEstado();
 
 	// getter y setter de link a mundo
 	void setLinkAMundo(b2Body* link);

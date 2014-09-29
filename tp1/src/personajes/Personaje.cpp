@@ -7,9 +7,9 @@ Personaje::Personaje(Pos* posicion) {
 	ancho = 60;
 	alto = 80;
 	rectanguloPersonaje = new Rectangulo(false, "#00F0A0", pos, 0, 80, alto, ancho);
-	estadoPerfil = E_PERFIL::DERECHA;
-	estadoMovimiento = E_MOVIMIENTO::QUIETO;
-	estadoAccion = E_ACCION::NINGUNA;
+	estado.perfil = E_PERFIL::DERECHA;
+	estado.movimiento = E_MOVIMIENTO::QUIETO;
+	estado.accion = E_ACCION::NINGUNA;
 }
 
 // getter de dimensiones
@@ -55,53 +55,43 @@ b2Body* Personaje::getLinkAMundo(){
 
 /**
  * \brief	Se setea el estado del personaje, mediante 3 taxonomias (incompletas para el juego final).
- * 			E_PERFIL: 			determina el perfil a conciderar
+ * 			E_PERFIL: 			determina el perfil a conciderar.
  * 			E_MOVIMIENTO: 		detalla que clase de movimiento está ejerciendo el personaje.
  * 			E_ACCION:			da información sobre las interacciones que tiene el personaje con otros
  * 								objetos del juego. Podría llamarse E_INTERACCION...es dicutible.
  *
  * \param	\perfil
- * \param	\movimiento	Todos los movimientos permitidos en el juego
+ * \param	\movimiento	Todos los movimientos permitidos en el juego.
  * \param	\accion		Se utiliza para las interacciones del juego, por ahora solo tomamos
- * 						el caso de que este empujando un objeto o simplemente no haciendo nada
+ * 						el caso de que este empujando un objeto o simplemente no haciendo nada.
  */
 void Personaje::setEstado(E_PERFIL perfil, E_MOVIMIENTO movimiento, E_ACCION accion){
-	estadoPerfil = perfil;
-	estadoMovimiento = movimiento;
-	estadoAccion = accion;
+	estado.perfil = perfil;
+	estado.movimiento = movimiento;
+	estado.accion = accion;
 }
 
 /**
- * \brief	Al igual que el método setEstado(E_PERFIL, E_MOVIMIENTO, E_ACCION) se setea el estado
- * 			del personaje. Pero se toma para el caso de E_ACCION, el valor por defecto que es "NINGUNA"
- *
- * \param	\perfil
- * \param	\movimiento	Todos los movimientos permitidos en el juego
+ * \brief	Idem a llamar setEstado(unPerfil, unMovimiento, E_ACCION::NINGUNA).
  */
 void Personaje::setEstado(E_PERFIL perfil, E_MOVIMIENTO movimiento){
-	estadoPerfil = perfil;
-	estadoMovimiento = movimiento;
-	estadoAccion = E_ACCION::NINGUNA;
+	estado.perfil = perfil;
+	estado.movimiento = movimiento;
+	estado.accion = E_ACCION::NINGUNA;
 }
 
 /**
- * \return	Estado relacionado con el perfil del personaje
+ * \brief	Setea el estado del personaje.
  */
-Personaje::E_PERFIL Personaje::getPerfil(){
-	return estadoPerfil;
+void Personaje::setEstado(Estado estado){
+	this->estado.perfil = estado.perfil;
+	this->estado.movimiento = estado.movimiento;
+	this->estado.accion = estado.accion;
 }
 
 /**
- * \return	Estado relacionado con el movimiento actual del personaje
+ * \return	Estado del personaje.
  */
-Personaje::E_MOVIMIENTO Personaje::getMovimiento(){
-	return estadoMovimiento;
+Personaje::Estado Personaje::getEstado(){
+	return estado;
 }
-
-/**
- * \return	Estado relacionado con la accion que realiza el personaje
- */
-Personaje::E_ACCION Personaje::getAccion(){
-	return estadoAccion;
-}
-
