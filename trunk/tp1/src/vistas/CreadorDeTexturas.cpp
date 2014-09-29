@@ -1,4 +1,4 @@
-#include <vistas/CreadorDeTexturas.h>
+#include "CreadorDeTexturas.h"
 #include <iostream>
 
 CreadorDeTexturas::CreadorDeTexturas() {

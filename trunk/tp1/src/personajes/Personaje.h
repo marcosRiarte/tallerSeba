@@ -16,6 +16,9 @@ private:
 public:
 	Personaje(Pos* posicion);
 
+	// getters de dimensiones
+	int getAlto();
+	int getAncho();
 	// getter y setter de la posicion
 	void setPosicion(Pos* posicion);
 	Pos* getPosicion();

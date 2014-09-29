@@ -9,6 +9,14 @@ Personaje::Personaje(Pos* posicion) {
 	rectanguloPersonaje = new Rectangulo(false, "#00F0A0", pos, 0, 80, alto, ancho);
 }
 
+// getter de dimensiones
+int Personaje::getAlto(){
+	return alto;
+}
+int Personaje::getAncho(){
+	return ancho;
+}
+
 // getter y setter de la posicion
 void Personaje::setPosicion(Pos* posicion) {
 	pos = posicion;
