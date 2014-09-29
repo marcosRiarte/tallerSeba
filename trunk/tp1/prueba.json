@@ -1,10 +1,10 @@
 {
 	"escenario": 
 	{
-		"alto_px": 768,
-		"ancho_px": 1024,
-		"alto_un": 768,
-		"ancho_un": 1024,
+		"alto_px": 1024,
+		"ancho_px": 768,
+		"alto_un": 1024,
+		"ancho_un": 768,
 		"imagen_fondo": "img/fondo1.png",
 		"personaje": 
 		{
@@ -16,16 +16,15 @@
 		[
 			{
 				"tipo": "rectangulo",
-				"x": 30,
+				"x": 100,
 				"y": -20,
-				"ancho": 20,
-				"alto": 80,
-				"color": "#00FF00",
+				"ancho": 10,
+				"alto": 50,
+				"color": "#FFFF00",
 				"rot": 45,
-				"masa": 10,
+				"masa": 5,
 				"estatico": false
 			},
-
 			{
 				"tipo": "paralelogramo",
 				"base": 15,

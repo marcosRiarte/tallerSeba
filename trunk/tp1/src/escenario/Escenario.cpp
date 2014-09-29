@@ -155,6 +155,9 @@ Escenario::Escenario(Config* config) {
 void Escenario::cambiar(std::vector<Evento*>* ListaDeEventos) {
 	// Avanza el mundo un step
 	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+
+
 
 	//Recorre objetos y personajes seteandole las nuevas posiciones y ángulos
 	for(unsigned i=0; i<personajes->size(); i++) {

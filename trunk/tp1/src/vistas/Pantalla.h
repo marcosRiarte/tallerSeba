@@ -7,6 +7,8 @@
 #include "../excepciones/SDL_Excepcion.h"
 #include "ObjetoMapaVista.h"
 #include "../parseo/Config.h"
+#include "CreadorDeTexturas.h"
+#include "Sprite.h"
 
 class Pantalla {
 private:
@@ -14,12 +16,14 @@ private:
 	int anchoPx;
 	int alto;
 	int ancho;
+	int numeroDeCuadro;
 	std::string dirImg;
 	SDL_Window* ventana;
 	SDL_Renderer* renderer;
 	SDL_Texture * fondo;
 	std::vector<Vista*>* vistas;
-
+	std::vector<SDL_Rect*>* listaDeCuadros;
+	CreadorDeTexturas* HojaDeSpritesDeTextura;
 	void agregarVistas(std::vector<ObjetoMapa*>* objetos);
 public:
 	Pantalla(Config* config);

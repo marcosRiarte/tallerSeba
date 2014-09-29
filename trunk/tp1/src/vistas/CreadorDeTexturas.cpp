@@ -56,8 +56,7 @@ bool CreadorDeTexturas::cargarDesde( std::string rutaArchivo, SDL_Renderer* rend
 	return Textura != nullptr;
 }
 
-void CreadorDeTexturas::free()
-{
+void CreadorDeTexturas::free(){
 	//Libera la textura si existe
 	if( Textura != nullptr )
 	{
@@ -68,52 +67,46 @@ void CreadorDeTexturas::free()
 	}
 }
 
-void CreadorDeTexturas::setColor( Uint8 rojo, Uint8 verde, Uint8 azul )
-{
+void CreadorDeTexturas::setColor( Uint8 rojo, Uint8 verde, Uint8 azul ){
 	//Setea el RGB de la textura
 	SDL_SetTextureColorMod( Textura, rojo, verde, azul );
 }
 
-void CreadorDeTexturas::setBlend( SDL_BlendMode blending )
-{
+void CreadorDeTexturas::setBlend( SDL_BlendMode blending ){
 	//Setea la función de blending
 	SDL_SetTextureBlendMode( Textura, blending );
 }
 
-void CreadorDeTexturas::setAlpha( Uint8 alpha )
-{
+void CreadorDeTexturas::setAlpha( Uint8 alpha ){
 	//Modula el alpha de la textura
 	SDL_SetTextureAlphaMod( Textura, alpha );
 }
 
-void CreadorDeTexturas::render( int x, int y, SDL_Rect* fotograma,SDL_Renderer* render )
-{
+void CreadorDeTexturas::render( int x, int y, SDL_Rect* fotograma,SDL_Renderer* render ){
 	//Se pide memoria para la imagen a ser dibujada
 	SDL_Rect* unRender = new SDL_Rect();
 
-	//Set clip rendering dimensions
+	//Seteo de las dimensiones del renderizado del cuadro
 	if( fotograma != nullptr )
 	{
 		unRender->h = fotograma->h;
 		unRender->w = fotograma->w;
-		unRender->x = fotograma->x;
-		unRender->y = fotograma->y;
+		unRender->x = 100;
+		unRender->y = 80;
 	}
 
-	//Render to screen
+	//Se dibuja en pantalla
 	SDL_RenderCopy( render, Textura, fotograma, unRender );
 }
 
-int CreadorDeTexturas::getAncho()
-{
+int CreadorDeTexturas::getAncho(){
 	return Ancho;
 }
 
-int CreadorDeTexturas::getAlto()
-{
+int CreadorDeTexturas::getAlto(){
 	return Alto;
 }
-CreadorDeTexturas::~CreadorDeTexturas() {
+CreadorDeTexturas::~CreadorDeTexturas(){
 	free();
 }
 
