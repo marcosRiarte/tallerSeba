@@ -24,7 +24,7 @@ private:
 	std::vector<Vista*>* vistas;
 	std::vector<SDL_Rect*>* listaDeCuadros;
 	CreadorDeTexturas* HojaDeSpritesDeTextura;
-	void agregarVistas(std::vector<ObjetoMapa*>* objetos);
+	void agregarVistas(std::vector<ObjetoMapa*>* objetos, std::vector<Personaje*>* personajes);
 public:
 	Pantalla(Config* config);
 	void inicializar() throw (SDL_Excepcion);
