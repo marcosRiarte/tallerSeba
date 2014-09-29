@@ -7,6 +7,9 @@ Personaje::Personaje(Pos* posicion) {
 	ancho = 60;
 	alto = 80;
 	rectanguloPersonaje = new Rectangulo(false, "#00F0A0", pos, 0, 80, alto, ancho);
+	estadoPerfil = E_PERFIL::DERECHA;
+	estadoMovimiento = E_MOVIMIENTO::QUIETO;
+	estadoAccion = E_ACCION::NINGUNA;
 }
 
 // getter de dimensiones
