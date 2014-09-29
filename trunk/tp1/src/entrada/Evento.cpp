@@ -13,7 +13,7 @@
 #include "../objetos/ObjetoMapa.h"
 
 Evento::Evento() {
-	this->teclaIngresada=teclaNada;
+	this->teclaIngresada=TECLA_NADA;
 }
 
 Evento::Evento(int evento) {
