@@ -87,7 +87,7 @@ Escenario::Escenario(Config* config) {
 		// El personaje es un rectangulo
 		b2FixtureDef caractDef;
 		b2PolygonShape forma;
-		forma.SetAsBox(MEDIO_ANCHO_PERSONAJE, MEDIO_ALTO_PERSONAJE);
+		forma.SetAsBox(personajes->at(i)->getAncho()/2, personajes->at(i)->getAlto()/2);
 		caractDef.shape = &forma;
 		caractDef.density = DENSIDAD_DEL_PERSONAJE;
 		caractDef.friction = FRICCION_DEL_PERSONAJE;

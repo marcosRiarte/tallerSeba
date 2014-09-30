@@ -12,20 +12,18 @@
 
 static const float GRAVEDAD_X = 0;
 static const float GRAVEDAD_Y = -10;
-static const float MEDIO_ALTO_SUELO = 5;
-static const float MEDIO_ALTO_TECHO = 3;
-static const float MEDIO_ANCHO_PARED = 4;
-static const float MEDIO_ANCHO_PERSONAJE = 5;
-static const float MEDIO_ALTO_PERSONAJE = 10;
-static const float DENSIDAD_DEL_PERSONAJE = 1;
+static const float MEDIO_ALTO_SUELO = 2;
+static const float MEDIO_ALTO_TECHO = 1;
+static const float MEDIO_ANCHO_PARED = 2;
+static const float DENSIDAD_DEL_PERSONAJE = 0.31;
 static const float FRICCION_DEL_PERSONAJE = 10;
 static const float FRICCION_DE_OBJETO = 10;
-static const float IMPULSO_IZQ_X = -100;
+static const float IMPULSO_IZQ_X = -1000;
 static const float IMPULSO_IZQ_Y = 0;
-static const float IMPULSO_DER_X = 100;
+static const float IMPULSO_DER_X = 1000;
 static const float IMPULSO_DER_Y = 0;
 static const float IMPULSO_ARR_X = 0;
-static const float IMPULSO_ARR_Y = 6500;
+static const float IMPULSO_ARR_Y = 65000;
 static const float32 TIME_STEP = 1/60.0;
 static const int32 VELOCITY_ITERATIONS = 8;
 static const int32 POSITION_ITERATIONS = 3;
