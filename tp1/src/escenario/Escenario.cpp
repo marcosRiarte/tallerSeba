@@ -100,13 +100,15 @@ Escenario::Escenario(Config* config) {
 
 		//solo funciona para un personaje
 		//add foot sensor fixture
-/*		b2PolygonShape sensorForma;
+			b2PolygonShape sensorForma;
+			float densidad = 10;
+
 	    b2FixtureDef sensorFix;
 	    sensorForma.SetAsBox(personajes->at(i)->getAncho()/2, 0.1, b2Vec2(0,-(personajes->at(i)->getAlto()/2)), 0);
 		sensorFix.isSensor = true;
+		sensorFix.shape =&sensorForma;
 		b2Fixture* footSensorFixture = personaje->CreateFixture(&sensorFix);
-		footSensorFixture->SetUserData( (void*)3 );*/
-
+		footSensorFixture->SetUserData( (void*)3 );
 	}
 
 	// Crea los objetos (se supone que no todos son estáticos)
@@ -158,8 +160,8 @@ Escenario::Escenario(Config* config) {
 		objetos->at(i)->setLinkAMundo(objeto);
 	}
 	// Se agrega al mundo el listener para los contactos
-	//cuentaPasos = new MyContactListener;
-	//world->SetContactListener(cuentaPasos);
+	cuentaPasos = new MyContactListener;
+	world->SetContactListener(cuentaPasos);
 
 	this->mundo = world;
 }
@@ -173,11 +175,9 @@ void Escenario::cambiar(std::vector<Evento*>* ListaDeEventos) {
 		} else if (ListaDeEventos->at(i)->getTecla() == TECLA_DERECHA) {
 			b2Vec2 impulsoDerecha(IMPULSO_DER_X, IMPULSO_DER_Y);
 			personajes->at(0)->getLinkAMundo()->ApplyLinearImpulse(impulsoDerecha,personajes->at(0)->getLinkAMundo()->GetPosition(),true);
-		} else if (ListaDeEventos->at(i)->getTecla() == TECLA_ARRIBA) {
-			//if (cuentaPasos->numFootContacts == 0) {
+		} else if ((ListaDeEventos->at(i)->getTecla() == TECLA_ARRIBA)&&(cuentaPasos->numFootContacts>0)) {
 				b2Vec2 impulsoArriba(IMPULSO_ARR_X, IMPULSO_ARR_Y);
 				personajes->at(0)->getLinkAMundo()->ApplyLinearImpulse(impulsoArriba,personajes->at(0)->getLinkAMundo()->GetPosition(),true);
-			//}
 		}
 	}
 
