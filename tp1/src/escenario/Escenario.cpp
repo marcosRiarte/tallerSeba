@@ -68,7 +68,7 @@ Escenario::Escenario(Config* config) {
 	// El segundo parámetro es la densidad
 	paredIzq->CreateFixture(&paredIzqForma, 0.0f);
 	b2BodyDef paredDerDef;
-	paredDerDef.position.Set(MEDIO_ANCHO_PARED, -(config->getAlto())/2);
+	paredDerDef.position.Set((config->getAncho())-MEDIO_ANCHO_PARED, -(config->getAlto())/2);
 	b2Body* paredDer = world->CreateBody(&paredDerDef);
 	b2PolygonShape paredDerForma;
 	paredDerForma.SetAsBox(MEDIO_ANCHO_PARED, (config->getAlto())/2-2*(MEDIO_ALTO_TECHO+MEDIO_ALTO_SUELO));
@@ -176,6 +176,8 @@ void Escenario::cambiar(std::vector<Evento*>* ListaDeEventos) {
 
 		Pos* posicion = new Pos(personaje->GetPosition().x,personaje->GetPosition().y);
 		personajes->at(i)->setPosicion(posicion);
+
+		printf("%4.2f %4.2f %i \n", personaje->GetPosition().x,personaje->GetPosition().y,i);
 	}
 	for(unsigned i=0; i<objetos->size(); i++) {
 		b2Body* objeto = objetos->at(i)->getLinkAMundo();
