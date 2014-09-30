@@ -4,10 +4,8 @@ Personaje::Personaje(Pos* posicion) {
 	pos = posicion;
 	rot = 0;
 	linkAMundo = nullptr;
-	ancho = 60;
-	alto = 80;
-	estado->perfil = E_PERFIL::IZQUIERDA;
-	estado->accion = E_ACCION::QUIETO;
+	ancho = 36;
+	alto = 64;
 
 	rectanguloPersonaje = new Rectangulo(false, "#00F0A0", pos, 0, 80, alto, ancho); // Solo para pruebas...
 

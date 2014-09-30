@@ -1,30 +1,43 @@
 {
 	"escenario": 
 	{
-		"alto_px": 1024,
-		"ancho_px": 768,
-		"alto_un": 1024,
-		"ancho_un": 768,
+		"alto_px": 800,
+		"ancho_px": 600,
+		"alto_un": 800,
+		"ancho_un": 600,
 		"imagen_fondo": "img/fondo1.png",
 		"personaje": 
 		{
-			"x": 486,
-			"y": -890
+			"x": 500,
+			"y": -500
 		},
 
 		"objetos": 
 		[
 			{
 				"tipo": "rectangulo",
-				"x": 100,
-				"y": -20,
-				"ancho": 10,
-				"alto": 50,
-				"color": "#FFFF00",
-				"rot": 45,
-				"masa": 5,
-				"estatico": false
+				"x": 96,
+				"y": -600,
+				"ancho": 192,
+				"alto": 65,
+				"color": "#0000FF",
+				"rot": 0,
+				"masa": 0,
+				"estatico": true
 			},
+			
+			{
+				"tipo": "rectangulo",
+				"x": 385,
+				"y": -600,
+				"ancho": 192,
+				"alto": 65,
+				"color": "#0000FF",
+				"rot": 0,
+				"masa": 0,
+				"estatico": true
+			},
+			
 			{
 				"tipo": "paralelogramo",
 				"base": 15,
