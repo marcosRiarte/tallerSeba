@@ -8,6 +8,7 @@
 #include "../objetos/ObjetoMapa.h"
 #include "../entrada/Evento.h"
 #include "../parseo/Config.h"
+#include "MyContactListener.h"
 #include <Box2D/Box2D.h>
 
 static const float GRAVEDAD_X = 0;
@@ -32,6 +33,7 @@ class Escenario {
 private:
 	std::vector<Personaje*>* personajes;
 	std::vector<ObjetoMapa*>* objetos;
+	MyContactListener* cuentaPasos;
 	b2World* mundo;
 
 public:
