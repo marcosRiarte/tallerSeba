@@ -1,4 +1,5 @@
 #include "PersonajeVista.h"
+#include <SDL2/SDL_image.h>
 
 #define PATH_IMAGEN_SPRITES					"../../img/SpritesPersonaje.png"
 #define ANCHO_PX_SPRITE						125
@@ -16,18 +17,45 @@ PersonajeVista::PersonajeVista(SDL_Renderer* r, Personaje* p) {
 	ventana->h = personaje->getAlto();
 	ventana->w = personaje->getAncho();
 
+	estadoAnterior = new Personaje::Estado();
+	estadoAnterior->perfil = Personaje::IZQUIERDA;
+	estadoAnterior->accion = Personaje::QUIETO;
+
 	vSpritesQuieto = new std::vector<SDL_Rect*>;
 	vSpritesDesplazamiento = new std::vector<SDL_Rect*>;
 	vSpritesSalto = new std::vector<SDL_Rect*>;
 	vSpritesCaida = new std::vector<SDL_Rect*>;
 	vSpritesEmpujar = new std::vector<SDL_Rect*>;
 
+	selectorDeSprite = 0;
+
+	cargarContenedorDeSprites();
 	crearSprites();
 
-	spriteQuieto = 0;
-	spriteDesplazamiento = 0;
-	spriteSalto = 0;
-	spriteEmpujar = 0;
+}
+
+/**
+ * \brief
+ */
+void PersonajeVista::cargarContenedorDeSprites(){
+	SDL_Surface* superficie = IMG_Load(PATH_IMAGEN_SPRITES);
+	this->contenedorDeSprites = SDL_CreateTextureFromSurface(renderer, superficie);
+	SDL_free(superficie);
+
+	/**
+	 * Esto que viene ahora solo sirve a modo de prueba para ver como es que carga la imagen
+	 * 	contenedora de sprites
+	 */
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+		SDL_RenderClear(renderer);
+		//Cargo el fondo de pantalla
+		SDL_RenderCopy(renderer, contenedorDeSprites, NULL, NULL);
+		SDL_RenderPresent(renderer);
+	/*
+	 * TODO verificar si el color key esta bien puesto
+	 * TODO ver que pasa con los tamaños.
+	 */
+
 }
 
 /**
@@ -92,20 +120,39 @@ void PersonajeVista::crearSprites(){
 SDL_Texture* PersonajeVista::getVista() {
 	SDL_Texture* textura;
 	Personaje::Estado estadoActual = personaje->getEstado();
-/*
+
+	if (estadoActual.accion == estadoAnterior->accion)
+		selectorDeSprite++;
+
 	switch(estadoActual.accion){
-
 		case(Personaje::E_ACCION::QUIETO):
-			textura = getVistaQuieto();
-
+			textura = getVista(vSpritesQuieto, selectorDeSprite);
 			break;
 		case(Personaje::E_ACCION::DESPLAZANDO):
-			textura = getVistaDesplazamiento();
+			textura = getVista(vSpritesDesplazamiento, selectorDeSprite);
+			break;
+		case(Personaje::E_ACCION::SALTANDO):
+			textura = getVista(vSpritesSalto, selectorDeSprite);
+			break;
+		case(Personaje::E_ACCION::CAYENDO):
+			textura = getVista(vSpritesCaida, selectorDeSprite);
+			break;
+		case(Personaje::E_ACCION::EMPUJANDO):
+			textura = getVista(vSpritesEmpujar,selectorDeSprite);
+			break;
 		default:
-			;
-
+			throw;
 	}
-*/
+	estadoAnterior->perfil = estadoActual.perfil;
+	estadoAnterior->accion = estadoActual.accion;
+	return textura;
+}
+
+/**
+ * TODO una vez que esté cargada la imagen principal con todos los sprites en ella,
+ * 	y testeado (importante) hay que hacer esto.
+ */
+SDL_Texture* PersonajeVista::getVista(std::vector<SDL_Rect*>* sprites, int iterador){
 	return nullptr;
 }
 
