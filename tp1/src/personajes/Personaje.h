@@ -8,11 +8,9 @@
 class Personaje {
 public:
 	enum E_PERFIL {DERECHA, IZQUIERDA};
-	enum E_MOVIMIENTO {QUIETO, MOVIMIENTO, SALTANDO_SUBIENDO, SALTANDO_BAJANDO};
-	enum E_ACCION {NINGUNA, EMPUJANDO};
+	enum E_ACCION {QUIETO, DESPLAZANDO, SALTANDO, CAYENDO, EMPUJANDO};
 	struct Estado{
 		E_PERFIL perfil;
-		E_MOVIMIENTO movimiento;
 		E_ACCION accion;
 	};
 
@@ -43,8 +41,7 @@ public:
 	Rectangulo* getRectangulo();
 
 	// getter y setter de estado
-	void setEstado(E_PERFIL p, E_MOVIMIENTO m, E_ACCION a);
-	void setEstado(E_PERFIL p, E_MOVIMIENTO m);
+	void setEstado(E_PERFIL p, E_ACCION a);
 	void setEstado(Estado estado);
 	Estado getEstado();
 
