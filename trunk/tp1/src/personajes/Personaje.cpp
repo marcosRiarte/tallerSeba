@@ -6,8 +6,8 @@ Personaje::Personaje(Pos* posicion) {
 	linkAMundo = nullptr;
 	ancho = 60;
 	alto = 80;
-	estado.perfil = E_PERFIL::IZQUIERDA;
-	estado.accion = E_ACCION::QUIETO;
+	estado->perfil = E_PERFIL::IZQUIERDA;
+	estado->accion = E_ACCION::QUIETO;
 
 	rectanguloPersonaje = new Rectangulo(false, "#00F0A0", pos, 0, 80, alto, ancho); // Solo para pruebas...
 
@@ -64,21 +64,21 @@ b2Body* Personaje::getLinkAMundo(){
  * \param	\accion		Se utiliza detallar que tipo de acciones está realizando el personaje.
  */
 void Personaje::setEstado(E_PERFIL perfil, E_ACCION accion){
-	estado.perfil = perfil;
-	estado.accion = accion;
+	estado->perfil = perfil;
+	estado->accion = accion;
 }
 
 /**
  * \brief	Setea el estado del personaje.
  */
 void Personaje::setEstado(Estado estado){
-	this->estado.perfil = estado.perfil;
-	this->estado.accion = estado.accion;
+	this->estado->perfil = estado.perfil;
+	this->estado->accion = estado.accion;
 }
 
 /**
  * \return	Estado del personaje.
  */
 Personaje::Estado Personaje::getEstado(){
-	return estado;
+	return *estado;
 }

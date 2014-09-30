@@ -20,7 +20,7 @@ private:
 	Pos* pos;
 	float rot;
 	b2Body* linkAMundo;
-	Estado estado;
+	Estado* estado;
 	Rectangulo *rectanguloPersonaje; //Solo para pruebas
 
 public:
