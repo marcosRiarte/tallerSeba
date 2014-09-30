@@ -6,7 +6,10 @@ Personaje::Personaje(Pos* posicion) {
 	linkAMundo = nullptr;
 	ancho = 36;
 	alto = 64;
-
+	/* Esto hace que explote, por lo que se deja comentado, revisar esta logica TODO
+	estado->perfil = E_PERFIL::IZQUIERDA;
+	estado->accion = E_ACCION::QUIETO;
+	*/
 	rectanguloPersonaje = new Rectangulo(false, "#00F0A0", pos, 0, 80, alto, ancho); // Solo para pruebas...
 
 }
