@@ -92,10 +92,21 @@ Escenario::Escenario(Config* config) {
 		caractDef.density = DENSIDAD_DEL_PERSONAJE;
 		caractDef.friction = FRICCION_DEL_PERSONAJE;
 
-		// La da la forma y la masa, determinando la densidad
+		// La da la forma y la masa, determinando la densidad y no deja que rote
 		personaje->CreateFixture(&caractDef);
+		personaje->SetFixedRotation(true);
 		// Guarda su referencia al mundo
 		personajes->at(i)->setLinkAMundo(personaje);
+
+		//solo funciona para un personaje
+		//add foot sensor fixture
+/*		b2PolygonShape sensorForma;
+	    b2FixtureDef sensorFix;
+	    sensorForma.SetAsBox(personajes->at(i)->getAncho()/2, 0.1, b2Vec2(0,-(personajes->at(i)->getAlto()/2)), 0);
+		sensorFix.isSensor = true;
+		b2Fixture* footSensorFixture = personaje->CreateFixture(&sensorFix);
+		footSensorFixture->SetUserData( (void*)3 );*/
+
 	}
 
 	// Crea los objetos (se supone que no todos son estáticos)
@@ -146,6 +157,10 @@ Escenario::Escenario(Config* config) {
 		// Guarda su referencia al mundo
 		objetos->at(i)->setLinkAMundo(objeto);
 	}
+	// Se agrega al mundo el listener para los contactos
+	//cuentaPasos = new MyContactListener;
+	//world->SetContactListener(cuentaPasos);
+
 	this->mundo = world;
 }
 
@@ -159,8 +174,10 @@ void Escenario::cambiar(std::vector<Evento*>* ListaDeEventos) {
 			b2Vec2 impulsoDerecha(IMPULSO_DER_X, IMPULSO_DER_Y);
 			personajes->at(0)->getLinkAMundo()->ApplyLinearImpulse(impulsoDerecha,personajes->at(0)->getLinkAMundo()->GetPosition(),true);
 		} else if (ListaDeEventos->at(i)->getTecla() == TECLA_ARRIBA) {
-			b2Vec2 impulsoArriba(IMPULSO_ARR_X, IMPULSO_ARR_Y);
-			personajes->at(0)->getLinkAMundo()->ApplyLinearImpulse(impulsoArriba,personajes->at(0)->getLinkAMundo()->GetPosition(),true);
+			//if (cuentaPasos->numFootContacts == 0) {
+				b2Vec2 impulsoArriba(IMPULSO_ARR_X, IMPULSO_ARR_Y);
+				personajes->at(0)->getLinkAMundo()->ApplyLinearImpulse(impulsoArriba,personajes->at(0)->getLinkAMundo()->GetPosition(),true);
+			//}
 		}
 	}
 
