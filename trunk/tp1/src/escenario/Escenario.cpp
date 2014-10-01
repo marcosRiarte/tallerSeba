@@ -275,7 +275,7 @@ void UpdatePos(std::vector<Personaje*>* personajes,
 			// si la velocidad en x y en y es cero esta quieto
 			estado = "Quieto";
 		}
-		//personajes->at(i)->setEstado(estado);
+		personajes->at(i)->setEstado(estado);
 	}
 	for (unsigned i = 0; i < objetos->size(); i++) {
 		b2Body* objeto = objetos->at(i)->getLinkAMundo();

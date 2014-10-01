@@ -12,7 +12,7 @@
 #include <Box2D/Box2D.h>
 
 static const float GRAVEDAD_X = 0;
-static const float GRAVEDAD_Y = -10;
+static const float GRAVEDAD_Y = -80;
 static const float MEDIO_ALTO_SUELO = 2;
 static const float MEDIO_ALTO_TECHO = 1;
 static const float MEDIO_ANCHO_PARED = 2;
