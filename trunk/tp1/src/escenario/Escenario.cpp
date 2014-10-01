@@ -9,6 +9,73 @@
 #include <stdio.h>
 
 
+
+
+
+/// Gets the combined AABB of all shapes of the given body.
+b2AABB GetBodyAABB( const b2Body* body )
+{
+   b2AABB result;
+   b2Transform trans = body->GetTransform();
+   const b2Fixture* first = body->GetFixtureList();
+
+   for( const b2Fixture* fixture = first; fixture; fixture = fixture->GetNext() )
+   {
+      b2AABB aabb;
+      fixture->GetShape()->ComputeAABB( &aabb, trans, 0 );
+      if( fixture == first )
+         result = aabb;
+      else
+         result.Combine( aabb );
+   }
+
+   return result;
+}
+
+/// Callback to check for overlap of given body.
+struct CheckOverlapCallback : b2QueryCallback
+{
+   CheckOverlapCallback( const b2Body* body ) :
+      m_body( body ), m_isOverlap( false ) {}
+
+   // override
+   bool ReportFixture( b2Fixture* fixture )
+   {
+      // Skip self.
+      if( fixture->GetBody() == m_body )
+         return true;
+
+      for( const b2Fixture* bodyFixture = m_body->GetFixtureList(); bodyFixture;
+          bodyFixture = bodyFixture->GetNext() )
+      {
+         if( b2TestOverlap( fixture->GetShape(), 0, bodyFixture->GetShape(), 0,
+            fixture->GetBody()->GetTransform(), m_body->GetTransform() ) )
+         {
+            m_isOverlap = true;
+            return false;
+         }
+      }
+   }
+
+   const b2Body* m_body;
+   bool m_isOverlap;
+};
+
+/// Returns true if the given body overlaps any other body in the world.
+bool IsOverlap( const b2World* world, const b2Body* body )
+{
+   CheckOverlapCallback callback( body );
+   world->QueryAABB( &callback, GetBodyAABB( body ) );
+   return callback.m_isOverlap;
+}
+
+
+
+
+
+
+
+
 /*
  *	Pasa los puntos de un vector de posiciones a uno
  *	de vértices que es la clase que maneja Box2D
@@ -146,7 +213,7 @@ void CrearObjetos(b2World* world, std::vector<ObjetoMapa*>* objetos) {
 		objetoDef.position.Set(objetos->at(i)->getPos()->getX(),
 				objetos->at(i)->getPos()->getY());
 		//objetoDef.angle = objetos->at(i)->getRotacion();
-		//objetoDef.angle = 0;
+		//objetoDef.angle = b2_pi;
 		b2Body* objeto = world->CreateBody(&objetoDef);
 
 		// Determina la forma y la crea
@@ -177,6 +244,15 @@ void CrearObjetos(b2World* world, std::vector<ObjetoMapa*>* objetos) {
 
 		// Guarda su referencia al mundo
 		objetos->at(i)->setLinkAMundo(objeto);
+
+		if (IsOverlap(world, objeto)){
+			world->DestroyBody(objeto);
+			//objetos->erase(std::remove(objetos->begin(), objetos->end(), i), objetos->end());
+			// aca se supone q se tendria q borrar y no se borra una mierda, vector dinamico del orto.
+			std::vector<ObjetoMapa*>::iterator newEnd = std::remove(objetos->begin(), objetos->end(), i);
+			objetos->erase(newEnd, objetos->end());
+		}
+
 	}
 }
 
