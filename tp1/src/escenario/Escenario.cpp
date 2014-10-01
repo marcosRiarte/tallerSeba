@@ -145,7 +145,7 @@ void CrearObjetos(b2World* world, std::vector<ObjetoMapa*>* objetos) {
 		// Setea posición y angulo
 		objetoDef.position.Set(objetos->at(i)->getPos()->getX(),
 				objetos->at(i)->getPos()->getY());
-		objetoDef.angle = objetos->at(i)->getRotacion();
+		//objetoDef.angle = objetos->at(i)->getRotacion();
 		//objetoDef.angle = 0;
 		b2Body* objeto = world->CreateBody(&objetoDef);
 
