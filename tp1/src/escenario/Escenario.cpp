@@ -143,7 +143,7 @@ Escenario::Escenario(Config* config) {
 			// hacerlo por parámetro alto_un, pero la corrección respecto al centro de masa, hay que trabajarla.
 
 			for(int j=0; j<cantidadDePuntos; j++) {
-				b2Vec2 * unParOrdenado = new b2Vec2(unVectorDePos->at(j)->getX(),800+unVectorDePos->at(j)->getY());
+				b2Vec2 * unParOrdenado = new b2Vec2(unVectorDePos->at(j)->getX()-(objetos->at(i)->getPos()->getX()),unVectorDePos->at(j)->getY()-(objetos->at(i)->getPos()->getY()));
 				vertices[j]= *unParOrdenado;
 			}
 			poligono.Set(vertices, cantidadDePuntos);
