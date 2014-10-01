@@ -6,6 +6,7 @@
 #include "Config.h"
 #include "CreadorObjetos.h"
 #include "ValidadorObjetos.h"
+#include "../src/Constantes.h"
 
 Config::Config(std::string nombreArchivo) {
 
@@ -20,8 +21,9 @@ Config::Config(std::string nombreArchivo) {
 	Json::Features::strictMode();
 
 	if (!parseoExitoso) {
-//		Log::Loguear(reader.getFormatedErrorMessages(), nombreArchivo);
-		std::cout << reader.getFormatedErrorMessages() << "\n";
+		std::string mensaje = "Fallo el parseo"+reader.getFormatedErrorMessages();
+		const char * c = mensaje.c_str();
+		loguer->loguear(c, Log::LOG_TIPO::LOG_ERR);
 	}
 
 	std::string escenario;
