@@ -7,20 +7,24 @@
 
 class Personaje {
 public:
+	/*
 	enum E_PERFIL {DERECHA, IZQUIERDA};
 	enum E_ACCION {QUIETO, DESPLAZANDO, SALTANDO, CAYENDO, EMPUJANDO};
 	struct Estado{
 		E_PERFIL perfil;
 		E_ACCION accion;
 	};
-
+	*/
+	std::string estado;
 private:
 	int ancho;
 	int alto;
 	Pos* pos;
 	float rot;
 	b2Body* linkAMundo;
+	/*
 	Estado* estado;
+	*/
 	Rectangulo *rectanguloPersonaje; //Solo para pruebas
 
 public:
@@ -40,10 +44,17 @@ public:
 	std::vector<Pos*>* getContorno();
 	Rectangulo* getRectangulo();
 
+	/*
 	// getter y setter de estado
 	void setEstado(E_PERFIL p, E_ACCION a);
 	void setEstado(Estado estado);
 	Estado getEstado();
+*/
+	//Setters y getters de estado.
+	void Personaje::setEstado(std::string unEstado);
+	std::string Personaje::getEstado();
+
+
 
 	// getter y setter de link a mundo
 	void setLinkAMundo(b2Body* link);

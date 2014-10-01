@@ -4,8 +4,10 @@ Personaje::Personaje(Pos* posicion) {
 	pos = posicion;
 	rot = 0;
 	linkAMundo = nullptr;
-	ancho = 36;
-	alto = 64;
+	ancho = 16;
+	alto = 24;
+	this->estado= "QuietoIzq";
+
 	/* Esto hace que explote, por lo que se deja comentado, revisar esta logica TODO
 	estado->perfil = E_PERFIL::IZQUIERDA;
 	estado->accion = E_ACCION::QUIETO;
@@ -64,6 +66,7 @@ b2Body* Personaje::getLinkAMundo(){
  * \param	\perfil
  * \param	\accion		Se utiliza detallar que tipo de acciones está realizando el personaje.
  */
+/*
 void Personaje::setEstado(E_PERFIL perfil, E_ACCION accion){
 	estado->perfil = perfil;
 	estado->accion = accion;
@@ -72,6 +75,7 @@ void Personaje::setEstado(E_PERFIL perfil, E_ACCION accion){
 /**
  * \brief	Setea el estado del personaje.
  */
+/*
 void Personaje::setEstado(Estado estado){
 	this->estado->perfil = estado.perfil;
 	this->estado->accion = estado.accion;
@@ -80,6 +84,16 @@ void Personaje::setEstado(Estado estado){
 /**
  * \return	Estado del personaje.
  */
+/*
 Personaje::Estado Personaje::getEstado(){
-	return *estado;
+	return estado;
+}
+*/
+
+void Personaje::setEstado(std::string unEstado){
+	this->estado = unEstado;
+}
+
+std::string Personaje::getEstado(){
+	return this->estado;
 }
