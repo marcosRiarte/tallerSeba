@@ -21,7 +21,7 @@
 #define CONTINUAR					2
 
 // Log
-#define PATH_LOG				 	"./logs/"
+#define PATH_LOG				 	"C:\\Users\\consultor\\workspace\\tp1 - Trunk\\logs"
 static Log* loguer = (Log*) DebugLog::getInstance();
 
 #endif /* CONSTANTES_H_ */
