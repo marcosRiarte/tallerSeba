@@ -6,7 +6,7 @@ Personaje::Personaje(Pos* posicion) {
 	linkAMundo = nullptr;
 	ancho = 16;
 	alto = 24;
-	this->estado= "QuietoIzq";
+	this->estado= "Quieto";
 
 	/* Esto hace que explote, por lo que se deja comentado, revisar esta logica TODO
 	estado->perfil = E_PERFIL::IZQUIERDA;

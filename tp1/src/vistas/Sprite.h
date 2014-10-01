@@ -4,10 +4,22 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <vector>
+#include <string>
 
 class Sprite{
+private:
+	std::vector<SDL_Rect*>* CaminandoDer;
+	std::vector<SDL_Rect*>* SaltandoDer;
+	std::vector<SDL_Rect*>* SaltandoDiagDer;
+
+	std::vector<SDL_Rect*>* CaminandoIzq;
+	std::vector<SDL_Rect*>* SaltandoIzq;
+	std::vector<SDL_Rect*>* SaltandoDiagIzq;
+	std::vector<SDL_Rect*>* Quieto;
+
 	public:
-	static std::vector<SDL_Rect*>* listaDeCuadros();
+	Sprite();
+	std::vector<SDL_Rect*>* listaDeCuadros(std::string tipoMov);
 };
 
 #endif
