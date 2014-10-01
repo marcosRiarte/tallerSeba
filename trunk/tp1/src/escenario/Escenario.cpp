@@ -11,6 +11,9 @@
  *	Pasa los puntos de un vector de posiciones a uno
  *	de vértices que es la clase que maneja Box2D
  */
+/* ESTO ASI NO FUNCIONA. Se hizo un for en el código de poligonos en si ya que no se puede devolver arrays de este tipo
+ * en c++, es decir new b2Vec2[puntos->size()] no devuelve un vector de tipo b2Vec2
+ *  que es lo que requiere box2D (un array común y feo que c++ lo maneja mal)
 b2Vec2* PasarAVertices(std::vector<Pos*>* puntos) {
 	b2Vec2* vectorDePuntos;
 	vectorDePuntos = new b2Vec2[puntos->size()];
@@ -21,6 +24,8 @@ b2Vec2* PasarAVertices(std::vector<Pos*>* puntos) {
 	// Seba dijo q los array dsp hay q eliminarlos, no encontre como D:
 	return vectorDePuntos;
 }
+*/
+
 
 /*
  *	Agarra el punto que devuelve el contorno de un circulo
@@ -101,7 +106,6 @@ Escenario::Escenario(Config* config) {
 		//solo funciona para un personaje
 		//add foot sensor fixture
 			b2PolygonShape sensorForma;
-			float densidad = 10;
 
 	    b2FixtureDef sensorFix;
 	    sensorForma.SetAsBox(personajes->at(i)->getAncho()/2, 0.1, b2Vec2(0,-(personajes->at(i)->getAlto()/2)), 0);
@@ -119,7 +123,6 @@ Escenario::Escenario(Config* config) {
 		if (!objetos->at(i)->esEstatico()) {
 			objetoDef.type = b2_dynamicBody;
 		}
-
 		// Setea posición y angulo
 		objetoDef.position.Set(objetos->at(i)->getPos()->getX(), objetos->at(i)->getPos()->getY());
 		objetoDef.angle = objetos->at(i)->getRotacion();
@@ -127,10 +130,22 @@ Escenario::Escenario(Config* config) {
 
 		// Determina la forma
 		b2FixtureDef caract;
-		if (objetos->at(i)->esCirculo()) {
+		if (!(objetos->at(i)->esCirculo())) {
 			b2PolygonShape poligono;
-			b2Vec2* vertices = PasarAVertices(objetos->at(i)->getContorno());
 			int cantidadDePuntos = objetos->at(i)->getContorno()->size();
+			b2Vec2 vertices[cantidadDePuntos];
+			std::vector<Pos*>* unVectorDePos = objetos->at(i)->getContorno();
+
+
+			//TODO falta implementar bien la logica de donde se hacen los poligonos,
+			// ya que box2d toma las cosas respecto al centro de masa, e y positivo para arriba
+			// lo de y positivo para arriba se soluciona sumandole la altura de la pantalla, habria que
+			// hacerlo por parámetro alto_un, pero la corrección respecto al centro de masa, hay que trabajarla.
+
+			for(int j=0; j<cantidadDePuntos; j++) {
+				b2Vec2 * unParOrdenado = new b2Vec2(unVectorDePos->at(j)->getX(),800+unVectorDePos->at(j)->getY());
+				vertices[j]= *unParOrdenado;
+			}
 			poligono.Set(vertices, cantidadDePuntos);
 			caract.shape = &poligono;
 
