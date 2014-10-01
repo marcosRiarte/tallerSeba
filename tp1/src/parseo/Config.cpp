@@ -17,6 +17,8 @@ Config::Config(std::string nombreArchivo) {
 
 	std::ifstream prueba(nombreArchivo, std::ifstream::binary);
 	bool parseoExitoso = reader.parse(prueba, raiz, false);
+	Json::Features::strictMode();
+
 	if (!parseoExitoso) {
 //		Log::Loguear(reader.getFormatedErrorMessages(), nombreArchivo);
 		std::cout << reader.getFormatedErrorMessages() << "\n";
