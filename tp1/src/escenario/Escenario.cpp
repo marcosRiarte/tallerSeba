@@ -241,39 +241,41 @@ void UpdatePos(std::vector<Personaje*>* personajes,
 		personajes->at(i)->setPosicion(posicion);
 
 		printf("%4.2f %4.2f %i \n", personaje->GetPosition().x,personaje->GetPosition().y, i);
+		personajes->at(i)->setEstado("Quieto");
 
 		// Determina el estado de la imagen
 		b2Vec2 velocidad = personaje->GetLinearVelocity();
+		std::string estado= "CayendoIzq";
 		if (velocidad.x<0) {
 			// si la velocidad en x es negativa, va para la izq.
 			if (velocidad.y<0) {
 				// si la velocidad en y es negativa esta cayendo.
-				personajes->at(i)->setEstado("CayendoIzq");
+				estado = "CayendoIzq";
 			} else if (velocidad.y>0) {
 				// si la velocidad en y es positiva esta saltando.
-				personajes->at(i)->setEstado("SaltandoIzq");
+				estado = "SaltandoIzq";
 			} else if (velocidad.y==0) {
 				// si la velocidad en y es cero esta quieto en y.
-				personajes->at(i)->setEstado("CaminandoIzq");
+				estado = "CaminandoIzq";
 			}
 		} else {
 			// si la velocidad en x es positiva, va para la der.
 			if (velocidad.y<0) {
 				// si la velocidad en y es negativa esta cayendo.
-				personajes->at(i)->setEstado("CayendoDer");
+				estado = "CayendoDer";
 			} else if (velocidad.y>0) {
 				// si la velocidad en y es positiva esta saltando.
-				personajes->at(i)->setEstado("SaltandoDer");
+				estado = "SaltandoDer";
 			} else if (velocidad.y==0) {
 				// si la velocidad en y es cero esta quieto en y.
-				personajes->at(i)->setEstado("CaminandoDer");
+				estado = "CaminandoDer";
 			}
 		}
 		if (velocidad.x==0 && velocidad.y==0) {
 			// si la velocidad en x y en y es cero esta quieto
-			personajes->at(i)->setEstado("Quieto");
-
+			estado = "Quieto";
 		}
+		//personajes->at(i)->setEstado(estado);
 	}
 	for (unsigned i = 0; i < objetos->size(); i++) {
 		b2Body* objeto = objetos->at(i)->getLinkAMundo();
