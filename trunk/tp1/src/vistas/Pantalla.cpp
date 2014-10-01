@@ -17,7 +17,7 @@ Pantalla::Pantalla(Config* config) {
 	this->renderer = nullptr;
 	this->fondo = nullptr;
 	this->unSprite = nullptr;
-	this->listaDeCuadros = nullptr;
+	this->listaDeCuadros = new std::vector<SDL_Rect*>();
 	this->HojaDeSpritesDeTextura= new CreadorDeTexturas();
 	this->config = config;
 	inicializar();
@@ -111,6 +111,7 @@ void Pantalla::cambiar(){
 
 	//"CayendoIzq","SaltandoIzq"),,"CaminandoIzq","CayendoDer","SaltandoDer","CaminandoDer","Quieto"
 
+	this->listaDeCuadros = unSprite->listaDeCuadros("Quieto");
 	if(config->getPersonajes()->at(0)->getEstado()=="Quieto"){
 		this->listaDeCuadros = unSprite->listaDeCuadros("Quieto");
 	}else if(config->getPersonajes()->at(0)->getEstado()=="CayendoIzq"){
@@ -126,9 +127,11 @@ void Pantalla::cambiar(){
 	}else if(config->getPersonajes()->at(0)->getEstado()=="CaminandoDer"){
 		this->listaDeCuadros = unSprite->listaDeCuadros("CaminandoDer");
 	}
-
 	//Renderizamos el sprite
-	SDL_Rect* cuadroActual = listaDeCuadros->at(numeroDeCuadro/(listaDeCuadros->size()));
+
+	std::cout << "tamanio lista de cuadros" << listaDeCuadros->size() << "\n";
+	std::cout << "numerode cuadros " << numeroDeCuadro << "\n";
+	SDL_Rect* cuadroActual = listaDeCuadros->at((numeroDeCuadro)/(listaDeCuadros->size()));
 	HojaDeSpritesDeTextura->render((unaVista->getVentana()->x),(unaVista->getVentana()->y), cuadroActual, renderer);
 
 	//Se actualiza la pantalla
@@ -137,7 +140,7 @@ void Pantalla::cambiar(){
 	//Siguiente cuadro
 	++numeroDeCuadro;
 	//Ciclado de la animación
-	if (numeroDeCuadro / (listaDeCuadros->size()) >= (listaDeCuadros->size())) {
+	if ((numeroDeCuadro / listaDeCuadros->size()) >= (listaDeCuadros->size())) {
 		numeroDeCuadro = 0;
 	}
 

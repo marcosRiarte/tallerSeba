@@ -8,13 +8,14 @@
 
 class Sprite{
 private:
-	std::vector<SDL_Rect*>* CaminandoDer;
+	std::vector<SDL_Rect*>* CayendoDer;
 	std::vector<SDL_Rect*>* SaltandoDer;
-	std::vector<SDL_Rect*>* SaltandoDiagDer;
+	std::vector<SDL_Rect*>* CaminandoDer;
 
-	std::vector<SDL_Rect*>* CaminandoIzq;
+	std::vector<SDL_Rect*>* CayendoIzq;
 	std::vector<SDL_Rect*>* SaltandoIzq;
-	std::vector<SDL_Rect*>* SaltandoDiagIzq;
+	std::vector<SDL_Rect*>* CaminandoIzq;
+
 	std::vector<SDL_Rect*>* Quieto;
 
 	public:
