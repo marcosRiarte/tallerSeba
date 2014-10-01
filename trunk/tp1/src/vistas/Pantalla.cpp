@@ -16,8 +16,10 @@ Pantalla::Pantalla(Config* config) {
 	this->ventana = nullptr;
 	this->renderer = nullptr;
 	this->fondo = nullptr;
+	this->unSprite = nullptr;
 	this->listaDeCuadros = nullptr;
 	this->HojaDeSpritesDeTextura= new CreadorDeTexturas();
+	this->config = config;
 	inicializar();
 	this->agregarVistas(config->getObjetos(),config->getPersonajes());
 }
@@ -57,7 +59,7 @@ void Pantalla::inicializar() throw (SDL_Excepcion){
 					const char* errorCargaTextura = errorTextura.c_str();
 							loguer->loguear(errorCargaTextura,Log::LOG_ERR);
 	} else {
-		listaDeCuadros = Sprite::listaDeCuadros();
+		unSprite = new Sprite();
 	}
 }
 
@@ -87,12 +89,9 @@ void Pantalla::cambiar(){
 	//Cargo el fondo de pantalla
 	SDL_RenderCopy(renderer, fondo, NULL, NULL);
 
-	//Renderizar el sprite
-	SDL_Rect* cuadroActual = listaDeCuadros->at(numeroDeCuadro/12);
-	HojaDeSpritesDeTextura->render((cuadroActual->w) / 2,(cuadroActual->h) / 2, cuadroActual, renderer);
 
 	//Se cargan los objetos
-	for(unsigned i = 0; i < vistas->size(); i++ ){
+	for(unsigned i = 0; i < vistas->size()-1; i++ ){
 		Vista* vista = vistas->at(i);
 		//obtengo la imagen ya rotada con el tamanio en dimensiones Box2D
 		SDL_Texture* textura = vista->getVista();
@@ -107,13 +106,38 @@ void Pantalla::cambiar(){
 		SDL_DestroyTexture(textura);
 	}
 
+	//Se carga el objeto personaje
+	Vista* unaVista = vistas->at(vistas->size()-1);
+
+	//"CayendoIzq","SaltandoIzq"),,"CaminandoIzq","CayendoDer","SaltandoDer","CaminandoDer","Quieto"
+
+	if(config->getPersonajes()->at(0)->getEstado()=="Quieto"){
+		this->listaDeCuadros = unSprite->listaDeCuadros("Quieto");
+	}else if(config->getPersonajes()->at(0)->getEstado()=="CayendoIzq"){
+		this->listaDeCuadros = unSprite->listaDeCuadros("CayendoIzq");
+	}else if(config->getPersonajes()->at(0)->getEstado()=="SaltandoIzq"){
+		this->listaDeCuadros = unSprite->listaDeCuadros("SaltandoIzq");
+	}else if(config->getPersonajes()->at(0)->getEstado()=="CaminandoIzq"){
+		this->listaDeCuadros = unSprite->listaDeCuadros("CaminandoIzq");
+	}else if(config->getPersonajes()->at(0)->getEstado()=="CayendoDer"){
+		this->listaDeCuadros = unSprite->listaDeCuadros("CayendoDer");
+	}else if(config->getPersonajes()->at(0)->getEstado()=="SaltandoDer"){
+		this->listaDeCuadros = unSprite->listaDeCuadros("SaltandoDer");
+	}else if(config->getPersonajes()->at(0)->getEstado()=="CaminandoDer"){
+		this->listaDeCuadros = unSprite->listaDeCuadros("CaminandoDer");
+	}
+
+	//Renderizamos el sprite
+	SDL_Rect* cuadroActual = listaDeCuadros->at(numeroDeCuadro/(listaDeCuadros->size()));
+	HojaDeSpritesDeTextura->render((unaVista->getVentana()->x),(unaVista->getVentana()->y), cuadroActual, renderer);
+
 	//Se actualiza la pantalla
 	SDL_RenderPresent(renderer);
 
 	//Siguiente cuadro
 	++numeroDeCuadro;
 	//Ciclado de la animación
-	if (numeroDeCuadro / 12 >= 12) {
+	if (numeroDeCuadro / (listaDeCuadros->size()) >= (listaDeCuadros->size())) {
 		numeroDeCuadro = 0;
 	}
 

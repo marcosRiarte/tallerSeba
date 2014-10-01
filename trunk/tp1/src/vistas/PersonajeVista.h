@@ -7,8 +7,9 @@
 class PersonajeVista: public Vista {
 private:
 	Personaje* personaje;
+	/*
 	Personaje::Estado* estadoAnterior;
-
+*/
 	// Texura que contiene todos los sprites que se van a usar
 	SDL_Texture* contenedorDeSprites;
 

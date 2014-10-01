@@ -120,7 +120,7 @@ Config::Config(std::string nombreArchivo) {
 }
 
 std::vector<ObjetoMapa*>* Config::getObjetos() {
-	return objetosMapa;
+	return this->objetosMapa;
 }
 
 std::vector<Personaje*>* Config::getPersonajes() {

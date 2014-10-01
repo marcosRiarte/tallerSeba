@@ -10,17 +10,18 @@
 #define CANTIDAD_SPRITES_CAIDA				1
 #define CANTIDAD_SPRITES_EMPUJAR			3
 
-
+/*
 PersonajeVista::PersonajeVista(SDL_Renderer* r, Personaje* p) {
 	renderer = r;
 	personaje = p;
 	ventana->h = personaje->getAlto();
 	ventana->w = personaje->getAncho();
-
+/*TODO
 	estadoAnterior = new Personaje::Estado();
 	estadoAnterior->perfil = Personaje::IZQUIERDA;
 	estadoAnterior->accion = Personaje::QUIETO;
-
+*/
+/*
 	vSpritesQuieto = new std::vector<SDL_Rect*>;
 	vSpritesDesplazamiento = new std::vector<SDL_Rect*>;
 	vSpritesSalto = new std::vector<SDL_Rect*>;
@@ -37,6 +38,7 @@ PersonajeVista::PersonajeVista(SDL_Renderer* r, Personaje* p) {
 /**
  * \brief
  */
+/*
 void PersonajeVista::cargarContenedorDeSprites(){
 	SDL_Surface* superficie = IMG_Load(PATH_IMAGEN_SPRITES);
 	this->contenedorDeSprites = SDL_CreateTextureFromSurface(renderer, superficie);
@@ -46,6 +48,7 @@ void PersonajeVista::cargarContenedorDeSprites(){
 	 * Esto que viene ahora solo sirve a modo de prueba para ver como es que carga la imagen
 	 * 	contenedora de sprites
 	 */
+/*
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 		SDL_RenderClear(renderer);
 		//Cargo el fondo de pantalla
@@ -55,7 +58,7 @@ void PersonajeVista::cargarContenedorDeSprites(){
 	 * TODO verificar si el color key esta bien puesto
 	 * TODO ver que pasa con los tamaños.
 	 */
-
+/*
 }
 
 /**
@@ -63,6 +66,7 @@ void PersonajeVista::cargarContenedorDeSprites(){
  * 			Llena cada vector con elementos del tipo SDL_Rect, que gestionan información acerca de qué porción de
  * 			la imagen que possee todos los sprites(\rutaImagenConSprites la referencia) se debe tener en cuenta.
  */
+/*
 void PersonajeVista::crearSprites(){
 
 	//Sprite cuando esta quieto
@@ -117,8 +121,10 @@ void PersonajeVista::crearSprites(){
 
 }
 
+/*
 SDL_Texture* PersonajeVista::getVista() {
 	SDL_Texture* textura;
+	/*
 	Personaje::Estado estadoActual = personaje->getEstado();
 
 	if (estadoActual.accion == estadoAnterior->accion)
@@ -152,6 +158,8 @@ SDL_Texture* PersonajeVista::getVista() {
  * TODO una vez que esté cargada la imagen principal con todos los sprites en ella,
  * 	y testeado (importante) hay que hacer esto.
  */
+
+	/*
 SDL_Texture* PersonajeVista::getVista(std::vector<SDL_Rect*>* sprites, int iterador){
 	return nullptr;
 }
@@ -167,3 +175,4 @@ PersonajeVista::~PersonajeVista() {
 	// TODO Auto-generated destructor stub
 }
 
+*/

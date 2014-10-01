@@ -9,6 +9,7 @@
 #include "../parseo/Config.h"
 #include "CreadorDeTexturas.h"
 #include "Sprite.h"
+#include "../personajes/Personaje.h"
 
 class Pantalla {
 private:
@@ -17,13 +18,15 @@ private:
 	int alto;
 	int ancho;
 	int numeroDeCuadro;
+	Config* config;
 	std::string dirImg;
 	SDL_Window* ventana;
 	SDL_Renderer* renderer;
 	SDL_Texture * fondo;
 	std::vector<Vista*>* vistas;
-	std::vector<SDL_Rect*>* listaDeCuadros;
+	Sprite* unSprite;
 	CreadorDeTexturas* HojaDeSpritesDeTextura;
+	std::vector<SDL_Rect*>* listaDeCuadros;
 	void agregarVistas(std::vector<ObjetoMapa*>* objetos, std::vector<Personaje*>* personajes);
 public:
 	Pantalla(Config* config);
