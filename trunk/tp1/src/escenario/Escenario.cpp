@@ -5,7 +5,9 @@
 #include "Escenario.h"
 #include "../entrada/Evento.h"
 #include "../objetos/Pos.h"
+#include "../personajes/Personaje.h"
 #include <stdio.h>
+
 
 /*
  *	Pasa los puntos de un vector de posiciones a uno
@@ -144,6 +146,7 @@ void CrearObjetos(b2World* world, std::vector<ObjetoMapa*>* objetos) {
 		objetoDef.position.Set(objetos->at(i)->getPos()->getX(),
 				objetos->at(i)->getPos()->getY());
 		objetoDef.angle = objetos->at(i)->getRotacion();
+		//objetoDef.angle = 0;
 		b2Body* objeto = world->CreateBody(&objetoDef);
 
 		// Determina la forma y la crea
@@ -234,12 +237,43 @@ void UpdatePos(std::vector<Personaje*>* personajes,
 		// Creo q deberia borrar la pos anterior de alguna forma. No se si alcanza.
 		delete personajes->at(i)->getPosicion();
 
-		Pos* posicion = new Pos(personaje->GetPosition().x,
-				personaje->GetPosition().y);
+		Pos* posicion = new Pos(personaje->GetPosition().x,personaje->GetPosition().y);
 		personajes->at(i)->setPosicion(posicion);
 
-		printf("%4.2f %4.2f %i \n", personaje->GetPosition().x,
-				personaje->GetPosition().y, i);
+		printf("%4.2f %4.2f %i \n", personaje->GetPosition().x,personaje->GetPosition().y, i);
+
+		// Determina el estado de la imagen
+		b2Vec2 velocidad = personaje->GetLinearVelocity();
+		if (velocidad.x<0) {
+			// si la velocidad en x es negativa, va para la izq.
+			if (velocidad.y<0) {
+				// si la velocidad en y es negativa esta cayendo.
+				personajes->at(i)->setEstado("CayendoIzq");
+			} else if (velocidad.y>0) {
+				// si la velocidad en y es positiva esta saltando.
+				personajes->at(i)->setEstado("SaltandoIzq");
+			} else if (velocidad.y==0) {
+				// si la velocidad en y es cero esta quieto en y.
+				personajes->at(i)->setEstado("CaminandoIzq");
+			}
+		} else {
+			// si la velocidad en x es positiva, va para la der.
+			if (velocidad.y<0) {
+				// si la velocidad en y es negativa esta cayendo.
+				personajes->at(i)->setEstado("CayendoDer");
+			} else if (velocidad.y>0) {
+				// si la velocidad en y es positiva esta saltando.
+				personajes->at(i)->setEstado("SaltandoDer");
+			} else if (velocidad.y==0) {
+				// si la velocidad en y es cero esta quieto en y.
+				personajes->at(i)->setEstado("CaminandoDer");
+			}
+		}
+		if (velocidad.x==0 && velocidad.y==0) {
+			// si la velocidad en x y en y es cero esta quieto
+			personajes->at(i)->setEstado("Quieto");
+
+		}
 	}
 	for (unsigned i = 0; i < objetos->size(); i++) {
 		b2Body* objeto = objetos->at(i)->getLinkAMundo();

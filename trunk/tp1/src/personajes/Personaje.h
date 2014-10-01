@@ -51,8 +51,8 @@ public:
 	Estado getEstado();
 */
 	//Setters y getters de estado.
-	void Personaje::setEstado(std::string unEstado);
-	std::string Personaje::getEstado();
+	void setEstado(std::string unEstado);
+	std::string getEstado();
 
 
 
