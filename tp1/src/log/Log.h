@@ -1,13 +1,14 @@
 #ifndef LOG_H_
 #define LOG_H_
 #include "../excepciones/LogExcepcion.h"
+#include <string>
 
 /**
  * Singleton, getInstance() siempre devuelve el mismo objeto Log.
  */
 class Log {
 protected:
-	const char* archivo;
+	std::string archivo;
 public:
 	enum LOG_TIPO {LOG_ERR, LOG_WAR, LOG_DEB};
 
