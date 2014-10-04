@@ -116,7 +116,7 @@ void CrearCaja(b2World* world, Config* config) {
 	// Se crea el suelo en la posición y con el ancho y el alto que indica la config
 	b2BodyDef sueloDef;
 	sueloDef.position.Set((config->getAncho()) / 2,
-			MEDIO_ALTO_SUELO - (config->getAlto()));
+			-MEDIO_ALTO_SUELO - (config->getAlto()));
 	b2Body* suelo = world->CreateBody(&sueloDef);
 	b2PolygonShape sueloForma;
 	sueloForma.SetAsBox((config->getAncho()) / 2, MEDIO_ALTO_SUELO);
@@ -125,7 +125,7 @@ void CrearCaja(b2World* world, Config* config) {
 
 	// Se crea el techo en la posición y con el ancho y el alto que indica la config
 	b2BodyDef techoDef;
-	techoDef.position.Set((config->getAncho()) / 2, -MEDIO_ALTO_TECHO);
+	techoDef.position.Set((config->getAncho()) / 2, MEDIO_ALTO_TECHO);
 	b2Body* techo = world->CreateBody(&techoDef);
 	b2PolygonShape techoForma;
 	techoForma.SetAsBox((config->getAncho()) / 2, MEDIO_ALTO_TECHO);
@@ -134,7 +134,7 @@ void CrearCaja(b2World* world, Config* config) {
 
 	// Se crean las paredes en la posición y con el ancho y el alto que indica la config
 	b2BodyDef paredIzqDef;
-	paredIzqDef.position.Set(MEDIO_ANCHO_PARED, -(config->getAlto()) / 2);
+	paredIzqDef.position.Set(-MEDIO_ANCHO_PARED, -(config->getAlto()) / 2);
 	b2Body* paredIzq = world->CreateBody(&paredIzqDef);
 	b2PolygonShape paredIzqForma;
 	paredIzqForma.SetAsBox(MEDIO_ANCHO_PARED,
@@ -143,7 +143,7 @@ void CrearCaja(b2World* world, Config* config) {
 	// El segundo parámetro es la densidad
 	paredIzq->CreateFixture(&paredIzqForma, 0.0f);
 	b2BodyDef paredDerDef;
-	paredDerDef.position.Set((config->getAncho()) - MEDIO_ANCHO_PARED,
+	paredDerDef.position.Set((config->getAncho()) + MEDIO_ANCHO_PARED,
 			-(config->getAlto()) / 2);
 	b2Body* paredDer = world->CreateBody(&paredDerDef);
 	b2PolygonShape paredDerForma;
