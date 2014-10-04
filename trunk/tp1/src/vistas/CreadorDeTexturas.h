@@ -38,7 +38,7 @@ class CreadorDeTexturas {
 		void setAlpha( Uint8 alpha );
 
 		//Renderiza la textura en un punto dado
-		void render( int x, int y, SDL_Rect* clip = nullptr, SDL_Renderer* renderer=nullptr);
+		void render( int x, int y, int ancho, int alto, SDL_Rect* clip = nullptr,  SDL_Renderer* renderer=nullptr);
 
 		//Devuelve las dimensiones de la imagen
 		int getAncho();

@@ -35,14 +35,14 @@ Sprite::Sprite(){
 	this->CaminandoIzq->push_back(crearCuadro(94,16,18,24));
 
 	//salto vertical
-	this->CayendoIzq->push_back(crearCuadro(118,10,21,30));
-	this->CayendoIzq->push_back(crearCuadro(118,10,21,30));
-	this->CayendoIzq->push_back(crearCuadro(118,10,21,30));
-	this->CayendoIzq->push_back(crearCuadro(118,10,21,30));
+	this->CayendoIzq->push_back(crearCuadro(118,10,20,30));
+	this->CayendoIzq->push_back(crearCuadro(118,10,20,30));
+	this->CayendoIzq->push_back(crearCuadro(118,10,20,30));
+	this->CayendoIzq->push_back(crearCuadro(118,10,20,30));
 
 	//salto diagonal
 	this->SaltandoIzq->push_back(crearCuadro(150,16,23,25));
-	this->SaltandoIzq->push_back(crearCuadro(182,19,24,21));
+	this->SaltandoIzq->push_back(crearCuadro(182,19,22,21));
 	this->SaltandoIzq->push_back(crearCuadro(216,16,21,24));
 	this->SaltandoIzq->push_back(crearCuadro(246,16,25,24));
 
@@ -55,14 +55,14 @@ Sprite::Sprite(){
 	this->CaminandoDer->push_back(crearCuadro(807,16,17,24));
 
 	//salto vertical
-	this->CayendoDer->push_back(crearCuadro(723,10,21,30));
-	this->CayendoDer->push_back(crearCuadro(723,10,21,30));
-	this->CayendoDer->push_back(crearCuadro(723,10,21,30));
-	this->CayendoDer->push_back(crearCuadro(723,10,21,30));
+	this->CayendoDer->push_back(crearCuadro(723,10,20,30));
+	this->CayendoDer->push_back(crearCuadro(723,10,20,30));
+	this->CayendoDer->push_back(crearCuadro(723,10,20,30));
+	this->CayendoDer->push_back(crearCuadro(723,10,20,30));
 
 	//salto diagonal
 	this->SaltandoDer->push_back(crearCuadro(689,16,23,25));
-	this->SaltandoDer->push_back(crearCuadro(656,19,24,21));
+	this->SaltandoDer->push_back(crearCuadro(656,19,22,21));
 	this->SaltandoDer->push_back(crearCuadro(626,15,22,25));
 	this->SaltandoDer->push_back(crearCuadro(591,16,25,24));
 }

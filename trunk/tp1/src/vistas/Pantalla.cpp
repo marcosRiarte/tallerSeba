@@ -59,6 +59,7 @@ void Pantalla::inicializar() throw (SDL_Excepcion){
 					const char* errorCargaTextura = errorTextura.c_str();
 							loguer->loguear(errorCargaTextura,Log::LOG_ERR);
 	} else {
+
 		unSprite = new Sprite();
 	}
 }
@@ -129,10 +130,8 @@ void Pantalla::cambiar(){
 	}
 	//Renderizamos el sprite
 
-	std::cout << "tamanio lista de cuadros" << listaDeCuadros->size() << "\n";
-	std::cout << "numerode cuadros " << numeroDeCuadro << "\n";
-	SDL_Rect* cuadroActual = listaDeCuadros->at((numeroDeCuadro)/(listaDeCuadros->size()));
-	HojaDeSpritesDeTextura->render((unaVista->getVentana()->x),(unaVista->getVentana()->y), cuadroActual, renderer);
+		SDL_Rect* cuadroActual = listaDeCuadros->at((numeroDeCuadro)/(listaDeCuadros->size()));
+	HojaDeSpritesDeTextura->render((unaVista->getVentana()->x),(unaVista->getVentana()->y),config->getPersonajes()->at(0)->getAncho(),config->getPersonajes()->at(0)->getAlto(), cuadroActual, renderer);
 
 	//Se actualiza la pantalla
 	SDL_RenderPresent(renderer);

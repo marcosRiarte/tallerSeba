@@ -4,6 +4,7 @@
 #include "Constantes.h"
 #include "controlador/Controlador.h"
 #include <iostream>
+#include <stdio.h>
 
 // Estructura del modelo
 struct MVC {
@@ -31,11 +32,30 @@ int main(int argc, char* argv[]) {
 // Crea todas las partes del modelo
 MVC* creacionDelModelo(char* direccionDeLaConfiguracion) {
 	MVC* mvc = new MVC;
+	char msg[1000];
 
 	mvc->config = new Config(direccionDeLaConfiguracion);
+
+	//Se loguea la creación de objetos
+	snprintf(msg, 1000, "Se crearon: %d objetos",mvc->config->getObjetos()->size());
+	loguer->loguear(msg, Log::LOG_DEB);
+
+
 	mvc->escenario = new Escenario(mvc->config);
+
+	//Se loguea la creación del escenario
+	snprintf(msg, 1000, "Se creo la física Box2D con ancho: %d unidades, alto %d unidades y %d objetos",
+			mvc->config->getAncho(), mvc->config->getAlto(), mvc->config->getObjetos()->size());
+		loguer->loguear(msg, Log::LOG_DEB);
+
 	Controlador::iniciarSDL();
+
 	mvc->pantalla = new Pantalla(mvc->config);
+
+	//Se loguea la creación de pantalla
+		snprintf(msg, 1000, "Se creo la pantalla con ancho: %d unidades y alto %d unidades",
+				mvc->pantalla->getAncho(), mvc->pantalla->getAlto());
+			loguer->loguear(msg, Log::LOG_DEB);
 
 	return mvc;
 }
