@@ -82,17 +82,17 @@ void CreadorDeTexturas::setAlpha( Uint8 alpha ){
 	SDL_SetTextureAlphaMod( Textura, alpha );
 }
 
-void CreadorDeTexturas::render( int x, int y, SDL_Rect* fotograma,SDL_Renderer* render ){
+void CreadorDeTexturas::render(int x, int y, int ancho, int alto, SDL_Rect* fotograma,SDL_Renderer* render){
 	//Se pide memoria para la imagen a ser dibujada
 	SDL_Rect* unRender = new SDL_Rect();
 
 	//Seteo de las dimensiones del renderizado del cuadro
 	if( fotograma != nullptr )
 	{
-		unRender->h = 24;
-		unRender->w = 16;
-		unRender->x = x;
-		unRender->y = y;
+		unRender->h = alto+4;
+		unRender->w = ancho+4;
+		unRender->x = x+12;
+		unRender->y = y+7;
 	}
 
 	//Se dibuja en pantalla

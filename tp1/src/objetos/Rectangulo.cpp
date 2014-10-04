@@ -12,7 +12,7 @@ std::vector<Pos*>* Rectangulo::getContorno() {
 	std::vector<Pos*>* vertices = new std::vector<Pos*>();
 
 	int x1 = (pos->getX()) - (ancho / 2);
-	int y1 = (pos->getY()) - (alto / 2);
+	int y1 = (pos->getY()) - (alto / 2)-1;
 	int x2 = x1 + ancho;
 	int y2 = y1;
 	int x3 = x2;
