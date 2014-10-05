@@ -245,14 +245,17 @@ void CrearObjetos(b2World* world, std::vector<ObjetoMapa*>* objetos) {
 		// La da la forma y la masa, determinando la densidad
 		objeto->CreateFixture(&caract);
 
+		if (!IsOverlap(world, objeto)){
 		// Guarda su referencia al mundo
 		objetos->at(i)->setLinkAMundo(objeto);
-
-		if (!IsOverlap(world, objeto)){
-			world->DestroyBody(objeto);
-			objetos->erase(objetos->begin()+i+1);
 		}
+		else{
+			objetos->erase(objetos->begin()+i);
+			i--;
+			world->DestroyBody(objeto);
 	}
+	}
+
 }
 
 Escenario::Escenario(Config* config) {
@@ -351,15 +354,15 @@ void UpdatePos(std::vector<Personaje*>* personajes,
 		}
 		personajes->at(i)->setEstado(estado);
 	}
-	for (unsigned i = 0; i < objetos->size(); i++) {
-		b2Body* objeto = objetos->at(i)->getLinkAMundo();
-		// Creo q deberia borrar la pos anterior de alguna forma. No se si alcanza.
-		delete objetos->at(i)->getPos();
 
-		Pos* posicion = new Pos(objeto->GetPosition().x,
-				objeto->GetPosition().y);
-		objetos->at(i)->setPos(posicion);
-		objetos->at(i)->setRotacion(objeto->GetAngle());
+	for (unsigned j = 0; j < objetos->size(); j++) {
+		b2Body* objeto = objetos->at(j)->getLinkAMundo();
+		// Creo q deberia borrar la pos anterior de alguna forma. No se si alcanza.
+		delete objetos->at(j)->getPos();
+
+		Pos* posicion = new Pos(objeto->GetPosition().x,objeto->GetPosition().y);
+		objetos->at(j)->setPos(posicion);
+		objetos->at(j)->setRotacion(objeto->GetAngle());
 	}
 }
 

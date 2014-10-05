@@ -21,7 +21,8 @@ std::vector<Pos*>* Poligono::getContorno() {
 }
 
 Poligono::~Poligono() {
-	// TODO Auto-generated destructor stub
+	this->lados = 0;
+		this->escala = 0;
 }
 
 float Poligono::getArea(){

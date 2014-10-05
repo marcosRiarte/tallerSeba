@@ -50,7 +50,7 @@ public:
 	virtual std::vector<Pos*>* getContorno() = 0;
 	virtual	float getArea() = 0;
 
-	virtual ~ObjetoMapa(){};
+	virtual ~ObjetoMapa();
 };
 
 #endif /* OBJETOMAPA_H_ */

@@ -34,13 +34,14 @@ MVC* creacionDelModelo(char* direccionDeLaConfiguracion) {
 	MVC* mvc = new MVC;
 	char msg[1000];
 
+	//Se parsea el archivo Json
 	mvc->config = new Config(direccionDeLaConfiguracion);
 
 	//Se loguea la creación de objetos
-	snprintf(msg, 1000, "Se crearon: %d objetos",mvc->config->getObjetos()->size());
+	snprintf(msg, 1000, "Se parsearon: %d objetos",mvc->config->getObjetos()->size());
 	loguer->loguear(msg, Log::LOG_DEB);
 
-
+	//Se crea el escenario
 	mvc->escenario = new Escenario(mvc->config);
 
 	//Se loguea la creación del escenario
@@ -48,8 +49,10 @@ MVC* creacionDelModelo(char* direccionDeLaConfiguracion) {
 			mvc->config->getAncho(), mvc->config->getAlto(), mvc->config->getObjetos()->size());
 		loguer->loguear(msg, Log::LOG_DEB);
 
+	//Se inicializa SDL
 	Controlador::iniciarSDL();
 
+	//Se crea la pantalla
 	mvc->pantalla = new Pantalla(mvc->config);
 
 	//Se loguea la creación de pantalla
