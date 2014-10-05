@@ -24,6 +24,10 @@ float Circulo::getArea(){
 	return PI*(diametro*diametro)/4;
 }
 
+bool Circulo::esCirculo(){
+	return true;
+}
+
 Circulo::~Circulo() {
 	// TODO Auto-generated destructor stub
 }
