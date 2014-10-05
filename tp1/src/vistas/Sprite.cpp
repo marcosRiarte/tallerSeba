@@ -32,7 +32,7 @@ Sprite::Sprite(){
 	this->CaminandoIzq->push_back(crearCuadro(38,16,22,24));
 	this->CaminandoIzq->push_back(crearCuadro(62,16,20,24));
 	this->CaminandoIzq->push_back(crearCuadro(94,16,18,24));
-	this->CaminandoIzq->push_back(crearCuadro(94,16,18,24));
+	this->CaminandoIzq->push_back(crearCuadro(38,16,22,24));
 
 	//salto vertical
 	this->CayendoIzq->push_back(crearCuadro(118,10,20,30));
