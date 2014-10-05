@@ -43,6 +43,9 @@ float Trapecio::getArea(){
 }
 
 Trapecio::~Trapecio() {
-	// TODO Auto-generated destructor stub
+	this->base = 0;
+		this->altura = 0;
+		this->alfa = 0;
+		this->beta = 0;
 }
 

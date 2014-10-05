@@ -29,6 +29,7 @@ bool Circulo::esCirculo(){
 }
 
 Circulo::~Circulo() {
-	// TODO Auto-generated destructor stub
+	this->circulo = nullptr;
+	this->diametro = 0;
 }
 

@@ -38,6 +38,7 @@ float Rectangulo::getArea(){
 }
 
 Rectangulo::~Rectangulo() {
-	// TODO Auto-generated destructor stub
+	this->alto = 0;
+		this->ancho = 0;
 }
 

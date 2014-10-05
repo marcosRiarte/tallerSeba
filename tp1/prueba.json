@@ -16,11 +16,33 @@
 		[
 			{
 				"tipo": "rectangulo",
-				"x": 96,
+				"x": 100,
 				"y": -700,
 				"ancho": 192,
 				"alto": 65,
-				"color": "#0000FF",
+				"color": "#00FF00",
+				"rot": 0,
+				"masa": 0,
+				"estatico": true
+			},
+			{
+				"tipo": "rectangulo",
+				"x": 150,
+				"y": -700,
+				"ancho": 192,
+				"alto": 65,
+				"color": "#FF00FF",
+				"rot": 0,
+				"masa": 0,
+				"estatico": true
+			},
+			{
+				"tipo": "rectangulo",
+				"x": 200,
+				"y": -700,
+				"ancho": 192,
+				"alto": 65,
+				"color": "#FF00FF",
 				"rot": 0,
 				"masa": 0,
 				"estatico": true
@@ -29,26 +51,14 @@
 			{
 			"tipo": "paralelogramo",
 				"base": 15,
-				"altura": 400,
+				"altura": 20,
 				"alfa": 130,
-				"x": 400,
-				"y": -500,
+				"x": 150,
+				"y": -200,
 				"color": "#FF0000",
 				"rot": 0,
 				"masa": 1,
 				"estatico": true
-			},
-			
-			{
-				"tipo": "circulo",
-				"diametro": 60,
-				"escala": 100,
-				"x": 150,
-				"y": -300,
-				"color": "#FF0000",
-				"rot": 90,
-				"masa": 1,
-				"estatico": false
 			}
 		]
 	}
