@@ -7,7 +7,10 @@
 #include "../objetos/Pos.h"
 #include "../personajes/Personaje.h"
 #include <stdio.h>
-
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
 
 
 
@@ -245,14 +248,10 @@ void CrearObjetos(b2World* world, std::vector<ObjetoMapa*>* objetos) {
 		// Guarda su referencia al mundo
 		objetos->at(i)->setLinkAMundo(objeto);
 
-		/*if (IsOverlap(world, objeto)){
+		if (!IsOverlap(world, objeto)){
 			world->DestroyBody(objeto);
-			//objetos->erase(std::remove(objetos->begin(), objetos->end(), i), objetos->end());
-			// aca se supone q se tendria q borrar y no se borra una mierda, vector dinamico del orto.
-			std::vector<ObjetoMapa*>::iterator newEnd = std::remove(objetos->begin(), objetos->end(), i);
-			objetos->erase(newEnd, objetos->end());
-		}*/
-
+			objetos->erase(objetos->begin()+i+1);
+		}
 	}
 }
 
@@ -316,7 +315,6 @@ void UpdatePos(std::vector<Personaje*>* personajes,
 		Pos* posicion = new Pos(personaje->GetPosition().x,personaje->GetPosition().y);
 		personajes->at(i)->setPosicion(posicion);
 
-		printf("%4.2f %4.2f %i \n", personaje->GetPosition().x,personaje->GetPosition().y, i);
 		personajes->at(i)->setEstado("Quieto");
 
 		// Determina el estado de la imagen
