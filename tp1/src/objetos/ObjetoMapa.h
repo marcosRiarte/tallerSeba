@@ -27,7 +27,7 @@ public:
 
 	bool esEstatico();
 
-	bool esCirculo();
+	virtual bool esCirculo();
 
 	float getDensidad();
 

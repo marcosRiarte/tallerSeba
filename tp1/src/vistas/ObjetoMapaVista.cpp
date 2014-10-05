@@ -63,7 +63,7 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 		Pos* pos = objeto->getPos()->ySimetrico();
 		int radio = pos->getDistancia(vertices->at(0));
 		filledCircleColor(renderer, radio, radio, radio, color);
-		filledCircleColor(renderer, radio, radio + radio / 2, radio / 4, color + 0x100);
+		filledCircleColor(renderer, radio, radio + radio / 2, radio / 4, color + 0xFF00);
 	}
 	//Si no es circulo
 	else {
@@ -198,7 +198,7 @@ SDL_Texture* ObjetoMapaVista::rotar(SDL_Texture* t, float grados){
 	SDL_RenderClear(renderer);
 
 	//Se rota la imagen
-	SDL_RenderCopyEx(renderer, t, NULL, NULL, objeto->getRotacion(), NULL, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(renderer, t, NULL, NULL, -grados, NULL, SDL_FLIP_NONE);
 
 	//Se modifica el target del renderer para que ahora apunte a la ventana (valor por defecto)
 	SDL_SetRenderTarget(renderer, NULL);
