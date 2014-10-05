@@ -368,7 +368,9 @@ void UpdatePos(std::vector<Personaje*>* personajes,
 void Escenario::cambiar(std::vector<Evento*>* ListaDeEventos) {
 	DarImpulsos(ListaDeEventos, personajes, cuentaPasos);
 
-	// Avanza el mundo dos step
+	// Avanza el mundo cuatro step
+	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 

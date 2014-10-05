@@ -30,7 +30,7 @@ bool CreadorDeTexturas::cargarDesde( std::string rutaArchivo, SDL_Renderer* rend
 	{
 		//Seteo del color
 		SDL_SetColorKey( Superficie, SDL_TRUE, SDL_MapRGB( Superficie->format, 255, 0, 255 ) );
-
+		//186 254 202
 		//Crear textura sobre la superficie
 		nuevaTextura = SDL_CreateTextureFromSurface( renderer, Superficie );
 		if( nuevaTextura == nullptr )

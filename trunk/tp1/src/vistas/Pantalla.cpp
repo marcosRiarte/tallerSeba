@@ -54,12 +54,13 @@ void Pantalla::inicializar() throw (SDL_Excepcion){
 	}
 
 	//Cargar texturas del sprite.
-	if (!HojaDeSpritesDeTextura->cargarDesde("img/SnowSprite.bmp",renderer)) {
+	if (!HojaDeSpritesDeTextura->cargarDesde("img/SnowSprite.png",renderer)) {
 		std::string errorTextura = "Imposible cargar la textura desde img/SnowSprite.bmp";
 					const char* errorCargaTextura = errorTextura.c_str();
 							loguer->loguear(errorCargaTextura,Log::LOG_ERR);
 	} else {
-
+		HojaDeSpritesDeTextura->setAlpha(255);
+		HojaDeSpritesDeTextura->setBlend(SDL_BLENDMODE_BLEND);
 		unSprite = new Sprite();
 	}
 }
@@ -130,7 +131,7 @@ void Pantalla::cambiar(){
 	}
 	//Renderizamos el sprite
 
-		SDL_Rect* cuadroActual = listaDeCuadros->at((numeroDeCuadro)/(listaDeCuadros->size()));
+		SDL_Rect* cuadroActual = listaDeCuadros->at((numeroDeCuadro/2)/(listaDeCuadros->size()));
 	HojaDeSpritesDeTextura->render((unaVista->getVentana()->x),(unaVista->getVentana()->y),config->getPersonajes()->at(0)->getAncho(),config->getPersonajes()->at(0)->getAlto(), cuadroActual, renderer);
 
 	//Se actualiza la pantalla
@@ -139,7 +140,7 @@ void Pantalla::cambiar(){
 	//Siguiente cuadro
 	++numeroDeCuadro;
 	//Ciclado de la animación
-	if ((numeroDeCuadro / listaDeCuadros->size()) >= (listaDeCuadros->size())) {
+	if ((numeroDeCuadro/2 / listaDeCuadros->size()) >= (listaDeCuadros->size())) {
 		numeroDeCuadro = 0;
 	}
 
