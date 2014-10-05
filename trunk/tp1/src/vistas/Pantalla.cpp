@@ -77,9 +77,9 @@ void Pantalla::agregarVistas(std::vector<ObjetoMapa*>* objetos, std::vector<Pers
 	}
 
 	for(unsigned i = 0; i < personajes->size(); i++){
-			v = new ObjetoMapaVista(renderer, personajes->at(i)->getRectangulo());
-			vistas->push_back(v);
-		}
+		v = new ObjetoMapaVista(renderer, personajes->at(i)->getRectangulo());
+		vistas->push_back(v);
+	}
 }
 
 
