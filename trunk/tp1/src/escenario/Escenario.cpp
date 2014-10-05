@@ -42,8 +42,7 @@ struct CheckOverlapCallback : b2QueryCallback
       m_body( body ), m_isOverlap( false ) {}
 
    // override
-   bool ReportFixture( b2Fixture* fixture )
-   {
+   bool ReportFixture( b2Fixture* fixture ) {
       // Skip self.
       if( fixture->GetBody() == m_body )
          return true;
@@ -52,12 +51,12 @@ struct CheckOverlapCallback : b2QueryCallback
           bodyFixture = bodyFixture->GetNext() )
       {
          if( b2TestOverlap( fixture->GetShape(), 0, bodyFixture->GetShape(), 0,
-            fixture->GetBody()->GetTransform(), m_body->GetTransform() ) )
-         {
+            fixture->GetBody()->GetTransform(), m_body->GetTransform() ) ) {
             m_isOverlap = true;
             return false;
          }
       }
+      return false;
    }
 
    const b2Body* m_body;
@@ -71,12 +70,6 @@ bool IsOverlap( const b2World* world, const b2Body* body )
    world->QueryAABB( &callback, GetBodyAABB( body ) );
    return callback.m_isOverlap;
 }
-
-
-
-
-
-
 
 
 /*
@@ -317,12 +310,11 @@ void UpdatePos(std::vector<Personaje*>* personajes,
 
 		Pos* posicion = new Pos(personaje->GetPosition().x,personaje->GetPosition().y);
 		personajes->at(i)->setPosicion(posicion);
-
-		personajes->at(i)->setEstado("Quieto");
+		std::string estadoAnterior = personajes->at(i)->getEstado();
 
 		// Determina el estado de la imagen
 		b2Vec2 velocidad = personaje->GetLinearVelocity();
-		std::string estado= "CayendoIzq";
+		std::string estado= "QuietoDer";
 		if (velocidad.x<0) {
 			// si la velocidad en x es negativa, va para la izq.
 			if (velocidad.y<0) {
@@ -350,6 +342,11 @@ void UpdatePos(std::vector<Personaje*>* personajes,
 		}
 		if (velocidad.x==0 && velocidad.y==0) {
 			// si la velocidad en x y en y es cero esta quieto
+			/*if (estadoAnterior == "CayendoDer"||estadoAnterior == "SaltandoDer"||estadoAnterior == "CaminandoDer"||estadoAnterior == "QuietoDer") {
+				estado = "QuietoDer";
+			} else {
+				estado = "QuietoIzq";
+			}*/
 			estado = "Quieto";
 		}
 		personajes->at(i)->setEstado(estado);
