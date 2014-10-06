@@ -105,6 +105,7 @@ void Pantalla::cambiar(){
 		r->y = vista->getVentana()->y*altoPx/alto;
 		SDL_RenderCopy(renderer, textura, NULL, r);
 		SDL_DestroyTexture(textura);
+		delete r;
 	}
 
 	//Se carga el objeto personaje
@@ -155,5 +156,10 @@ int Pantalla::getAncho(){
 	return ancho;
 }
 
-Pantalla::~Pantalla() {}
+Pantalla::~Pantalla() {
+	for(unsigned i = 0; i < vistas->size(); i++){
+		delete vistas->at(i);
+	}
+	delete vistas;
+}
 

@@ -22,10 +22,13 @@ ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o) {
 	if (objeto->esCirculo()) {
 		Pos* pos = objeto->getPos()->ySimetrico();
 		diametro = 2 * pos->getDistancia(vertices->at(0));
+		delete pos;
 	}else {
 		Pos *pIzqSup = getPosIzqSup(vertices);
 		Pos *pDerInf = getPosDerInf(vertices);
 		diametro = pIzqSup->getDistancia(pDerInf);
+		delete pIzqSup;
+		delete pDerInf;
 	}
 	ventana->w = diametro;
 	ventana->h = diametro;
@@ -66,6 +69,7 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 		int radio = pos->getDistancia(vertices->at(0));
 		filledCircleColor(renderer, radio, radio, radio, color);
 		filledCircleColor(renderer, radio, radio + radio / 2, radio / 4, color + 0xFF00);
+		delete pos;
 	}
 	//Si no es circulo
 	else {
@@ -78,6 +82,8 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 			vy[i] = vertices->at(i)->getY() - centroFigura->getY() + centroVentana->getY();
 		}
 		filledPolygonColor(renderer, vx, vy, cantVertices, color);
+		delete centroFigura;
+		delete centroVentana;
 	}
 
 	//Se modifica el target del renderer para que ahora apunte a la ventana (valor por defecto)
@@ -85,6 +91,11 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 
 	SDL_Texture* texturaRotada = this->rotar(textura, objeto->getRotacion());
 	SDL_DestroyTexture(textura);
+
+	for(unsigned i = 0; i < vertices->size(); i++){
+		delete vertices->at(i);
+	}
+	delete vertices;
 
 	return texturaRotada;
 }
@@ -99,12 +110,11 @@ const SDL_Rect* ObjetoMapaVista::getVentana() {
 	Pos* p = objeto->getPos()->ySimetrico();
 	ventana->x = p->getX() - ventana->w / 2;
 	ventana->y = p->getY() - ventana->h / 2;
+	delete p;
 	return ventana;
 }
 
-ObjetoMapaVista::~ObjetoMapaVista() {
-	// TODO Auto-generated destructor stub
-}
+ObjetoMapaVista::~ObjetoMapaVista() {}
 
 /**
  * \param	vPos 	vector de posiciones.
