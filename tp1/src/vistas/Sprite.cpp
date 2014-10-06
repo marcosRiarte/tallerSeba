@@ -13,20 +13,28 @@ Sprite::Sprite(){
 	this->CayendoDer = new std::vector<SDL_Rect*>();
 	this->SaltandoDer = new std::vector<SDL_Rect*>();
 	this->CaminandoDer = new std::vector<SDL_Rect*>();
-	this->Quieto = new std::vector<SDL_Rect*>();
+	this->QuietoDer = new std::vector<SDL_Rect*>();
 
 	this->CaminandoIzq = new std::vector<SDL_Rect*>();
 	this->SaltandoIzq = new std::vector<SDL_Rect*>();
 	this->CayendoIzq = new std::vector<SDL_Rect*>();
+	this->QuietoIzq = new std::vector<SDL_Rect*>();
 
+	this->Quieto = new std::vector<SDL_Rect*>();
 
 	//Quieto
-	this->Quieto->push_back(crearCuadro(165,87,48,50));
-	this->Quieto->push_back(crearCuadro(165,87,48,50));
-	this->Quieto->push_back(crearCuadro(165,87,48,50));
-	this->Quieto->push_back(crearCuadro(165,87,48,50));
+	this->Quieto->push_back(crearCuadro(110,87,50,49));
+	this->Quieto->push_back(crearCuadro(110,87,50,49));
+	this->Quieto->push_back(crearCuadro(110,87,50,49));
+	this->Quieto->push_back(crearCuadro(110,87,50,49));
 
 	//Izquierda
+
+	//Quieto
+		this->QuietoIzq->push_back(crearCuadro(6,15,22,25));
+		this->QuietoIzq->push_back(crearCuadro(6,15,22,25));
+		this->QuietoIzq->push_back(crearCuadro(6,15,22,25));
+		this->QuietoIzq->push_back(crearCuadro(6,15,22,25));
 
 	//caminar
 	this->CaminandoIzq->push_back(crearCuadro(38,16,22,24));
@@ -47,6 +55,12 @@ Sprite::Sprite(){
 	this->SaltandoIzq->push_back(crearCuadro(246,16,25,24));
 
 	//Derecha
+
+	//Quieto
+	this->QuietoDer->push_back(crearCuadro(834,15,22,25));
+	this->QuietoDer->push_back(crearCuadro(834,15,22,25));
+	this->QuietoDer->push_back(crearCuadro(834,15,22,25));
+	this->QuietoDer->push_back(crearCuadro(834,15,22,25));
 
 	//caminar
 	this->CaminandoDer->push_back(crearCuadro(807,16,17,24));
@@ -75,7 +89,9 @@ std::vector<SDL_Rect*>* Sprite::listaDeCuadros(std::string tipoMov){
 	if(tipoMov=="CaminandoDer"){return CaminandoDer;}
 	if(tipoMov=="SaltandoDer"){return SaltandoDer;}
 	if(tipoMov=="CayendoDer"){return CayendoDer;}
-	return this->Quieto;
+	if(tipoMov=="QuietoDer"){return QuietoDer;}
+	if(tipoMov=="QuietoIzq"){return QuietoIzq;}
+	if(tipoMov=="Quieto"){return Quieto;}
 }
 
 

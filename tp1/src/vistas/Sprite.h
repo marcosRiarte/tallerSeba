@@ -17,6 +17,8 @@ private:
 	std::vector<SDL_Rect*>* CaminandoIzq;
 
 	std::vector<SDL_Rect*>* Quieto;
+	std::vector<SDL_Rect*>* QuietoDer;
+	std::vector<SDL_Rect*>* QuietoIzq;
 
 	public:
 	Sprite();
