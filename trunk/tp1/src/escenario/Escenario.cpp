@@ -90,6 +90,10 @@ b2Vec2* PasarAVertices(ObjetoMapa* objeto) {
 		vertices[j] = *unParOrdenado;
 	}
 
+	for(unsigned i=0; i < unVectorDePos->size(); i++)
+		delete unVectorDePos->at(i);
+	delete unVectorDePos;
+
 	return vertices;
 }
 

@@ -97,6 +97,8 @@ void CreadorDeTexturas::render(int x, int y, int ancho, int alto, SDL_Rect* foto
 
 	//Se dibuja en pantalla
 	SDL_RenderCopy( render, Textura, fotograma, unRender );
+
+	delete unRender;
 }
 
 int CreadorDeTexturas::getAncho(){
