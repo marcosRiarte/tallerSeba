@@ -208,7 +208,7 @@ void CrearObjetos(b2World* world, std::vector<ObjetoMapa*>* objetos) {
 		// Setea posición y angulo
 		objetoDef.position.Set(objetos->at(i)->getPos()->getX(),
 				objetos->at(i)->getPos()->getY());
-		//objetoDef.angle = objetos->at(i)->getRotacion();
+		objetoDef.angle = objetos->at(i)->getRotacion();
 		//objetoDef.angle = b2_pi;
 		b2Body* objeto = world->CreateBody(&objetoDef);
 
@@ -342,12 +342,11 @@ void UpdatePos(std::vector<Personaje*>* personajes,
 		}
 		if (velocidad.x==0 && velocidad.y==0) {
 			// si la velocidad en x y en y es cero esta quieto
-			/*if (estadoAnterior == "CayendoDer"||estadoAnterior == "SaltandoDer"||estadoAnterior == "CaminandoDer"||estadoAnterior == "QuietoDer") {
+			if (estadoAnterior == "CayendoDer"||estadoAnterior == "SaltandoDer"||estadoAnterior == "CaminandoDer"||estadoAnterior == "QuietoDer") {
 				estado = "QuietoDer";
 			} else {
 				estado = "QuietoIzq";
-			}*/
-			estado = "Quieto";
+			}
 		}
 		personajes->at(i)->setEstado(estado);
 	}
@@ -360,6 +359,7 @@ void UpdatePos(std::vector<Personaje*>* personajes,
 		Pos* posicion = new Pos(objeto->GetPosition().x,objeto->GetPosition().y);
 		objetos->at(j)->setPos(posicion);
 		objetos->at(j)->setRotacion(objeto->GetAngle());
+
 	}
 }
 
@@ -371,7 +371,6 @@ void Escenario::cambiar(std::vector<Evento*>* ListaDeEventos) {
 	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-
 	UpdatePos(personajes, objetos);
 }
 

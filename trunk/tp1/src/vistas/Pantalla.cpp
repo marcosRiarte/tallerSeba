@@ -91,7 +91,6 @@ void Pantalla::cambiar(){
 	//Cargo el fondo de pantalla
 	SDL_RenderCopy(renderer, fondo, NULL, NULL);
 
-
 	//Se cargan los objetos
 	for(unsigned i = 0; i < vistas->size()-1; i++ ){
 		Vista* vista = vistas->at(i);
@@ -113,10 +112,11 @@ void Pantalla::cambiar(){
 
 	//"CayendoIzq","SaltandoIzq"),,"CaminandoIzq","CayendoDer","SaltandoDer","CaminandoDer","Quieto"
 
-	this->listaDeCuadros = unSprite->listaDeCuadros("Quieto");
-	if(config->getPersonajes()->at(0)->getEstado()=="Quieto"){
-		this->listaDeCuadros = unSprite->listaDeCuadros("Quieto");
-	}else if(config->getPersonajes()->at(0)->getEstado()=="CayendoIzq"){
+	if(config->getPersonajes()->at(0)->getEstado()=="QuietoIzq"){
+		this->listaDeCuadros = unSprite->listaDeCuadros("QuietoIzq");
+	}else if(config->getPersonajes()->at(0)->getEstado()=="QuietoDer"){
+		this->listaDeCuadros = unSprite->listaDeCuadros("QuietoDer");
+			}else if(config->getPersonajes()->at(0)->getEstado()=="CayendoIzq"){
 		this->listaDeCuadros = unSprite->listaDeCuadros("CayendoIzq");
 	}else if(config->getPersonajes()->at(0)->getEstado()=="SaltandoIzq"){
 		this->listaDeCuadros = unSprite->listaDeCuadros("SaltandoIzq");
@@ -129,6 +129,7 @@ void Pantalla::cambiar(){
 	}else if(config->getPersonajes()->at(0)->getEstado()=="CaminandoDer"){
 		this->listaDeCuadros = unSprite->listaDeCuadros("CaminandoDer");
 	}
+
 	//Renderizamos el sprite
 
 		SDL_Rect* cuadroActual = listaDeCuadros->at((numeroDeCuadro/2)/(listaDeCuadros->size()));

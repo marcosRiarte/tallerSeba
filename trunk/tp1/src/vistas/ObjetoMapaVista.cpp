@@ -1,6 +1,8 @@
 #include "ObjetoMapaVista.h"
 #include "../Constantes.h"
 #include <SDL2/SDL2_gfxPrimitives.h>
+#include <string>
+#include <iostream>
 
 ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o) {
 	objeto = o;
@@ -82,7 +84,6 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 	SDL_SetRenderTarget(renderer, NULL);
 
 	SDL_Texture* texturaRotada = this->rotar(textura, objeto->getRotacion());
-
 	SDL_DestroyTexture(textura);
 
 	return texturaRotada;
@@ -185,7 +186,7 @@ Pos* ObjetoMapaVista::getPosCentro(std::vector<Pos*>* vPos){
  *
  * \obs		\t no se modifica ni se destruye. Esto debe hacerse de forma externa.
  */
-SDL_Texture* ObjetoMapaVista::rotar(SDL_Texture* t, float grados){
+SDL_Texture* ObjetoMapaVista::rotar(SDL_Texture* t, double grados){
 	//Se crea una textura donde se guardara la imagen rotada
 	SDL_Texture* texturaRotada = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_UNKNOWN, SDL_TEXTUREACCESS_TARGET, ventana->w, ventana->h);
 

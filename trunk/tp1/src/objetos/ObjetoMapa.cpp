@@ -77,11 +77,11 @@ void ObjetoMapa::setPos(Pos* posicion) {
 }
 
 int ObjetoMapa::getRotacion() {
-	return rot;
+	return this->rot;
 }
 
 void ObjetoMapa::setRotacion(float rotacion) {
-	rot = rotacion;
+	this->rot = rotacion;
 }
 
 int ObjetoMapa::getMasa() {
