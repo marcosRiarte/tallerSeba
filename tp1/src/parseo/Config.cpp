@@ -1,5 +1,6 @@
 #include "json/json.h"
 #include <iostream>
+#include <exception>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -8,22 +9,26 @@
 #include "ValidadorObjetos.h"
 #include "../src/Constantes.h"
 
-Config::Config(std::string nombreArchivo) {
+
+Config::Config(std::string nombreArchivo){
 
 	this->objetosMapa = new std::vector<ObjetoMapa*>();
 	this->personajes = new std::vector<Personaje*>();
 
 	Json::Value raiz;
-	Json::Reader reader;
+	Json::Reader reader(Json::Features::strictMode());
 
 	std::ifstream prueba(nombreArchivo, std::ifstream::binary);
-	bool parseoExitoso = reader.parse(prueba, raiz, false);
-	Json::Features::strictMode();
+	bool parseoExitoso = reader.parse(prueba, raiz, true);
+
 
 	if (!parseoExitoso) {
-		std::string mensaje = "Fallo el parseo"+reader.getFormatedErrorMessages();
+		std::string mensaje = "Fallo el parseo"
+				+ reader.getFormatedErrorMessages();
 		const char * c = mensaje.c_str();
 		loguer->loguear(c, Log::LOG_TIPO::LOG_ERR);
+		//throw new ConfigExcepcion("No se puede abrir el archivo de Log para Errores \n");
+
 	}
 
 	std::string escenario;
