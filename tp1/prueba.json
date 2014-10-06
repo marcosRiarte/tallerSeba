@@ -9,14 +9,14 @@
 		"personaje": 
 		{
 			"x": 400,
-			"y": -300
+			"y": -3
 		},
 
 		"objetos": 
 		[
 		{
 				"tipo": "circulo",
-				"x": 700,
+				"x": 500,
 				"y": -300,
 				"diametro": 100,
 				"alto": 65,
@@ -28,11 +28,11 @@
 			{
 				"tipo": "rectangulo",
 				"x": 500,
-				"y": -300,
+				"y": -700,
 				"ancho": 192,
 				"alto": 65,
 				"color": "#FF00FF",
-				"rot": 100,
+				"rot": 45,
 				"masa": 5,
 				"estatico": false
 			}

@@ -11,7 +11,8 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-
+#include <Math.h>
+#define RADIANES_A_GRADOS(_ANGULO_)((_ANGULO_)/M_PI*180.0)
 
 
 
@@ -103,6 +104,14 @@ float CalcularRadio(ObjetoMapa* circulo) {
 			- circulo->getContorno()->at(0)->getY();
 	float radio = sqrt(distX * distX + distY * distY);
 	return radio;
+}
+
+//Convierte y normaliza el ángulo
+float radAGrados(float angulo){
+	float unAngulo = RADIANES_A_GRADOS(angulo);
+while (unAngulo<=0){ unAngulo += 360;}
+while (unAngulo>360){unAngulo -= 360;}
+return unAngulo;
 }
 
 /*
@@ -358,7 +367,7 @@ void UpdatePos(std::vector<Personaje*>* personajes,
 
 		Pos* posicion = new Pos(objeto->GetPosition().x,objeto->GetPosition().y);
 		objetos->at(j)->setPos(posicion);
-		objetos->at(j)->setRotacion(objeto->GetAngle());
+		objetos->at(j)->setRotacion(radAGrados(objeto->GetAngle()));
 
 	}
 }
