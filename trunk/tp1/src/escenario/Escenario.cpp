@@ -16,7 +16,14 @@
 #define GRADOS_A_RADIANES(_ANGULO_)((_ANGULO_)*M_PI/180.0)
 
 
-/// Gets the combined AABB of all shapes of the given body.
+void liberarPos(std::vector <Pos*> & a ){
+   for ( unsigned i = 0; i < a.size(); i++ ) {
+      delete a[i];
+   }
+   a.clear();
+}
+
+/// Devuelve el AABB para todas las figuras de un cuerpo dado.
 b2AABB GetBodyAABB( const b2Body* body )
 {
    b2AABB result;
@@ -90,10 +97,7 @@ b2Vec2* PasarAVertices(ObjetoMapa* objeto) {
 		vertices[j] = *unParOrdenado;
 	}
 
-	for(unsigned i=0; i < unVectorDePos->size(); i++)
-		delete unVectorDePos->at(i);
-	delete unVectorDePos;
-
+	liberarPos(*unVectorDePos);
 	return vertices;
 }
 

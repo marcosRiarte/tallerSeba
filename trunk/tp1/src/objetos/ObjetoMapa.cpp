@@ -97,9 +97,5 @@ b2Body* ObjetoMapa::getLinkAMundo() {
 	return linkAMundo;
 }
 ObjetoMapa::~ObjetoMapa(){
-	this->estatico = false;
-	this->color = 0;
-	this->pos= nullptr;
-	this->rot=0;
-	this->masa=0;
+	delete this->pos;
 };

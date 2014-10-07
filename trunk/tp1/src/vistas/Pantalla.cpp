@@ -161,5 +161,10 @@ Pantalla::~Pantalla() {
 		delete vistas->at(i);
 	}
 	delete vistas;
-}
+	SDL_DestroyTexture(fondo);
+    SDL_RenderClear(renderer);
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(ventana);
+	}
+
 

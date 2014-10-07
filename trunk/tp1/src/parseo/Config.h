@@ -17,6 +17,8 @@ private:
 	int ancho_un;
 	std::string fondo;
 public:
+	void liberarObjetos(std::vector <ObjetoMapa*> & a);
+	void liberarPjs(std::vector <Personaje*> & a);
 	Config(std::string nombre) throw (Config_Excepcion);
 	std::vector<ObjetoMapa*>* getObjetos();
 	std::vector<Personaje*>* getPersonajes();
