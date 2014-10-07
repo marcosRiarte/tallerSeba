@@ -3,10 +3,9 @@
 #include <fstream>
 #include <exception>
 #include <time.h>
-
 ErrorLog::ErrorLog() {
 	std::string dir = PATH_LOG;
-	this->archivo = dir.append("error_log.txt").c_str();
+	archivo = dir.append("error_log.txt");
 	fecha = nullptr;
 }
 

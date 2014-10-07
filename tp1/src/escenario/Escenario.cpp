@@ -13,7 +13,7 @@
 #include <string>
 #include <Math.h>
 #define RADIANES_A_GRADOS(_ANGULO_)((_ANGULO_)/M_PI*180.0)
-
+#define GRADOS_A_RADIANES(_ANGULO_)((_ANGULO_)*M_PI/180.0)
 
 
 /// Gets the combined AABB of all shapes of the given body.
@@ -36,7 +36,7 @@ b2AABB GetBodyAABB( const b2Body* body )
    return result;
 }
 
-/// Callback to check for overlap of given body.
+/// Llamada para chequear si el cuerpo se superpone con otro.
 struct CheckOverlapCallback : b2QueryCallback
 {
    CheckOverlapCallback( const b2Body* body ) :
@@ -64,7 +64,7 @@ struct CheckOverlapCallback : b2QueryCallback
    bool m_isOverlap;
 };
 
-/// Returns true if the given body overlaps any other body in the world.
+/// Devuelve true si el cuerpo se solapa con otro cuerpo en el mundo.
 bool IsOverlap( const b2World* world, const b2Body* body )
 {
    CheckOverlapCallback callback( body );
@@ -221,7 +221,7 @@ void CrearObjetos(b2World* world, std::vector<ObjetoMapa*>* objetos) {
 		// Setea posición y angulo
 		objetoDef.position.Set(objetos->at(i)->getPos()->getX(),
 				objetos->at(i)->getPos()->getY());
-		objetoDef.angle = objetos->at(i)->getRotacion();
+		objetoDef.angle = GRADOS_A_RADIANES(objetos->at(i)->getRotacion());
 		//objetoDef.angle = b2_pi;
 		b2Body* objeto = world->CreateBody(&objetoDef);
 
@@ -314,7 +314,7 @@ void DarImpulsos(std::vector<Evento*>* ListaDeEventos,
  *	Actualize las posiciones de los objetos y personajes.
  */
 void UpdatePos(std::vector<Personaje*>* personajes,
-		std::vector<ObjetoMapa*>* objetos) {
+		std::vector<ObjetoMapa*>* objetos, MyContactListener* cuentaPasos) {
 	//Recorre objetos y personajes seteandole las nuevas posiciones y ángulos
 	for (unsigned i = 0; i < personajes->size(); i++) {
 		b2Body* personaje = personajes->at(i)->getLinkAMundo();
@@ -327,8 +327,9 @@ void UpdatePos(std::vector<Personaje*>* personajes,
 
 		// Determina el estado de la imagen
 		b2Vec2 velocidad = personaje->GetLinearVelocity();
+
 		std::string estado= "QuietoDer";
-		if (velocidad.x<0) {
+		if (velocidad.x<0 && cuentaPasos->numFootContacts <2) {
 			// si la velocidad en x es negativa, va para la izq.
 			if (velocidad.y<0) {
 				// si la velocidad en y es negativa esta cayendo.
@@ -340,7 +341,7 @@ void UpdatePos(std::vector<Personaje*>* personajes,
 				// si la velocidad en y es cero esta quieto en y.
 				estado = "CaminandoIzq";
 			}
-		} else {
+		} else if (cuentaPasos->numFootContacts <2){
 			// si la velocidad en x es positiva, va para la der.
 			if (velocidad.y<0) {
 				// si la velocidad en y es negativa esta cayendo.
@@ -348,7 +349,7 @@ void UpdatePos(std::vector<Personaje*>* personajes,
 			} else if (velocidad.y>0) {
 				// si la velocidad en y es positiva esta saltando.
 				estado = "SaltandoDer";
-			} else if (velocidad.y==0) {
+			} else if (velocidad.y<=0) {
 				// si la velocidad en y es cero esta quieto en y.
 				estado = "CaminandoDer";
 			}
@@ -384,7 +385,7 @@ void Escenario::cambiar(std::vector<Evento*>* ListaDeEventos) {
 	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-	UpdatePos(personajes, objetos);
+	UpdatePos(personajes, objetos,cuentaPasos);
 }
 
 Escenario::~Escenario() {

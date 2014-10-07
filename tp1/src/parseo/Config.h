@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 #include "../personajes/Personaje.h"
+#include "../excepciones/ConfigExcepcion.h"
+
 
 class Config {
 private:
@@ -15,7 +17,7 @@ private:
 	int ancho_un;
 	std::string fondo;
 public:
-	Config(std::string nombre);
+	Config(std::string nombre) throw (Config_Excepcion);
 	std::vector<ObjetoMapa*>* getObjetos();
 	std::vector<Personaje*>* getPersonajes();
 	int getAltoPx();

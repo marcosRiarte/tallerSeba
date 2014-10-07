@@ -1,24 +1,24 @@
 {
 	"escenario": 
 	{
-		"alto_px": 800,
-		"ancho_px": 600,
-		"alto_un": 800,
-		"ancho_un": 600,
+		"alto_px": 600,
+		"ancho_px": 1024,
+		"alto_un": 600,
+		"ancho_un": 1024,
 		"imagen_fondo": "img/fondo1.png",
 		"personaje": 
 		{
-			"x": 400,
-			"y": -3
+			"x": 760,
+			"y": -170
 		},
 
 		"objetos": 
 		[
 		{
 				"tipo": "circulo",
-				"x": 500,
-				"y": -300,
-				"diametro": 100,
+				"x": 645,
+				"y": -170,
+				"diametro": 50,
 				"alto": 65,
 				"color": "#FF00FF",
 				"rot": 0,
@@ -27,15 +27,39 @@
 			},
 			{
 				"tipo": "rectangulo",
-				"x": 500,
-				"y": -700,
+				"x": 300,
+				"y": -550,
 				"ancho": 192,
-				"alto": 65,
-				"color": "#FF00FF",
-				"rot": 45,
-				"masa": 5,
-				"estatico": false
+				"alto": 20,
+				"color": "#0FF000",
+				"rot": 0,
+				"masa": 500000,
+				"estatico": true
+			},
+			{
+				"tipo": "rectangulo",
+				"x": 704,
+				"y": -260,
+				"ancho": 200,
+				"alto": 20,
+				"color": "#0FF000",
+				"rot": 0,
+				"masa": 500000,
+				"estatico": true
+			},
+			{
+				"tipo": "paralelogramo",
+				"x": 500,
+				"y": -404,
+				"base": 350,
+				"altura": 20,
+				"color": "#0FF000",
+				"rot": 55,
+				"masa": 0,
+				"alfa": 25,
+				"estatico": true
 			}
+			
 		]
 	}
 }

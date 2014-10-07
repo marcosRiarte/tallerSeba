@@ -5,6 +5,8 @@
 #include "controlador/Controlador.h"
 #include <iostream>
 #include <stdio.h>
+#include <exception>
+#include "excepciones/MVCExcepcion.h"
 
 // Estructura del modelo
 struct MVC {
@@ -14,28 +16,40 @@ struct MVC {
 };
 
 // Momentos de la ejecucion
-MVC* creacionDelModelo(char*);
+MVC* creacionDelModelo(char*) throw (MVC_Excepcion);
 int gameLoop(MVC*);
 void terminar(MVC*);
 
 int main(int argc, char* argv[]) {
 	int fin = REINICIAR;
 	while (FIN_DEL_JUEGO != fin) {
+		try{
 		MVC* mvc = creacionDelModelo(argv[1]);
 		fin = gameLoop(mvc);
 		terminar(mvc);
+		}
+		catch(MVC_Excepcion& ex){
+			std::cout << ex.what() << "\n";
+			std::cout << "Revisar log de errores" << "\n";
+			return RES_OK;
+		}
 	}
-
 	return RES_OK;
 }
 
 // Crea todas las partes del modelo
-MVC* creacionDelModelo(char* direccionDeLaConfiguracion) {
+MVC* creacionDelModelo(char* direccionDeLaConfiguracion) throw (MVC_Excepcion){
 	MVC* mvc = new MVC;
 	char msg[1000];
 
 	//Se parsea el archivo Json
-	mvc->config = new Config(direccionDeLaConfiguracion);
+	try{
+		mvc->config = new Config(direccionDeLaConfiguracion);
+	}
+			catch(Config_Excepcion&){
+				throw MVC_Excepcion("No se pudo parsear el archivo .json");
+	}
+
 
 	//Se loguea la creación de objetos
 	snprintf(msg, 1000, "Se parsearon: %d objetos",mvc->config->getObjetos()->size());
@@ -53,7 +67,13 @@ MVC* creacionDelModelo(char* direccionDeLaConfiguracion) {
 	Controlador::iniciarSDL();
 
 	//Se crea la pantalla
-	mvc->pantalla = new Pantalla(mvc->config);
+	try{
+		mvc->pantalla = new Pantalla(mvc->config);
+	}
+				catch(SDL_Excepcion&){
+					throw MVC_Excepcion("No se pudo crear la pantalla \n");
+	}
+
 
 	//Se loguea la creación de pantalla
 		snprintf(msg, 1000, "Se creo la pantalla con ancho: %d unidades y alto %d unidades",

@@ -1,6 +1,5 @@
 #include "json/json.h"
 #include <iostream>
-#include <exception>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -8,9 +7,9 @@
 #include "CreadorObjetos.h"
 #include "ValidadorObjetos.h"
 #include "../src/Constantes.h"
+#include <exception>
 
-
-Config::Config(std::string nombreArchivo){
+Config::Config(std::string nombreArchivo) throw (Config_Excepcion){
 
 	this->objetosMapa = new std::vector<ObjetoMapa*>();
 	this->personajes = new std::vector<Personaje*>();
@@ -27,8 +26,7 @@ Config::Config(std::string nombreArchivo){
 				+ reader.getFormatedErrorMessages();
 		const char * c = mensaje.c_str();
 		loguer->loguear(c, Log::LOG_TIPO::LOG_ERR);
-		//throw new ConfigExcepcion("No se puede abrir el archivo de Log para Errores \n");
-
+		throw Config_Excepcion("No se pudo parsear exitosamente el archivo \n");
 	}
 
 	std::string escenario;
@@ -49,7 +47,6 @@ Config::Config(std::string nombreArchivo){
 		 por defecto.*/
 		std::string imagen_fondo = un_Escenario.get("imagen_fondo",
 				"fondo1.png").asString();
-		std::cout << imagen_fondo << "\n";
 		this->fondo = imagen_fondo;
 
 		altoPx = un_Escenario.get("alto_px", 768).asInt();
@@ -83,7 +80,7 @@ Config::Config(std::string nombreArchivo){
 
 			int base = objetos[i].get("base", 1).asInt();
 			int altura = objetos[i].get("altura", 1).asInt();
-			int alfa = objetos[i].get("alfa", 1).asInt();
+			int alfa = objetos[i].get("alfa", 25).asInt();
 			int beta = objetos[i].get("beta", 1).asInt();
 
 			int lados = objetos[i].get("lados", 0).asInt();

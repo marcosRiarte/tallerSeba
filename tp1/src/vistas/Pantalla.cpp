@@ -32,13 +32,13 @@ void Pantalla::inicializar() throw (SDL_Excepcion){
 	if (ventana == nullptr){
 		loguer->loguear("No se pudo crear la ventana principal", Log::LOG_ERR);
 		const char* msg = ((std::string)"Error creando ventana principal: ").append(SDL_GetError()).c_str();
-		throw new SDL_Excepcion(msg);
+		throw SDL_Excepcion(msg);
 	}
 	renderer =  SDL_CreateRenderer(ventana, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE);
 	if (renderer == nullptr){
 		loguer->loguear("No se pudo crear el renderer", Log::LOG_ERR);
 		const char* msg = ((std::string)"Error creando el renderer: ").append(SDL_GetError()).c_str();
-		throw new SDL_Excepcion(msg);
+		throw SDL_Excepcion(msg);
 	}
 
 	//Paso a const char* el string del nombre de la imagen.
@@ -50,7 +50,7 @@ void Pantalla::inicializar() throw (SDL_Excepcion){
 		const char* msg =
 				((std::string) "Error cargando el fondo de pantalla: ").append(
 						SDL_GetError()).c_str();
-		throw new SDL_Excepcion(msg);
+		throw SDL_Excepcion(msg);
 	}
 
 	//Cargar texturas del sprite.
