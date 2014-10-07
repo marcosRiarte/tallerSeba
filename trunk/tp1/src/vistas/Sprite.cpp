@@ -91,7 +91,7 @@ std::vector<SDL_Rect*>* Sprite::listaDeCuadros(std::string tipoMov){
 	if(tipoMov=="CayendoDer"){return CayendoDer;}
 	if(tipoMov=="QuietoDer"){return QuietoDer;}
 	if(tipoMov=="QuietoIzq"){return QuietoIzq;}
-	if(tipoMov=="Quieto"){return Quieto;}
+	return Quieto;
 }
 
 
