@@ -9,6 +9,20 @@
 #include "../src/Constantes.h"
 #include <exception>
 
+void Config::liberarObjetos(std::vector <ObjetoMapa*> & a ){
+   for ( unsigned i = 0; i < a.size(); i++ ) {
+      delete a[i];
+   }
+   a.clear();
+}
+
+void Config::liberarPjs(std::vector <Personaje*> & a){
+   for ( unsigned i = 0; i < a.size(); i++ ) {
+      delete a[i];
+   }
+   a.clear();
+}
+
 Config::Config(std::string nombreArchivo) throw (Config_Excepcion){
 
 	this->objetosMapa = new std::vector<ObjetoMapa*>();
@@ -154,6 +168,8 @@ std::string Config::getFondo() {
 }
 
 Config::~Config() {
+	Config::liberarObjetos(*objetosMapa);
+	Config::liberarPjs(*personajes);
 	delete objetosMapa;
 	delete personajes;
 }

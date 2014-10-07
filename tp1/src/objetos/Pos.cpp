@@ -50,6 +50,5 @@ Pos* Pos::ySimetrico(){
 }
 
 Pos::~Pos() {
-	// TODO Auto-generated destructor stub
 }
 
