@@ -122,4 +122,5 @@ void terminar(MVC* mvc){
 	delete mvc->pantalla;
 	delete mvc->config;
 	delete mvc;
+	SDL_Quit();
 }

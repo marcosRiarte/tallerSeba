@@ -25,6 +25,7 @@ public:
 	int getAlto();
 	int getAncho();
 	std::string getFondo();
+	~Config();
 };
 
 #endif /* CONFIG_H_ */

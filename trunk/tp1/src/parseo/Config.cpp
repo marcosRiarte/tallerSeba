@@ -152,3 +152,9 @@ int Config::getAncho() {
 std::string Config::getFondo() {
 	return fondo;
 }
+
+Config::~Config() {
+	delete objetosMapa;
+	delete personajes;
+}
+
