@@ -5,7 +5,7 @@
 
 WarningLog::WarningLog() {
 	std::string dir = PATH_LOG;
-	this->archivo = dir.append("warning_log.txt");
+	archivo = dir.append("warning_log.txt");
 	fecha = nullptr;
 }
 
