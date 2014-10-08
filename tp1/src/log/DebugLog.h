@@ -1,3 +1,10 @@
+/*
+ * DebugLog.h
+ *
+ *  Created on: 12/9/2014
+ *      Author: pablo_000
+ */
+
 #ifndef DEBUGLOG_H_
 #define DEBUGLOG_H_
 
