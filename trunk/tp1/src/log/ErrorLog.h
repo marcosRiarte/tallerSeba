@@ -1,3 +1,10 @@
+/*
+ * ErrorLog.h
+ *
+ *  Created on: 12/9/2014
+ *      Author: pgotuzzo
+ */
+
 #ifndef ERRORLOG_H_
 #define ERRORLOG_H_
 
