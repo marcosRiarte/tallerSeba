@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
 	int fin = REINICIAR;
 	while (FIN_DEL_JUEGO != fin) {
 		try{
-		MVC* mvc = creacionDelModelo(argv[1]);
+		MVC* mvc = creacionDelModelo("prueba.json");
 		fin = gameLoop(mvc);
 		terminar(mvc);
 		}

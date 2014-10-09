@@ -5,7 +5,7 @@
  *      Author: Seba
  */
 
-#include <excepciones/MVCExcepcion.h>
+#include "MVCExcepcion.h"
 
 MVC_Excepcion::MVC_Excepcion() {
 	msg = nullptr;

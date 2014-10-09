@@ -89,10 +89,10 @@ void CreadorDeTexturas::render(int x, int y, int ancho, int alto, SDL_Rect* foto
 	//Seteo de las dimensiones del renderizado del cuadro
 	if( fotograma != nullptr )
 	{
-		unRender->h = alto+4;
-		unRender->w = ancho+4;
-		unRender->x = x+12;
-		unRender->y = y+7;
+		unRender->h = alto+2;
+		unRender->w = ancho+2;
+		unRender->x = x+11;
+		unRender->y = y+3;
 	}
 
 	//Se dibuja en pantalla

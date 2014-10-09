@@ -4,8 +4,8 @@ Personaje::Personaje(Pos* posicion) {
 	pos = posicion;
 	rot = 0;
 	linkAMundo = nullptr;
-	ancho = 50;
-	alto = 60;
+	ancho = 34;
+	alto = 45;
 	this->estado= "Quieto";
 
 	/* Esto hace que explote, por lo que se deja comentado, revisar esta logica TODO
