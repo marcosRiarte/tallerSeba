@@ -12,6 +12,7 @@
 #include <sstream>
 #include <string>
 #include <Math.h>
+#include "../src/Constantes.h"
 #define RADIANES_A_GRADOS(_ANGULO_)((_ANGULO_)/M_PI*180.0)
 #define GRADOS_A_RADIANES(_ANGULO_)((_ANGULO_)*M_PI/180.0)
 
@@ -201,7 +202,7 @@ void CrearPersonajes(b2World* world, std::vector<Personaje*>* personajes) {
 		b2PolygonShape sensorForma;
 
 		b2FixtureDef sensorFix;
-		sensorForma.SetAsBox(personajes->at(i)->getAncho() / 2, 0.1,
+		sensorForma.SetAsBox(personajes->at(i)->getAncho() / 2-3, 0.1,
 				b2Vec2(0, -(personajes->at(i)->getAlto() / 2)), 0);
 		sensorFix.isSensor = true;
 		sensorFix.shape = &sensorForma;
@@ -258,8 +259,10 @@ void CrearObjetos(b2World* world, std::vector<ObjetoMapa*>* objetos) {
 		if (!IsOverlap(world, objeto)){
 		// Guarda su referencia al mundo
 		objetos->at(i)->setLinkAMundo(objeto);
+
 		}
 		else{
+			loguer->loguear("Se superpone", Log::LOG_TIPO::LOG_ERR);
 			objetos->erase(objetos->begin()+i);
 			i--;
 			world->DestroyBody(objeto);
@@ -385,8 +388,6 @@ void Escenario::cambiar(std::vector<Evento*>* ListaDeEventos) {
 	DarImpulsos(ListaDeEventos, personajes, cuentaPasos);
 
 	// Avanza el mundo cuatro step
-	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 	UpdatePos(personajes, objetos,cuentaPasos);

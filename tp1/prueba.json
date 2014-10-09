@@ -15,10 +15,11 @@
 		"objetos": 
 		[
 		{
-				"tipo": "circulo",
-				"x": 645,
+				"tipo": "poligono",
+				"x": 100,
 				"y": -170,
-				"diametro": 50,
+				"lados": 2,
+				"escala":20,
 				"alto": 65,
 				"color": "#FF00FF",
 				"rot": 0,
@@ -31,7 +32,7 @@
 				"y": -550,
 				"ancho": 192,
 				"alto": 20,
-				"color": "#0FF000",
+				"color": "J00FF00",
 				"rot": 0,
 				"masa": 500000,
 				"estatico": true
