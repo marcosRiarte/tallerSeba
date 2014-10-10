@@ -1,20 +1,22 @@
 /* Maneja la relacion entre Box2D y el resto del Juego.
  */
 
-#include <vector>
 #include "Escenario.h"
-#include "../entrada/Evento.h"
 #include "../objetos/Pos.h"
 #include "../personajes/Personaje.h"
+#include "../objetos/ObjetoMapa.h"
+#include "../src/Constantes.h"
+#include <vector>
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <Box2D/Box2D.h>
 #include <Math.h>
-#include "../src/Constantes.h"
 #define RADIANES_A_GRADOS(_ANGULO_)((_ANGULO_)/M_PI*180.0)
 #define GRADOS_A_RADIANES(_ANGULO_)((_ANGULO_)*M_PI/180.0)
+
 
 
 void liberarPos(std::vector <Pos*> & a ){
@@ -293,8 +295,7 @@ Escenario::Escenario(Config* config) {
 /*
  *	Da los impulsos a los personajes segun los eventos.
  */
-void DarImpulsos(std::vector<Evento*>* ListaDeEventos,
-		std::vector<Personaje*>* personajes, MyContactListener* cuentaPasos) {
+void DarImpulsos(std::vector<Evento*>* ListaDeEventos, std::vector<Personaje*>* personajes, MyContactListener* cuentaPasos) {
 	// Evalua si algun evento es un impulso.
 	for (unsigned i = 0; i < ListaDeEventos->size(); i++) {
 		if (ListaDeEventos->at(i)->getTecla() == TECLA_IZQUIERDA) {
@@ -320,8 +321,7 @@ void DarImpulsos(std::vector<Evento*>* ListaDeEventos,
 /*
  *	Actualize las posiciones de los objetos y personajes.
  */
-void UpdatePos(std::vector<Personaje*>* personajes,
-		std::vector<ObjetoMapa*>* objetos, MyContactListener* cuentaPasos) {
+void UpdatePos(std::vector<Personaje*>* personajes, std::vector<ObjetoMapa*>* objetos, MyContactListener* cuentaPasos) {
 	//Recorre objetos y personajes seteandole las nuevas posiciones y ángulos
 	for (unsigned i = 0; i < personajes->size(); i++) {
 		b2Body* personaje = personajes->at(i)->getLinkAMundo();
@@ -385,11 +385,14 @@ void UpdatePos(std::vector<Personaje*>* personajes,
 }
 
 void Escenario::cambiar(std::vector<Evento*>* ListaDeEventos) {
+	// Determino impulsos para los personajes
 	DarImpulsos(ListaDeEventos, personajes, cuentaPasos);
 
-	// Avanza el mundo cuatro step
+	// Avanza el mundo dos step
 	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+
+	// Guarda las nuevas posiciones de los personajes y objetos
 	UpdatePos(personajes, objetos,cuentaPasos);
 }
 

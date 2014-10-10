@@ -4,13 +4,11 @@
 #ifndef ESCENARIO_H_
 #define ESCENARIO_H_
 
-#include "../personajes/Personaje.h"
-#include "../objetos/ObjetoMapa.h"
 #include "../entrada/Evento.h"
 #include "../parseo/Config.h"
 #include "MyContactListener.h"
-#include <Box2D/Box2D.h>
 
+// Constantes del mundo en Box2D
 static const float GRAVEDAD_X = 0;
 static const float GRAVEDAD_Y = -50;
 static const float MEDIO_ALTO_SUELO = 2;
@@ -37,9 +35,9 @@ private:
 	b2World* mundo;
 
 public:
+	// Crea el escenario a partir de una configuracion
 	Escenario(Config* config);
-	// Genera un nuevo de step, pone a los personajes en sus nuevas posiciones,
-	// avisando si cambiar en relación a su posición anterior.
+	// Genera un nuevo de step, pone a los personajes en sus nuevas posiciones
 	void cambiar(std::vector<Evento*>* ListaDeEventos);
 
 	~Escenario();
