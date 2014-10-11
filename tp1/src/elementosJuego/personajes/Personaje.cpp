@@ -1,11 +1,13 @@
 #include "Personaje.h"
+#include "../../Constantes.h"
 
 Personaje::Personaje(Pos* posicion) {
 	pos = posicion;
 	rot = 0;
 	linkAMundo = nullptr;
-	ancho = 34;
-	alto = 45;
+	ancho = ANCHO_PERSONAJE_UN;
+	alto = ALTO_PERSONAJE_UN;
+	masa = MASA_PERSONAJE;
 	this->estado= "Quieto";
 
 	/* Esto hace que explote, por lo que se deja comentado, revisar esta logica TODO
@@ -13,10 +15,18 @@ Personaje::Personaje(Pos* posicion) {
 	estado->accion = E_ACCION::QUIETO;
 	*/
 	rectanguloPersonaje = new Rectangulo(false, "#00F0A0", pos, 0, 80, alto, ancho); // Solo para pruebas...
-
 }
 
-// getter de dimensiones
+/*
+ * Devuelve el area del elemento
+ */
+float Personaje::getArea(){
+	return alto*ancho;
+}
+
+/*
+ * Getter para alto y ancho del personaje en unidades reales
+ */
 int Personaje::getAlto(){
 	return alto;
 }
@@ -24,27 +34,27 @@ int Personaje::getAncho(){
 	return ancho;
 }
 
-// getter y setter de la posicion
+/*
+ * Setter para la posicion
+ */
 void Personaje::setPos(Pos* posicion) {
 	pos = posicion;
 	rectanguloPersonaje->setPos(posicion);
 }
 
+/*
+ * Devuelve el contorno del personaje
+ */
 std::vector<Pos*>* Personaje::getContorno() {
 	return rectanguloPersonaje->getContorno();
 }
-// devuelve verdadero si esta en esa posicion
-bool Personaje::estaEnPos(Pos* posicion) {
-	return pos->esIgual(posicion);
-}
 
+/*
+ * Devuelve el rectangulo que representa al personaje
+ */
 Rectangulo* Personaje::getRectangulo() {
 	return rectanguloPersonaje;
 }
-
-Personaje::~Personaje() {
-}
-
 
 /**
  * \brief	Se setea el estado del personaje, mediante 3 taxonomias (incompletas para el juego final).
@@ -78,17 +88,15 @@ Personaje::Estado Personaje::getEstado(){
 }
 */
 
+/*
+ * Getter y setter para el estado
+ */
 void Personaje::setEstado(std::string unEstado){
 	this->estado = unEstado;
 }
-
-/*
- * Devuelve el area del elemento
- */
-float Personaje::getArea() {
-	return 15;
-}
-
 std::string Personaje::getEstado(){
 	return this->estado;
+}
+
+Personaje::~Personaje() {
 }

@@ -24,4 +24,9 @@
 #define PATH_LOG				 	"./logs/"
 static Log* loguer = (Log*) DebugLog::getInstance();
 
+// Datos del personaje
+#define ANCHO_PERSONAJE_UN			34
+#define ALTO_PERSONAJE_UN			45
+#define MASA_PERSONAJE				70
+
 #endif /* CONSTANTES_H_ */
