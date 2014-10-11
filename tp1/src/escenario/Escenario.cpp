@@ -138,7 +138,7 @@ void CrearCaja(b2World* world, Config* config) {
 	b2PolygonShape sueloForma;
 	sueloForma.SetAsBox((config->getAncho()) / 2, MEDIO_ALTO_SUELO);
 	// El segundo parámetro es la densidad
-	suelo->CreateFixture(&sueloForma, 0.0f);
+	suelo->CreateFixture(&sueloForma, FRICCION_CERO);
 
 	// Se crea el techo en la posición y con el ancho y el alto que indica la config
 	b2BodyDef techoDef;
@@ -147,7 +147,7 @@ void CrearCaja(b2World* world, Config* config) {
 	b2PolygonShape techoForma;
 	techoForma.SetAsBox((config->getAncho()) / 2, MEDIO_ALTO_TECHO);
 	// El segundo parámetro es la densidad
-	techo->CreateFixture(&techoForma, 0.0f);
+	techo->CreateFixture(&techoForma, FRICCION_CERO);
 
 	// Se crean las paredes en la posición y con el ancho y el alto que indica la config
 	b2BodyDef paredIzqDef;
@@ -158,7 +158,7 @@ void CrearCaja(b2World* world, Config* config) {
 			(config->getAlto()) / 2
 					- 2 * (MEDIO_ALTO_TECHO + MEDIO_ALTO_SUELO));
 	// El segundo parámetro es la densidad
-	paredIzq->CreateFixture(&paredIzqForma, 0.0f);
+	paredIzq->CreateFixture(&paredIzqForma, FRICCION_CERO);
 	b2BodyDef paredDerDef;
 	paredDerDef.position.Set((config->getAncho()) + MEDIO_ANCHO_PARED,
 			-(config->getAlto()) / 2);
@@ -168,7 +168,7 @@ void CrearCaja(b2World* world, Config* config) {
 			(config->getAlto()) / 2
 					- 2 * (MEDIO_ALTO_TECHO + MEDIO_ALTO_SUELO));
 	// El segundo parámetro es la densidad
-	paredDer->CreateFixture(&paredDerForma, 0.0f);
+	paredDer->CreateFixture(&paredDerForma, FRICCION_CERO);
 }
 
 /*
@@ -191,7 +191,7 @@ void CrearPersonajes(b2World* world, std::vector<Personaje*>* personajes) {
 		forma.SetAsBox(personajes->at(i)->getAncho() / 2,
 				personajes->at(i)->getAlto() / 2);
 		caractDef.shape = &forma;
-		caractDef.density = DENSIDAD_DEL_PERSONAJE;
+		caractDef.density = personajes->at(i)->getDensidad();
 		caractDef.friction = FRICCION_DEL_PERSONAJE;
 
 		// La da la forma y la masa, determinando la densidad y no deja que rote
