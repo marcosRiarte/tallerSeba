@@ -5,7 +5,7 @@
 #ifndef ESCENARIO_H_
 #define ESCENARIO_H_
 
-#include "../entrada/Evento.h"
+#include "../controlador/Evento.h"
 #include "../parseo/Config.h"
 #include "MyContactListener.h"
 
