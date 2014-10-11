@@ -38,7 +38,5 @@ float Rectangulo::getArea(){
 }
 
 Rectangulo::~Rectangulo() {
-	this->alto = 0;
-		this->ancho = 0;
 }
 

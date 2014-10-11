@@ -2,9 +2,10 @@
  */
 
 #include "Escenario.h"
-#include "../objetos/Pos.h"
-#include "../personajes/Personaje.h"
-#include "../objetos/ObjetoMapa.h"
+#include "../elementosJuego/Pos.h"
+#include "../elementosJuego/personajes/Personaje.h"
+#include "../elementosJuego/objetos/ObjetoMapa.h"
+#include "../elementosJuego/ElementosJuego.h"
 #include "../src/Constantes.h"
 #include <vector>
 #include <stdio.h>
@@ -180,8 +181,8 @@ void CrearPersonajes(b2World* world, std::vector<Personaje*>* personajes) {
 		peronajeDef.type = b2_dynamicBody;
 
 		// Setea posición y angulo
-		peronajeDef.position.Set(personajes->at(i)->getPosicion()->getX(),
-				personajes->at(i)->getPosicion()->getY());
+		peronajeDef.position.Set(personajes->at(i)->getPos()->getX(),
+				personajes->at(i)->getPos()->getY());
 		b2Body* personaje = world->CreateBody(&peronajeDef);
 
 		// El personaje es un rectangulo
@@ -268,11 +269,14 @@ void CrearObjetos(b2World* world, std::vector<ObjetoMapa*>* objetos) {
 			objetos->erase(objetos->begin()+i);
 			i--;
 			world->DestroyBody(objeto);
-	}
+		}
 	}
 
 }
 
+/*
+ * Crea el escenario a partir de una configuracion
+ */
 Escenario::Escenario(Config* config) {
 	personajes = config->getPersonajes();
 	objetos = config->getObjetos();
@@ -281,11 +285,15 @@ Escenario::Escenario(Config* config) {
 	b2Vec2 gravity(GRAVEDAD_X, GRAVEDAD_Y);
 	b2World* world = new b2World(gravity);
 
+	// Crea la caja donde se van a desarrollar los eventos
 	CrearCaja(world, config);
-	CrearPersonajes(world, personajes);
-	CrearObjetos(world, objetos);
 
-	// Se agrega al mundo el listener para los contactos
+	// Crea personajes y objetos
+	CrearPersonajes(world, personajes);
+	std::vector<ObjetoMapa*>* asd= objetos;
+	CrearObjetos(world, asd);
+
+	// Se agrega al mundo el listener para los contactos de los personajes
 	cuentaPasos = new MyContactListener;
 	world->SetContactListener(cuentaPasos);
 
@@ -326,10 +334,10 @@ void UpdatePos(std::vector<Personaje*>* personajes, std::vector<ObjetoMapa*>* ob
 	for (unsigned i = 0; i < personajes->size(); i++) {
 		b2Body* personaje = personajes->at(i)->getLinkAMundo();
 		// Creo q deberia borrar la pos anterior de alguna forma. No se si alcanza.
-		delete personajes->at(i)->getPosicion();
+		delete personajes->at(i)->getPos();
 
 		Pos* posicion = new Pos(personaje->GetPosition().x,personaje->GetPosition().y);
-		personajes->at(i)->setPosicion(posicion);
+		personajes->at(i)->setPos(posicion);
 		std::string estadoAnterior = personajes->at(i)->getEstado();
 
 		// Determina el estado de la imagen
@@ -384,6 +392,9 @@ void UpdatePos(std::vector<Personaje*>* personajes, std::vector<ObjetoMapa*>* ob
 	}
 }
 
+/*
+ * Genera un nuevo de step, pone a los personajes en sus nuevas posiciones
+ */
 void Escenario::cambiar(std::vector<Evento*>* ListaDeEventos) {
 	// Determino impulsos para los personajes
 	DarImpulsos(ListaDeEventos, personajes, cuentaPasos);
@@ -393,7 +404,9 @@ void Escenario::cambiar(std::vector<Evento*>* ListaDeEventos) {
 	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 
 	// Guarda las nuevas posiciones de los personajes y objetos
-	UpdatePos(personajes, objetos,cuentaPasos);
+
+	std::vector<ObjetoMapa*>* asd= objetos;
+	UpdatePos(personajes, asd,cuentaPasos);
 }
 
 Escenario::~Escenario() {

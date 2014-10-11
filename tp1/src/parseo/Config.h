@@ -1,9 +1,9 @@
 #ifndef CONFIG_H_
 #define CONFIG_H_
-#include "../objetos/ObjetoMapa.h"
+#include "../elementosJuego/objetos/ObjetoMapa.h"
 #include <vector>
 #include <string>
-#include "../personajes/Personaje.h"
+#include "../elementosJuego/personajes/Personaje.h"
 #include "../excepciones/ConfigExcepcion.h"
 
 
@@ -17,7 +17,7 @@ private:
 	int ancho_un;
 	std::string fondo;
 public:
-	void liberarObjetos(std::vector <ObjetoMapa*> & a);
+	void liberarObjetos(std::vector <ObjetoMapa*>* a);
 	void liberarPjs(std::vector <Personaje*> & a);
 	Config(std::string nombre) throw (Config_Excepcion);
 	std::vector<ObjetoMapa*>* getObjetos();

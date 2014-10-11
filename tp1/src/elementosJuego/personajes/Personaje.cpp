@@ -25,12 +25,9 @@ int Personaje::getAncho(){
 }
 
 // getter y setter de la posicion
-void Personaje::setPosicion(Pos* posicion) {
+void Personaje::setPos(Pos* posicion) {
 	pos = posicion;
 	rectanguloPersonaje->setPos(posicion);
-}
-Pos* Personaje::getPosicion(){
-	return rectanguloPersonaje->getPos();
 }
 
 std::vector<Pos*>* Personaje::getContorno() {
@@ -46,17 +43,8 @@ Rectangulo* Personaje::getRectangulo() {
 }
 
 Personaje::~Personaje() {
-	// TODO Auto-generated destructor stub
 }
 
-// getter y setter de link a mundo
-void Personaje::setLinkAMundo(b2Body* link){
-	linkAMundo = link;
-}
-
-b2Body* Personaje::getLinkAMundo(){
-	return linkAMundo;
-}
 
 /**
  * \brief	Se setea el estado del personaje, mediante 3 taxonomias (incompletas para el juego final).
@@ -92,6 +80,13 @@ Personaje::Estado Personaje::getEstado(){
 
 void Personaje::setEstado(std::string unEstado){
 	this->estado = unEstado;
+}
+
+/*
+ * Devuelve el area del elemento
+ */
+float Personaje::getArea() {
+	return 15;
 }
 
 std::string Personaje::getEstado(){

@@ -1,11 +1,11 @@
 #ifndef CREADOROBJETOS_H_
 #define CREADOROBJETOS_H_
-#include "../objetos/Rectangulo.h"
-#include "../objetos/Poligono.h"
-#include "../objetos/Circulo.h"
-#include "../objetos/Paralelogramo.h"
-#include "../objetos/Trapecio.h"
-#include "../personajes/Personaje.h"
+#include "../elementosJuego/objetos/Rectangulo.h"
+#include "../elementosJuego/objetos/Poligono.h"
+#include "../elementosJuego/objetos/Circulo.h"
+#include "../elementosJuego/objetos/Paralelogramo.h"
+#include "../elementosJuego/objetos/Trapecio.h"
+#include "../elementosJuego/personajes/Personaje.h"
 
 class CreadorObjetos {
 public:

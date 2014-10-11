@@ -10,7 +10,7 @@
 #include <sstream>
 #include <string>
 #include "../Constantes.h"
-#include "../objetos/ObjetoMapa.h"
+#include "../elementosJuego/objetos/ObjetoMapa.h"
 
 Evento::Evento() {
 	this->teclaIngresada=TECLA_NADA;

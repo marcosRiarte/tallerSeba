@@ -9,11 +9,11 @@
 #include "../src/Constantes.h"
 #include <exception>
 
-void Config::liberarObjetos(std::vector <ObjetoMapa*> & a ){
-   for ( unsigned i = 0; i < a.size(); i++ ) {
-      delete a[i];
+void Config::liberarObjetos(std::vector <ObjetoMapa*>* a ){
+   for ( unsigned i = 0; i < a->size(); i++ ) {
+      delete a->at(i);
    }
-   a.clear();
+   a->clear();
 }
 
 void Config::liberarPjs(std::vector <Personaje*> & a){
@@ -168,7 +168,7 @@ std::string Config::getFondo() {
 }
 
 Config::~Config() {
-	Config::liberarObjetos(*objetosMapa);
+	Config::liberarObjetos(objetosMapa);
 	Config::liberarPjs(*personajes);
 	delete objetosMapa;
 	delete personajes;
