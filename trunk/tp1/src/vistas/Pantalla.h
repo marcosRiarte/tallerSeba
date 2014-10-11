@@ -9,7 +9,7 @@
 #include "../parseo/Config.h"
 #include "CreadorDeTexturas.h"
 #include "Sprite.h"
-#include "../personajes/Personaje.h"
+#include "../elementosJuego/personajes/Personaje.h"
 
 class Pantalla {
 private:

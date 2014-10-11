@@ -2,7 +2,7 @@
 #define PERSONAJEVISTA_H_
 
 #include "Vista.h"
-#include "../personajes/Personaje.h"
+#include "../elementosJuego/personajes/Personaje.h"
 
 class PersonajeVista: public Vista {
 private:

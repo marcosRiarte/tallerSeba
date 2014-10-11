@@ -2,7 +2,7 @@
 #define OBJETOMAPAVISTA_H_
 
 #include "Vista.h"
-#include "../objetos/ObjetoMapa.h"
+#include "../elementosJuego/objetos/ObjetoMapa.h"
 
 class ObjetoMapaVista : public Vista{
 private:
