@@ -27,25 +27,33 @@ private:
 
 public:
 
+	Personaje(Pos* posicion);
+
 	/*
 	 * Devuelve el area del elemento
 	 */
 	float getArea();
 
-	Personaje(Pos* posicion);
-
-	// getters de dimensiones
+	/*
+	 * Getter para alto y ancho del personaje en unidades reales
+	 */
 	int getAlto();
 	int getAncho();
 
-	// devuelve verdadero si esta en esa posicion
-	bool estaEnPos(Pos* posicion);
-
-	std::vector<Pos*>* getContorno();
-	Rectangulo* getRectangulo();
-
-
+	/*
+	 * Setter para la posicion
+	 */
 	void setPos(Pos* posicion);
+
+	/*
+	 * Devuelve el contorno del personaje
+	 */
+	std::vector<Pos*>* getContorno();
+
+	/*
+	 * Devuelve el rectangulo que representa al personaje
+	 */
+	Rectangulo* getRectangulo();
 
 	/*
 	// getter y setter de estado
@@ -53,7 +61,10 @@ public:
 	void setEstado(Estado estado);
 	Estado getEstado();
 */
-	//Setters y getters de estado.
+
+	/*
+	 * Getter y setter para el estado
+	 */
 	void setEstado(std::string unEstado);
 	std::string getEstado();
 

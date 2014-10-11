@@ -39,7 +39,9 @@ long stringToHexa(std::string s){
                 return longValue;
 }
 
-
+/*
+ * Inicializa un objeto
+ */
 void ObjetoMapa::initialice(bool esEstatico, std::string color, Pos pos_cm, int rotacion, int masa) {
                 this->estatico = esEstatico;
                 this->color = stringToHexa( color.substr(1, color.npos) );
@@ -48,20 +50,29 @@ void ObjetoMapa::initialice(bool esEstatico, std::string color, Pos pos_cm, int 
                 this->masa = masa;
 }
 
-bool ObjetoMapa::esCirculo() {
-        return false;
-}
-
+/*
+ * Devuelve verdadero si el objeto no se puede mover
+ */
 bool ObjetoMapa::esEstatico() {
         return this->estatico;
 }
 
+/*
+ * Devuelve verdadero si el objeto es un circulo
+ */
+bool ObjetoMapa::esCirculo() {
+        return false;
+}
+
+/*
+ * Getter y setter para el color del objeto
+ */
 long ObjetoMapa::getColor(){
         return color;
 }
-
 void ObjetoMapa::setColor(std::string color) {
         this->color = stringToHexa( color.substr(1, color.npos) );
 }
+
 ObjetoMapa::~ObjetoMapa(){
 };
