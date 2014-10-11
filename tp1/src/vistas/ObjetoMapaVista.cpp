@@ -34,6 +34,13 @@ ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o) {
 	ventana->h = diametro;
 }
 
+void liberarVertices(std::vector <Pos*> & a){
+   for ( unsigned i = 0; i < a.size(); i++ ) {
+      delete a[i];
+   }
+   a.clear();
+}
+
 /**
  * \return	Textura, cuyo tamaño y posición se puede adquirir por medio del método
  * 			getVentana(). Observar que la textura debe ser liberada por el objeto que la recibe, ya
@@ -92,9 +99,7 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 	SDL_Texture* texturaRotada = this->rotar(textura, objeto->getRotacion());
 	SDL_DestroyTexture(textura);
 
-	for(unsigned i = 0; i < vertices->size(); i++){
-		delete vertices->at(i);
-	}
+	liberarVertices(*vertices);
 	delete vertices;
 
 	return texturaRotada;
