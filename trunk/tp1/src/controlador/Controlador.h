@@ -1,7 +1,7 @@
 #ifndef CONTROLADOR_H_
 #define CONTROLADOR_H_
 #include <vector>
-#include "../entrada/Evento.h"
+#include "Evento.h"
 
 class Controlador {
 public:
