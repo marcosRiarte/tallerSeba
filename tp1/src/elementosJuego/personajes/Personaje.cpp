@@ -8,12 +8,12 @@ Personaje::Personaje(Pos* posicion) {
 	ancho = ANCHO_PERSONAJE_UN;
 	alto = ALTO_PERSONAJE_UN;
 	masa = MASA_PERSONAJE;
-	/*this->estado= "Quieto";*/
+	estado.perfil = E_PERFIL::IZQUIERDA;
+	estado.accion = E_ACCION::QUIETO;
 
-	estado->perfil = Personaje::E_PERFIL::IZQUIERDA;
-	estado->accion = Personaje::E_ACCION::QUIETO;
+//	this->estado= "Quieto";
+//	rectanguloPersonaje = new Rectangulo(false, "#00F0A0", pos, 0, 80, alto, ancho); // Solo para pruebas...
 
-	rectanguloPersonaje = new Rectangulo(false, "#00F0A0", pos, 0, 80, alto, ancho); // Solo para pruebas...
 }
 
 /*
@@ -34,26 +34,24 @@ int Personaje::getAncho(){
 }
 
 /*
- * Setter para la posicion
- */
-void Personaje::setPos(Pos* posicion) {
-	pos = posicion;
-	rectanguloPersonaje->setPos(posicion);
-}
-
-/*
  * Devuelve el contorno del personaje
  */
 std::vector<Pos*>* Personaje::getContorno() {
-	return rectanguloPersonaje->getContorno();
+	Personaje::Estado estado = Personaje::Estado();
+	estado.accion = Personaje::DESPLAZANDO;
+	estado.perfil = Personaje::DERECHA;
+	return nullptr;
+	//	return rectanguloPersonaje->getContorno();
 }
 
 /*
  * Devuelve el rectangulo que representa al personaje
  */
+/*
 Rectangulo* Personaje::getRectangulo() {
 	return rectanguloPersonaje;
 }
+*/
 
 /**
  * \brief	Se setea el estado del personaje, mediante 3 taxonomias (incompletas para el juego final).
@@ -63,28 +61,26 @@ Rectangulo* Personaje::getRectangulo() {
  * \param	\perfil
  * \param	\accion		Se utiliza detallar que tipo de acciones está realizando el personaje.
  */
-
 void Personaje::setEstado(E_PERFIL perfil, E_ACCION accion){
-	estado->perfil = perfil;
-	estado->accion = accion;
+	estado.perfil = perfil;
+	estado.accion = accion;
 }
 
-/*
+/**
  * \brief	Setea el estado del personaje.
  */
+
 void Personaje::setEstado(Estado estado){
-	this->estado->perfil = estado.perfil;
-	this->estado->accion = estado.accion;
+	this->estado.perfil = estado.perfil;
+	this->estado.accion = estado.accion;
 }
 
-/*
+/**
  * \return	Estado del personaje.
  */
-
 Personaje::Estado Personaje::getEstado(){
 	return estado;
 }
-
 
 /*
  * Getter y setter para el estado
