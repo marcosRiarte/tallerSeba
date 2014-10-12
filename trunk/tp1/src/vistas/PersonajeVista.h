@@ -26,7 +26,7 @@ private:
 	void crearSprites();
 
 	// Genera una textura, a partir de un vector de sprites y un selector
-	SDL_Texture* getVista(SDL_Rect* sprite);
+	SDL_Texture* getVista(SDL_Rect* sprite, Personaje::E_PERFIL perfil);
 
 public:
 	PersonajeVista(SDL_Renderer* r, Personaje* p);
