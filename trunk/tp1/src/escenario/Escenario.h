@@ -18,13 +18,16 @@ private:
 
 public:
 	/*
-	 * Crea el escenario a partir de una configuracion
+	 * Crea el escenario a partir de una configuracion que contiene la lista de objetos
+	 * y personajes a crear, y los parametros de tamaño del mundo.
 	 */
 	Escenario(Config* config);
 
 	/*
-	 * Genera un nuevo de step, pone a los personajes en sus nuevas posiciones
+	 * Toma los eventos de entrada, aplica los cambios al mundo y pone a los personajes
+	 *  en sus nuevas posiciones
 	 */
+
 	void cambiar(std::vector<Evento*>* ListaDeEventos);
 
 	~Escenario();
