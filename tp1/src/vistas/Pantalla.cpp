@@ -1,27 +1,28 @@
 #include <iostream>
 #include <string>
+#include <SDL2/SDL2_gfxPrimitives.h>
 #include "../Constantes.h"
 #include "Pantalla.h"
-#include <SDL2/SDL2_gfxPrimitives.h>
-#include <SDL2/SDL2_rotozoom.h>
+#include "ObjetoMapaVista.h"
+#include "PersonajeVista.h"
 
 Pantalla::Pantalla(Config* config) {
 	this->altoPx = config->getAltoPx();
 	this->anchoPx = config->getAnchoPx();
 	this->alto = config->getAlto();
 	this->ancho = config->getAncho();
-	this->numeroDeCuadro = 0;
 	this->dirImg = config->getFondo();
 	this->vistas = nullptr;
 	this->ventana = nullptr;
 	this->renderer = nullptr;
 	this->fondo = nullptr;
-	this->unSprite = nullptr;
-	this->listaDeCuadros = new std::vector<SDL_Rect*>();
-	this->HojaDeSpritesDeTextura= new CreadorDeTexturas();
-	this->config = config;
 	inicializar();
-	this->agregarVistas(config->getObjetos(),config->getPersonajes());
+	agregarVistas(config->getObjetos(),config->getPersonajes());
+//	this->numeroDeCuadro = 0;
+//	this->unSprite = nullptr;
+//	this->listaDeCuadros = new std::vector<SDL_Rect*>();
+//	this->HojaDeSpritesDeTextura= new CreadorDeTexturas();
+//	this->config = config;
 }
 
 /**
@@ -41,10 +42,7 @@ void Pantalla::inicializar() throw (SDL_Excepcion){
 		throw SDL_Excepcion(msg);
 	}
 
-	//Paso a const char* el string del nombre de la imagen.
-			const char* dirFondo = dirImg.c_str();
-
-	this->fondo = IMG_LoadTexture(renderer, dirFondo);
+	this->fondo = IMG_LoadTexture(renderer, dirImg.c_str());
 	if (fondo == nullptr) {
 		loguer->loguear("No se encontró imagen de fondo", Log::LOG_ERR);
 		const char* msg =
@@ -52,7 +50,7 @@ void Pantalla::inicializar() throw (SDL_Excepcion){
 						SDL_GetError()).c_str();
 		throw SDL_Excepcion(msg);
 	}
-
+/*
 	//Cargar texturas del sprite.
 	if (!HojaDeSpritesDeTextura->cargarDesde("img/SnowSprite.png",renderer)) {
 		std::string errorTextura = "Imposible cargar la textura desde img/SnowSprite.bmp";
@@ -63,10 +61,7 @@ void Pantalla::inicializar() throw (SDL_Excepcion){
 		HojaDeSpritesDeTextura->setBlend(SDL_BLENDMODE_BLEND);
 		unSprite = new Sprite();
 	}
-}
-
-SDL_Renderer* Pantalla::getRenderer(){
-	return renderer;
+*/
 }
 
 void Pantalla::agregarVistas(std::vector<ObjetoMapa*>* objetos, std::vector<Personaje*>* personajes){
@@ -76,11 +71,11 @@ void Pantalla::agregarVistas(std::vector<ObjetoMapa*>* objetos, std::vector<Pers
 		v = new ObjetoMapaVista(renderer, objetos->at(i));
 		vistas->push_back(v);
 	}
-
 	for(unsigned i = 0; i < personajes->size(); i++){
-		v = new ObjetoMapaVista(renderer, personajes->at(i)->getRectangulo());
+		v = new PersonajeVista(renderer, personajes->at(i));
 		vistas->push_back(v);
 	}
+
 }
 
 
@@ -92,22 +87,22 @@ void Pantalla::cambiar(){
 	SDL_RenderCopy(renderer, fondo, NULL, NULL);
 
 	//Se cargan los objetos
-	for(unsigned i = 0; i < vistas->size()-1; i++ ){
+	for(unsigned i = 0; i < vistas->size(); i++){
 		Vista* vista = vistas->at(i);
 		//obtengo la imagen ya rotada con el tamanio en dimensiones Box2D
 		SDL_Texture* textura = vista->getVista();
 
 		//La imprimo en la pantalla con la debida transformacion
-		SDL_Rect* r = new SDL_Rect();
-		r->h = vista->getVentana()->h*altoPx/alto;
-		r->w = vista->getVentana()->w*anchoPx/ancho;
-		r->x = vista->getVentana()->x*anchoPx/ancho;
-		r->y = vista->getVentana()->y*altoPx/alto;
-		SDL_RenderCopy(renderer, textura, NULL, r);
+		SDL_Rect r = SDL_Rect();
+		const SDL_Rect* v = vista->getVentana();
+		r.h = v->h*altoPx/alto;
+		r.w = v->w*anchoPx/ancho;
+		r.x = v->x*anchoPx/ancho;
+		r.y = v->y*altoPx/alto;
+		SDL_RenderCopy(renderer, textura, NULL, &r);
 		SDL_DestroyTexture(textura);
-		delete r;
 	}
-
+/*
 	//Se carga el objeto personaje
 	Vista* unaVista = vistas->at(vistas->size()-1);
 
@@ -135,17 +130,17 @@ void Pantalla::cambiar(){
 
 		SDL_Rect* cuadroActual = listaDeCuadros->at((numeroDeCuadro/2)/(listaDeCuadros->size()));
 	HojaDeSpritesDeTextura->render((unaVista->getVentana()->x),(unaVista->getVentana()->y),config->getPersonajes()->at(0)->getAncho(),config->getPersonajes()->at(0)->getAlto(), cuadroActual, renderer);
-
+*/
 	//Se actualiza la pantalla
 	SDL_RenderPresent(renderer);
-
+/*
 	//Siguiente cuadro
 	++numeroDeCuadro;
 	//Ciclado de la animación
 	if ((numeroDeCuadro/2 / listaDeCuadros->size()) >= (listaDeCuadros->size())) {
 		numeroDeCuadro = 0;
 	}
-
+*/
 }
 
 
@@ -165,6 +160,6 @@ Pantalla::~Pantalla() {
     SDL_RenderClear(renderer);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(ventana);
-	}
+}
 
 
