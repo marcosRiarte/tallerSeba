@@ -17,12 +17,11 @@
 		{
 				"tipo": "poligono",
 				"x": 100,
-				"y": -170,
-				"lados": 2,
-				"escala":20,
-				"alto": 65,
-				"color": "#FF00FF",
-				"rot": 0,
+				"y": -50,
+				"lados": 3,
+				"escala":0,
+				"color": "#FFJ0FF",
+				"rot": 50,
 				"masa": 10,
 				"estatico": false
 			},
