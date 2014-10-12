@@ -48,4 +48,6 @@ static Log* loguer = (Log*) DebugLog::getInstance();
 #define VELOCITY_ITERATIONS			8
 #define POSITION_ITERATIONS			3
 
+// Constantes de SDL
+#define FRAME_RATE					4
 #endif /* CONSTANTES_H_ */
