@@ -1,5 +1,6 @@
-#include "PersonajeVista.h"
 #include <SDL2/SDL_image.h>
+#include "PersonajeVista.h"
+#include "../Constantes.h"
 
 #define PATH_IMAGEN_SPRITES					"img/SpritesPersonaje.png"
 #define ANCHO_PX_SPRITE						125
@@ -113,24 +114,24 @@ SDL_Texture* PersonajeVista::getVista() {
 
 	switch(estadoActual.accion){
 		case(Personaje::E_ACCION::QUIETO):
-			selectorDeSprite = selectorDeSprite % CANTIDAD_SPRITES_QUIETO;
-			textura = getVista(vSpritesQuieto->at(selectorDeSprite));
+			selectorDeSprite = selectorDeSprite % (CANTIDAD_SPRITES_QUIETO * FRAME_RATE);
+			textura = getVista(vSpritesQuieto->at(selectorDeSprite / FRAME_RATE), estadoActual.perfil);
 			break;
 		case(Personaje::E_ACCION::DESPLAZANDO):
-			selectorDeSprite = selectorDeSprite % CANTIDAD_SPRITES_DESPLAZAMIENTO;
-			textura = getVista(vSpritesDesplazamiento->at(selectorDeSprite));
+			selectorDeSprite = selectorDeSprite % (CANTIDAD_SPRITES_DESPLAZAMIENTO * FRAME_RATE);
+			textura = getVista(vSpritesDesplazamiento->at(selectorDeSprite / FRAME_RATE), estadoActual.perfil);
 			break;
 		case(Personaje::E_ACCION::SALTANDO):
-			selectorDeSprite = selectorDeSprite % CANTIDAD_SPRITES_SALTO;
-			textura = getVista(vSpritesSalto->at(selectorDeSprite));
+			selectorDeSprite = selectorDeSprite % (CANTIDAD_SPRITES_SALTO * FRAME_RATE);
+			textura = getVista(vSpritesSalto->at(selectorDeSprite / FRAME_RATE), estadoActual.perfil);
 			break;
 		case(Personaje::E_ACCION::CAYENDO):
-			selectorDeSprite = selectorDeSprite % CANTIDAD_SPRITES_CAIDA;
-			textura = getVista(vSpritesCaida->at(selectorDeSprite));
+			selectorDeSprite = selectorDeSprite % (CANTIDAD_SPRITES_CAIDA * FRAME_RATE);
+			textura = getVista(vSpritesCaida->at(selectorDeSprite / FRAME_RATE), estadoActual.perfil);
 			break;
 		case(Personaje::E_ACCION::EMPUJANDO):
-			selectorDeSprite = selectorDeSprite % CANTIDAD_SPRITES_EMPUJAR;
-			textura = getVista(vSpritesEmpujar->at(selectorDeSprite));
+			selectorDeSprite = selectorDeSprite % (CANTIDAD_SPRITES_EMPUJAR * FRAME_RATE);
+			textura = getVista(vSpritesEmpujar->at(selectorDeSprite / FRAME_RATE), estadoActual.perfil);
 			break;
 		default:
 			throw;
@@ -140,13 +141,16 @@ SDL_Texture* PersonajeVista::getVista() {
 	return textura;
 }
 
-SDL_Texture* PersonajeVista::getVista(SDL_Rect* sprite) {
+SDL_Texture* PersonajeVista::getVista(SDL_Rect* sprite, Personaje::E_PERFIL perfil) {
 	SDL_Texture * textura = SDL_CreateTexture(renderer,	SDL_PIXELFORMAT_UNKNOWN, SDL_TEXTUREACCESS_TARGET, ventana->w, ventana->h);
 	SDL_SetRenderTarget(renderer, textura);
 	SDL_SetTextureBlendMode(textura, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderClear(renderer);
-	SDL_RenderCopy(renderer, contenedorDeSprites, sprite, NULL);
+	if (perfil == Personaje::DERECHA)
+		SDL_RenderCopyEx(renderer, contenedorDeSprites, sprite, NULL, 0, NULL, SDL_FLIP_HORIZONTAL);
+	else
+		SDL_RenderCopy(renderer, contenedorDeSprites, sprite, NULL);
 	SDL_SetRenderTarget(renderer, NULL);
 	return textura;
 }
