@@ -7,9 +7,8 @@
 class PersonajeVista: public Vista {
 private:
 	Personaje* personaje;
-	/*
-	Personaje::Estado* estadoAnterior;
-*/
+	Personaje::Estado estadoAnterior;
+
 	// Texura que contiene todos los sprites que se van a usar
 	SDL_Texture* contenedorDeSprites;
 
@@ -27,7 +26,7 @@ private:
 	void crearSprites();
 
 	// Genera una textura, a partir de un vector de sprites y un selector
-	SDL_Texture* getVista(std::vector<SDL_Rect*>* sprites, int selector);
+	SDL_Texture* getVista(SDL_Rect* sprite);
 
 public:
 	PersonajeVista(SDL_Renderer* r, Personaje* p);
