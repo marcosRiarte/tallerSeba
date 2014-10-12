@@ -275,7 +275,8 @@ void CrearObjetos(b2World* world, std::vector<ObjetoMapa*>* objetos) {
 }
 
 /*
- * Crea el escenario a partir de una configuracion
+ * Crea el escenario a partir de una configuracion que contiene la lista de objetos
+ * y personajes a crear, y los parametros de tamaño del mundo.
  */
 Escenario::Escenario(Config* config) {
 	personajes = config->getPersonajes();
@@ -327,9 +328,9 @@ void DarImpulsos(std::vector<Evento*>* ListaDeEventos, std::vector<Personaje*>* 
 }
 
 /*
- *	Actualize las posiciones de los objetos y personajes.
+ *	Actualiza las posiciones de los objetos y personajes.
  */
-void UpdatePos(std::vector<Personaje*>* personajes, std::vector<ObjetoMapa*>* objetos, MyContactListener* cuentaPasos) {
+void ActualizarPos(std::vector<Personaje*>* personajes, std::vector<ObjetoMapa*>* objetos, MyContactListener* cuentaPasos) {
 	//Recorre objetos y personajes seteandole las nuevas posiciones y ángulos
 	for (unsigned i = 0; i < personajes->size(); i++) {
 		b2Body* personaje = personajes->at(i)->getLinkAMundo();
@@ -338,59 +339,35 @@ void UpdatePos(std::vector<Personaje*>* personajes, std::vector<ObjetoMapa*>* ob
 
 		Pos* posicion = new Pos(personaje->GetPosition().x,personaje->GetPosition().y);
 		personajes->at(i)->setPos(posicion);
-		Personaje::Estado estadoAnterior = personajes->at(i)->getEstado();
 
 		// Determina el estado de la imagen
 		b2Vec2 velocidad = personaje->GetLinearVelocity();
-
-		if (velocidad.x<0 && cuentaPasos->numFootContacts <2) {
-			// si la velocidad en x es negativa, va para la izq.
-			if (velocidad.y<0) {
-				// si la velocidad en y es negativa esta cayendo.
-				personajes->at(i)->setEstado(Personaje::E_PERFIL::IZQUIERDA,Personaje::E_ACCION::CAYENDO);
-			} else if (velocidad.y>0) {
-				// si la velocidad en y es positiva esta saltando.
-				personajes->at(i)->setEstado(Personaje::E_PERFIL::IZQUIERDA,Personaje::E_ACCION::SALTANDO);
-			} else if (velocidad.y==0) {
-				// si la velocidad en y es cero esta quieto en y.
-				personajes->at(i)->setEstado(Personaje::E_PERFIL::IZQUIERDA,Personaje::E_ACCION::DESPLAZANDO);
-			}
-		} else if (cuentaPasos->numFootContacts <2){
-			// si la velocidad en x es positiva, va para la der.
-			if (velocidad.y<0) {
-				// si la velocidad en y es negativa esta cayendo.
-				personajes->at(i)->setEstado(Personaje::E_PERFIL::DERECHA,Personaje::E_ACCION::CAYENDO);
-			} else if (velocidad.y>0) {
-				// si la velocidad en y es positiva esta saltando.
-				personajes->at(i)->setEstado(Personaje::E_PERFIL::DERECHA,Personaje::E_ACCION::SALTANDO);
-			} else if (velocidad.y<=0) {
-				// si la velocidad en y es cero esta quieto en y.
-				personajes->at(i)->setEstado(Personaje::E_PERFIL::DERECHA,Personaje::E_ACCION::DESPLAZANDO);
-			}
+		Personaje::E_ACCION accion;
+		Personaje::E_PERFIL perfil;
+		if (velocidad.y < 0) {
+			// Si la velocidad en y es negativa esta cayendo
+			accion = Personaje::E_ACCION::CAYENDO;
+		} else if (velocidad.y > 0) {
+			// Si la velocidad en y es positiva esta saltando
+			accion = Personaje::E_ACCION::SALTANDO;
+		} else if (velocidad.x != 0){
+			// Si la velocidad en y es cero, pero tiene velocidad en x esta desplazandose
+			accion = Personaje::E_ACCION::DESPLAZANDO;
+		} else {
+			// Si la velocidad en x tambien es cero esta quieto
+			accion = Personaje::E_ACCION::QUIETO;
 		}
-		Personaje::Estado CayendoDer = Personaje::Estado();
-		CayendoDer.accion = Personaje::E_ACCION::CAYENDO;
-		CayendoDer.perfil = Personaje::E_PERFIL::DERECHA;
-		Personaje::Estado SaltandoDer;
-		CayendoDer.accion = Personaje::E_ACCION::SALTANDO;
-		CayendoDer.perfil = Personaje::E_PERFIL::DERECHA;
-		Personaje::Estado CaminandoDer;
-		CayendoDer.accion = Personaje::E_ACCION::DESPLAZANDO;
-		CayendoDer.perfil = Personaje::E_PERFIL::DERECHA;
-		Personaje::Estado QuietoDer;
-		CayendoDer.accion = Personaje::E_ACCION::QUIETO;
-		CayendoDer.perfil = Personaje::E_PERFIL::DERECHA;
-		if (velocidad.x==0 && velocidad.y==0) {
-			// si la velocidad en x y en y es cero esta quieto
-			if (estadoAnterior == CayendoDer
-					||estadoAnterior == SaltandoDer
-							||estadoAnterior == CaminandoDer
-									||estadoAnterior == QuietoDer) {
-				personajes->at(i)->setEstado(Personaje::E_PERFIL::DERECHA,Personaje::E_ACCION::QUIETO);
-			} else {
-				personajes->at(i)->setEstado(Personaje::E_PERFIL::IZQUIERDA,Personaje::E_ACCION::QUIETO);
-			}
+		if (velocidad.x<0) {
+			// Si la velocidad en x es negativa, va para la izquierda
+			perfil = Personaje::E_PERFIL::IZQUIERDA;
+		} else if (velocidad.x>0) {
+			// Si la velocidad en x es positiva, va para la derecha
+			perfil = Personaje::E_PERFIL::DERECHA;
+		} else {
+			// Si no tiene velocidad en x su perfil continua como estaba
+			perfil = personajes->at(i)->getEstado().perfil;
 		}
+		personajes->at(i)->setEstado(perfil,accion);
 	}
 
 	for (unsigned j = 0; j < objetos->size(); j++) {
@@ -406,7 +383,8 @@ void UpdatePos(std::vector<Personaje*>* personajes, std::vector<ObjetoMapa*>* ob
 }
 
 /*
- * Genera un nuevo de step, pone a los personajes en sus nuevas posiciones
+ * Toma los eventos de entrada, aplica los cambios al mundo y pone a los personajes
+ *  en sus nuevas posiciones
  */
 void Escenario::cambiar(std::vector<Evento*>* ListaDeEventos) {
 	// Determino impulsos para los personajes
@@ -417,9 +395,7 @@ void Escenario::cambiar(std::vector<Evento*>* ListaDeEventos) {
 	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 
 	// Guarda las nuevas posiciones de los personajes y objetos
-
-	std::vector<ObjetoMapa*>* asd= objetos;
-	UpdatePos(personajes, asd,cuentaPasos);
+	ActualizarPos(personajes, objetos,cuentaPasos);
 }
 
 Escenario::~Escenario() {
