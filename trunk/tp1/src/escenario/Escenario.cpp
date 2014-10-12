@@ -338,46 +338,59 @@ void UpdatePos(std::vector<Personaje*>* personajes, std::vector<ObjetoMapa*>* ob
 
 		Pos* posicion = new Pos(personaje->GetPosition().x,personaje->GetPosition().y);
 		personajes->at(i)->setPos(posicion);
-		std::string estadoAnterior = personajes->at(i)->getEstado();
+		Personaje::Estado estadoAnterior = personajes->at(i)->getEstado();
 
 		// Determina el estado de la imagen
 		b2Vec2 velocidad = personaje->GetLinearVelocity();
 
-		std::string estado= "QuietoDer";
 		if (velocidad.x<0 && cuentaPasos->numFootContacts <2) {
 			// si la velocidad en x es negativa, va para la izq.
 			if (velocidad.y<0) {
 				// si la velocidad en y es negativa esta cayendo.
-				estado = "CayendoIzq";
+				personajes->at(i)->setEstado(Personaje::E_PERFIL::IZQUIERDA,Personaje::E_ACCION::CAYENDO);
 			} else if (velocidad.y>0) {
 				// si la velocidad en y es positiva esta saltando.
-				estado = "SaltandoIzq";
+				personajes->at(i)->setEstado(Personaje::E_PERFIL::IZQUIERDA,Personaje::E_ACCION::SALTANDO);
 			} else if (velocidad.y==0) {
 				// si la velocidad en y es cero esta quieto en y.
-				estado = "CaminandoIzq";
+				personajes->at(i)->setEstado(Personaje::E_PERFIL::IZQUIERDA,Personaje::E_ACCION::DESPLAZANDO);
 			}
 		} else if (cuentaPasos->numFootContacts <2){
 			// si la velocidad en x es positiva, va para la der.
 			if (velocidad.y<0) {
 				// si la velocidad en y es negativa esta cayendo.
-				estado = "CayendoDer";
+				personajes->at(i)->setEstado(Personaje::E_PERFIL::DERECHA,Personaje::E_ACCION::CAYENDO);
 			} else if (velocidad.y>0) {
 				// si la velocidad en y es positiva esta saltando.
-				estado = "SaltandoDer";
+				personajes->at(i)->setEstado(Personaje::E_PERFIL::DERECHA,Personaje::E_ACCION::SALTANDO);
 			} else if (velocidad.y<=0) {
 				// si la velocidad en y es cero esta quieto en y.
-				estado = "CaminandoDer";
+				personajes->at(i)->setEstado(Personaje::E_PERFIL::DERECHA,Personaje::E_ACCION::DESPLAZANDO);
 			}
 		}
+		Personaje::Estado CayendoDer = Personaje::Estado();
+		CayendoDer.accion = Personaje::E_ACCION::CAYENDO;
+		CayendoDer.perfil = Personaje::E_PERFIL::DERECHA;
+		Personaje::Estado SaltandoDer;
+		CayendoDer.accion = Personaje::E_ACCION::SALTANDO;
+		CayendoDer.perfil = Personaje::E_PERFIL::DERECHA;
+		Personaje::Estado CaminandoDer;
+		CayendoDer.accion = Personaje::E_ACCION::DESPLAZANDO;
+		CayendoDer.perfil = Personaje::E_PERFIL::DERECHA;
+		Personaje::Estado QuietoDer;
+		CayendoDer.accion = Personaje::E_ACCION::QUIETO;
+		CayendoDer.perfil = Personaje::E_PERFIL::DERECHA;
 		if (velocidad.x==0 && velocidad.y==0) {
 			// si la velocidad en x y en y es cero esta quieto
-			if (estadoAnterior == "CayendoDer"||estadoAnterior == "SaltandoDer"||estadoAnterior == "CaminandoDer"||estadoAnterior == "QuietoDer") {
-				estado = "QuietoDer";
+			if (estadoAnterior == CayendoDer
+					||estadoAnterior == SaltandoDer
+							||estadoAnterior == CaminandoDer
+									||estadoAnterior == QuietoDer) {
+				personajes->at(i)->setEstado(Personaje::E_PERFIL::DERECHA,Personaje::E_ACCION::QUIETO);
 			} else {
-				estado = "QuietoIzq";
+				personajes->at(i)->setEstado(Personaje::E_PERFIL::IZQUIERDA,Personaje::E_ACCION::QUIETO);
 			}
 		}
-		personajes->at(i)->setEstado(estado);
 	}
 
 	for (unsigned j = 0; j < objetos->size(); j++) {

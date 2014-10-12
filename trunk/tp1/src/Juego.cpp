@@ -44,7 +44,8 @@ MVC* creacionDelModelo(char* direccionDeLaConfiguracion) throw (MVC_Excepcion){
 
 	//Se parsea el archivo Json
 	try{
-		mvc->config = new Config(direccionDeLaConfiguracion);
+		std::string asd = "prueba.json";
+		mvc->config = new Config(asd);
 	}
 			catch(Config_Excepcion&){
 				throw MVC_Excepcion("No se pudo parsear el archivo .json");

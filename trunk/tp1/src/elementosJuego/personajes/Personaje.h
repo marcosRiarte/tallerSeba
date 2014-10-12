@@ -8,21 +8,21 @@
 
 class Personaje : public ElementosJuego {
 public:
-	/*
+
 	enum E_PERFIL {DERECHA, IZQUIERDA};
 	enum E_ACCION {QUIETO, DESPLAZANDO, SALTANDO, CAYENDO, EMPUJANDO};
 	struct Estado{
 		E_PERFIL perfil;
 		E_ACCION accion;
 	};
-	*/
-	std::string estado;
+/*
+	std::string estado;*/
 private:
 	int ancho;
 	int alto;
-	/*
+
 	Estado* estado;
-	*/
+
 	Rectangulo *rectanguloPersonaje; //Solo para pruebas
 
 public:
@@ -55,19 +55,19 @@ public:
 	 */
 	Rectangulo* getRectangulo();
 
-	/*
+
 	// getter y setter de estado
 	void setEstado(E_PERFIL p, E_ACCION a);
 	void setEstado(Estado estado);
 	Estado getEstado();
-*/
+
 
 	/*
 	 * Getter y setter para el estado
 	 */
-	void setEstado(std::string unEstado);
+	/*void setEstado(std::string unEstado);
 	std::string getEstado();
-
+*/
 	~Personaje();
 };
 
