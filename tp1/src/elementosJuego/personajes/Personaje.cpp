@@ -8,12 +8,11 @@ Personaje::Personaje(Pos* posicion) {
 	ancho = ANCHO_PERSONAJE_UN;
 	alto = ALTO_PERSONAJE_UN;
 	masa = MASA_PERSONAJE;
-	this->estado= "Quieto";
+	/*this->estado= "Quieto";*/
 
-	/* Esto hace que explote, por lo que se deja comentado, revisar esta logica TODO
-	estado->perfil = E_PERFIL::IZQUIERDA;
-	estado->accion = E_ACCION::QUIETO;
-	*/
+	estado->perfil = Personaje::E_PERFIL::IZQUIERDA;
+	estado->accion = Personaje::E_ACCION::QUIETO;
+
 	rectanguloPersonaje = new Rectangulo(false, "#00F0A0", pos, 0, 80, alto, ancho); // Solo para pruebas...
 }
 
@@ -64,39 +63,38 @@ Rectangulo* Personaje::getRectangulo() {
  * \param	\perfil
  * \param	\accion		Se utiliza detallar que tipo de acciones está realizando el personaje.
  */
-/*
+
 void Personaje::setEstado(E_PERFIL perfil, E_ACCION accion){
 	estado->perfil = perfil;
 	estado->accion = accion;
 }
 
-/**
+/*
  * \brief	Setea el estado del personaje.
  */
-/*
 void Personaje::setEstado(Estado estado){
 	this->estado->perfil = estado.perfil;
 	this->estado->accion = estado.accion;
 }
 
-/**
+/*
  * \return	Estado del personaje.
  */
-/*
+
 Personaje::Estado Personaje::getEstado(){
 	return estado;
 }
-*/
+
 
 /*
  * Getter y setter para el estado
  */
-void Personaje::setEstado(std::string unEstado){
+/*void Personaje::setEstado(std::string unEstado){
 	this->estado = unEstado;
 }
 std::string Personaje::getEstado(){
 	return this->estado;
 }
-
+*/
 Personaje::~Personaje() {
 }
