@@ -7,15 +7,15 @@ Poligono::Poligono(Pos posicion, int lados, int escala, int rotacion,std::string
 	this->initialice(estatico, color, posicion, rotacion, masa);
 	}
 
-std::vector<Pos>* Poligono::getContorno() {
+std::vector<Pos> Poligono::getContorno() {
 
-	std::vector<Pos>* vertices = new std::vector<Pos>();
+	std::vector<Pos> vertices = std::vector<Pos>();
 	const double PI = 4.0*atan(1.0);
 	for (int i = 0; i < lados; i++) {
- 	int x = (this->pos->getX() + (escala * cos((2 * PI * i / lados))));
- 	int y = (this->pos->getY() + (escala * sin((2 * PI * i / lados))));
+ 	int x = (this->pos.getX() + (escala * cos((2 * PI * i / lados))));
+ 	int y = (this->pos.getY() + (escala * sin((2 * PI * i / lados))));
  	Pos posicion = Pos(x,y);
-	  vertices->push_back(posicion);
+	  vertices.push_back(posicion);
 	}
 	return vertices;
 }

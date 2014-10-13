@@ -10,9 +10,9 @@ ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o) {
 	ventana = new SDL_Rect();
 
 	//Obtengo los vértices, transformando cada vertice en su simétrico respecto del eje Y
-	std::vector<Pos>* vertices = objeto->getContorno();
-	for (unsigned i = 0; i < vertices->size(); i++) {
-		vertices->at(i) = vertices->at(i).ySimetrico();
+	std::vector<Pos> vertices = objeto->getContorno();
+	for (unsigned i = 0; i < vertices.size(); i++) {
+		vertices.at(i) = vertices.at(i).ySimetrico();
 	}
 
 	int diametro;
@@ -20,11 +20,11 @@ ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o) {
 	//Se calcula la superficie que puede llegar a ocupar dicho objeto, teniendo en cuenta
 	//	las posibles rotaciones.
 	if (objeto->esCirculo()) {
-		Pos pos = objeto->getPos()->ySimetrico();
-		diametro = 2 * pos.getDistancia(vertices->at(0));
+		Pos pos = objeto->getPos().ySimetrico();
+		diametro = 2 * pos.getDistancia(vertices.at(0));
 	}else {
-		Pos pIzqSup = getPosIzqSup(vertices);
-		Pos pDerInf = getPosDerInf(vertices);
+		Pos pIzqSup = getPosIzqSup(&vertices);
+		Pos pDerInf = getPosDerInf(&vertices);
 		diametro = pIzqSup.getDistancia(pDerInf);
 	}
 	ventana->w = diametro;
@@ -42,12 +42,12 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 	long color = ( objeto->getColor() ) + 0xFF000000;
 
 	//Obtengo los vértices, transformando cada vertice en su simétrico respecto del eje Y
-	std::vector<Pos>* vertices = objeto->getContorno();
-	for (unsigned i = 0; i < vertices->size(); i++) {
-		vertices->at(i) = vertices->at(i).ySimetrico();
+	std::vector<Pos> vertices = objeto->getContorno();
+	for (unsigned i = 0; i < vertices.size(); i++) {
+		vertices.at(i) = vertices.at(i).ySimetrico();
 	}
 
-	int cantVertices = vertices->size();
+	int cantVertices = vertices.size();
 
 	//Se crea la textura y sobre la cual se va a trabajar
 	SDL_Texture* textura = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_UNKNOWN, SDL_TEXTUREACCESS_TARGET, ventana->w, ventana->h);
@@ -63,8 +63,8 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 	//Se dibuja la figura segun su tipo (taxonomía: circulo, no-circulo)
 	//Si es circulo
 	if (objeto->esCirculo()) {
-		Pos* pos = objeto->getPos()->ySimetrico();
-		int radio = pos->getDistancia(vertices->at(0));
+		Pos pos = objeto->getPos().ySimetrico();
+		int radio = pos.getDistancia(vertices.at(0));
 		filledCircleColor(renderer, radio, radio, radio, color);
 		filledCircleColor(renderer, radio, radio + radio / 2, radio / 4, color + 0xFF00);
 	}
@@ -72,11 +72,11 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 	else {
 		short vx[cantVertices];
 		short vy[cantVertices];
-		Pos centroFigura = getPosCentro(vertices);
+		Pos centroFigura = getPosCentro(&vertices);
 		Pos centroVentana = Pos(ventana->w / 2, ventana->w / 2);
 		for (int i = 0; i < cantVertices; i++) {
-			vx[i] = vertices->at(i).getX() - centroFigura.getX() + centroVentana.getX();
-			vy[i] = vertices->at(i).getY() - centroFigura.getY() + centroVentana.getY();
+			vx[i] = vertices.at(i).getX() - centroFigura.getX() + centroVentana.getX();
+			vy[i] = vertices.at(i).getY() - centroFigura.getY() + centroVentana.getY();
 		}
 		filledPolygonColor(renderer, vx, vy, cantVertices, color);
 	}
@@ -86,8 +86,6 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 
 	SDL_Texture* texturaRotada = this->rotar(textura, objeto->getRotacion());
 	SDL_DestroyTexture(textura);
-
-	delete vertices;
 
 	return texturaRotada;
 }
@@ -99,10 +97,9 @@ SDL_Texture* ObjetoMapaVista::getVista() {
  */
 
 const SDL_Rect* ObjetoMapaVista::getVentana() {
-	Pos* p = objeto->getPos()->ySimetrico();
-	ventana->x = p->getX() - ventana->w / 2;
-	ventana->y = p->getY() - ventana->h / 2;
-	delete p;
+	Pos p = objeto->getPos().ySimetrico();
+	ventana->x = p.getX() - ventana->w / 2;
+	ventana->y = p.getY() - ventana->h / 2;
 	return ventana;
 }
 

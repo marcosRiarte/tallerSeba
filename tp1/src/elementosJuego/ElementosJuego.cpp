@@ -18,10 +18,10 @@ float ElementosJuego::getFriccion() {return friccion;}
 /*
  * Getter y setter para la posicion
  */
-Pos* ElementosJuego::getPos() {
+Pos ElementosJuego::getPos() {
 	return pos;
 }
-void ElementosJuego::setPos(Pos* posicion) {
+void ElementosJuego::setPos(Pos posicion) {
 	pos = posicion;
 }
 
@@ -46,5 +46,4 @@ void ElementosJuego::setLinkAMundo(b2Body* link) {
 }
 
 ElementosJuego::~ElementosJuego() {
-	delete pos;
 }

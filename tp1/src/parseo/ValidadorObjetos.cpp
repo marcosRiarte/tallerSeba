@@ -5,10 +5,10 @@
 #include <string>
 #include "../src/Constantes.h"
 
-void ValidadorObjetos::ValidarPersonaje(int* x, int* y,int* ancho_un,int* alto_un) {
-        if (!((*x >= 0) && (*x < *ancho_un+1) && (*y > -*alto_un-1) && (*y <= 0))) {
+void ValidadorObjetos::ValidarPersonaje(int *x, int *y,int ancho_un,int alto_un) {
+        if (!((*x >= 0) && (*x < ancho_un+1) && (*y > -alto_un-1) && (*y <= 0))) {
     		std::string mensaje = "Personaje fuera de pantalla, se crea en la posición por defecto x=40 y=-80";
-    				const char * c = mensaje.c_str();
+    				const char* c = mensaje.c_str();
     				loguer->loguear(c, Log::LOG_TIPO::LOG_WAR);
     				*x=40;
     				*y=-80;
@@ -22,7 +22,7 @@ bool es_color(std::string const& s)
       && s.find_first_not_of("0123456789abcdefABCDEF", 1) == std::string::npos;
 }
 
-void ValidadorObjetos::ValidarBasicos(std::string* tipo, int* x, int* y, std::string* color, int* rotacion, int* masa, bool* estatico,int* ancho_un,int* alto_un){
+void ValidadorObjetos::ValidarBasicos(std::string *tipo, int *x, int *y, std::string *color, int *rotacion, int *masa, bool estatico,int ancho_un,int alto_un){
 		std::string mensaje;
         std::string str1(*tipo);
 	if (((str1.compare("rectangulo")) == 0) || ((str1.compare("poligono")) == 0)
@@ -31,9 +31,9 @@ void ValidadorObjetos::ValidarBasicos(std::string* tipo, int* x, int* y, std::st
 			|| ((str1.compare("trapecio")) == 0)
 			|| ((str1.compare("circulo")) == 0)) {
 		if (es_color(*color)) {
-			if ((*x >= 0) && (*x < *ancho_un + 1) && (*y > -*alto_un - 1) && (*y <= 0)) {
+			if ((*x >= 0) && (*x < ancho_un + 1) && (*y > -alto_un - 1) && (*y <= 0)) {
 				if (*rotacion >= 0) {
-					if (!(*masa > 0 || (*masa == 0 && *estatico == true))) {
+					if (!(masa > 0 || (masa == 0 && estatico == true))) {
 						mensaje = "la masa debe ser mayor a 0 o ser 0 y el objeto estático, se toma masa 5";
 						*masa=5;
 					}
@@ -75,7 +75,7 @@ void ValidadorObjetos::ValidarPoligono(int* lados, float* escala) {
 	loguer->loguear(c, Log::LOG_TIPO::LOG_WAR);
 }
 
-void ValidadorObjetos::ValidarCirculo(int* diametro) {
+void ValidadorObjetos::ValidarCirculo(int *diametro) {
 	if (*diametro<1) {
 		std::string mensaje = "diametro inválido, se crea con 1 por defecto";
 		*diametro=1;
@@ -84,7 +84,7 @@ void ValidadorObjetos::ValidarCirculo(int* diametro) {
 	}
 }
 
-void ValidadorObjetos::ValidarParalelogramo(int* alfa) {
+void ValidadorObjetos::ValidarParalelogramo(int *alfa) {
 	if (!((*alfa < 181) && (*alfa >= 0))) {
 		std::string mensaje = "Ángulo es inválido, se crea con 45% por defecto";
 		*alfa=45;
@@ -93,8 +93,8 @@ void ValidadorObjetos::ValidarParalelogramo(int* alfa) {
 	}
 }
 
-void ValidadorObjetos::ValidarTrapecio(int* alfa, int* beta) {
-	if (!((*alfa < 90) && (*alfa >= 0)  )) {
+void ValidadorObjetos::ValidarTrapecio(int alfa, int beta) {
+	if (!((alfa < 90) && (alfa >= 0)  )) {
 		std::string mensaje = "Ángulo inválido, se crea con 45% por defecto";
 				const char * c = mensaje.c_str();
 				loguer->loguear(c, Log::LOG_TIPO::LOG_WAR);

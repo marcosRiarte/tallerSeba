@@ -11,8 +11,8 @@
 
 class Escenario {
 private:
-	std::vector<Personaje*>* personajes;
-	std::vector<ObjetoMapa*>* objetos;
+	std::vector<Personaje>* personajes;
+	std::vector<ObjetoMapa>* objetos;
 	MyContactListener* cuentaPasos;
 	b2World* mundo;
 

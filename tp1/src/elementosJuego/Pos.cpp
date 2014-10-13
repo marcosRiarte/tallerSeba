@@ -6,6 +6,11 @@ Pos::Pos(int x, int y) {
 	this->y= y;
 }
 
+Pos::Pos() {
+	x = 0;
+	y= 0;
+}
+
 int Pos::getX(){
 	return this->x;
 }
@@ -19,12 +24,6 @@ Pos::Pos(const Pos* p) {
 	y = p->y;
 }
 
-bool Pos::esIgual(Pos* posicion){
-	if ( (posicion->x == x) && (posicion->y == y) )
-		return true;
-	else
-		return false;
-}
 /*
  * @return Distancia al origen de coordenadas (0,0).
  */
@@ -45,8 +44,8 @@ float Pos::getDistancia(Pos p){
 /*
  * @return posición simétrica a this respecto del eje Y.
  */
-Pos* Pos::ySimetrico(){
-	return new Pos(x, -y);
+Pos Pos::ySimetrico(){
+	return Pos(x, -y);
 }
 
 Pos::~Pos() {
