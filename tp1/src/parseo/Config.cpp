@@ -25,8 +25,8 @@ void Config::liberarPjs(std::vector <Personaje*> & a){
 
 Config::Config(std::string nombreArchivo) throw (Config_Excepcion){
 
-	objetosMapa = new std::vector<ObjetoMapa>();
-	personajes = new std::vector<Personaje>();
+	objetosMapa = new std::vector<ObjetoMapa*>();
+	personajes = new std::vector<Personaje*>();
 
 	Json::Value raiz;
 	Json::Reader reader(Json::Features::strictMode());
@@ -139,11 +139,11 @@ Config::Config(std::string nombreArchivo) throw (Config_Excepcion){
 }
 
 
-std::vector<ObjetoMapa>* Config::getObjetos() {
+std::vector<ObjetoMapa*>* Config::getObjetos() {
 	return objetosMapa;
 }
 
-std::vector<Personaje>* Config::getPersonajes() {
+std::vector<Personaje*>* Config::getPersonajes() {
 	return personajes;
 }
 
@@ -168,9 +168,13 @@ std::string Config::getFondo() {
 }
 
 Config::~Config() {
+	for (unsigned i = 0; i < objetosMapa->size(); i++){
+		delete objetosMapa->at(i);
+	}
 	delete objetosMapa;
-	delete personajes;
-	delete objetosMapa;
+	for (unsigned i = 0; i < personajes->size(); i++){
+		delete personajes->at(i);
+	}
 	delete personajes;
 }
 

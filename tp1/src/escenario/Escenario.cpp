@@ -157,18 +157,18 @@ void CrearCaja(b2World* mundo, Config* config) {
 /*
  *	Crea los elementos en el mundo.
  */
-void CrearElementos(b2World* mundo, std::vector<ElementosJuego>* elementos, bool ponerSensorYFijarRotacion) {
+void CrearElementos(b2World* mundo, std::vector<ElementosJuego*>* elementos, bool ponerSensorYFijarRotacion) {
 	// Crea los objetos (se supone que no todos son estáticos)
 	for (unsigned i = 0; i < elementos->size(); i++) {
 		b2BodyDef elementoDef;
 		// Determina si es o no estático
-		if (!elementos->at(i).esEstatico()) {
+		if (!elementos->at(i)->esEstatico()) {
 			elementoDef.type = b2_dynamicBody;
 		}
 
 		// Setea posición y angulo
-		elementoDef.position.Set(elementos->at(i).getPos().getX(), elementos->at(i).getPos().getY());
-		elementoDef.angle = gradosARadianes(elementos->at(i).getRotacion());
+		elementoDef.position.Set(elementos->at(i)->getPos().getX(), elementos->at(i)->getPos().getY());
+		elementoDef.angle = gradosARadianes(elementos->at(i)->getRotacion());
 		b2Body* elemento = mundo->CreateBody(&elementoDef);
 
 		// Determina la forma y la crea
@@ -176,21 +176,21 @@ void CrearElementos(b2World* mundo, std::vector<ElementosJuego>* elementos, bool
 		b2PolygonShape poligono;
 		b2CircleShape circulo;
 
-		if(!(elementos->at(i).esCirculo())) {
-			b2Vec2* vertices = PasarAVertices(&elementos->at(i));
-			poligono.Set(vertices, elementos->at(i).getContorno().size());
+		if(!(elementos->at(i)->esCirculo())) {
+			b2Vec2* vertices = PasarAVertices(elementos->at(i));
+			poligono.Set(vertices, elementos->at(i)->getContorno().size());
 			caract.shape = &poligono;
 			delete vertices;
 		} else {
-			float radio = CalcularRadio(&elementos->at(i));
+			float radio = CalcularRadio(elementos->at(i));
 			circulo.m_radius = radio;
 			caract.shape = &circulo;
 		}
 
 		// Carga las caract si no es estatico
-		if (!elementos->at(i).esEstatico()) {
-			caract.density = elementos->at(i).getDensidad();
-			caract.friction = elementos->at(i).getFriccion();
+		if (!elementos->at(i)->esEstatico()) {
+			caract.density = elementos->at(i)->getDensidad();
+			caract.friction = elementos->at(i)->getFriccion();
 		}
 
 		// Crea el fixture del elemento
@@ -204,7 +204,7 @@ void CrearElementos(b2World* mundo, std::vector<ElementosJuego>* elementos, bool
 			mundo->DestroyBody(elemento);
 		} else {
 			// Guarda su referencia al mundo
-			elementos->at(i).setLinkAMundo(elemento);
+			elementos->at(i)->setLinkAMundo(elemento);
 
 			if (ponerSensorYFijarRotacion) {
 				// No deja que el elemento rote
@@ -242,8 +242,8 @@ Escenario::Escenario(Config* config) {
 	CrearCaja(world, config);
 
 	// Crea personajes y objetos
-	CrearElementos(world, (std::vector<ElementosJuego>*)personajes,true);
-	CrearElementos(world, (std::vector<ElementosJuego>*)objetos,false);
+	CrearElementos(world, (std::vector<ElementosJuego*>*)personajes,true);
+	CrearElementos(world, (std::vector<ElementosJuego*>*)objetos,false);
 
 	// Se agrega al mundo el listener para los contactos de los personajes
 	cuentaPasos = new MyContactListener;
@@ -255,19 +255,19 @@ Escenario::Escenario(Config* config) {
 /*
  *	Da los impulsos a los personajes segun los eventos.
  */
-void DarImpulsos(std::vector<Evento*>* ListaDeEventos, std::vector<Personaje>* personajes, MyContactListener* cuentaPasos) {
+void DarImpulsos(std::vector<Evento*>* ListaDeEventos, std::vector<Personaje*>* personajes, MyContactListener* cuentaPasos) {
 	// Evalua si algun evento es un impulso.
 	for (unsigned i = 0; i < ListaDeEventos->size(); i++) {
-		b2Vec2 pos = personajes->at(0).getLinkAMundo()->GetPosition();
+		b2Vec2 pos = personajes->at(0)->getLinkAMundo()->GetPosition();
 		if (ListaDeEventos->at(i)->getTecla() == TECLA_IZQUIERDA) {
 			b2Vec2 impulsoIzquierda(IMPULSO_IZQ_X, IMPULSO_IZQ_Y);
-			personajes->at(0).getLinkAMundo()->ApplyLinearImpulse(impulsoIzquierda,pos, true);
+			personajes->at(0)->getLinkAMundo()->ApplyLinearImpulse(impulsoIzquierda,pos, true);
 		} else if (ListaDeEventos->at(i)->getTecla() == TECLA_DERECHA) {
 			b2Vec2 impulsoDerecha(IMPULSO_DER_X, IMPULSO_DER_Y);
-			personajes->at(0).getLinkAMundo()->ApplyLinearImpulse(impulsoDerecha,pos, true);
+			personajes->at(0)->getLinkAMundo()->ApplyLinearImpulse(impulsoDerecha,pos, true);
 		} else if ((ListaDeEventos->at(i)->getTecla() == TECLA_ARRIBA) && (cuentaPasos->numFootContacts > 0)) {
 			b2Vec2 impulsoArriba(IMPULSO_ARR_X, IMPULSO_ARR_Y);
-			personajes->at(0).getLinkAMundo()->ApplyLinearImpulse(impulsoArriba,pos, true);
+			personajes->at(0)->getLinkAMundo()->ApplyLinearImpulse(impulsoArriba,pos, true);
 		}
 	}
 }
@@ -275,23 +275,23 @@ void DarImpulsos(std::vector<Evento*>* ListaDeEventos, std::vector<Personaje>* p
 /*
  *	Actualiza las posiciones de los objetos y personajes.
  */
-void ActualizarPos(std::vector<ElementosJuego>* elementos) {
+void ActualizarPos(std::vector<ElementosJuego*>* elementos) {
 	for (unsigned j = 0; j < elementos->size(); j++) {
-			b2Body* objeto = elementos->at(j).getLinkAMundo();
+			b2Body* objeto = elementos->at(j)->getLinkAMundo();
 
 			Pos posicion = Pos(objeto->GetPosition().x,objeto->GetPosition().y);
-			elementos->at(j).setPos(posicion);
-			elementos->at(j).setRotacion(radianesAGrados(objeto->GetAngle()));
+			elementos->at(j)->setPos(posicion);
+			elementos->at(j)->setRotacion(radianesAGrados(objeto->GetAngle()));
 	}
 }
 
 /*
  *	Actualiza los estados de los personajes
  */
-void ActualizarEstado(std::vector<Personaje>* personajes, MyContactListener* cuentaPasos) {
+void ActualizarEstado(std::vector<Personaje*>* personajes, MyContactListener* cuentaPasos) {
 	//Recorre los personajes seteandole los nuevos estados
 	for (unsigned i = 0; i < personajes->size(); i++) {
-		b2Body* personaje = personajes->at(i).getLinkAMundo();
+		b2Body* personaje = personajes->at(i)->getLinkAMundo();
 
 		// A partir de la velocidad determina el estado
 		b2Vec2 velocidad = personaje->GetLinearVelocity();
@@ -318,9 +318,9 @@ void ActualizarEstado(std::vector<Personaje>* personajes, MyContactListener* cue
 			perfil = Personaje::E_PERFIL::DERECHA;
 		} else {
 			// Si no tiene velocidad en x su perfil continua como estaba
-			perfil = personajes->at(i).getEstado().perfil;
+			perfil = personajes->at(i)->getEstado().perfil;
 		}
-		personajes->at(i).setEstado(perfil, accion);
+		personajes->at(i)->setEstado(perfil, accion);
 	}
 }
 
@@ -337,8 +337,8 @@ void Escenario::cambiar(std::vector<Evento*>* ListaDeEventos) {
 	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 
 	// Guarda las nuevas posiciones de los personajes y objetos
-	ActualizarPos((std::vector<ElementosJuego>*) objetos);
-	ActualizarPos((std::vector<ElementosJuego>*) personajes);
+	ActualizarPos((std::vector<ElementosJuego*>*) objetos);
+	ActualizarPos((std::vector<ElementosJuego*>*) personajes);
 
 	// Actualiza el estado de los personajes
 	ActualizarEstado(personajes,cuentaPasos);
