@@ -88,7 +88,7 @@ bool IsOverlap( const b2World* world, const b2Body* body )
  *	Pasa los puntos de un vector de posiciones a uno
  *	de vértices que es la clase que maneja Box2D
  */
-b2Vec2* PasarAVertices(ObjetoMapa* objeto) {
+b2Vec2* PasarAVertices(ElementosJuego* objeto) {
 	int cantidadDePuntos = objeto->getContorno()->size();
 
 	b2Vec2* vertices = new b2Vec2[cantidadDePuntos];
@@ -109,7 +109,7 @@ b2Vec2* PasarAVertices(ObjetoMapa* objeto) {
  *	Agarra el punto que devuelve el contorno de un circulo
  *	y la posicion en la que esta y devuelve su radio
  */
-float CalcularRadio(ObjetoMapa* circulo) {
+float CalcularRadio(ElementosJuego* circulo) {
 	float distX = circulo->getPos()->getX()
 			- circulo->getContorno()->at(0)->getX();
 	float distY = circulo->getPos()->getY()
@@ -158,107 +158,79 @@ void CrearCaja(b2World* mundo, Config* config) {
 }
 
 /*
- *	Crea los personajes en el mundo.
+ *	Crea los elementos en el mundo.
  */
-void CrearPersonajes(b2World* world, std::vector<Personaje*>* personajes) {
-	// Crea los personajes (se supone que todos son dinámicos)
-	for (unsigned i = 0; i < personajes->size(); i++) {
-		b2BodyDef peronajeDef;
-		peronajeDef.type = b2_dynamicBody;
-
-		// Setea posición y angulo
-		peronajeDef.position.Set(personajes->at(i)->getPos()->getX(),
-				personajes->at(i)->getPos()->getY());
-		b2Body* personaje = world->CreateBody(&peronajeDef);
-
-		// El personaje es un rectangulo
-		b2FixtureDef caractDef;
-		b2PolygonShape forma;
-		forma.SetAsBox(personajes->at(i)->getAncho() / 2,
-				personajes->at(i)->getAlto() / 2);
-		caractDef.shape = &forma;
-		caractDef.density = personajes->at(i)->getDensidad();
-		caractDef.friction = FRICCION_DEL_PERSONAJE;
-
-		// La da la forma y la masa, determinando la densidad y no deja que rote
-		personaje->CreateFixture(&caractDef);
-		personaje->SetFixedRotation(true);
-		// Guarda su referencia al mundo
-		personajes->at(i)->setLinkAMundo(personaje);
-
-		//solo funciona para un personaje
-		//add foot sensor fixture
-		b2PolygonShape sensorForma;
-
-		b2FixtureDef sensorFix;
-		sensorForma.SetAsBox(personajes->at(i)->getAncho() / 2-3, 0.1,
-				b2Vec2(0, -(personajes->at(i)->getAlto() / 2)), 0);
-		sensorFix.isSensor = true;
-		sensorFix.shape = &sensorForma;
-		b2Fixture* footSensorFixture = personaje->CreateFixture(&sensorFix);
-		footSensorFixture->SetUserData((void*) 3);
-	}
-}
-
-/*
- *	Crea los objetos en el mundo.
- */
-void CrearObjetos(b2World* world, std::vector<ObjetoMapa*>* objetos) {
+void CrearElementos(b2World* mundo, std::vector<ElementosJuego*>* elementos, bool esPersonaje) {
 	// Crea los objetos (se supone que no todos son estáticos)
-	for (unsigned i = 0; i < objetos->size(); i++) {
-		b2BodyDef objetoDef;
-
+	for (unsigned i = 0; i < elementos->size(); i++) {
+		b2BodyDef elementoDef;
 		// Determina si es o no estático
-		if (!objetos->at(i)->esEstatico()) {
-			objetoDef.type = b2_dynamicBody;
+		if (!elementos->at(i)->esEstatico()) {
+			elementoDef.type = b2_dynamicBody;
 		}
+
 		// Setea posición y angulo
-		objetoDef.position.Set(objetos->at(i)->getPos()->getX(),
-				objetos->at(i)->getPos()->getY());
-		objetoDef.angle = GRADOS_A_RADIANES(objetos->at(i)->getRotacion());
-		//objetoDef.angle = b2_pi;
-		b2Body* objeto = world->CreateBody(&objetoDef);
+		elementoDef.position.Set(elementos->at(i)->getPos()->getX(), elementos->at(i)->getPos()->getY());
+		elementoDef.angle = GRADOS_A_RADIANES(elementos->at(i)->getRotacion());
+		b2Body* elemento = mundo->CreateBody(&elementoDef);
 
 		// Determina la forma y la crea
 		b2FixtureDef caract;
 		b2PolygonShape poligono;
 		b2CircleShape circulo;
 
-		if (!(objetos->at(i)->esCirculo())) {
-			b2Vec2* vertices = PasarAVertices(objetos->at(i));
-
-			poligono.Set(vertices, objetos->at(i)->getContorno()->size());
+		if (esPersonaje) {
+			poligono.SetAsBox(ANCHO_PERSONAJE_UN / 2, ALTO_PERSONAJE_UN / 2);
+			caract.shape = &poligono;
+		} else if(!(elementos->at(i)->esCirculo())) {
+			b2Vec2* vertices = PasarAVertices(elementos->at(i));
+			poligono.Set(vertices, elementos->at(i)->getContorno()->size());
 			caract.shape = &poligono;
 			delete vertices;
 		} else {
-			float radio = CalcularRadio(objetos->at(i));
+			float radio = CalcularRadio(elementos->at(i));
 			circulo.m_radius = radio;
 			caract.shape = &circulo;
 		}
 
 		// Carga las caract si no es estatico
-		if (!objetos->at(i)->esEstatico()) {
-			caract.density = objetos->at(i)->getDensidad();
-			caract.friction = FRICCION_DE_OBJETO;
+		if (!elementos->at(i)->esEstatico()) {
+			caract.density = elementos->at(i)->getDensidad();
+			caract.friction = elementos->at(i)->getFriccion();
 		}
 
-		// La da la forma y la masa, determinando la densidad
-		objeto->CreateFixture(&caract);
+		// Crea el fixture del elemento
+		elemento->CreateFixture(&caract);
 
-		if (!IsOverlap(world, objeto)){
-		// Guarda su referencia al mundo
-		objetos->at(i)->setLinkAMundo(objeto);
-
-		}
-		else{
+		if (IsOverlap(mundo, elemento)) {
+			// Si se superpone con algo que estaba lo borra del mundo
 			loguer->loguear("Se superpone", Log::LOG_TIPO::LOG_ERR);
-			objetos->erase(objetos->begin()+i);
+			elementos->erase(elementos->begin() + i);
 			i--;
-			world->DestroyBody(objeto);
+			mundo->DestroyBody(elemento);
+		} else {
+			// Guarda su referencia al mundo
+			elementos->at(i)->setLinkAMundo(elemento);
+
+			if (esPersonaje) {
+				// Si es un personaje no deja que rote
+				elemento->SetFixedRotation(true);
+
+				//solo funciona para un personaje
+				//add foot sensor fixture
+				b2PolygonShape sensorForma;
+
+				b2FixtureDef sensorFix;
+				sensorForma.SetAsBox(ANCHO_PERSONAJE_UN/2-3, 0.1, b2Vec2(0,-ALTO_PERSONAJE_UN/2), 0);
+				sensorFix.isSensor = true;
+				sensorFix.shape = &sensorForma;
+				b2Fixture* footSensorFixture = elemento->CreateFixture(&sensorFix);
+				footSensorFixture->SetUserData((void*) 3);
+			}
 		}
 	}
-
 }
+
 
 /*
  * Crea el escenario a partir de una configuracion que contiene la lista de objetos
@@ -276,8 +248,8 @@ Escenario::Escenario(Config* config) {
 	CrearCaja(world, config);
 
 	// Crea personajes y objetos
-	CrearPersonajes(world, personajes);
-	CrearObjetos(world, objetos);
+	CrearElementos(world, (std::vector<ElementosJuego*>*)personajes,true);
+	CrearElementos(world, (std::vector<ElementosJuego*>*)objetos,false);
 
 	// Se agrega al mundo el listener para los contactos de los personajes
 	cuentaPasos = new MyContactListener;

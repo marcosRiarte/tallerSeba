@@ -27,11 +27,6 @@ public:
     virtual bool esEstatico() = 0;
 
 	/*
-	 * Devuelve verdadero si el elemento es un personaje
-	 */
-    bool esPersonaje();
-
-	/*
 	 * Devuelve verdadero si el objeto es un circulo
 	 */
     virtual bool esCirculo() = 0;
