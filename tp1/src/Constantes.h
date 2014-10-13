@@ -32,12 +32,10 @@ static Log* loguer = (Log*) DebugLog::getInstance();
 // Constantes del mundo en Box2D
 #define GRAVEDAD_X 					0
 #define GRAVEDAD_Y					-50
-#define MEDIO_ALTO_SUELO			2
-#define MEDIO_ALTO_TECHO			1
-#define MEDIO_ANCHO_PARED			2
+#define GROSOR_BORDE_MUNDO			4
 #define FRICCION_DEL_PERSONAJE		0.4
 #define FRICCION_DE_OBJETO			0.4
-#define FRICCION_CERO				0
+#define DENSIDAD_CERO				0
 #define IMPULSO_IZQ_X				-5000
 #define IMPULSO_IZQ_Y				0
 #define IMPULSO_DER_X				5000

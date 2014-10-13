@@ -34,6 +34,16 @@ public:
 	Personaje(Pos* posicion);
 
 	/*
+	 * Devuelve verdadero si el objeto no se puede mover
+	 */
+    bool esEstatico();
+
+	/*
+	 * Devuelve verdadero si el objeto es un circulo
+	 */
+    bool esCirculo();
+
+	/*
 	 * Devuelve el area del elemento
 	 */
 	float getArea();

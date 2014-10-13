@@ -127,48 +127,34 @@ return unAngulo;
 }
 
 /*
+ *	Crea un elemento estatico en (posx,posy) con las dimensiones determinadas
+ */
+void CrearCaja(b2World* mundo, float posX, float posY, float ancho, float alto) {
+	b2BodyDef elementoDef;
+	elementoDef.position.Set(posX,posY);
+	b2Body* elemento = mundo->CreateBody(&elementoDef);
+	b2PolygonShape elementoForma;
+	elementoForma.SetAsBox(ancho/2, alto/2);
+	elemento->CreateFixture(&elementoForma, DENSIDAD_CERO);
+}
+
+/*
  *	Crea las paredes, el techo y el suelo del mundo.
  */
-void CrearCaja(b2World* world, Config* config) {
-	// Se crea el suelo en la posición y con el ancho y el alto que indica la config
-	b2BodyDef sueloDef;
-	sueloDef.position.Set((config->getAncho()) / 2,
-			-MEDIO_ALTO_SUELO - (config->getAlto()));
-	b2Body* suelo = world->CreateBody(&sueloDef);
-	b2PolygonShape sueloForma;
-	sueloForma.SetAsBox((config->getAncho()) / 2, MEDIO_ALTO_SUELO);
-	// El segundo parámetro es la densidad
-	suelo->CreateFixture(&sueloForma, FRICCION_CERO);
+void CrearCaja(b2World* mundo, Config* config) {
+	float anchoMundo = config->getAncho();
+	float altoMundo = config->getAlto();
+	float centroMundoX = config->getAncho()/2;
+	float centroMundoY = config->getAlto()/2;
 
-	// Se crea el techo en la posición y con el ancho y el alto que indica la config
-	b2BodyDef techoDef;
-	techoDef.position.Set((config->getAncho()) / 2, MEDIO_ALTO_TECHO);
-	b2Body* techo = world->CreateBody(&techoDef);
-	b2PolygonShape techoForma;
-	techoForma.SetAsBox((config->getAncho()) / 2, MEDIO_ALTO_TECHO);
-	// El segundo parámetro es la densidad
-	techo->CreateFixture(&techoForma, FRICCION_CERO);
-
-	// Se crean las paredes en la posición y con el ancho y el alto que indica la config
-	b2BodyDef paredIzqDef;
-	paredIzqDef.position.Set(-MEDIO_ANCHO_PARED, -(config->getAlto()) / 2);
-	b2Body* paredIzq = world->CreateBody(&paredIzqDef);
-	b2PolygonShape paredIzqForma;
-	paredIzqForma.SetAsBox(MEDIO_ANCHO_PARED,
-			(config->getAlto()) / 2
-					- 2 * (MEDIO_ALTO_TECHO + MEDIO_ALTO_SUELO));
-	// El segundo parámetro es la densidad
-	paredIzq->CreateFixture(&paredIzqForma, FRICCION_CERO);
-	b2BodyDef paredDerDef;
-	paredDerDef.position.Set((config->getAncho()) + MEDIO_ANCHO_PARED,
-			-(config->getAlto()) / 2);
-	b2Body* paredDer = world->CreateBody(&paredDerDef);
-	b2PolygonShape paredDerForma;
-	paredDerForma.SetAsBox(MEDIO_ANCHO_PARED,
-			(config->getAlto()) / 2
-					- 2 * (MEDIO_ALTO_TECHO + MEDIO_ALTO_SUELO));
-	// El segundo parámetro es la densidad
-	paredDer->CreateFixture(&paredDerForma, FRICCION_CERO);
+	// Se crea el suelo
+	CrearCaja(mundo, centroMundoX, -altoMundo-GROSOR_BORDE_MUNDO/2, anchoMundo, GROSOR_BORDE_MUNDO);
+	// Se crea el techo
+	CrearCaja(mundo, centroMundoX, GROSOR_BORDE_MUNDO/2, anchoMundo, GROSOR_BORDE_MUNDO);
+	// Se crea el pared derecha
+	CrearCaja(mundo, anchoMundo+GROSOR_BORDE_MUNDO/2, -centroMundoY, GROSOR_BORDE_MUNDO, altoMundo);
+	// Se crea el pared izquierda
+	CrearCaja(mundo, -GROSOR_BORDE_MUNDO/2, -centroMundoY, GROSOR_BORDE_MUNDO, altoMundo);
 }
 
 /*
@@ -291,8 +277,7 @@ Escenario::Escenario(Config* config) {
 
 	// Crea personajes y objetos
 	CrearPersonajes(world, personajes);
-	std::vector<ObjetoMapa*>* asd= objetos;
-	CrearObjetos(world, asd);
+	CrearObjetos(world, objetos);
 
 	// Se agrega al mundo el listener para los contactos de los personajes
 	cuentaPasos = new MyContactListener;
@@ -307,22 +292,16 @@ Escenario::Escenario(Config* config) {
 void DarImpulsos(std::vector<Evento*>* ListaDeEventos, std::vector<Personaje*>* personajes, MyContactListener* cuentaPasos) {
 	// Evalua si algun evento es un impulso.
 	for (unsigned i = 0; i < ListaDeEventos->size(); i++) {
+		b2Vec2 pos = personajes->at(0)->getLinkAMundo()->GetPosition();
 		if (ListaDeEventos->at(i)->getTecla() == TECLA_IZQUIERDA) {
 			b2Vec2 impulsoIzquierda(IMPULSO_IZQ_X, IMPULSO_IZQ_Y);
-			personajes->at(0)->getLinkAMundo()->ApplyLinearImpulse(
-					impulsoIzquierda,
-					personajes->at(0)->getLinkAMundo()->GetPosition(), true);
+			personajes->at(0)->getLinkAMundo()->ApplyLinearImpulse(impulsoIzquierda,pos, true);
 		} else if (ListaDeEventos->at(i)->getTecla() == TECLA_DERECHA) {
 			b2Vec2 impulsoDerecha(IMPULSO_DER_X, IMPULSO_DER_Y);
-			personajes->at(0)->getLinkAMundo()->ApplyLinearImpulse(
-					impulsoDerecha,
-					personajes->at(0)->getLinkAMundo()->GetPosition(), true);
-		} else if ((ListaDeEventos->at(i)->getTecla() == TECLA_ARRIBA)
-				&& (cuentaPasos->numFootContacts > 0)) {
+			personajes->at(0)->getLinkAMundo()->ApplyLinearImpulse(impulsoDerecha,pos, true);
+		} else if ((ListaDeEventos->at(i)->getTecla() == TECLA_ARRIBA) && (cuentaPasos->numFootContacts > 0)) {
 			b2Vec2 impulsoArriba(IMPULSO_ARR_X, IMPULSO_ARR_Y);
-			personajes->at(0)->getLinkAMundo()->ApplyLinearImpulse(
-					impulsoArriba,
-					personajes->at(0)->getLinkAMundo()->GetPosition(), true);
+			personajes->at(0)->getLinkAMundo()->ApplyLinearImpulse(impulsoArriba,pos, true);
 		}
 	}
 }
@@ -330,17 +309,27 @@ void DarImpulsos(std::vector<Evento*>* ListaDeEventos, std::vector<Personaje*>* 
 /*
  *	Actualiza las posiciones de los objetos y personajes.
  */
-void ActualizarPos(std::vector<Personaje*>* personajes, std::vector<ObjetoMapa*>* objetos, MyContactListener* cuentaPasos) {
-	//Recorre objetos y personajes seteandole las nuevas posiciones y ángulos
+void ActualizarPos(std::vector<ElementosJuego*>* elementos) {
+	for (unsigned j = 0; j < elementos->size(); j++) {
+			b2Body* objeto = elementos->at(j)->getLinkAMundo();
+			// Creo q deberia borrar la pos anterior de alguna forma. No se si alcanza.
+			delete elementos->at(j)->getPos();
+
+			Pos* posicion = new Pos(objeto->GetPosition().x,objeto->GetPosition().y);
+			elementos->at(j)->setPos(posicion);
+			elementos->at(j)->setRotacion(radAGrados(objeto->GetAngle()));
+	}
+}
+
+/*
+ *	Actualiza los estados de los personajes
+ */
+void ActualizarEstado(std::vector<Personaje*>* personajes, MyContactListener* cuentaPasos) {
+	//Recorre los personajes seteandole los nuevos estados
 	for (unsigned i = 0; i < personajes->size(); i++) {
 		b2Body* personaje = personajes->at(i)->getLinkAMundo();
-		// Creo q deberia borrar la pos anterior de alguna forma. No se si alcanza.
-		delete personajes->at(i)->getPos();
 
-		Pos* posicion = new Pos(personaje->GetPosition().x,personaje->GetPosition().y);
-		personajes->at(i)->setPos(posicion);
-
-		// Determina el estado de la imagen
+		// A partir de la velocidad determina el estado
 		b2Vec2 velocidad = personaje->GetLinearVelocity();
 		Personaje::E_ACCION accion;
 		Personaje::E_PERFIL perfil;
@@ -350,35 +339,24 @@ void ActualizarPos(std::vector<Personaje*>* personajes, std::vector<ObjetoMapa*>
 		} else if (velocidad.y > 0) {
 			// Si la velocidad en y es positiva esta saltando
 			accion = Personaje::E_ACCION::SALTANDO;
-		} else if (velocidad.x != 0){
+		} else if (velocidad.x != 0) {
 			// Si la velocidad en y es cero, pero tiene velocidad en x esta desplazandose
 			accion = Personaje::E_ACCION::DESPLAZANDO;
 		} else {
 			// Si la velocidad en x tambien es cero esta quieto
 			accion = Personaje::E_ACCION::QUIETO;
 		}
-		if (velocidad.x<0) {
+		if (velocidad.x < 0) {
 			// Si la velocidad en x es negativa, va para la izquierda
 			perfil = Personaje::E_PERFIL::IZQUIERDA;
-		} else if (velocidad.x>0) {
+		} else if (velocidad.x > 0) {
 			// Si la velocidad en x es positiva, va para la derecha
 			perfil = Personaje::E_PERFIL::DERECHA;
 		} else {
 			// Si no tiene velocidad en x su perfil continua como estaba
 			perfil = personajes->at(i)->getEstado().perfil;
 		}
-		personajes->at(i)->setEstado(perfil,accion);
-	}
-
-	for (unsigned j = 0; j < objetos->size(); j++) {
-		b2Body* objeto = objetos->at(j)->getLinkAMundo();
-		// Creo q deberia borrar la pos anterior de alguna forma. No se si alcanza.
-		delete objetos->at(j)->getPos();
-
-		Pos* posicion = new Pos(objeto->GetPosition().x,objeto->GetPosition().y);
-		objetos->at(j)->setPos(posicion);
-		objetos->at(j)->setRotacion(radAGrados(objeto->GetAngle()));
-
+		personajes->at(i)->setEstado(perfil, accion);
 	}
 }
 
@@ -387,7 +365,7 @@ void ActualizarPos(std::vector<Personaje*>* personajes, std::vector<ObjetoMapa*>
  *  en sus nuevas posiciones
  */
 void Escenario::cambiar(std::vector<Evento*>* ListaDeEventos) {
-	// Determino impulsos para los personajes
+	// Determino impulsos para los personajes segun los eventos
 	DarImpulsos(ListaDeEventos, personajes, cuentaPasos);
 
 	// Avanza el mundo dos step
@@ -395,7 +373,11 @@ void Escenario::cambiar(std::vector<Evento*>* ListaDeEventos) {
 	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 
 	// Guarda las nuevas posiciones de los personajes y objetos
-	ActualizarPos(personajes, objetos,cuentaPasos);
+	ActualizarPos((std::vector<ElementosJuego*>*) objetos);
+	ActualizarPos((std::vector<ElementosJuego*>*) personajes);
+
+	// Actualiza el estado de los personajes
+	ActualizarEstado(personajes,cuentaPasos);
 }
 
 Escenario::~Escenario() {
