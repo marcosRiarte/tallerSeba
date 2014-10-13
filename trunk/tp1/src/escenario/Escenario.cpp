@@ -15,10 +15,6 @@
 #include <string>
 #include <Box2D/Box2D.h>
 #include <Math.h>
-#define RADIANES_A_GRADOS(_ANGULO_)((_ANGULO_)/M_PI*180.0)
-#define GRADOS_A_RADIANES(_ANGULO_)((_ANGULO_)*M_PI/180.0)
-
-
 
 void liberarPos(std::vector <Pos*> & a ){
    for ( unsigned i = 0; i < a.size(); i++ ) {
@@ -110,20 +106,30 @@ b2Vec2* PasarAVertices(ElementosJuego* objeto) {
  *	y la posicion en la que esta y devuelve su radio
  */
 float CalcularRadio(ElementosJuego* circulo) {
-	float distX = circulo->getPos()->getX()
-			- circulo->getContorno()->at(0)->getX();
-	float distY = circulo->getPos()->getY()
-			- circulo->getContorno()->at(0)->getY();
-	float radio = sqrt(distX * distX + distY * distY);
-	return radio;
+	float distX = circulo->getPos()->getX() - circulo->getContorno()->at(0)->getX();
+	float distY = circulo->getPos()->getY()	- circulo->getContorno()->at(0)->getY();
+	return sqrt(distX * distX + distY * distY);
 }
 
-//Convierte y normaliza el ángulo
-float radAGrados(float angulo){
-	float unAngulo = RADIANES_A_GRADOS(angulo);
-while (unAngulo<=0){ unAngulo += 360;}
-while (unAngulo>360){unAngulo -= 360;}
-return unAngulo;
+/*
+ *	Convierte un angulo de radianes a grados y lo normaliza
+ */
+float radianesAGrados(float anguloRad) {
+	float anguloGrad = (anguloRad/M_PI)*180.0;
+	while (anguloGrad <= 0) {
+		anguloGrad += 360;
+	}
+	while (anguloGrad > 360) {
+		anguloGrad -= 360;
+	}
+	return anguloGrad;
+}
+
+/*
+ *	Normaliza un angulo en grados y lo convierte a radianes
+ */
+float gradosARadianes(float anguloGrad) {
+	return (anguloGrad/180.0)*M_PI;
 }
 
 /*
@@ -171,7 +177,7 @@ void CrearElementos(b2World* mundo, std::vector<ElementosJuego*>* elementos, boo
 
 		// Setea posición y angulo
 		elementoDef.position.Set(elementos->at(i)->getPos()->getX(), elementos->at(i)->getPos()->getY());
-		elementoDef.angle = GRADOS_A_RADIANES(elementos->at(i)->getRotacion());
+		elementoDef.angle = gradosARadianes(elementos->at(i)->getRotacion());
 		b2Body* elemento = mundo->CreateBody(&elementoDef);
 
 		// Determina la forma y la crea
@@ -286,7 +292,7 @@ void ActualizarPos(std::vector<ElementosJuego*>* elementos) {
 
 			Pos* posicion = new Pos(objeto->GetPosition().x,objeto->GetPosition().y);
 			elementos->at(j)->setPos(posicion);
-			elementos->at(j)->setRotacion(radAGrados(objeto->GetAngle()));
+			elementos->at(j)->setRotacion(radianesAGrados(objeto->GetAngle()));
 	}
 }
 
