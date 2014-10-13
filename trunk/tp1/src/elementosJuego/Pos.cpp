@@ -36,9 +36,9 @@ float Pos::getNorma(){
  * @param p posición desde la cual se mide la distancia.
  * @return Distancia a p.
  */
-float Pos::getDistancia(Pos* p){
-	int x = this->x - p->x;
-	int y = this->y - p->y;
+float Pos::getDistancia(Pos p){
+	int x = this->x - p.x;
+	int y = this->y - p.y;
 	return sqrt(x*x + y*y);
 }
 

@@ -38,16 +38,16 @@ int Personaje::getAncho(){
 /*
  * Devuelve el contorno del personaje
  */
-std::vector<Pos*>* Personaje::getContorno() {
-	std::vector<Pos*>* vertices = new std::vector<Pos*>();
+std::vector<Pos>* Personaje::getContorno() {
+	std::vector<Pos>* vertices = new std::vector<Pos>();
 
- 	Pos* posicion1 = new Pos(pos->getX()+getAncho()/2,pos->getY()+getAlto()/2);
+ 	Pos posicion1 = Pos(pos->getX()+getAncho()/2,pos->getY()+getAlto()/2);
 	vertices->push_back(posicion1);
- 	Pos* posicion2 = new Pos(pos->getX()-getAncho()/2,pos->getY()+getAlto()/2);
+ 	Pos posicion2 = Pos(pos->getX()-getAncho()/2,pos->getY()+getAlto()/2);
 	vertices->push_back(posicion2);
- 	Pos* posicion3 = new Pos(pos->getX()-getAncho()/2,pos->getY()-getAlto()/2);
+ 	Pos posicion3 = Pos(pos->getX()-getAncho()/2,pos->getY()-getAlto()/2);
 	vertices->push_back(posicion3);
- 	Pos* posicion4 = new Pos(pos->getX()+getAncho()/2,pos->getY()-getAlto()/2);
+ 	Pos posicion4 = Pos(pos->getX()+getAncho()/2,pos->getY()-getAlto()/2);
 	vertices->push_back(posicion4);
 
 	return vertices;

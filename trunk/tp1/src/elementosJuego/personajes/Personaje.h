@@ -57,7 +57,7 @@ public:
 	/*
 	 * Devuelve el contorno del personaje
 	 */
-	std::vector<Pos*>* getContorno();
+	std::vector<Pos>* getContorno();
 
 	// getter y setter de estado
 	void setEstado(E_PERFIL p, E_ACCION a);
