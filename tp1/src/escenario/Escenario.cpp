@@ -79,10 +79,9 @@ bool IsOverlap( const b2World* world, const b2Body* body )
    return callback.m_isOverlap;
 }
 
-
 /*
- *	Pasa los puntos de un vector de posiciones a uno
- *	de vértices que es la clase que maneja Box2D
+ *	Pasa los puntos de un vector de posiciones a uno de vértices que es
+ *	 la clase que maneja Box2D y les resta el centro de masa
  */
 b2Vec2* PasarAVertices(ElementosJuego* objeto) {
 	int cantidadDePuntos = objeto->getContorno()->size();
@@ -91,10 +90,10 @@ b2Vec2* PasarAVertices(ElementosJuego* objeto) {
 	std::vector<Pos*>* unVectorDePos = objeto->getContorno();
 
 	for (int j = 0; j < cantidadDePuntos; j++) {
-		b2Vec2 * unParOrdenado = new b2Vec2(
+		b2Vec2 unParOrdenado = b2Vec2(
 				unVectorDePos->at(j)->getX() - (objeto->getPos()->getX()),
 				unVectorDePos->at(j)->getY() - (objeto->getPos()->getY()));
-		vertices[j] = *unParOrdenado;
+		vertices[j] = unParOrdenado;
 	}
 
 	liberarPos(*unVectorDePos);
