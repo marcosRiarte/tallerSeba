@@ -7,9 +7,9 @@ class Poligono: public ObjetoMapa {
 private:
 	int lados;
 	int escala;
+	void crearContorno();
 public:
 	Poligono(Pos posicion, int lados, int escala, int rotacion, std::string color, int masa, bool estatico);
-	std::vector<Pos> getContorno();
 	float getArea();
 	virtual ~Poligono();
 };

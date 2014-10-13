@@ -4,18 +4,16 @@ Circulo::Circulo(Pos posicion, int diametro, int rotacion, std::string color, in
 	this->circulo = true;
 	this->diametro = diametro;
 	this->initialice(estatico, color, posicion, rotacion, masa);
-
 }
+
 /*
  * @return Devuelve un vector con una sola posición (p). De esta manera, se puede calcular
  * 			su radio, haciendo | getPos() - p |
  */
-std::vector<Pos> Circulo::getContorno() {
-	std::vector<Pos> vertices = std::vector<Pos>();
-	int x = pos.getX() + (diametro / 2);
-	int y = pos.getY();
-	Pos posicion = Pos(x, y);
-	return vertices;
+void Circulo::crearContorno() {
+	int x = diametro / 2;
+	int y = 0;
+	vertices.push_back(Pos(x, y));
 }
 
 float Circulo::getArea() {

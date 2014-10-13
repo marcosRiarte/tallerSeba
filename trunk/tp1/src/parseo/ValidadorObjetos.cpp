@@ -5,8 +5,7 @@
 #include <string>
 #include "../src/Constantes.h"
 
-void ValidadorObjetos::ValidarPersonaje(int *x, int *y, int ancho_un,
-		int alto_un) {
+void ValidadorObjetos::ValidarPersonaje(int *x, int *y, int ancho_un, int alto_un) {
 	if (!((*x >= 0) && (*x < ancho_un + 1) && (*y > -alto_un - 1) && (*y <= 0))) {
 		std::string mensaje = "Personaje fuera de pantalla, se crea en la posición por defecto x=40 y=-80";
 		const char* c = mensaje.c_str();
