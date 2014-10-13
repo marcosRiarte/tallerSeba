@@ -11,6 +11,7 @@ private:
 	Pos getPosIzqSup(std::vector<Pos>* vPos);
 	Pos getPosCentro(std::vector<Pos>* vPos);
 	SDL_Texture* rotar(SDL_Texture* t, double grados);
+	SDL_Texture* unaTextura;
 public:
 	ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o);
 	SDL_Texture* getVista();

@@ -38,7 +38,7 @@ bool CreadorDeTexturas::cargarDesde( std::string rutaArchivo, SDL_Renderer* rend
 			std::string errorTextura = "Imposible cargar la textura desde "+rutaArchivo+" Error SDL: "+SDL_GetError();
 			const char* errorCargaTextura = errorTextura.c_str();
 					loguer->loguear(errorCargaTextura,Log::LOG_ERR);
-							throw new SDL_Excepcion(errorCargaTextura);
+							throw SDL_Excepcion(errorCargaTextura);
 		}
 		else
 		{

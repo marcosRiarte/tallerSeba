@@ -15,7 +15,7 @@ class ElementosJuego {
 protected:
 	float masa;
 	float rot;
-	Pos pos;
+	Pos* pos;
 	b2Body* linkAMundo;
 	float friccion;
 
@@ -44,7 +44,7 @@ public:
 	/*
 	 * Devuelve los puntos del contorno del elemento
 	 */
-	virtual std::vector<Pos> getContorno() = 0;
+	virtual std::vector<Pos>* getContorno() = 0;
 
 	/*
 	 * Devuelve el area del elemento
@@ -54,8 +54,8 @@ public:
 	/*
 	 * Getter y setter para la posicion
 	 */
-	Pos getPos();
-	void setPos(Pos posicion);
+	Pos* getPos();
+	void setPos(Pos* posicion);
 
 	/*
 	 * Getter y setter para el angulo de rotacion

@@ -31,7 +31,7 @@ private:
 //	Rectangulo *rectanguloPersonaje; //Solo para pruebas
 
 public:
-	Personaje(Pos posicion);
+	Personaje(Pos* posicion);
 
 	/*
 	 * Devuelve verdadero si el objeto no se puede mover
@@ -57,7 +57,7 @@ public:
 	/*
 	 * Devuelve el contorno del personaje
 	 */
-	std::vector<Pos> getContorno();
+	std::vector<Pos>* getContorno();
 
 	// getter y setter de estado
 	void setEstado(E_PERFIL p, E_ACCION a);

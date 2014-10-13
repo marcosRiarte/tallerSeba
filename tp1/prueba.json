@@ -48,6 +48,17 @@
 				"estatico": true
 			},
 			{
+				"tipo": "circulo",
+				"x": 704,
+				"y": -200,
+				"diametro": 45,
+				"alto": 20,
+				"color": "#FF00FF",
+				"rot": 0,
+				"masa": 120,
+				"estatico": false
+			},
+			{
 				"tipo": "paralelogramo",
 				"x": 500,
 				"y": -404,

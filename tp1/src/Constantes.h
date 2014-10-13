@@ -47,5 +47,5 @@ static Log* loguer = (Log*) DebugLog::getInstance();
 #define POSITION_ITERATIONS			3
 
 // Constantes de SDL
-#define FRAME_RATE					4
+#define FRAME_RATE					13
 #endif /* CONSTANTES_H_ */
