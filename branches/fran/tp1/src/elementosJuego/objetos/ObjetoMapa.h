@@ -45,10 +45,9 @@ public:
     	 * Se implementan en las clases hija, un metodo devuelve los puntos del
     	 * contorno y el otro el area del objeto
     	 */
-        virtual std::vector<Pos> getContorno() {
-        	std::vector<Pos> vertices = std::vector<Pos>();
-        	return vertices;};
-        virtual float getArea() {return 1;};
+        virtual std::vector<Pos> getContorno() = 0;
+
+        virtual float getArea() = 0;
 
         virtual ~ObjetoMapa();
 };

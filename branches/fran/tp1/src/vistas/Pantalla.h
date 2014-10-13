@@ -23,7 +23,7 @@ private:
 	SDL_Renderer* renderer;
 	SDL_Texture * fondo;
 	std::vector<Vista*>* vistas;
-	void agregarVistas(std::vector<ObjetoMapa>* objetos, std::vector<Personaje>* personajes);
+	void agregarVistas(std::vector<ObjetoMapa*>* objetos, std::vector<Personaje*>* personajes);
 //	Sprite* unSprite;
 //	CreadorDeTexturas* HojaDeSpritesDeTextura;
 //	std::vector<SDL_Rect*>* listaDeCuadros;

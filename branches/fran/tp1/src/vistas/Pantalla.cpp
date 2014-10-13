@@ -64,15 +64,15 @@ void Pantalla::inicializar() throw (SDL_Excepcion){
 */
 }
 
-void Pantalla::agregarVistas(std::vector<ObjetoMapa>* objetos, std::vector<Personaje>* personajes){
+void Pantalla::agregarVistas(std::vector<ObjetoMapa*>* objetos, std::vector<Personaje*>* personajes){
 	vistas = new std::vector<Vista*>();
 	Vista* v;
 	for(unsigned i = 0; i < objetos->size(); i++){
-		v = new ObjetoMapaVista(renderer, &objetos->at(i));
+		v = new ObjetoMapaVista(renderer, objetos->at(i));
 		vistas->push_back(v);
 	}
 	for(unsigned i = 0; i < personajes->size(); i++){
-		v = new PersonajeVista(renderer, &personajes->at(i));
+		v = new PersonajeVista(renderer, personajes->at(i));
 		vistas->push_back(v);
 	}
 
