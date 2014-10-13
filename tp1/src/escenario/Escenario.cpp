@@ -160,7 +160,7 @@ void CrearCaja(b2World* mundo, Config* config) {
 /*
  *	Crea los elementos en el mundo.
  */
-void CrearElementos(b2World* mundo, std::vector<ElementosJuego*>* elementos, bool esPersonaje) {
+void CrearElementos(b2World* mundo, std::vector<ElementosJuego*>* elementos, bool ponerSensorYFijarRotacion) {
 	// Crea los objetos (se supone que no todos son estáticos)
 	for (unsigned i = 0; i < elementos->size(); i++) {
 		b2BodyDef elementoDef;
@@ -179,10 +179,7 @@ void CrearElementos(b2World* mundo, std::vector<ElementosJuego*>* elementos, boo
 		b2PolygonShape poligono;
 		b2CircleShape circulo;
 
-		if (esPersonaje) {
-			poligono.SetAsBox(ANCHO_PERSONAJE_UN / 2, ALTO_PERSONAJE_UN / 2);
-			caract.shape = &poligono;
-		} else if(!(elementos->at(i)->esCirculo())) {
+		if(!(elementos->at(i)->esCirculo())) {
 			b2Vec2* vertices = PasarAVertices(elementos->at(i));
 			poligono.Set(vertices, elementos->at(i)->getContorno()->size());
 			caract.shape = &poligono;
@@ -212,8 +209,8 @@ void CrearElementos(b2World* mundo, std::vector<ElementosJuego*>* elementos, boo
 			// Guarda su referencia al mundo
 			elementos->at(i)->setLinkAMundo(elemento);
 
-			if (esPersonaje) {
-				// Si es un personaje no deja que rote
+			if (ponerSensorYFijarRotacion) {
+				// No deja que el elemento rote
 				elemento->SetFixedRotation(true);
 
 				//solo funciona para un personaje
