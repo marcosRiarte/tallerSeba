@@ -10,9 +10,9 @@ ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o) {
 	ventana = new SDL_Rect();
 
 	//Obtengo los vértices, transformando cada vertice en su simétrico respecto del eje Y
-	std::vector<Pos*>* vertices = objeto->getContorno();
+	std::vector<Pos>* vertices = objeto->getContorno();
 	for (unsigned i = 0; i < vertices->size(); i++) {
-		vertices->at(i) = vertices->at(i)->ySimetrico();
+		vertices->at(i) = vertices->at(i).ySimetrico();
 	}
 
 	int diametro;
@@ -20,26 +20,17 @@ ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o) {
 	//Se calcula la superficie que puede llegar a ocupar dicho objeto, teniendo en cuenta
 	//	las posibles rotaciones.
 	if (objeto->esCirculo()) {
-		Pos* pos = objeto->getPos()->ySimetrico();
-		diametro = 2 * pos->getDistancia(vertices->at(0));
-		delete pos;
+		Pos pos = objeto->getPos()->ySimetrico();
+		diametro = 2 * pos.getDistancia(vertices->at(0));
 	}else {
-		Pos *pIzqSup = getPosIzqSup(vertices);
-		Pos *pDerInf = getPosDerInf(vertices);
-		diametro = pIzqSup->getDistancia(pDerInf);
-		delete pIzqSup;
-		delete pDerInf;
+		Pos pIzqSup = getPosIzqSup(vertices);
+		Pos pDerInf = getPosDerInf(vertices);
+		diametro = pIzqSup.getDistancia(pDerInf);
 	}
 	ventana->w = diametro;
 	ventana->h = diametro;
 }
 
-void liberarVertices(std::vector <Pos*> & a){
-   for ( unsigned i = 0; i < a.size(); i++ ) {
-      delete a[i];
-   }
-   a.clear();
-}
 
 /**
  * \return	Textura, cuyo tamaño y posición se puede adquirir por medio del método
@@ -51,9 +42,9 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 	long color = ( objeto->getColor() ) + 0xFF000000;
 
 	//Obtengo los vértices, transformando cada vertice en su simétrico respecto del eje Y
-	std::vector<Pos*>* vertices = objeto->getContorno();
+	std::vector<Pos>* vertices = objeto->getContorno();
 	for (unsigned i = 0; i < vertices->size(); i++) {
-		vertices->at(i) = vertices->at(i)->ySimetrico();
+		vertices->at(i) = vertices->at(i).ySimetrico();
 	}
 
 	int cantVertices = vertices->size();
@@ -76,21 +67,18 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 		int radio = pos->getDistancia(vertices->at(0));
 		filledCircleColor(renderer, radio, radio, radio, color);
 		filledCircleColor(renderer, radio, radio + radio / 2, radio / 4, color + 0xFF00);
-		delete pos;
 	}
 	//Si no es circulo
 	else {
 		short vx[cantVertices];
 		short vy[cantVertices];
-		Pos* centroFigura = getPosCentro(vertices);
-		Pos* centroVentana = new Pos(ventana->w / 2, ventana->w / 2);
+		Pos centroFigura = getPosCentro(vertices);
+		Pos centroVentana = Pos(ventana->w / 2, ventana->w / 2);
 		for (int i = 0; i < cantVertices; i++) {
-			vx[i] = vertices->at(i)->getX() - centroFigura->getX() + centroVentana->getX();
-			vy[i] = vertices->at(i)->getY() - centroFigura->getY() + centroVentana->getY();
+			vx[i] = vertices->at(i).getX() - centroFigura.getX() + centroVentana.getX();
+			vy[i] = vertices->at(i).getY() - centroFigura.getY() + centroVentana.getY();
 		}
 		filledPolygonColor(renderer, vx, vy, cantVertices, color);
-		delete centroFigura;
-		delete centroVentana;
 	}
 
 	//Se modifica el target del renderer para que ahora apunte a la ventana (valor por defecto)
@@ -99,7 +87,6 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 	SDL_Texture* texturaRotada = this->rotar(textura, objeto->getRotacion());
 	SDL_DestroyTexture(textura);
 
-	liberarVertices(*vertices);
 	delete vertices;
 
 	return texturaRotada;
@@ -134,18 +121,18 @@ ObjetoMapaVista::~ObjetoMapaVista() {}
  * \obs		Se llama getPosInzSup ya que en SDL el punto (0,0) u origen de
  * 			coordenadas se encuentra arriba a la izquierda
  */
-Pos* ObjetoMapaVista::getPosIzqSup(std::vector<Pos*>* vPos) {
-	Pos* p = vPos->at(0);
-	int Xmin = p->getX();
-	int Ymin = p->getY();
+Pos ObjetoMapaVista::getPosIzqSup(std::vector<Pos>* vPos) {
+	Pos p = vPos->at(0);
+	int Xmin = p.getX();
+	int Ymin = p.getY();
 	for (unsigned i = 1; i < vPos->size(); i++) {
 		p = vPos->at(i);
-		if (p->getX() < Xmin)
-			Xmin = p->getX();
-		if (p->getY() < Ymin)
-			Ymin = p->getY();
+		if (p.getX() < Xmin)
+			Xmin = p.getX();
+		if (p.getY() < Ymin)
+			Ymin = p.getY();
 	}
-	return new Pos(Xmin, Ymin);
+	return Pos(Xmin, Ymin);
 }
 
 /**
@@ -161,18 +148,18 @@ Pos* ObjetoMapaVista::getPosIzqSup(std::vector<Pos*>* vPos) {
  * \obs		Se llama getPosDerInf ya que en SDL el punto (0,0) u origen de
  * 			coordenadas se encuentra arriba a la izquierda
  */
-Pos* ObjetoMapaVista::getPosDerInf(std::vector<Pos*>* vPos) {
-	Pos* p = vPos->at(0);
-	int Xmax = p->getX();
-	int Ymax = p->getY();
+Pos ObjetoMapaVista::getPosDerInf(std::vector<Pos>* vPos) {
+	Pos p = vPos->at(0);
+	int Xmax = p.getX();
+	int Ymax = p.getY();
 	for (unsigned i = 1; i < vPos->size(); i++) {
 		p = vPos->at(i);
-		if (p->getX() > Xmax)
-			Xmax = p->getX();
-		if (p->getY() > Ymax)
-			Ymax = p->getY();
+		if (p.getX() > Xmax)
+			Xmax = p.getX();
+		if (p.getY() > Ymax)
+			Ymax = p.getY();
 	}
-	return new Pos(Xmax, Ymax);
+	return Pos(Xmax, Ymax);
 }
 
 /**
@@ -184,12 +171,12 @@ Pos* ObjetoMapaVista::getPosDerInf(std::vector<Pos*>* vPos) {
  *
  * \return	Pos		centro del contorno.
  */
-Pos* ObjetoMapaVista::getPosCentro(std::vector<Pos*>* vPos){
-	Pos* pIzqSup = getPosIzqSup(vPos);
-	Pos* pDerInf = getPosDerInf(vPos);
-	int x = ( pDerInf->getX() + pIzqSup->getX() ) /2;
-	int y = ( pDerInf->getY() + pIzqSup->getY() ) /2;
-	return new Pos(x,y);
+Pos ObjetoMapaVista::getPosCentro(std::vector<Pos>* vPos){
+	Pos pIzqSup = getPosIzqSup(vPos);
+	Pos pDerInf = getPosDerInf(vPos);
+	int x = ( pDerInf.getX() + pIzqSup.getX() ) /2;
+	int y = ( pDerInf.getY() + pIzqSup.getY() ) /2;
+	return Pos(x,y);
 }
 
 /**

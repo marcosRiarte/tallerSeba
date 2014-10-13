@@ -87,16 +87,16 @@ b2Vec2* PasarAVertices(ElementosJuego* objeto) {
 	int cantidadDePuntos = objeto->getContorno()->size();
 
 	b2Vec2* vertices = new b2Vec2[cantidadDePuntos];
-	std::vector<Pos*>* unVectorDePos = objeto->getContorno();
+	std::vector<Pos>* unVectorDePos = objeto->getContorno();
 
 	for (int j = 0; j < cantidadDePuntos; j++) {
 		b2Vec2 unParOrdenado = b2Vec2(
-				unVectorDePos->at(j)->getX() - (objeto->getPos()->getX()),
-				unVectorDePos->at(j)->getY() - (objeto->getPos()->getY()));
+				unVectorDePos->at(j).getX() - (objeto->getPos()->getX()),
+				unVectorDePos->at(j).getY() - (objeto->getPos()->getY()));
 		vertices[j] = unParOrdenado;
 	}
 
-	liberarPos(*unVectorDePos);
+	delete(unVectorDePos);
 	return vertices;
 }
 
@@ -105,8 +105,8 @@ b2Vec2* PasarAVertices(ElementosJuego* objeto) {
  *	y la posicion en la que esta y devuelve su radio
  */
 float CalcularRadio(ElementosJuego* circulo) {
-	float distX = circulo->getPos()->getX() - circulo->getContorno()->at(0)->getX();
-	float distY = circulo->getPos()->getY()	- circulo->getContorno()->at(0)->getY();
+	float distX = circulo->getPos()->getX() - circulo->getContorno()->at(0).getX();
+	float distY = circulo->getPos()->getY()	- circulo->getContorno()->at(0).getY();
 	return sqrt(distX * distX + distY * distY);
 }
 

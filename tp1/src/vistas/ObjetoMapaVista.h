@@ -7,9 +7,9 @@
 class ObjetoMapaVista : public Vista{
 private:
 	ObjetoMapa* objeto;
-	Pos* getPosDerInf(std::vector<Pos*>* vPos);
-	Pos* getPosIzqSup(std::vector<Pos*>* vPos);
-	Pos* getPosCentro(std::vector<Pos*>* vPos);
+	Pos getPosDerInf(std::vector<Pos>* vPos);
+	Pos getPosIzqSup(std::vector<Pos>* vPos);
+	Pos getPosCentro(std::vector<Pos>* vPos);
 	SDL_Texture* rotar(SDL_Texture* t, double grados);
 public:
 	ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o);

@@ -12,7 +12,7 @@ public:
 	int getY();
 	bool esIgual(Pos* posicion);
 	float getNorma();
-	float getDistancia(Pos* p);
+	float getDistancia(Pos p);
 	Pos* ySimetrico();
 	virtual ~Pos();
 };

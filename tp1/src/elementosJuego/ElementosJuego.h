@@ -44,7 +44,7 @@ public:
 	/*
 	 * Devuelve los puntos del contorno del elemento
 	 */
-	virtual std::vector<Pos*>* getContorno() = 0;
+	virtual std::vector<Pos>* getContorno() = 0;
 
 	/*
 	 * Devuelve el area del elemento
