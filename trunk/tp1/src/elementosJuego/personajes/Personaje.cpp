@@ -11,6 +11,8 @@ Personaje::Personaje(Pos* posicion) {
 	estado.perfil = E_PERFIL::IZQUIERDA;
 	estado.accion = E_ACCION::QUIETO;
 
+    friccion = FRICCION_DEL_PERSONAJE;
+
 //	this->estado= "Quieto";
 //	rectanguloPersonaje = new Rectangulo(false, "#00F0A0", pos, 0, 80, alto, ancho); // Solo para pruebas...
 
@@ -81,6 +83,10 @@ void Personaje::setEstado(Estado estado){
 Personaje::Estado Personaje::getEstado(){
 	return estado;
 }
+
+bool Personaje::esEstatico() { return false; }
+bool Personaje::esCirculo() { return false; }
+
 
 /*
  * Getter y setter para el estado

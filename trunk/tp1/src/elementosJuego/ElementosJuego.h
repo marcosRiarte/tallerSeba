@@ -17,12 +17,34 @@ protected:
 	float rot;
 	Pos* pos;
 	b2Body* linkAMundo;
+	float friccion;
 
 public:
+
+	/*
+	 * Devuelve verdadero si el objeto no se puede mover
+	 */
+    virtual bool esEstatico() = 0;
+
+	/*
+	 * Devuelve verdadero si el elemento es un personaje
+	 */
+    bool esPersonaje();
+
+	/*
+	 * Devuelve verdadero si el objeto es un circulo
+	 */
+    virtual bool esCirculo() = 0;
+
 	/*
 	 * Devuelve la densidad del elemento
 	 */
 	float getDensidad();
+
+	/*
+	 * Devuelve la friccion del elemento
+	 */
+	float getFriccion();
 
 	/*
 	 * Devuelve los puntos del contorno del elemento
