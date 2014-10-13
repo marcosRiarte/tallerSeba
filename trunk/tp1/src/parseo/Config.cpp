@@ -36,8 +36,7 @@ Config::Config(std::string nombreArchivo) throw (Config_Excepcion){
 
 
 	if (!parseoExitoso) {
-		std::string mensaje = "Fallo el parseo"
-				+ reader.getFormatedErrorMessages();
+		std::string mensaje = "Fallo el parseo"	+ reader.getFormatedErrorMessages();
 		const char * c = mensaje.c_str();
 		loguer->loguear(c, Log::LOG_TIPO::LOG_ERR);
 		throw Config_Excepcion("No se pudo parsear exitosamente el archivo \n");
@@ -51,16 +50,14 @@ Config::Config(std::string nombreArchivo) throw (Config_Excepcion){
 	un_Escenario = raiz["escenario"];
 
 	if (un_Escenario.isNull()) {
-		std::string mensajeError =
-				"No hay escenario, fallo el parseo del archivo ";
+		std::string mensajeError = "No hay escenario, fallo el parseo del archivo ";
 //		Log::Loguear(mensajeError, nombreArchivo);
 
 		std::cout << mensajeError << "\n";
 	} else {
 		/* Busca el nombre de la imagen_fondo en el archivo json, si no lo encuentra crea un null
 		 por defecto.*/
-		std::string imagen_fondo = un_Escenario.get("imagen_fondo",
-				"fondo1.png").asString();
+		std::string imagen_fondo = un_Escenario.get("imagen_fondo",	"fondo1.png").asString();
 		this->fondo = imagen_fondo;
 
 		altoPx = un_Escenario.get("alto_px", 768).asInt();
@@ -72,18 +69,15 @@ Config::Config(std::string nombreArchivo) throw (Config_Excepcion){
 
 		personaje_x = un_Escenario["personaje"].get("x", 0).asInt();
 		personaje_y = un_Escenario["personaje"].get("y", -100).asInt();
-		ValidadorObjetos::ValidarPersonaje(&personaje_x, &personaje_y, ancho_un,
-				alto_un);
-		personajes->push_back(
-				CreadorObjetos::CrearPersonaje(personaje_x, personaje_y));
+		ValidadorObjetos::ValidarPersonaje(&personaje_x, &personaje_y, ancho_un, alto_un);
+		personajes->push_back(CreadorObjetos::CrearPersonaje(personaje_x, personaje_y));
 		Json::Value objetos;
 		objetos = un_Escenario["objetos"];
 
 		//En esta parte parseamos todos los objetos que haya, y creamos los objetos correspondientes
 		for (size_t i = 0; i < objetos.size(); i++) {
 			std::string tipo = objetos[i].get("tipo", "rectangulo").asString();
-			int x, y, diametro, ancho, alto, base, altura, alfa, beta, lados,
-					rotacion, masa;
+			int x, y, diametro, ancho, alto, base, altura, alfa, beta, lados, rotacion, masa;
 			bool estatico;
 			float escala;
 
@@ -106,38 +100,26 @@ Config::Config(std::string nombreArchivo) throw (Config_Excepcion){
 			masa = objetos[i].get("masa", 1).asInt();
 			estatico = objetos[i].get("estatico", false).asBool();
 			escala = objetos[i].get("escala", 1).asFloat();
-			ValidadorObjetos::ValidarBasicos(&tipo, &x, &y, &color, &rotacion, &masa,
-					estatico, ancho_un, alto_un);
+			ValidadorObjetos::ValidarBasicos(&tipo, &x, &y, &color, &rotacion, &masa, estatico, ancho_un, alto_un);
 
 			if (tipo == "rectangulo") {
-				this->objetosMapa->push_back(
-						CreadorObjetos::CrearRectangulo(x, y, ancho, alto,
-								rotacion, color, masa, estatico));
+				this->objetosMapa->push_back(CreadorObjetos::CrearRectangulo(x, y, ancho, alto,	rotacion, color, masa, estatico));
 			} else if (tipo == "poligono") {
 				ValidadorObjetos::ValidarPoligono(&lados, &escala);
-				this->objetosMapa->push_back(
-						CreadorObjetos::CrearPoligono(x, y, lados, escala,
-								rotacion, color, masa, estatico));
+				this->objetosMapa->push_back(CreadorObjetos::CrearPoligono(x, y, lados, escala,	rotacion, color, masa, estatico));
 			} else if (tipo == "circulo") {
 				ValidadorObjetos::ValidarCirculo(&diametro);
-				this->objetosMapa->push_back(
-						CreadorObjetos::CrearCirculo(x, y, diametro, rotacion,
-								color, masa, estatico));
+				this->objetosMapa->push_back(CreadorObjetos::CrearCirculo(x, y, diametro, rotacion,	color, masa, estatico));
 			} else if (tipo == "paralelogramo") {
 				ValidadorObjetos::ValidarParalelogramo(&alfa);
-				this->objetosMapa->push_back(
-						CreadorObjetos::CrearParalelogramo(x, y, base, altura,
-								alfa, rotacion, color, masa, estatico));
+				this->objetosMapa->push_back(CreadorObjetos::CrearParalelogramo(x, y, base, altura,	alfa, rotacion, color, masa, estatico));
 			} else if (tipo == "trapecio") {
 				ValidadorObjetos::ValidarTrapecio(alfa, beta);
-				this->objetosMapa->push_back(
-						CreadorObjetos::CrearTrapecio(x, y, base, altura, alfa,
-								beta, rotacion, color, masa, estatico));
+				this->objetosMapa->push_back(CreadorObjetos::CrearTrapecio(x, y, base, altura, alfa, beta, rotacion, color, masa, estatico));
 			}
 		}
 	}
 }
-
 
 std::vector<ObjetoMapa*>* Config::getObjetos() {
 	return objetosMapa;

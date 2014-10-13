@@ -23,12 +23,11 @@ void terminar(MVC*);
 int main(int argc, char* argv[]) {
 	int fin = REINICIAR;
 	while (FIN_DEL_JUEGO != fin) {
-		try{
-		MVC* mvc = creacionDelModelo("prueba.json");
-		fin = gameLoop(mvc);
-		terminar(mvc);
-		}
-		catch(MVC_Excepcion& ex){
+		try {
+			MVC* mvc = creacionDelModelo("prueba.json");
+			fin = gameLoop(mvc);
+			terminar(mvc);
+		} catch (MVC_Excepcion& ex) {
 			std::cout << ex.what() << "\n";
 			std::cout << "Revisar log de errores" << "\n";
 			return RES_OK;
@@ -38,56 +37,55 @@ int main(int argc, char* argv[]) {
 }
 
 // Crea todas las partes del modelo
-MVC* creacionDelModelo(char* direccionDeLaConfiguracion) throw (MVC_Excepcion){
+MVC* creacionDelModelo(char* direccionDeLaConfiguracion) throw (MVC_Excepcion) {
 	MVC* mvc = new MVC;
 	char msg[1000];
 
 	//Se parsea el archivo Json
-	try{
+	try {
 		std::string asd = "prueba.json";
 		mvc->config = new Config(asd);
+	} catch (Config_Excepcion&) {
+		throw MVC_Excepcion("No se pudo parsear el archivo .json");
 	}
-			catch(Config_Excepcion&){
-				throw MVC_Excepcion("No se pudo parsear el archivo .json");
-	}
-
 
 	//Se loguea la creación de objetos
-	snprintf(msg, 1000, "Se parsearon: %d objetos",mvc->config->getObjetos()->size());
+	snprintf(msg, 1000, "Se parsearon: %d objetos",	mvc->config->getObjetos()->size());
 	loguer->loguear(msg, Log::LOG_DEB);
 
 	//Se crea el escenario
 	mvc->escenario = new Escenario(mvc->config);
 
 	//Se loguea la creación del escenario
-	snprintf(msg, 1000, "Se creo la física Box2D con ancho: %d unidades, alto %d unidades y %d objetos",
-			mvc->config->getAncho(), mvc->config->getAlto(), mvc->config->getObjetos()->size());
-		loguer->loguear(msg, Log::LOG_DEB);
+	snprintf(msg, 1000,
+			"Se creo la física Box2D con ancho: %d unidades, alto %d unidades y %d objetos",
+			mvc->config->getAncho(),
+			mvc->config->getAlto(),
+			mvc->config->getObjetos()->size());
+	loguer->loguear(msg, Log::LOG_DEB);
 
 	//Se inicializa SDL
 	Controlador::iniciarSDL();
 
 	//Se crea la pantalla
-	try{
+	try {
 		mvc->pantalla = new Pantalla(mvc->config);
+	} catch (SDL_Excepcion&) {
+		throw MVC_Excepcion("No se pudo crear la pantalla \n");
 	}
-				catch(SDL_Excepcion&){
-					throw MVC_Excepcion("No se pudo crear la pantalla \n");
-	}
-
 
 	//Se loguea la creación de pantalla
-		snprintf(msg, 1000, "Se creo la pantalla con ancho: %d unidades y alto %d unidades",
-				mvc->pantalla->getAncho(), mvc->pantalla->getAlto());
-			loguer->loguear(msg, Log::LOG_DEB);
+	snprintf(msg, 1000,
+			"Se creo la pantalla con ancho: %d unidades y alto %d unidades",
+			mvc->pantalla->getAncho(), mvc->pantalla->getAlto());
+	loguer->loguear(msg, Log::LOG_DEB);
 
 	return mvc;
 }
 
 void ayuda() {
 	std::cout << "Ayuda: \n";
-	std::cout
-			<< "\t Para ejecutar SnowBross ingresar dirección del archivo de configuración. \n";
+	std::cout << "\t Para ejecutar SnowBross ingresar dirección del archivo de configuración. \n";
 	std::cout << "Ejemplo: \n";
 	std::cout << "\t > SnowBross 'c:\\configuracion.json' \n";
 }

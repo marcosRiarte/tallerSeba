@@ -13,7 +13,9 @@ float ElementosJuego::getDensidad() {
 /*
  * Devuelve la friccion del elemento
  */
-float ElementosJuego::getFriccion() {return friccion;}
+float ElementosJuego::getFriccion() {
+	return friccion;
+}
 
 /*
  * Getter y setter para la posicion

@@ -24,12 +24,12 @@ public:
 	/*
 	 * Devuelve verdadero si el objeto no se puede mover
 	 */
-    virtual bool esEstatico() = 0;
+	virtual bool esEstatico() = 0;
 
 	/*
 	 * Devuelve verdadero si el objeto es un circulo
 	 */
-    virtual bool esCirculo() = 0;
+	virtual bool esCirculo() = 0;
 
 	/*
 	 * Devuelve la densidad del elemento

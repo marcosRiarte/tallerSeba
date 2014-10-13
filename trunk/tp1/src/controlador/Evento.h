@@ -13,19 +13,18 @@ private:
 
 public:
 	// Valores posibles para la tecla ingresada:
-	#define TECLA_NADA					0
-	#define TECLA_IZQUIERDA				1
-	#define TECLA_DERECHA				2
-	#define TECLA_ARRIBA				3
-	#define TECLA_R						4
+#define TECLA_NADA					0
+#define TECLA_IZQUIERDA				1
+#define TECLA_DERECHA				2
+#define TECLA_ARRIBA				3
+#define TECLA_R						4
 
-
-/*	static const int teclaNada = 0;
-	static const int teclaIzquierda = 1;
-	static const int teclaDerecha = 2;
-	static const int teclaArriba = 3;
-	static const int teclaR = 4;
-*/
+	/*	static const int teclaNada = 0;
+	 static const int teclaIzquierda = 1;
+	 static const int teclaDerecha = 2;
+	 static const int teclaArriba = 3;
+	 static const int teclaR = 4;
+	 */
 	// se crea por defecto con "teclaNada"
 	Evento();
 	Evento(int evento);
@@ -35,9 +34,7 @@ public:
 	int getTecla();
 	void procesarTecla(int tecla);
 
-
 	virtual ~Evento();
 };
-
 
 #endif /* EVENTO_H_ */

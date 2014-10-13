@@ -9,7 +9,7 @@ private:
 	int altura;
 	int alfa;
 public:
-	Paralelogramo(Pos posicion, int base, int altura, int alfa, int rotacion,std::string color,int masa,bool estatico);
+	Paralelogramo(Pos posicion, int base, int altura, int alfa, int rotacion, std::string color, int masa, bool estatico);
 	std::vector<Pos> getContorno();
 	float getArea();
 	virtual ~Paralelogramo();

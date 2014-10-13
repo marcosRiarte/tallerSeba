@@ -13,11 +13,11 @@
 #include "../elementosJuego/objetos/ObjetoMapa.h"
 
 Evento::Evento() {
-	this->teclaIngresada=TECLA_NADA;
+	this->teclaIngresada = TECLA_NADA;
 }
 
 Evento::Evento(int evento) {
-	this->teclaIngresada=evento;
+	this->teclaIngresada = evento;
 }
 
 // geter y seter para la tecla
@@ -29,7 +29,7 @@ int Evento::getTecla() {
 	return this->teclaIngresada;
 }
 
-void procesarTecla(){
+void procesarTecla() {
 
 }
 
