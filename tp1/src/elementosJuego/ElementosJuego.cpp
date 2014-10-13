@@ -18,6 +18,13 @@ float ElementosJuego::getFriccion() {
 }
 
 /*
+ * Devuelve un vector de Posiciones que define el contorno de la figura
+ */
+std::vector<Pos> ElementosJuego::getContorno() {
+	return vertices;
+}
+
+/*
  * Getter y setter para la posicion
  */
 Pos ElementosJuego::getPos() {

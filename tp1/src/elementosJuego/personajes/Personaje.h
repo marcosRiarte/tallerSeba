@@ -31,7 +31,7 @@ private:
 	int ancho;
 	int alto;
 	Estado estado;
-
+	void crearContorno();
 //	Rectangulo *rectanguloPersonaje; //Solo para pruebas
 
 public:
@@ -48,20 +48,12 @@ public:
 	bool esCirculo();
 
 	/*
-	 * Devuelve el area del elemento
-	 */
-	float getArea();
-
-	/*
 	 * Getter para alto y ancho del personaje en unidades reales
 	 */
 	int getAlto();
 	int getAncho();
 
-	/*
-	 * Devuelve el contorno del personaje
-	 */
-	std::vector<Pos> getContorno();
+	float getArea();
 
 	// getter y setter de estado
 	void setEstado(E_PERFIL p, E_ACCION a);

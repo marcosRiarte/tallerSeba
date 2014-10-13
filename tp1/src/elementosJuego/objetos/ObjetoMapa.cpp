@@ -49,6 +49,7 @@ void ObjetoMapa::initialice(bool esEstatico, std::string color, Pos pos_cm,	int 
 	this->rot = rotacion;
 	this->masa = masa;
 	this->friccion = FRICCION_DE_OBJETO;
+	crearContorno();
 }
 
 /*

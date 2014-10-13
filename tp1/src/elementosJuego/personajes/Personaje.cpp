@@ -13,6 +13,8 @@ Personaje::Personaje(Pos posicion) {
 
 	friccion = FRICCION_DEL_PERSONAJE;
 
+	crearContorno();
+
 //	this->estado= "Quieto";
 //	rectanguloPersonaje = new Rectangulo(false, "#00F0A0", pos, 0, 80, alto, ancho); // Solo para pruebas...
 
@@ -38,19 +40,15 @@ int Personaje::getAncho() {
 /*
  * Devuelve el contorno del personaje
  */
-std::vector<Pos> Personaje::getContorno() {
-	std::vector<Pos> vertices = std::vector<Pos>();
-
-	Pos posicion1 = Pos(pos.getX() + getAncho() / 2, pos.getY() + getAlto() / 2);
+void Personaje::crearContorno() {
+	Pos posicion1 = Pos(getAncho() / 2, getAlto() / 2);
 	vertices.push_back(posicion1);
-	Pos posicion2 = Pos(pos.getX() - getAncho() / 2, pos.getY() + getAlto() / 2);
+	Pos posicion2 = Pos(- getAncho() / 2, getAlto() / 2);
 	vertices.push_back(posicion2);
-	Pos posicion3 = Pos(pos.getX() - getAncho() / 2, pos.getY() - getAlto() / 2);
+	Pos posicion3 = Pos(- getAncho() / 2, - getAlto() / 2);
 	vertices.push_back(posicion3);
-	Pos posicion4 = Pos(pos.getX() + getAncho() / 2, pos.getY() - getAlto() / 2);
+	Pos posicion4 = Pos( getAncho() / 2, - getAlto() / 2);
 	vertices.push_back(posicion4);
-
-	return vertices;
 }
 
 /*

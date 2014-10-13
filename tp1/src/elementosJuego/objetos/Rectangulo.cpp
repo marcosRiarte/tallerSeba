@@ -6,11 +6,9 @@ Rectangulo::Rectangulo(bool esEstatico, std::string color, Pos pos_cm, int rotac
 	this->initialice(esEstatico, color, pos_cm, rotacion, masa);
 }
 
-std::vector<Pos> Rectangulo::getContorno() {
-	std::vector<Pos> vertices;
-
-	int x1 = (pos.getX()) - (ancho / 2);
-	int y1 = (pos.getY()) - (alto / 2) - 1;
+void Rectangulo::crearContorno() {
+	int x1 = -ancho / 2;
+	int y1 = -alto / 2;
 	int x2 = x1 + ancho;
 	int y2 = y1;
 	int x3 = x2;
@@ -26,8 +24,6 @@ std::vector<Pos> Rectangulo::getContorno() {
 	vertices.push_back(posicion2);
 	vertices.push_back(posicion3);
 	vertices.push_back(posicion4);
-
-	return vertices;
 }
 
 float Rectangulo::getArea() {

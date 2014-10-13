@@ -83,9 +83,7 @@ b2Vec2* PasarAVertices(ElementosJuego* elemento) {
 	b2Vec2* vertices = new b2Vec2[cantidadDePuntos];
 
 	for (int j = 0; j < cantidadDePuntos; j++) {
-		b2Vec2 unParOrdenado = b2Vec2(
-				unVectorDePos.at(j).getX() - (elemento->getPos().getX()),
-				unVectorDePos.at(j).getY() - (elemento->getPos().getY()));
+		b2Vec2 unParOrdenado = b2Vec2(unVectorDePos.at(j).getX(), unVectorDePos.at(j).getY());
 		vertices[j] = unParOrdenado;
 	}
 

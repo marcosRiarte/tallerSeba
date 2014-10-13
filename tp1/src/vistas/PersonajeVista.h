@@ -11,6 +11,7 @@ private:
 
 	// Texura que contiene todos los sprites que se van a usar
 	SDL_Texture* contenedorDeSprites;
+	SDL_Texture* textura;
 
 	// Vectores con sprites que caracterizan cada accion
 	std::vector<SDL_Rect*>* vSpritesQuieto;
@@ -26,7 +27,7 @@ private:
 	void crearSprites();
 
 	// Genera una textura, a partir de un vector de sprites y un selector
-	SDL_Texture* getVista(SDL_Rect* sprite, Personaje::E_PERFIL perfil);
+	void generarVista(SDL_Rect* sprite, Personaje::E_PERFIL perfil);
 
 public:
 	PersonajeVista(SDL_Renderer* r, Personaje* p);

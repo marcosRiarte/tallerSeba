@@ -18,6 +18,9 @@ protected:
 	Pos pos;
 	b2Body* linkAMundo;
 	float friccion;
+	std::vector<Pos> vertices = std::vector<Pos>();
+
+	virtual void crearContorno() = 0;
 
 public:
 
@@ -44,7 +47,7 @@ public:
 	/*
 	 * Devuelve los puntos del contorno del elemento
 	 */
-	virtual std::vector<Pos> getContorno() = 0;
+	std::vector<Pos> getContorno();
 
 	/*
 	 * Devuelve el area del elemento

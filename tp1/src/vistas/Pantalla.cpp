@@ -98,7 +98,6 @@ void Pantalla::cambiar(){
 		r.x = v->x*anchoPx/ancho;
 		r.y = v->y*altoPx/alto;
 		SDL_RenderCopy(renderer, textura, NULL, &r);
-		SDL_DestroyTexture(textura);
 	}
 /*
 	//Se carga el objeto personaje
