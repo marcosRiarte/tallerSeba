@@ -6,18 +6,22 @@
 #include <Box2D/Box2D.h>
 #include "../objetos/Rectangulo.h"
 
-class Personaje : public ElementosJuego {
+class Personaje: public ElementosJuego {
 public:
-	enum E_PERFIL {DERECHA, IZQUIERDA};
-	enum E_ACCION {QUIETO, DESPLAZANDO, SALTANDO, CAYENDO, EMPUJANDO};
-	struct Estado{
+	enum E_PERFIL {
+		DERECHA, IZQUIERDA
+	};
+	enum E_ACCION {
+		QUIETO, DESPLAZANDO, SALTANDO, CAYENDO, EMPUJANDO
+	};
+	struct Estado {
 		E_PERFIL perfil;
 		E_ACCION accion;
 
-		bool operator==(const Estado& e){
-				if (e.perfil == this->perfil && e.accion == this->accion)
-				   	return true;
-				return false;
+		bool operator==(const Estado& e) {
+			if (e.perfil == this->perfil && e.accion == this->accion)
+				return true;
+			return false;
 		}
 	};
 
@@ -36,12 +40,12 @@ public:
 	/*
 	 * Devuelve verdadero si el objeto no se puede mover
 	 */
-    bool esEstatico();
+	bool esEstatico();
 
 	/*
 	 * Devuelve verdadero si el objeto es un circulo
 	 */
-    bool esCirculo();
+	bool esCirculo();
 
 	/*
 	 * Devuelve el area del elemento
@@ -70,12 +74,10 @@ public:
 	 * Devuelve el rectangulo que representa al personaje
 	 */
 //	Rectangulo* getRectangulo();
-
 	/*
 	 * Getter y setter para el estado
 	 */
 //	void setEstado(std::string unEstado);
 //	std::string getEstado();
-
 };
 #endif /* PERSONAJE_H_ */

@@ -10,7 +10,7 @@ private:
 	int alfa;
 	int beta;
 public:
-	Trapecio(Pos posicion, int base, int altura, int alfa, int beta,int rotacion,std::string color,int masa,bool estatico);
+	Trapecio(Pos posicion, int base, int altura, int alfa, int beta, int rotacion, std::string color, int masa, bool estatico);
 	std::vector<Pos> getContorno();
 	float getArea();
 	virtual ~Trapecio();

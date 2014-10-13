@@ -45,9 +45,7 @@ void Pantalla::inicializar() throw (SDL_Excepcion){
 	this->fondo = IMG_LoadTexture(renderer, dirImg.c_str());
 	if (fondo == nullptr) {
 		loguer->loguear("No se encontró imagen de fondo", Log::LOG_ERR);
-		const char* msg =
-				((std::string) "Error cargando el fondo de pantalla: ").append(
-						SDL_GetError()).c_str();
+		const char* msg = ((std::string) "Error cargando el fondo de pantalla: ").append(SDL_GetError()).c_str();
 		throw SDL_Excepcion(msg);
 	}
 /*
