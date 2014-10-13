@@ -156,9 +156,9 @@ SDL_Texture* PersonajeVista::getVista(SDL_Rect* sprite, Personaje::E_PERFIL perf
 }
 
 const SDL_Rect* PersonajeVista::getVentana() {
-	Pos* p = personaje->getPos()->ySimetrico();
-	ventana->x = p->getX() - ventana->w / 2;
-	ventana->y = p->getY() - ventana->h / 2;
+	Pos p = personaje->getPos().ySimetrico();
+	ventana->x = p.getX() - ventana->w / 2;
+	ventana->y = p.getY() - ventana->h / 2;
 	return ventana;
 }
 

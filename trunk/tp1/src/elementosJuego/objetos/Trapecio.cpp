@@ -8,12 +8,12 @@ Trapecio::Trapecio(Pos posicion, int base, int altura, int alfa, int beta,int ro
 	this->initialice(estatico, color, posicion, rotacion, masa);
 }
 
-std::vector<Pos>* Trapecio::getContorno() {
+std::vector<Pos> Trapecio::getContorno() {
 	const double PI = 4.0*atan(1.0);
-	std::vector<Pos>* vertices = new std::vector<Pos>();
+	std::vector<Pos> vertices = std::vector<Pos>();
 
-	int x1 = pos->getX()-((this->base)/2);
-	int y1 = pos->getY()-((this->altura)/2);
+	int x1 = pos.getX()-((this->base)/2);
+	int y1 = pos.getY()-((this->altura)/2);
 	int x2 = x1+base;
 	int y2 = y1;
 	int x3 = x2-((this->altura)/tan(beta * PI / 180));
@@ -25,10 +25,10 @@ std::vector<Pos>* Trapecio::getContorno() {
 	Pos posicion2 = Pos(x2, y2);
 	Pos posicion3 = Pos(x3, y3);
 	Pos posicion4 = Pos(x4, y4);
-	vertices->push_back(posicion1);
-	vertices->push_back(posicion2);
-	vertices->push_back(posicion3);
-	vertices->push_back(posicion4);
+	vertices.push_back(posicion1);
+	vertices.push_back(posicion2);
+	vertices.push_back(posicion3);
+	vertices.push_back(posicion4);
 
 	return vertices;
 }
