@@ -16,13 +16,6 @@
 #include <Box2D/Box2D.h>
 #include <Math.h>
 
-void liberarPos(std::vector <Pos*> & a ){
-   for ( unsigned i = 0; i < a.size(); i++ ) {
-      delete a[i];
-   }
-   a.clear();
-}
-
 /// Devuelve el AABB para todas las figuras de un cuerpo dado.
 b2AABB GetBodyAABB( const b2Body* body )
 {
@@ -83,20 +76,19 @@ bool IsOverlap( const b2World* world, const b2Body* body )
  *	Pasa los puntos de un vector de posiciones a uno de vértices que es
  *	 la clase que maneja Box2D y les resta el centro de masa
  */
-b2Vec2* PasarAVertices(ElementosJuego* objeto) {
-	int cantidadDePuntos = objeto->getContorno()->size();
+b2Vec2* PasarAVertices(ElementosJuego* elemento) {
+	std::vector<Pos> unVectorDePos = elemento->getContorno();
+	int cantidadDePuntos = unVectorDePos.size();
 
 	b2Vec2* vertices = new b2Vec2[cantidadDePuntos];
-	std::vector<Pos>* unVectorDePos = objeto->getContorno();
 
 	for (int j = 0; j < cantidadDePuntos; j++) {
 		b2Vec2 unParOrdenado = b2Vec2(
-				unVectorDePos->at(j).getX() - (objeto->getPos()->getX()),
-				unVectorDePos->at(j).getY() - (objeto->getPos()->getY()));
+				unVectorDePos.at(j).getX() - (elemento->getPos().getX()),
+				unVectorDePos.at(j).getY() - (elemento->getPos().getY()));
 		vertices[j] = unParOrdenado;
 	}
 
-	delete(unVectorDePos);
 	return vertices;
 }
 
@@ -105,8 +97,8 @@ b2Vec2* PasarAVertices(ElementosJuego* objeto) {
  *	y la posicion en la que esta y devuelve su radio
  */
 float CalcularRadio(ElementosJuego* circulo) {
-	float distX = circulo->getPos()->getX() - circulo->getContorno()->at(0).getX();
-	float distY = circulo->getPos()->getY()	- circulo->getContorno()->at(0).getY();
+	float distX = circulo->getPos().getX() - circulo->getContorno().at(0).getX();
+	float distY = circulo->getPos().getY()	- circulo->getContorno().at(0).getY();
 	return sqrt(distX * distX + distY * distY);
 }
 
@@ -175,7 +167,7 @@ void CrearElementos(b2World* mundo, std::vector<ElementosJuego*>* elementos, boo
 		}
 
 		// Setea posición y angulo
-		elementoDef.position.Set(elementos->at(i)->getPos()->getX(), elementos->at(i)->getPos()->getY());
+		elementoDef.position.Set(elementos->at(i)->getPos().getX(), elementos->at(i)->getPos().getY());
 		elementoDef.angle = gradosARadianes(elementos->at(i)->getRotacion());
 		b2Body* elemento = mundo->CreateBody(&elementoDef);
 
@@ -186,7 +178,7 @@ void CrearElementos(b2World* mundo, std::vector<ElementosJuego*>* elementos, boo
 
 		if(!(elementos->at(i)->esCirculo())) {
 			b2Vec2* vertices = PasarAVertices(elementos->at(i));
-			poligono.Set(vertices, elementos->at(i)->getContorno()->size());
+			poligono.Set(vertices, elementos->at(i)->getContorno().size());
 			caract.shape = &poligono;
 			delete vertices;
 		} else {
@@ -286,10 +278,8 @@ void DarImpulsos(std::vector<Evento*>* ListaDeEventos, std::vector<Personaje*>* 
 void ActualizarPos(std::vector<ElementosJuego*>* elementos) {
 	for (unsigned j = 0; j < elementos->size(); j++) {
 			b2Body* objeto = elementos->at(j)->getLinkAMundo();
-			// Creo q deberia borrar la pos anterior de alguna forma. No se si alcanza.
-			delete elementos->at(j)->getPos();
 
-			Pos* posicion = new Pos(objeto->GetPosition().x,objeto->GetPosition().y);
+			Pos posicion = Pos(objeto->GetPosition().x,objeto->GetPosition().y);
 			elementos->at(j)->setPos(posicion);
 			elementos->at(j)->setRotacion(radianesAGrados(objeto->GetAngle()));
 	}

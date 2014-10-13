@@ -1,7 +1,7 @@
 #include "Personaje.h"
 #include "../../Constantes.h"
 
-Personaje::Personaje(Pos* posicion) {
+Personaje::Personaje(Pos posicion) {
 	pos = posicion;
 	rot = 0;
 	linkAMundo = nullptr;
@@ -38,17 +38,17 @@ int Personaje::getAncho(){
 /*
  * Devuelve el contorno del personaje
  */
-std::vector<Pos>* Personaje::getContorno() {
-	std::vector<Pos>* vertices = new std::vector<Pos>();
+std::vector<Pos> Personaje::getContorno() {
+	std::vector<Pos> vertices = std::vector<Pos>();
 
- 	Pos posicion1 = Pos(pos->getX()+getAncho()/2,pos->getY()+getAlto()/2);
-	vertices->push_back(posicion1);
- 	Pos posicion2 = Pos(pos->getX()-getAncho()/2,pos->getY()+getAlto()/2);
-	vertices->push_back(posicion2);
- 	Pos posicion3 = Pos(pos->getX()-getAncho()/2,pos->getY()-getAlto()/2);
-	vertices->push_back(posicion3);
- 	Pos posicion4 = Pos(pos->getX()+getAncho()/2,pos->getY()-getAlto()/2);
-	vertices->push_back(posicion4);
+ 	Pos posicion1 = Pos(pos.getX()+getAncho()/2,pos.getY()+getAlto()/2);
+	vertices.push_back(posicion1);
+ 	Pos posicion2 = Pos(pos.getX()-getAncho()/2,pos.getY()+getAlto()/2);
+	vertices.push_back(posicion2);
+ 	Pos posicion3 = Pos(pos.getX()-getAncho()/2,pos.getY()-getAlto()/2);
+	vertices.push_back(posicion3);
+ 	Pos posicion4 = Pos(pos.getX()+getAncho()/2,pos.getY()-getAlto()/2);
+	vertices.push_back(posicion4);
 
 	return vertices;
 }

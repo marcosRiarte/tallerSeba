@@ -11,10 +11,10 @@ class Config {
 private:
 	std::vector<ObjetoMapa*>* objetosMapa;
 	std::vector<Personaje*>* personajes;
-	int* altoPx;
-	int* anchoPx;
-	int* alto_un;
-	int* ancho_un;
+	int altoPx;
+	int anchoPx;
+	int alto_un;
+	int ancho_un;
 	std::string fondo;
 public:
 	void liberarObjetos(std::vector <ObjetoMapa*>* a);

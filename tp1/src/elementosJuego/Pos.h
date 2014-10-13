@@ -6,14 +6,14 @@ private:
 	int x;
 	int y;
 public:
+	Pos();
 	Pos(int x, int y);
 	Pos(const Pos* p);
 	int getX();
 	int getY();
-	bool esIgual(Pos* posicion);
 	float getNorma();
 	float getDistancia(Pos p);
-	Pos* ySimetrico();
+	Pos ySimetrico();
 	virtual ~Pos();
 };
 
