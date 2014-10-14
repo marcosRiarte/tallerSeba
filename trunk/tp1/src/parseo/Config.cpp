@@ -84,11 +84,11 @@ Config::Config(std::string nombreArchivo) throw (Config_Excepcion){
 			x = objetos[i].get("x", 5).asInt();
 			y = objetos[i].get("y", 90).asInt();
 			diametro = objetos[i].get("diametro", 1).asInt();
-			ancho = objetos[i].get("ancho", 2).asInt();
-			alto = objetos[i].get("alto", 1).asInt();
+			ancho = objetos[i].get("ancho", 20).asInt();
+			alto = objetos[i].get("alto", 30).asInt();
 
-			base = objetos[i].get("base", 1).asInt();
-			altura = objetos[i].get("altura", 1).asInt();
+			base = objetos[i].get("base", 20).asInt();
+			altura = objetos[i].get("altura", 20).asInt();
 			alfa = objetos[i].get("alfa", 25).asInt();
 			beta = objetos[i].get("beta", 1).asInt();
 

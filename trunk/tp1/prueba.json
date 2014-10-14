@@ -25,7 +25,7 @@
 				"estatico": false
 			},
 			{
-				"tipo": "poligono",
+				"tipo": "poligonoo",
 				"x": 100,
 				"y": -200,
 				"lados": 3,
