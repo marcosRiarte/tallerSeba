@@ -57,7 +57,7 @@ Config::Config(std::string nombreArchivo) throw (Config_Excepcion){
 	} else {
 		/* Busca el nombre de la imagen_fondo en el archivo json, si no lo encuentra crea un null
 		 por defecto.*/
-		std::string imagen_fondo = un_Escenario.get("imagen_fondo",	"fondo1.png").asString();
+		std::string imagen_fondo = un_Escenario.get("imagen_fondo",	"img/fondoDefault.png").asString();
 		this->fondo = imagen_fondo;
 
 		altoPx = un_Escenario.get("alto_px", 768).asInt();
