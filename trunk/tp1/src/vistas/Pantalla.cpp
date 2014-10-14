@@ -39,11 +39,20 @@ void Pantalla::inicializar() throw (SDL_Excepcion){
 
 	this->fondo = IMG_LoadTexture(renderer, dirImg.c_str());
 	if (fondo == nullptr) {
-		loguer->loguear("No se encontró imagen de fondo", Log::LOG_ERR);
-		const char* msg = ((std::string) "Error cargando el fondo de pantalla: ").append(SDL_GetError()).c_str();
-		throw SDL_Excepcion(msg);
+		loguer->loguear(
+				"No se encontró imagen de fondo, se toma imagen de fondo por defecto",
+				Log::LOG_WAR);
+		dirImg = "img/fondoDefault.png";
+		this->fondo = IMG_LoadTexture(renderer, dirImg.c_str());
+		if (fondo == nullptr) {
+			loguer->loguear("No se pudo crear el fondo", Log::LOG_ERR);
+			const char* msg = ((std::string) "Error creando el fondo: ").append(
+					SDL_GetError()).c_str();
+			throw SDL_Excepcion(msg);
+		}
 	}
 }
+
 
 void Pantalla::agregarVistas(std::vector<ObjetoMapa*> objetos, std::vector<Personaje*> personajes){
 	Vista* v;
