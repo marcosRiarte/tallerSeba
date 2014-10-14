@@ -240,8 +240,8 @@ Escenario::Escenario(Config* config) {
 	CrearCaja(world, config);
 
 	// Crea personajes y objetos
-	CrearElementos(world, (std::vector<ElementosJuego*>*)personajes,true);
-	CrearElementos(world, (std::vector<ElementosJuego*>*)objetos,false);
+	CrearElementos(world, (std::vector<ElementosJuego*>*)&personajes, true);
+	CrearElementos(world, (std::vector<ElementosJuego*>*)&objetos, false);
 
 	// Se agrega al mundo el listener para los contactos de los personajes
 	cuentaPasos = new MyContactListener;
@@ -253,19 +253,19 @@ Escenario::Escenario(Config* config) {
 /*
  *	Da los impulsos a los personajes segun los eventos.
  */
-void DarImpulsos(std::vector<Evento*>* ListaDeEventos, std::vector<Personaje*>* personajes, MyContactListener* cuentaPasos) {
+void DarImpulsos(std::vector<Evento>* ListaDeEventos, std::vector<Personaje*> personajes, MyContactListener* cuentaPasos) {
 	// Evalua si algun evento es un impulso.
 	for (unsigned i = 0; i < ListaDeEventos->size(); i++) {
-		b2Vec2 pos = personajes->at(0)->getLinkAMundo()->GetPosition();
-		if (ListaDeEventos->at(i)->getTecla() == TECLA_IZQUIERDA) {
+		b2Vec2 pos = personajes.at(0)->getLinkAMundo()->GetPosition();
+		if (ListaDeEventos->at(i).getTecla() == TECLA_IZQUIERDA) {
 			b2Vec2 impulsoIzquierda(IMPULSO_IZQ_X, IMPULSO_IZQ_Y);
-			personajes->at(0)->getLinkAMundo()->ApplyLinearImpulse(impulsoIzquierda,pos, true);
-		} else if (ListaDeEventos->at(i)->getTecla() == TECLA_DERECHA) {
+			personajes.at(0)->getLinkAMundo()->ApplyLinearImpulse(impulsoIzquierda,pos, true);
+		} else if (ListaDeEventos->at(i).getTecla() == TECLA_DERECHA) {
 			b2Vec2 impulsoDerecha(IMPULSO_DER_X, IMPULSO_DER_Y);
-			personajes->at(0)->getLinkAMundo()->ApplyLinearImpulse(impulsoDerecha,pos, true);
-		} else if ((ListaDeEventos->at(i)->getTecla() == TECLA_ARRIBA) && (cuentaPasos->numFootContacts > 0)) {
+			personajes.at(0)->getLinkAMundo()->ApplyLinearImpulse(impulsoDerecha,pos, true);
+		} else if ((ListaDeEventos->at(i).getTecla() == TECLA_ARRIBA) && (cuentaPasos->numFootContacts > 0)) {
 			b2Vec2 impulsoArriba(IMPULSO_ARR_X, IMPULSO_ARR_Y);
-			personajes->at(0)->getLinkAMundo()->ApplyLinearImpulse(impulsoArriba,pos, true);
+			personajes.at(0)->getLinkAMundo()->ApplyLinearImpulse(impulsoArriba,pos, true);
 		}
 	}
 }
@@ -286,10 +286,10 @@ void ActualizarPos(std::vector<ElementosJuego*>* elementos) {
 /*
  *	Actualiza los estados de los personajes
  */
-void ActualizarEstado(std::vector<Personaje*>* personajes, MyContactListener* cuentaPasos) {
+void ActualizarEstado(std::vector<Personaje*> personajes, MyContactListener* cuentaPasos) {
 	//Recorre los personajes seteandole los nuevos estados
-	for (unsigned i = 0; i < personajes->size(); i++) {
-		b2Body* personaje = personajes->at(i)->getLinkAMundo();
+	for (unsigned i = 0; i < personajes.size(); i++) {
+		b2Body* personaje = personajes.at(i)->getLinkAMundo();
 
 		// A partir de la velocidad determina el estado
 		b2Vec2 velocidad = personaje->GetLinearVelocity();
@@ -316,9 +316,9 @@ void ActualizarEstado(std::vector<Personaje*>* personajes, MyContactListener* cu
 			perfil = Personaje::E_PERFIL::DERECHA;
 		} else {
 			// Si no tiene velocidad en x su perfil continua como estaba
-			perfil = personajes->at(i)->getEstado().perfil;
+			perfil = personajes.at(i)->getEstado().perfil;
 		}
-		personajes->at(i)->setEstado(perfil, accion);
+		personajes.at(i)->setEstado(perfil, accion);
 	}
 }
 
@@ -326,7 +326,7 @@ void ActualizarEstado(std::vector<Personaje*>* personajes, MyContactListener* cu
  * Toma los eventos de entrada, aplica los cambios al mundo y pone a los personajes
  *  en sus nuevas posiciones
  */
-void Escenario::cambiar(std::vector<Evento*>* ListaDeEventos) {
+void Escenario::cambiar(std::vector<Evento>* ListaDeEventos) {
 	// Determino impulsos para los personajes segun los eventos
 	DarImpulsos(ListaDeEventos, personajes, cuentaPasos);
 
@@ -335,8 +335,8 @@ void Escenario::cambiar(std::vector<Evento*>* ListaDeEventos) {
 	mundo->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 
 	// Guarda las nuevas posiciones de los personajes y objetos
-	ActualizarPos((std::vector<ElementosJuego*>*) objetos);
-	ActualizarPos((std::vector<ElementosJuego*>*) personajes);
+	ActualizarPos((std::vector<ElementosJuego*>*) &objetos);
+	ActualizarPos((std::vector<ElementosJuego*>*) &personajes);
 
 	// Actualiza el estado de los personajes
 	ActualizarEstado(personajes,cuentaPasos);

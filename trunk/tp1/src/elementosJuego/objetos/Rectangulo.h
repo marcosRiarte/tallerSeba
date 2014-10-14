@@ -8,9 +8,9 @@ private:
 	int alto;
 	int ancho;
 	void crearContorno();
+	void calcularArea();
 public:
 	Rectangulo(bool esEstatico, std::string color, Pos pos_cm, int rotacion, int masa, int alto, int ancho);
-	float getArea();
 	virtual ~Rectangulo();
 };
 

@@ -6,7 +6,7 @@
 /* Se eliminan los eventos de la lista y se lo completa con los nuevos
  * Obtenidos por el teclado.
  */
-int Controlador::cambiar(std::vector<Evento*>* listaEventos) {
+int Controlador::cambiar(std::vector<Evento>* listaEventos) {
 	listaEventos->clear();
 
 	SDL_Event event;
@@ -15,17 +15,17 @@ int Controlador::cambiar(std::vector<Evento*>* listaEventos) {
 
 	if (event.key.keysym.sym == SDLK_LEFT && (state[SDL_SCANCODE_LEFT])) {
 		if (state[SDL_SCANCODE_RIGHT] && state[SDL_SCANCODE_UP]) {
-			Evento* der = new Evento(2);
-			Evento* arriba = new Evento(3);
+			Evento der = Evento(2);
+			Evento arriba = Evento(3);
 			listaEventos->push_back(der);
 			listaEventos->push_back(arriba);
 			return CONTINUAR;
 		} else if (state[SDL_SCANCODE_RIGHT]) {
-			Evento* der = new Evento(2);
+			Evento der = Evento(2);
 			listaEventos->push_back(der);
 			return CONTINUAR;
 		} else {
-			Evento* izq = new Evento(1);
+			Evento izq = Evento(1);
 			listaEventos->push_back(izq);
 			return CONTINUAR;
 		}
@@ -34,18 +34,18 @@ int Controlador::cambiar(std::vector<Evento*>* listaEventos) {
 
 	else if (event.key.keysym.sym == SDLK_RIGHT && (state[SDL_SCANCODE_RIGHT])) {
 		if (state[SDL_SCANCODE_LEFT] && state[SDL_SCANCODE_UP]) {
-			Evento* izq = new Evento(1);
-			Evento* arriba = new Evento(3);
+			Evento izq = Evento(1);
+			Evento arriba = Evento(3);
 			listaEventos->push_back(izq);
 			listaEventos->push_back(arriba);
 			return CONTINUAR;
 
 		} else if (state[SDL_SCANCODE_LEFT]) {
-			Evento* izq = new Evento(1);
+			Evento izq = Evento(1);
 			listaEventos->push_back(izq);
 			return CONTINUAR;
 		} else {
-			Evento* der = new Evento(2);
+			Evento der = Evento(2);
 			listaEventos->push_back(der);
 			return CONTINUAR;
 		}
@@ -54,26 +54,26 @@ int Controlador::cambiar(std::vector<Evento*>* listaEventos) {
 	else if (event.key.keysym.sym == SDLK_UP && (state[SDL_SCANCODE_UP])) {
 
 		if (state[SDL_SCANCODE_LEFT] && state[SDL_SCANCODE_UP]){
-			Evento* arriba = new Evento(3);
+			Evento arriba = Evento(3);
 			listaEventos->push_back(arriba);
 			return CONTINUAR;
 
 		} else if (state[SDL_SCANCODE_LEFT]) {
-			Evento* izq = new Evento(1);
-			Evento* arriba = new Evento(3);
+			Evento izq = Evento(1);
+			Evento arriba = Evento(3);
 			listaEventos->push_back(izq);
 			listaEventos->push_back(arriba);
 			return CONTINUAR;
 		} else if (state[SDL_SCANCODE_RIGHT]) {
-			Evento* der = new Evento(2);
-			Evento* arriba = new Evento(3);
+			Evento der = Evento(2);
+			Evento arriba = Evento(3);
 			listaEventos->push_back(der);
 			listaEventos->push_back(arriba);
 			return CONTINUAR;
 
 		}else{
 
-		Evento* arriba = new Evento(3);
+		Evento arriba = Evento(3);
 		listaEventos->push_back(arriba);
 		return CONTINUAR;
 		}
@@ -81,19 +81,19 @@ int Controlador::cambiar(std::vector<Evento*>* listaEventos) {
 		}
 
 	else if (event.key.keysym.sym == SDLK_r && (state[SDL_SCANCODE_R])) {
-		Evento* reset = new Evento(4);
+		Evento reset = Evento(4);
 		listaEventos->push_back(reset);
 		return REINICIAR;
 	}
 
 	if (state[SDL_SCANCODE_LEFT]){
-		Evento* izq = new Evento(1);
+		Evento izq = Evento(1);
 		listaEventos->push_back(izq);
 		return CONTINUAR;
 	}
 
 	if (state[SDL_SCANCODE_RIGHT]){
-		Evento* der = new Evento(2);
+		Evento der = Evento(2);
 		listaEventos->push_back(der);
 		return CONTINUAR;
 	}
@@ -102,7 +102,7 @@ int Controlador::cambiar(std::vector<Evento*>* listaEventos) {
 		return FIN_DEL_JUEGO;
 	}
 
-	Evento* nada= new Evento(0);
+	Evento nada= Evento(0);
 	listaEventos->push_back(nada);
 	return CONTINUAR;
 }

@@ -16,8 +16,6 @@ class ObjetoMapa: public ElementosJuego {
 protected:
 	bool estatico;
 	long color;
-	float area;
-	bool circulo = false;
 
 public:
 	/*

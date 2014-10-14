@@ -17,16 +17,13 @@ void Poligono::crearContorno() {
 	}
 }
 
-Poligono::~Poligono() {
-	this->lados = 0;
-	this->escala = 0;
-}
-
-float Poligono::getArea() {
+void Poligono::calcularArea() {
 	const double PI = 4.0 * atan(1.0);
 	int n = this->lados;
 	float alfa = 2 * PI / n;
 	int r = this->escala;
-	return (n * r * r * sin(alfa * PI / 180)) / 2;
+	area = (n * r * r * sin(alfa * PI / 180)) / 2;
 }
 
+Poligono::~Poligono() {
+}

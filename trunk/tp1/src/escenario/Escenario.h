@@ -11,8 +11,8 @@
 
 class Escenario {
 private:
-	std::vector<Personaje*>* personajes;
-	std::vector<ObjetoMapa*>* objetos;
+	std::vector<Personaje*> personajes;
+	std::vector<ObjetoMapa*> objetos;
 	MyContactListener* cuentaPasos;
 	b2World* mundo;
 
@@ -28,7 +28,7 @@ public:
 	 *  en sus nuevas posiciones
 	 */
 
-	void cambiar(std::vector<Evento*>* ListaDeEventos);
+	void cambiar(std::vector<Evento>* ListaDeEventos);
 
 	~Escenario();
 };

@@ -16,7 +16,7 @@ struct MVC {
 };
 
 // Momentos de la ejecucion
-MVC* creacionDelModelo(char*) throw (MVC_Excepcion);
+MVC* creacionDelModelo(const char*) throw (MVC_Excepcion);
 int gameLoop(MVC*);
 void terminar(MVC*);
 
@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) {
 }
 
 // Crea todas las partes del modelo
-MVC* creacionDelModelo(char* direccionDeLaConfiguracion) throw (MVC_Excepcion) {
+MVC* creacionDelModelo(const char* direccionDeLaConfiguracion) throw (MVC_Excepcion) {
 	MVC* mvc = new MVC;
 	char msg[1000];
 
@@ -50,7 +50,7 @@ MVC* creacionDelModelo(char* direccionDeLaConfiguracion) throw (MVC_Excepcion) {
 	}
 
 	//Se loguea la creación de objetos
-	snprintf(msg, 1000, "Se parsearon: %d objetos",	mvc->config->getObjetos()->size());
+	snprintf(msg, 1000, "Se parsearon: %d objetos",	mvc->config->getObjetos().size());
 	loguer->loguear(msg, Log::LOG_DEB);
 
 	//Se crea el escenario
@@ -61,7 +61,7 @@ MVC* creacionDelModelo(char* direccionDeLaConfiguracion) throw (MVC_Excepcion) {
 			"Se creo la física Box2D con ancho: %d unidades, alto %d unidades y %d objetos",
 			mvc->config->getAncho(),
 			mvc->config->getAlto(),
-			mvc->config->getObjetos()->size());
+			mvc->config->getObjetos().size());
 	loguer->loguear(msg, Log::LOG_DEB);
 
 	//Se inicializa SDL
@@ -98,19 +98,16 @@ void ayuda() {
 
 // Ejecuta el modelo
 int gameLoop(MVC* mvc) {
-	std::vector<Evento*>* listaDeEventos;
-	listaDeEventos = new std::vector<Evento*>();
+	std::vector<Evento> listaDeEventos = std::vector<Evento>();
 
 	int fin = CONTINUAR;
 	while (FIN_DEL_JUEGO != fin && REINICIAR != fin) {
 		// Responsabilidades> ...
-		fin = Controlador::cambiar(listaDeEventos);
-		mvc->escenario->cambiar(listaDeEventos);
+		fin = Controlador::cambiar(&listaDeEventos);
+		mvc->escenario->cambiar(&listaDeEventos);
 		mvc->pantalla->cambiar();
 		SDL_Delay(10);
 	}
-
-	delete listaDeEventos;
 
 	return fin;
 }

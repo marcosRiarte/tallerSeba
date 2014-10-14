@@ -8,8 +8,6 @@
 #include "../excepciones/SDL_Excepcion.h"
 #include "../parseo/Config.h"
 #include "../elementosJuego/personajes/Personaje.h"
-//#include "CreadorDeTexturas.h"
-//#include "Sprite.h"
 
 class Pantalla {
 private:
@@ -22,11 +20,9 @@ private:
 	SDL_Window* ventana;
 	SDL_Renderer* renderer;
 	SDL_Texture * fondo;
-	std::vector<Vista*>* vistas;
-	void agregarVistas(std::vector<ObjetoMapa*>* objetos, std::vector<Personaje*>* personajes);
-//	Sprite* unSprite;
-//	CreadorDeTexturas* HojaDeSpritesDeTextura;
-//	std::vector<SDL_Rect*>* listaDeCuadros;
+	std::vector<Vista*> vistas;
+	void agregarVistas(std::vector<ObjetoMapa*> objetos, std::vector<Personaje*> personajes);
+
 public:
 	Pantalla(Config* config);
 	void inicializar() throw (SDL_Excepcion);
