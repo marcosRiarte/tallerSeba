@@ -19,7 +19,7 @@
 				"x": 100,
 				"y": -100,
 				"diametro": 50,
-				"color": "#FF0000",
+				"color": "#0000FF",
 				"rot": 0,
 				"masa": 100,
 				"estatico": false
