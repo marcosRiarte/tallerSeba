@@ -95,9 +95,7 @@ b2Vec2* PasarAVertices(ElementosJuego* elemento) {
  *	y la posicion en la que esta y devuelve su radio
  */
 float CalcularRadio(ElementosJuego* circulo) {
-	float distX = circulo->getPos().getX() - circulo->getContorno().at(0).getX();
-	float distY = circulo->getPos().getY()	- circulo->getContorno().at(0).getY();
-	return sqrt(distX * distX + distY * distY);
+	return circulo->getContorno().at(0).getNorma();
 }
 
 /*

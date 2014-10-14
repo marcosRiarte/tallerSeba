@@ -23,7 +23,7 @@ ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o) {
 	//	las posibles rotaciones.
 	if (objeto->esCirculo()) {
 		Pos pos = objeto->getPos().ySimetrico();
-		diametro = 2 * pos.getDistancia(vertices.at(0));
+		diametro = 2 * vertices.at(0).getNorma();
 	}else {
 		Pos pIzqSup = getPosIzqSup(vertices);
 		Pos pDerInf = getPosDerInf(vertices);
@@ -66,10 +66,13 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 	//Se dibuja la figura segun su tipo (taxonomía: circulo, no-circulo)
 	//Si es circulo
 	if (objeto->esCirculo()) {
-		Pos pos = objeto->getPos().ySimetrico();
-		int radio = pos.getDistancia(vertices.at(0));
+		Pos p = vertices.at(0);
+		int radio = p.getNorma();
+		double angulo = atan2(p.getY(), p.getX());
+		int x = (radio / 2) * cos(angulo - objeto->getRotacion() * M_PI / 180) + radio;
+		int y = (radio / 2) * sin(angulo - objeto->getRotacion() * M_PI / 180) + radio;
 		filledCircleColor(renderer, radio, radio, radio, color);
-		filledCircleColor(renderer, radio, radio + radio / 2, radio / 4, color + 0xFF00);
+		filledCircleColor(renderer, x, y, radio / 4, color + 0xF0F0F0);
 	}
 	//Si no es circulo
 	else {
