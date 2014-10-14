@@ -6,15 +6,17 @@
 class Vista {
 protected:
 	SDL_Renderer* renderer;
-	SDL_Rect* ventana;
+	SDL_Rect ventana;
 	SDL_Texture* textura;
 public:
 	virtual SDL_Texture* getVista() = 0;
-	virtual const SDL_Rect* getVentana() = 0;
+	virtual const SDL_Rect getVentana() = 0;
 	void setRenderer(SDL_Renderer* r){
 		renderer = r;
 	};
-	virtual ~Vista(){};
+	virtual ~Vista(){
+		SDL_DestroyTexture(textura);
+	};
 };
 
 #endif /* VISTA_H_ */

@@ -12,17 +12,12 @@ Pantalla::Pantalla(Config* config) {
 	this->alto = config->getAlto();
 	this->ancho = config->getAncho();
 	this->dirImg = config->getFondo();
-	this->vistas = nullptr;
+	this->vistas = std::vector<Vista*>();
 	this->ventana = nullptr;
 	this->renderer = nullptr;
 	this->fondo = nullptr;
 	inicializar();
-	agregarVistas(config->getObjetos(),config->getPersonajes());
-//	this->numeroDeCuadro = 0;
-//	this->unSprite = nullptr;
-//	this->listaDeCuadros = new std::vector<SDL_Rect*>();
-//	this->HojaDeSpritesDeTextura= new CreadorDeTexturas();
-//	this->config = config;
+	agregarVistas(config->getObjetos(), config->getPersonajes());
 }
 
 /**
@@ -48,32 +43,18 @@ void Pantalla::inicializar() throw (SDL_Excepcion){
 		const char* msg = ((std::string) "Error cargando el fondo de pantalla: ").append(SDL_GetError()).c_str();
 		throw SDL_Excepcion(msg);
 	}
-/*
-	//Cargar texturas del sprite.
-	if (!HojaDeSpritesDeTextura->cargarDesde("img/SnowSprite.png",renderer)) {
-		std::string errorTextura = "Imposible cargar la textura desde img/SnowSprite.bmp";
-					const char* errorCargaTextura = errorTextura.c_str();
-							loguer->loguear(errorCargaTextura,Log::LOG_ERR);
-	} else {
-		HojaDeSpritesDeTextura->setAlpha(255);
-		HojaDeSpritesDeTextura->setBlend(SDL_BLENDMODE_BLEND);
-		unSprite = new Sprite();
-	}
-*/
 }
 
-void Pantalla::agregarVistas(std::vector<ObjetoMapa*>* objetos, std::vector<Personaje*>* personajes){
-	vistas = new std::vector<Vista*>();
+void Pantalla::agregarVistas(std::vector<ObjetoMapa*> objetos, std::vector<Personaje*> personajes){
 	Vista* v;
-	for(unsigned i = 0; i < objetos->size(); i++){
-		v = new ObjetoMapaVista(renderer, objetos->at(i));
-		vistas->push_back(v);
+	for(unsigned i = 0; i < objetos.size(); i++){
+		v = new ObjetoMapaVista(renderer, objetos.at(i));
+		vistas.push_back(v);
 	}
-	for(unsigned i = 0; i < personajes->size(); i++){
-		v = new PersonajeVista(renderer, personajes->at(i));
-		vistas->push_back(v);
+	for(unsigned i = 0; i < personajes.size(); i++){
+		v = new PersonajeVista(renderer, personajes.at(i));
+		vistas.push_back(v);
 	}
-
 }
 
 
@@ -85,59 +66,22 @@ void Pantalla::cambiar(){
 	SDL_RenderCopy(renderer, fondo, NULL, NULL);
 
 	//Se cargan los objetos
-	for(unsigned i = 0; i < vistas->size(); i++){
-		Vista* vista = vistas->at(i);
+	for(unsigned i = 0; i < vistas.size(); i++){
+		Vista* vista = vistas.at(i);
 		//obtengo la imagen ya rotada con el tamanio en dimensiones Box2D
 		SDL_Texture* textura = vista->getVista();
 
 		//La imprimo en la pantalla con la debida transformacion
 		SDL_Rect r = SDL_Rect();
-		const SDL_Rect* v = vista->getVentana();
-		r.h = v->h*altoPx/alto;
-		r.w = v->w*anchoPx/ancho;
-		r.x = v->x*anchoPx/ancho;
-		r.y = v->y*altoPx/alto;
+		const SDL_Rect v = vista->getVentana();
+		r.h = v.h*altoPx/alto;
+		r.w = v.w*anchoPx/ancho;
+		r.x = v.x*anchoPx/ancho;
+		r.y = v.y*altoPx/alto;
 		SDL_RenderCopy(renderer, textura, NULL, &r);
 	}
-/*
-	//Se carga el objeto personaje
-	Vista* unaVista = vistas->at(vistas->size()-1);
-
-	//"CayendoIzq","SaltandoIzq"),,"CaminandoIzq","CayendoDer","SaltandoDer","CaminandoDer","Quieto"
-
-	if(config->getPersonajes()->at(0)->getEstado()=="QuietoIzq"){
-		this->listaDeCuadros = unSprite->listaDeCuadros("QuietoIzq");
-	}else if(config->getPersonajes()->at(0)->getEstado()=="QuietoDer"){
-		this->listaDeCuadros = unSprite->listaDeCuadros("QuietoDer");
-			}else if(config->getPersonajes()->at(0)->getEstado()=="CayendoIzq"){
-		this->listaDeCuadros = unSprite->listaDeCuadros("CayendoIzq");
-	}else if(config->getPersonajes()->at(0)->getEstado()=="SaltandoIzq"){
-		this->listaDeCuadros = unSprite->listaDeCuadros("SaltandoIzq");
-	}else if(config->getPersonajes()->at(0)->getEstado()=="CaminandoIzq"){
-		this->listaDeCuadros = unSprite->listaDeCuadros("CaminandoIzq");
-	}else if(config->getPersonajes()->at(0)->getEstado()=="CayendoDer"){
-		this->listaDeCuadros = unSprite->listaDeCuadros("CayendoDer");
-	}else if(config->getPersonajes()->at(0)->getEstado()=="SaltandoDer"){
-		this->listaDeCuadros = unSprite->listaDeCuadros("SaltandoDer");
-	}else if(config->getPersonajes()->at(0)->getEstado()=="CaminandoDer"){
-		this->listaDeCuadros = unSprite->listaDeCuadros("CaminandoDer");
-	}
-
-	//Renderizamos el sprite
-
-		SDL_Rect* cuadroActual = listaDeCuadros->at((numeroDeCuadro/2)/(listaDeCuadros->size()));
-	HojaDeSpritesDeTextura->render((unaVista->getVentana()->x),(unaVista->getVentana()->y),config->getPersonajes()->at(0)->getAncho(),config->getPersonajes()->at(0)->getAlto(), cuadroActual, renderer);
-*/
 	//Se actualiza la pantalla
 	SDL_RenderPresent(renderer);
-/*
-	//Siguiente cuadro
-	++numeroDeCuadro;
-	//Ciclado de la animación
-	if ((numeroDeCuadro/2 / listaDeCuadros->size()) >= (listaDeCuadros->size())) {
-		numeroDeCuadro = 0;
-	}
-*/
 }
 
 
@@ -149,12 +93,10 @@ int Pantalla::getAncho(){
 }
 
 Pantalla::~Pantalla() {
-	for(unsigned i = 0; i < vistas->size(); i++){
-		delete vistas->at(i);
+	for(unsigned i = 0; i < vistas.size(); i++){
+		delete vistas.at(i);
 	}
-	delete vistas;
 	SDL_DestroyTexture(fondo);
-    SDL_RenderClear(renderer);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(ventana);
 }

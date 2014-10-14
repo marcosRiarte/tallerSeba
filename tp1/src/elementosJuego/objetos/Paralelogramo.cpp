@@ -48,18 +48,15 @@ void Paralelogramo::crearContorno() {
 	}
 }
 
-float Paralelogramo::getArea() {
+void Paralelogramo::calcularArea() {
 	const double PI = 4.0 * atan(1.0);
 	if ((this->alfa) < 90) {
-		return ((this->base) * (this->altura * sin(alfa * PI / 180)));
+		area = ((this->base) * (this->altura * sin(alfa * PI / 180)));
 	} else {
 		int beta = 180 - alfa;
-		return ((this->base) * (this->altura * sin(beta * PI / 180)));
+		area = ((this->base) * (this->altura * sin(beta * PI / 180)));
 	}
 }
 
 Paralelogramo::~Paralelogramo() {
-	this->base = 0;
-	this->altura = 0;
-	this->alfa = 0;
 }

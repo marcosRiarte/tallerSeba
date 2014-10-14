@@ -10,21 +10,16 @@ Personaje::Personaje(Pos posicion) {
 	masa = MASA_PERSONAJE;
 	estado.perfil = E_PERFIL::IZQUIERDA;
 	estado.accion = E_ACCION::QUIETO;
-
 	friccion = FRICCION_DEL_PERSONAJE;
-
 	crearContorno();
-
-//	this->estado= "Quieto";
-//	rectanguloPersonaje = new Rectangulo(false, "#00F0A0", pos, 0, 80, alto, ancho); // Solo para pruebas...
-
+	calcularArea();
 }
 
 /*
  * Devuelve el area del elemento
  */
-float Personaje::getArea() {
-	return alto * ancho;
+void Personaje::calcularArea() {
+	area = alto * ancho;
 }
 
 /*
@@ -50,15 +45,6 @@ void Personaje::crearContorno() {
 	Pos posicion4 = Pos( getAncho() / 2, - getAlto() / 2);
 	vertices.push_back(posicion4);
 }
-
-/*
- * Devuelve el rectangulo que representa al personaje
- */
-/*
- Rectangulo* Personaje::getRectangulo() {
- return rectanguloPersonaje;
- }
- */
 
 /**
  * \brief	Se setea el estado del personaje, mediante 3 taxonomias (incompletas para el juego final).
@@ -92,19 +78,10 @@ Personaje::Estado Personaje::getEstado() {
 bool Personaje::esEstatico() {
 	return false;
 }
+
 bool Personaje::esCirculo() {
 	return false;
 }
 
-/*
- * Getter y setter para el estado
- */
-/*void Personaje::setEstado(std::string unEstado){
- this->estado = unEstado;
- }
- std::string Personaje::getEstado(){
- return this->estado;
- }
- */
 Personaje::~Personaje() {
 }

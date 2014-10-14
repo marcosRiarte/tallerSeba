@@ -6,10 +6,10 @@ class Circulo: public ObjetoMapa {
 private:
 	int diametro;
 	void crearContorno();
+	void calcularArea();
 public:
 	Circulo(Pos posicion, int diametro, int rotacion, std::string color, int masa, bool estatico);
 	bool esCirculo();
-	float getArea();
 	virtual ~Circulo();
 };
 

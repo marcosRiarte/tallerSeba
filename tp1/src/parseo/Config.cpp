@@ -25,8 +25,8 @@ void Config::liberarPjs(std::vector <Personaje*> & a){
 
 Config::Config(std::string nombreArchivo) throw (Config_Excepcion){
 
-	objetosMapa = new std::vector<ObjetoMapa*>();
-	personajes = new std::vector<Personaje*>();
+	objetosMapa = std::vector<ObjetoMapa*>();
+	personajes = std::vector<Personaje*>();
 
 	Json::Value raiz;
 	Json::Reader reader(Json::Features::strictMode());
@@ -70,7 +70,7 @@ Config::Config(std::string nombreArchivo) throw (Config_Excepcion){
 		personaje_x = un_Escenario["personaje"].get("x", 0).asInt();
 		personaje_y = un_Escenario["personaje"].get("y", -100).asInt();
 		ValidadorObjetos::ValidarPersonaje(&personaje_x, &personaje_y, ancho_un, alto_un);
-		personajes->push_back(CreadorObjetos::CrearPersonaje(personaje_x, personaje_y));
+		personajes.push_back(CreadorObjetos::CrearPersonaje(personaje_x, personaje_y));
 		Json::Value objetos;
 		objetos = un_Escenario["objetos"];
 
@@ -103,29 +103,29 @@ Config::Config(std::string nombreArchivo) throw (Config_Excepcion){
 			ValidadorObjetos::ValidarBasicos(&tipo, &x, &y, &color, &rotacion, &masa, estatico, ancho_un, alto_un);
 
 			if (tipo == "rectangulo") {
-				this->objetosMapa->push_back(CreadorObjetos::CrearRectangulo(x, y, ancho, alto,	rotacion, color, masa, estatico));
+				this->objetosMapa.push_back(CreadorObjetos::CrearRectangulo(x, y, ancho, alto,	rotacion, color, masa, estatico));
 			} else if (tipo == "poligono") {
 				ValidadorObjetos::ValidarPoligono(&lados, &escala);
-				this->objetosMapa->push_back(CreadorObjetos::CrearPoligono(x, y, lados, escala,	rotacion, color, masa, estatico));
+				this->objetosMapa.push_back(CreadorObjetos::CrearPoligono(x, y, lados, escala,	rotacion, color, masa, estatico));
 			} else if (tipo == "circulo") {
 				ValidadorObjetos::ValidarCirculo(&diametro);
-				this->objetosMapa->push_back(CreadorObjetos::CrearCirculo(x, y, diametro, rotacion,	color, masa, estatico));
+				this->objetosMapa.push_back(CreadorObjetos::CrearCirculo(x, y, diametro, rotacion,	color, masa, estatico));
 			} else if (tipo == "paralelogramo") {
 				ValidadorObjetos::ValidarParalelogramo(&alfa);
-				this->objetosMapa->push_back(CreadorObjetos::CrearParalelogramo(x, y, base, altura,	alfa, rotacion, color, masa, estatico));
+				this->objetosMapa.push_back(CreadorObjetos::CrearParalelogramo(x, y, base, altura,	alfa, rotacion, color, masa, estatico));
 			} else if (tipo == "trapecio") {
 				ValidadorObjetos::ValidarTrapecio(alfa, beta);
-				this->objetosMapa->push_back(CreadorObjetos::CrearTrapecio(x, y, base, altura, alfa, beta, rotacion, color, masa, estatico));
+				this->objetosMapa.push_back(CreadorObjetos::CrearTrapecio(x, y, base, altura, alfa, beta, rotacion, color, masa, estatico));
 			}
 		}
 	}
 }
 
-std::vector<ObjetoMapa*>* Config::getObjetos() {
+std::vector<ObjetoMapa*> Config::getObjetos() {
 	return objetosMapa;
 }
 
-std::vector<Personaje*>* Config::getPersonajes() {
+std::vector<Personaje*> Config::getPersonajes() {
 	return personajes;
 }
 
@@ -150,13 +150,11 @@ std::string Config::getFondo() {
 }
 
 Config::~Config() {
-	for (unsigned i = 0; i < objetosMapa->size(); i++){
-		delete objetosMapa->at(i);
+	for (unsigned i = 0; i < objetosMapa.size(); i++){
+		delete objetosMapa.at(i);
 	}
-	delete objetosMapa;
-	for (unsigned i = 0; i < personajes->size(); i++){
-		delete personajes->at(i);
+	for (unsigned i = 0; i < personajes.size(); i++){
+		delete personajes.at(i);
 	}
-	delete personajes;
 }
 

@@ -9,7 +9,7 @@
 ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o) {
 	objeto = o;
 	this->setRenderer(r);
-	ventana = new SDL_Rect();
+	ventana = SDL_Rect();
 
 	//Obtengo los vértices, transformando cada vertice en su simétrico respecto del eje Y
 	std::vector<Pos> vertices = objeto->getContorno();
@@ -25,15 +25,15 @@ ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o) {
 		Pos pos = objeto->getPos().ySimetrico();
 		diametro = 2 * pos.getDistancia(vertices.at(0));
 	}else {
-		Pos pIzqSup = getPosIzqSup(&vertices);
-		Pos pDerInf = getPosDerInf(&vertices);
+		Pos pIzqSup = getPosIzqSup(vertices);
+		Pos pDerInf = getPosDerInf(vertices);
 		diametro = pIzqSup.getDistancia(pDerInf);
 	}
-	ventana->w = diametro;
-	ventana->h = diametro;
+	ventana.w = diametro;
+	ventana.h = diametro;
 
 	//Se crea la textura y sobre la cual se va a trabajar
-	textura = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_UNKNOWN, SDL_TEXTUREACCESS_TARGET, ventana->w, ventana->h);
+	textura = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_UNKNOWN, SDL_TEXTUREACCESS_TARGET, ventana.w, ventana.h);
 
 }
 
@@ -75,7 +75,7 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 	else {
 		short vx[cantVertices];
 		short vy[cantVertices];
-		Pos centroVentana = Pos(ventana->w / 2, ventana->w / 2);
+		Pos centroVentana = Pos(ventana.w / 2, ventana.w / 2);
 		for (int i = 0; i < cantVertices; i++) {
 			Pos p = vertices.at(i);
 			double angulo = atan2(p.getY(), p.getX());
@@ -97,14 +97,16 @@ SDL_Texture* ObjetoMapaVista::getVista() {
  * 			su contenido, pero si puede consultarse.
  */
 
-const SDL_Rect* ObjetoMapaVista::getVentana() {
+const SDL_Rect ObjetoMapaVista::getVentana() {
 	Pos p = objeto->getPos().ySimetrico();
-	ventana->x = p.getX() - ventana->w / 2;
-	ventana->y = p.getY() - ventana->h / 2;
+	ventana.x = p.getX() - ventana.w / 2;
+	ventana.y = p.getY() - ventana.h / 2;
 	return ventana;
 }
 
-ObjetoMapaVista::~ObjetoMapaVista() {}
+ObjetoMapaVista::~ObjetoMapaVista() {
+	SDL_DestroyTexture(textura);
+}
 
 /**
  * \param	vPos 	vector de posiciones.
@@ -119,12 +121,12 @@ ObjetoMapaVista::~ObjetoMapaVista() {}
  * \obs		Se llama getPosInzSup ya que en SDL el punto (0,0) u origen de
  * 			coordenadas se encuentra arriba a la izquierda
  */
-Pos ObjetoMapaVista::getPosIzqSup(std::vector<Pos>* vPos) {
-	Pos p = vPos->at(0);
+Pos ObjetoMapaVista::getPosIzqSup(std::vector<Pos> vPos) {
+	Pos p = vPos.at(0);
 	int Xmin = p.getX();
 	int Ymin = p.getY();
-	for (unsigned i = 1; i < vPos->size(); i++) {
-		p = vPos->at(i);
+	for (unsigned i = 1; i < vPos.size(); i++) {
+		p = vPos.at(i);
 		if (p.getX() < Xmin)
 			Xmin = p.getX();
 		if (p.getY() < Ymin)
@@ -146,12 +148,12 @@ Pos ObjetoMapaVista::getPosIzqSup(std::vector<Pos>* vPos) {
  * \obs		Se llama getPosDerInf ya que en SDL el punto (0,0) u origen de
  * 			coordenadas se encuentra arriba a la izquierda
  */
-Pos ObjetoMapaVista::getPosDerInf(std::vector<Pos>* vPos) {
-	Pos p = vPos->at(0);
+Pos ObjetoMapaVista::getPosDerInf(std::vector<Pos> vPos) {
+	Pos p = vPos.at(0);
 	int Xmax = p.getX();
 	int Ymax = p.getY();
-	for (unsigned i = 1; i < vPos->size(); i++) {
-		p = vPos->at(i);
+	for (unsigned i = 1; i < vPos.size(); i++) {
+		p = vPos.at(i);
 		if (p.getX() > Xmax)
 			Xmax = p.getX();
 		if (p.getY() > Ymax)

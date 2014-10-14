@@ -30,18 +30,14 @@ void Trapecio::crearContorno() {
 	vertices.push_back(posicion4);
 }
 
-float Trapecio::getArea() {
+void Trapecio::calcularArea() {
 	const double PI = 4.0 * atan(1.0);
 	double h = this->altura;
 	double b1 = h / tan(this->alfa * PI / 180);
 	double b3 = h / tan(this->beta * PI / 180);
 	double b2 = (this->base - (b1 + b3));
-	return ((b1 * h / 2) + (b2 * h) + (b3 * h / 2));
+	area = ((b1 * h / 2) + (b2 * h) + (b3 * h / 2));
 }
 
 Trapecio::~Trapecio() {
-	this->base = 0;
-	this->altura = 0;
-	this->alfa = 0;
-	this->beta = 0;
 }

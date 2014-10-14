@@ -10,9 +10,9 @@ private:
 	int alfa;
 	int beta;
 	void crearContorno();
+	void calcularArea();
 public:
 	Trapecio(Pos posicion, int base, int altura, int alfa, int beta, int rotacion, std::string color, int masa, bool estatico);
-	float getArea();
 	virtual ~Trapecio();
 };
 

@@ -8,8 +8,8 @@
 
 class Config {
 private:
-	std::vector<ObjetoMapa*>* objetosMapa;
-	std::vector<Personaje*>* personajes;
+	std::vector<ObjetoMapa*> objetosMapa;
+	std::vector<Personaje*> personajes;
 	int altoPx;
 	int anchoPx;
 	int alto_un;
@@ -19,8 +19,8 @@ public:
 	void liberarObjetos(std::vector<ObjetoMapa*>* a);
 	void liberarPjs(std::vector<Personaje*> & a);
 	Config(std::string nombre) throw (Config_Excepcion);
-	std::vector<ObjetoMapa*>* getObjetos();
-	std::vector<Personaje*>* getPersonajes();
+	std::vector<ObjetoMapa*> getObjetos();
+	std::vector<Personaje*> getPersonajes();
 	int getAltoPx();
 	int getAnchoPx();
 	int getAlto();

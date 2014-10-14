@@ -26,8 +26,8 @@ void Rectangulo::crearContorno() {
 	vertices.push_back(posicion4);
 }
 
-float Rectangulo::getArea() {
-	return (this->alto * this->ancho);
+void Rectangulo::calcularArea() {
+	area = (this->alto * this->ancho);
 }
 
 Rectangulo::~Rectangulo() {

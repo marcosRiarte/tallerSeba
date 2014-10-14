@@ -24,6 +24,10 @@ std::vector<Pos> ElementosJuego::getContorno() {
 	return vertices;
 }
 
+float ElementosJuego::getArea(){
+	return area;
+}
+
 /*
  * Getter y setter para la posicion
  */

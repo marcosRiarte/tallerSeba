@@ -50,6 +50,7 @@ void ObjetoMapa::initialice(bool esEstatico, std::string color, Pos pos_cm,	int 
 	this->masa = masa;
 	this->friccion = FRICCION_DE_OBJETO;
 	crearContorno();
+	calcularArea();
 }
 
 /*
@@ -78,4 +79,3 @@ void ObjetoMapa::setColor(std::string color) {
 
 ObjetoMapa::~ObjetoMapa() {
 }
-;

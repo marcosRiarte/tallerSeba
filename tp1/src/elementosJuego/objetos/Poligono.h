@@ -8,9 +8,9 @@ private:
 	int lados;
 	int escala;
 	void crearContorno();
+	void calcularArea();
 public:
 	Poligono(Pos posicion, int lados, int escala, int rotacion, std::string color, int masa, bool estatico);
-	float getArea();
 	virtual ~Poligono();
 };
 

@@ -25,14 +25,12 @@ public:
 		}
 	};
 
-//	std::string estado;
-
 private:
 	int ancho;
 	int alto;
 	Estado estado;
 	void crearContorno();
-//	Rectangulo *rectanguloPersonaje; //Solo para pruebas
+	void calcularArea();
 
 public:
 	Personaje(Pos posicion);
@@ -53,7 +51,6 @@ public:
 	int getAlto();
 	int getAncho();
 
-	float getArea();
 
 	// getter y setter de estado
 	void setEstado(E_PERFIL p, E_ACCION a);
@@ -61,15 +58,5 @@ public:
 	Estado getEstado();
 
 	~Personaje();
-
-	/*
-	 * Devuelve el rectangulo que representa al personaje
-	 */
-//	Rectangulo* getRectangulo();
-	/*
-	 * Getter y setter para el estado
-	 */
-//	void setEstado(std::string unEstado);
-//	std::string getEstado();
 };
 #endif /* PERSONAJE_H_ */

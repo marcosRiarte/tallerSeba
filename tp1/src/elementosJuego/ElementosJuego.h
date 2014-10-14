@@ -15,12 +15,14 @@ class ElementosJuego {
 protected:
 	float masa;
 	float rot;
+	float area;
 	Pos pos;
 	b2Body* linkAMundo;
 	float friccion;
 	std::vector<Pos> vertices = std::vector<Pos>();
 
 	virtual void crearContorno() = 0;
+	virtual void calcularArea() = 0;
 
 public:
 
@@ -52,7 +54,7 @@ public:
 	/*
 	 * Devuelve el area del elemento
 	 */
-	virtual float getArea() = 0;
+	float getArea();
 
 	/*
 	 * Getter y setter para la posicion

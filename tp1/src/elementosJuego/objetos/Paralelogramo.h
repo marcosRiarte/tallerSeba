@@ -9,9 +9,9 @@ private:
 	int altura;
 	int alfa;
 	void crearContorno();
+	void calcularArea();
 public:
 	Paralelogramo(Pos posicion, int base, int altura, int alfa, int rotacion, std::string color, int masa, bool estatico);
-	float getArea();
 	virtual ~Paralelogramo();
 };
 
