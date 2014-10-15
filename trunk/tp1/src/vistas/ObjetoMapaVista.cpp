@@ -23,7 +23,7 @@ ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o) {
 	//	las posibles rotaciones.
 	if (objeto->esCirculo()) {
 		Pos pos = objeto->getPos().ySimetrico();
-		diametro = 2 * vertices.at(0).getNorma();
+		diametro = 2 * vertices.at(0).getNorma()+1;
 	}else {
 		Pos pIzqSup = getPosIzqSup(vertices);
 		Pos pDerInf = getPosDerInf(vertices);
