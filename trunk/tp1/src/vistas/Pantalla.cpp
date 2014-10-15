@@ -42,7 +42,7 @@ void Pantalla::inicializar() throw (SDL_Excepcion){
 		loguer->loguear(
 				"No se encontró imagen de fondo, se toma imagen de fondo por defecto",
 				Log::LOG_WAR);
-		dirImg = "img/fondoDefault.png";
+		this->dirImg = "img/fondoDefault.png";
 		this->fondo = IMG_LoadTexture(renderer, dirImg.c_str());
 		if (fondo == nullptr) {
 			loguer->loguear("No se pudo crear el fondo", Log::LOG_ERR);
@@ -102,7 +102,7 @@ int Pantalla::getAncho(){
 }
 
 Pantalla::~Pantalla() {
-	for(unsigned i = 0; i < vistas.size(); i++){
+	for(unsigned i = 0; i < vistas.size()-1; i++){
 		delete vistas.at(i);
 	}
 	SDL_DestroyTexture(fondo);

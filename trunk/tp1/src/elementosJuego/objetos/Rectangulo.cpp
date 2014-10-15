@@ -7,9 +7,9 @@ Rectangulo::Rectangulo(bool esEstatico, std::string color, Pos pos_cm, int rotac
 }
 
 void Rectangulo::crearContorno() {
-	int x1 = -ancho / 2;
-	int y1 = -alto / 2;
-	int x2 = x1 + ancho;
+	int x1 = (-ancho / 2)+0.5;
+	int y1 = (-alto / 2)+0.5;
+	int x2 = (x1 + ancho)+0.5;
 	int y2 = y1;
 	int x3 = x2;
 	int y3 = y2 + alto;

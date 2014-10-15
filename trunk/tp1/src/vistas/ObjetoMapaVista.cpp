@@ -69,8 +69,8 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 		Pos p = vertices.at(0);
 		int radio = p.getNorma();
 		double angulo = atan2(p.getY(), p.getX());
-		int x = (radio / 2) * cos(angulo - objeto->getRotacion() * M_PI / 180) + radio;
-		int y = (radio / 2) * sin(angulo - objeto->getRotacion() * M_PI / 180) + radio;
+		int x = (radio / 2) * cos(angulo - objeto->getRotacion() * M_PI / 180) + radio+0.5;
+		int y = (radio / 2) * sin(angulo - objeto->getRotacion() * M_PI / 180) + radio+0.5;
 		filledCircleColor(renderer, radio, radio, radio, color);
 		filledCircleColor(renderer, x, y, radio / 4, color + 0xF0F0F0);
 	}
@@ -82,8 +82,8 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 		for (int i = 0; i < cantVertices; i++) {
 			Pos p = vertices.at(i);
 			double angulo = atan2(p.getY(), p.getX());
-			vx[i] = p.getNorma() * cos(angulo - objeto->getRotacion() * M_PI / 180) + centroVentana.getX();
-			vy[i] = p.getNorma() * sin(angulo - objeto->getRotacion() * M_PI / 180) + centroVentana.getY();
+			vx[i] = p.getNorma() * cos(angulo - objeto->getRotacion() * M_PI / 180) + centroVentana.getX()+0.5;
+			vy[i] = p.getNorma() * sin(angulo - objeto->getRotacion() * M_PI / 180) + centroVentana.getY()+0.5;
 		}
 		filledPolygonColor(renderer, vx, vy, cantVertices, color);
 	}
