@@ -195,7 +195,8 @@ void CrearElementos(b2World* mundo, std::vector<ElementosJuego*>* elementos, boo
 		if (IsOverlap(mundo, elemento)) {
 			// Si se superpone con algo que estaba lo borra del mundo
 			loguer->loguear("Se superpone", Log::LOG_TIPO::LOG_ERR);
-			elementos->erase(elementos->begin() + i);
+			//elementos->erase(elementos->begin()+i-1);
+			elementos->at(i)->setPos(Pos(1000,1000));
 			i--;
 			mundo->DestroyBody(elemento);
 		} else {
