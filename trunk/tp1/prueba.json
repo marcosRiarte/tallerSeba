@@ -48,6 +48,17 @@
                         },
                         {
                                 "tipo": "rectangulo",
+                                "x": 200,
+                                "y": -550,
+                                "ancho": 192,
+                                "alto": 20,
+                                "color": "#00FFF0",
+                                "rot": 0,
+                                "masa": 500000,
+                                "estatico": true
+                        },
+                        {
+                                "tipo": "rectangulo",
                                 "x": 704,
                                 "y": -260,
                                 "ancho": 200,
