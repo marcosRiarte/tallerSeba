@@ -8,6 +8,7 @@ protected:
 	SDL_Renderer* renderer;
 	SDL_Rect ventana;
 	SDL_Texture* textura;
+	SDL_Surface *superficie;
 public:
 	virtual SDL_Texture* getVista() = 0;
 	virtual const SDL_Rect getVentana() = 0;
@@ -16,6 +17,7 @@ public:
 	};
 	virtual ~Vista(){
 		SDL_DestroyTexture(textura);
+		SDL_FreeSurface( superficie );
 	};
 };
 

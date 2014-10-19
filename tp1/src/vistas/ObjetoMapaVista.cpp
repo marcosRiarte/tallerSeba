@@ -4,7 +4,7 @@
 #include <math.h>
 #include "ObjetoMapaVista.h"
 #include "../Constantes.h"
-
+#include <SDL2/SDL_image.h>
 
 ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o) {
 	objeto = o;
@@ -33,6 +33,7 @@ ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o) {
 	ventana.h = diametro;
 
 	//Se crea la textura y sobre la cual se va a trabajar
+	superficie = SDL_LoadBMP("img/tablones.bmp");
 	textura = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_UNKNOWN, SDL_TEXTUREACCESS_TARGET, ventana.w, ventana.h);
 
 }
@@ -86,6 +87,7 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 			vy[i] = p.getNorma() * sin(angulo - objeto->getRotacion() * M_PI / 180) + centroVentana.getY()+0.5;
 		}
 		filledPolygonColor(renderer, vx, vy, cantVertices, color);
+		//texturedPolygon(renderer, vx, vy, cantVertices,superficie, 0,0);
 	}
 
 	//Se modifica el target del renderer para que ahora apunte a la ventana (valor por defecto)

@@ -36,10 +36,11 @@ Config::Config(std::string nombreArchivo) throw (Config_Excepcion){
 
 
 	if (!parseoExitoso) {
-		std::string mensaje = "Fallo el parseo"	+ reader.getFormatedErrorMessages();
+		std::string mensaje = "Fallo el parseo, se carga json por defecto"	+ reader.getFormatedErrorMessages();
 		const char * c = mensaje.c_str();
 		loguer->loguear(c, Log::LOG_TIPO::LOG_ERR);
-		throw Config_Excepcion("No se pudo parsear exitosamente el archivo \n");
+		std::ifstream prueba("pruebaDefecto.json", std::ifstream::binary);
+		bool parseoExitoso = reader.parse(prueba, raiz, true);
 	}
 
 	std::string escenario;
