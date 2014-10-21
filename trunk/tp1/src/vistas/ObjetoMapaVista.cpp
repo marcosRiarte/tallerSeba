@@ -5,6 +5,7 @@
 #include "ObjetoMapaVista.h"
 #include "../Constantes.h"
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL2_rotozoom.h>
 
 ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o) {
 	objeto = o;
@@ -33,7 +34,8 @@ ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o) {
 	ventana.h = diametro;
 
 	//Se crea la textura y sobre la cual se va a trabajar
-	superficie = SDL_LoadBMP("img/tablones.bmp");
+	SDL_Surface* unaSup = SDL_LoadBMP("img/tablones1.bmp");
+	superficie = SDL_ConvertSurfaceFormat(unaSup,SDL_PIXELFORMAT_RGB444,SDL_RLEACCEL);
 	textura = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_UNKNOWN, SDL_TEXTUREACCESS_TARGET, ventana.w, ventana.h);
 
 }
@@ -83,11 +85,12 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 		for (int i = 0; i < cantVertices; i++) {
 			Pos p = vertices.at(i);
 			double angulo = atan2(p.getY(), p.getX());
-			vx[i] = p.getNorma() * cos(angulo - objeto->getRotacion() * M_PI / 180) + centroVentana.getX()+0.5;
-			vy[i] = p.getNorma() * sin(angulo - objeto->getRotacion() * M_PI / 180) + centroVentana.getY()+0.5;
+			vx[i] = p.getNorma() * cos(angulo ) + centroVentana.getX()+0.5;
+			vy[i] = p.getNorma() * sin(angulo ) + centroVentana.getY()+0.5;
 		}
-		filledPolygonColor(renderer, vx, vy, cantVertices, color);
-		//texturedPolygon(renderer, vx, vy, cantVertices,superficie, 0,0);
+
+		//filledPolygonColor(renderer, vx, vy, cantVertices, color);
+		texturedPolygon(renderer, vx, vy, cantVertices,superficie, 30,30);
 	}
 
 	//Se modifica el target del renderer para que ahora apunte a la ventana (valor por defecto)
@@ -166,3 +169,4 @@ Pos ObjetoMapaVista::getPosDerInf(std::vector<Pos> vPos) {
 	}
 	return Pos(Xmax, Ymax);
 }
+

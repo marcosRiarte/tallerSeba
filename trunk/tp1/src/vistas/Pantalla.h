@@ -22,7 +22,7 @@ private:
 	SDL_Texture * fondo;
 	std::vector<Vista*> vistas;
 	void agregarVistas(std::vector<ObjetoMapa*> objetos, std::vector<Personaje*> personajes);
-
+	Config* unConfig;
 public:
 	Pantalla(Config* config);
 	void inicializar() throw (SDL_Excepcion);
