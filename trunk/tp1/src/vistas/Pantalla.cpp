@@ -106,6 +106,7 @@ void Pantalla::cambiar(){
 
 	//Se actualiza la pantalla
 	SDL_RenderPresent(renderer);
+
 }
 
 

@@ -5,7 +5,7 @@
                 "ancho_px": 1024,
                 "alto_un": 600,
                 "ancho_un": 1024,
-                "imagen_fondo": "img/fondo1.png",
+                "imagen_fondo": "img/terreno.png",
                 "personaje": 
                 {
                         "x": 760,
