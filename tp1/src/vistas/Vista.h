@@ -2,6 +2,7 @@
 #define VISTA_H_
 
 #include <SDL2/SDL.h>
+#include "../elementosJuego/objetos/ObjetoMapa.h"
 
 class Vista {
 protected:
@@ -15,7 +16,7 @@ public:
 	void setRenderer(SDL_Renderer* r){
 		renderer = r;
 	};
-	virtual ~Vista(){
+virtual ~Vista(){
 		SDL_DestroyTexture(textura);
 		SDL_FreeSurface( superficie );
 	};

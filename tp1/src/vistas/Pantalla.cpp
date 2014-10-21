@@ -16,6 +16,7 @@ Pantalla::Pantalla(Config* config) {
 	this->ventana = nullptr;
 	this->renderer = nullptr;
 	this->fondo = nullptr;
+	this->unConfig = config;
 	inicializar();
 	agregarVistas(config->getObjetos(), config->getPersonajes());
 }
@@ -75,7 +76,7 @@ void Pantalla::cambiar(){
 	SDL_RenderCopy(renderer, fondo, NULL, NULL);
 
 	//Se cargan los objetos
-	for(unsigned i = 0; i < vistas.size(); i++){
+	for(unsigned i = 0; i < vistas.size()-1; i++){
 		Vista* vista = vistas.at(i);
 		//obtengo la imagen ya rotada con el tamanio en dimensiones Box2D
 		SDL_Texture* textura = vista->getVista();
@@ -87,8 +88,22 @@ void Pantalla::cambiar(){
 		r.w = v.w*anchoPx/ancho;
 		r.x = v.x*anchoPx/ancho;
 		r.y = v.y*altoPx/alto;
-		SDL_RenderCopy(renderer, textura, NULL, &r);
+		SDL_RenderCopyEx(renderer, textura, NULL, &r, -(unConfig->getObjetos().at(i)->getRotacion()), NULL, SDL_FLIP_NONE);
 	}
+
+	Vista* vista = vistas.at(vistas.size()-1);
+				//obtengo la imagen ya rotada con el tamanio en dimensiones Box2D
+				SDL_Texture* textura = vista->getVista();
+
+				//La imprimo en la pantalla con la debida transformacion
+				SDL_Rect r = SDL_Rect();
+				const SDL_Rect v = vista->getVentana();
+				r.h = v.h*altoPx/alto;
+				r.w = v.w*anchoPx/ancho;
+				r.x = v.x*anchoPx/ancho;
+				r.y = v.y*altoPx/alto;
+				SDL_RenderCopy(renderer, textura, NULL, &r);
+
 	//Se actualiza la pantalla
 	SDL_RenderPresent(renderer);
 }

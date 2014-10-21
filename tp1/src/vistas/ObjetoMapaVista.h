@@ -11,6 +11,7 @@ private:
 	Pos getPosIzqSup(std::vector<Pos> vPos);
 public:
 	ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o);
+	Pos* getPosCentro(std::vector<Pos*>* vPos);
 	SDL_Texture* getVista();
 	const SDL_Rect getVentana();
 	virtual ~ObjetoMapaVista();
