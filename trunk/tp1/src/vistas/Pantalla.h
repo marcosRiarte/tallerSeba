@@ -17,12 +17,14 @@ private:
 	int alto;
 	int ancho;
 	int numeroDeCuadro;
+	float zoom;
 	std::string dirImg;
 	SDL_Window* ventana;
 	SDL_Renderer* renderer;
 	SDL_Texture * fondo;
 	std::vector<Vista*> vistas;
 	SDL_Rect camara;
+	SDL_Rect personaje;
 	void agregarVistas(std::vector<ObjetoMapa*> objetos, std::vector<Personaje*> personajes);
 	Config* unConfig;
 public:

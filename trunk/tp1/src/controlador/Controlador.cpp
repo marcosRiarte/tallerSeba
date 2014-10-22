@@ -13,14 +13,16 @@ int Controlador::cambiar(std::vector<Evento>* listaEventos) {
 	SDL_PollEvent(&event);
 	const Uint8 *state = SDL_GetKeyboardState(NULL);
 
-	if (event.key.keysym.sym == SDLK_KP_PLUS && state[SDL_SCANCODE_KP_PLUS] && !state[SDL_SCANCODE_KP_MINUS]){
+	if (event.key.keysym.sym == SDLK_KP_PLUS && !state[SDL_SCANCODE_KP_MINUS]){
 				Evento mas = Evento(5);
 				listaEventos->push_back(mas);
+				return CONTINUAR;
 	}
 
-	if (event.key.keysym.sym == SDLK_KP_PLUS && state[SDL_SCANCODE_KP_MINUS] && !state[SDL_SCANCODE_KP_PLUS]){
+	if (event.key.keysym.sym == SDLK_KP_MINUS && !state[SDL_SCANCODE_KP_PLUS]){
 			Evento menos = Evento(6);
 			listaEventos->push_back(menos);
+			return CONTINUAR;
 	}
 
 	if (event.key.keysym.sym == SDLK_LEFT && (state[SDL_SCANCODE_LEFT])) {
@@ -106,6 +108,18 @@ int Controlador::cambiar(std::vector<Evento>* listaEventos) {
 		Evento der = Evento(2);
 		listaEventos->push_back(der);
 		return CONTINUAR;
+	}
+
+	if (state[SDL_SCANCODE_KP_PLUS]){
+			Evento mas = Evento(5);
+			listaEventos->push_back(mas);
+			return CONTINUAR;
+	}
+
+	if (state[SDL_SCANCODE_KP_MINUS]){
+			Evento menos = Evento(6);
+			listaEventos->push_back(menos);
+			return CONTINUAR;
 	}
 
 	if (event.type == SDL_QUIT){
