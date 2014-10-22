@@ -14,6 +14,8 @@ class Pantalla {
 private:
 	int altoPx;
 	int anchoPx;
+	int altoPx1;
+	int anchoPx1;
 	int alto;
 	int ancho;
 	int numeroDeCuadro;
@@ -23,6 +25,7 @@ private:
 	SDL_Window* ventana;
 	SDL_Renderer* renderer;
 	SDL_Texture * fondo;
+	SDL_Rect cuadrado;
 	std::vector<Vista*> vistas;
 	SDL_Rect camara;
 	SDL_Rect personaje;

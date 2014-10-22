@@ -9,6 +9,8 @@
 Pantalla::Pantalla(Config* config) {
 	this->altoPx = config->getAltoPx();
 	this->anchoPx = config->getAnchoPx();
+	this->altoPx1 = config->getAltoPx();
+	this->anchoPx1 = config->getAnchoPx();
 	this->alto = config->getAlto();
 	this->ancho = config->getAncho();
 	this->dirImg = config->getFondo();
@@ -18,14 +20,18 @@ Pantalla::Pantalla(Config* config) {
 	this->fondo = nullptr;
 	this->unConfig = config;
 	this->camara={ 0, 0, anchoPx, altoPx };
-	this->zoomout=1.01;
-	this->zoomin=0.99;
+	this->zoomout=2;
+	this->zoomin=0.50;
 	inicializar();
 	agregarVistas(config->getObjetos(), config->getPersonajes());
 
 	//Se carga el personaje
 	Vista* vista = vistas.at(vistas.size()-1);
 	personaje = vista->getVentana();
+
+	//Cargo el fondo de pantalla en el renderer
+	cuadrado = { 0, 0, anchoPx, altoPx };
+
 }
 
 /**
@@ -86,17 +92,6 @@ void Pantalla::cambiar(std::vector<Evento>* ListaDeEventos){
 	//La imprimo en la pantalla con la debida transformacion
 	const SDL_Rect v = vista->getVentana();
 
-	/*
-	for (unsigned i = 0; i < ListaDeEventos->size(); i++) {
-		if (ListaDeEventos->at(i).getTecla() == TECLA_MAS) {
-			this->Zoom(camara.x,camara.y,zoomin,&camara);
-		}
-
-		if (ListaDeEventos->at(i).getTecla() == TECLA_MENOS) {
-			this->Zoom(camara.x,camara.y,zoomout,&camara);
-		}
-	}
-*/
 	//Se centra la camara alrededor del personaje
 	camara.x = (v.x + (v.w / 2)) - anchoPx / 2;
 	camara.y = (v.y + (v.h / 2)) - altoPx / 2;
@@ -123,7 +118,6 @@ void Pantalla::cambiar(std::vector<Evento>* ListaDeEventos){
 	SDL_RenderClear(renderer);
 
 	//Cargo el fondo de pantalla en el renderer
-	SDL_Rect cuadrado = { 0, 0, anchoPx, altoPx };
 	SDL_RenderCopy(renderer, fondo, &camara, &cuadrado);
 
 	//Cargo el personaje en el renderer
@@ -148,11 +142,16 @@ void Pantalla::cambiar(std::vector<Evento>* ListaDeEventos){
 
 	for (unsigned i = 0; i < ListaDeEventos->size(); i++) {
 			if (ListaDeEventos->at(i).getTecla() == TECLA_MAS) {
-				SDL_RenderSetLogicalSize(renderer, zoomin*anchoPx, zoomin*altoPx);
+				SDL_RenderSetLogicalSize(renderer, zoomin*anchoPx*(anchoPx/altoPx), zoomin*altoPx);
+				cuadrado.w=cuadrado.w*zoomin;
+				cuadrado.h=cuadrado.h*zoomin;
+
 			}
 
 			if (ListaDeEventos->at(i).getTecla() == TECLA_MENOS) {
-				SDL_RenderSetLogicalSize(renderer, zoomout*anchoPx, zoomout*altoPx);
+				SDL_RenderSetLogicalSize(renderer, zoomout*anchoPx*(anchoPx/altoPx), zoomout*altoPx);
+				cuadrado.w=cuadrado.w*zoomout;
+				cuadrado.h=cuadrado.h*zoomout;
 			}
 		}
 

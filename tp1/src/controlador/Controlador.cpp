@@ -13,13 +13,13 @@ int Controlador::cambiar(std::vector<Evento>* listaEventos) {
 	SDL_PollEvent(&event);
 	const Uint8 *state = SDL_GetKeyboardState(NULL);
 
-	if (event.key.keysym.sym == SDLK_KP_PLUS && !state[SDL_SCANCODE_KP_MINUS]){
+	if (((event.key.keysym.sym == SDLK_KP_PLUS) || (event.key.keysym.sym ==SDLK_PLUS)) && !state[SDL_SCANCODE_KP_MINUS]){
 				Evento mas = Evento(5);
 				listaEventos->push_back(mas);
 				return CONTINUAR;
 	}
 
-	if (event.key.keysym.sym == SDLK_KP_MINUS && !state[SDL_SCANCODE_KP_PLUS]){
+	if (((event.key.keysym.sym == SDLK_KP_MINUS) || (event.key.keysym.sym ==SDLK_MINUS)) && !state[SDL_SCANCODE_KP_PLUS]){
 			Evento menos = Evento(6);
 			listaEventos->push_back(menos);
 			return CONTINUAR;
