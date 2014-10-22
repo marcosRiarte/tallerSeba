@@ -43,7 +43,7 @@ ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o) {
 	//Seteo del color
 	SDL_SetColorKey( superficieCirculo, SDL_TRUE, SDL_MapRGB( superficieCirculo->format, 255, 0, 255 ) );
 	texturaCirculo = SDL_CreateTextureFromSurface( renderer, superficieCirculo );
-	SDL_SetTextureAlphaMod( texturaCirculo, 200 );
+	SDL_SetTextureAlphaMod( texturaCirculo, 125 );
 
 }
 

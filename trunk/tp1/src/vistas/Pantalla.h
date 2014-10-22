@@ -17,7 +17,8 @@ private:
 	int alto;
 	int ancho;
 	int numeroDeCuadro;
-	float zoom;
+	float zoomin;
+	float zoomout;
 	std::string dirImg;
 	SDL_Window* ventana;
 	SDL_Renderer* renderer;
@@ -32,8 +33,7 @@ public:
 	void inicializar() throw (SDL_Excepcion);
 	void cambiar(std::vector<Evento>* ListaDeEventos);
 	void agregarVista(Vista* v);
-	void hacerZoom(int x, int y, float escalaAncho, float escalaAlto, SDL_Rect rectangulo);
-
+	void Zoom(int x, int y, float zoom, SDL_Rect* rectangulo);
 	int getAlto();
 	int getAncho();
 
