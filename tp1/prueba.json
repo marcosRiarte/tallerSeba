@@ -26,14 +26,14 @@
                         },
                         {
                                 "tipo": "poligonoo",
-                                "x": 700,
-                                "y": -200,
+                                "x": 50,
+                                "y": -50,
                                 "lados": 3,
                                 "escala":0,
                                 "color": "#FFJ0FF",
                                 "rot": 50,
                                 "masa": 10,
-                                "estatico": false
+                                "estatico": true
                         },
                         {
                                 "tipo": "rectangulo",

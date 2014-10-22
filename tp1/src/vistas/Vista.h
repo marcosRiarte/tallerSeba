@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include "../elementosJuego/objetos/ObjetoMapa.h"
+#include "../controlador/Evento.h"
 
 class Vista {
 protected:

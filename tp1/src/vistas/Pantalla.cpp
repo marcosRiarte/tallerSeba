@@ -18,8 +18,13 @@ Pantalla::Pantalla(Config* config) {
 	this->fondo = nullptr;
 	this->unConfig = config;
 	this->camara={ 0, 0, anchoPx, altoPx };
+	this->zoom=1.1;
 	inicializar();
 	agregarVistas(config->getObjetos(), config->getPersonajes());
+
+	//Se carga el personaje
+	Vista* vista = vistas.at(vistas.size()-1);
+	personaje = vista->getVentana();
 }
 
 /**
@@ -78,8 +83,18 @@ void Pantalla::cambiar(std::vector<Evento>* ListaDeEventos){
 	SDL_Texture* textura = vista->getVista();
 
 	//La imprimo en la pantalla con la debida transformacion
-	SDL_Rect personaje = SDL_Rect();
 	const SDL_Rect v = vista->getVentana();
+
+	for (unsigned i = 0; i < ListaDeEventos->size(); i++) {
+		if (ListaDeEventos->at(i).getTecla() == TECLA_MAS) {
+			camara.w = camara.w / zoom;
+			camara.h = camara.h / zoom;
+		}
+		if (ListaDeEventos->at(i).getTecla() == TECLA_MENOS) {
+			camara.w = camara.w * zoom;
+			camara.h = camara.h * zoom;
+		}
+	}
 
 	//Se centra la camara alrededor del personaje
 	camara.x = (v.x + (v.w / 2)) - anchoPx / 2;
@@ -99,23 +114,32 @@ void Pantalla::cambiar(std::vector<Evento>* ListaDeEventos){
 		camara.y = alto - camara.h;
 	}
 
-	personaje.h = v.h;
-	personaje.w = v.w;
 	personaje.x = v.x-camara.x;
 	personaje.y = v.y-camara.y;
+
+/*
+	for (unsigned i = 0; i < ListaDeEventos->size(); i++) {
+		if (ListaDeEventos->at(i).getTecla() == TECLA_MAS) {
+			personaje.h = personaje.h*zoom;
+			personaje.w = personaje.w*zoom;
+		}
+		if (ListaDeEventos->at(i).getTecla() == TECLA_MENOS) {
+			personaje.h = personaje.h/zoom;
+			personaje.w = personaje.w/zoom;
+		}
+	}
+*/
 
 	//Limpio la pantalla
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderClear(renderer);
 
 	//Cargo el fondo de pantalla en el renderer
-	SDL_Rect cuadrado = { 0, 0, camara.w, camara.h };
-
+	SDL_Rect cuadrado = { 0, 0, anchoPx, altoPx };
 	SDL_RenderCopy(renderer, fondo, &camara, &cuadrado);
 
 	//Cargo el personaje en el renderer
 	SDL_RenderCopy(renderer, textura, NULL, &personaje);
-
 
 	//Se cargan los objetos
 	for(unsigned i = 0; i < vistas.size()-1; i++){
