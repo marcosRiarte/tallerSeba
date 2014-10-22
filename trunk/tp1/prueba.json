@@ -3,8 +3,8 @@
         {
                 "alto_px": 600,
                 "ancho_px": 1024,
-                "alto_un": 600,
-                "ancho_un": 1024,
+                "alto_un": 1200,
+                "ancho_un": 2048,
                 "imagen_fondo": "img/terreno.png",
                 "personaje": 
                 {
@@ -16,9 +16,9 @@
                 [
                         {
                                 "tipo": "circulo",
-                                "x": 100,
+                                "x": 720,
                                 "y": -100,
-                                "diametro": 50,
+                                "diametro": 20,
                                 "color": "#0000FF",
                                 "rot": 0,
                                 "masa": 100,

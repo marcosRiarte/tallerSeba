@@ -35,7 +35,7 @@ ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o) {
 
 	//Se crea la textura y sobre la cual se va a trabajar
 	SDL_Surface* imagenFiguras = SDL_LoadBMP("img/tablones1.bmp");
-	SDL_Surface* imagenCirculo = IMG_Load( "img/tierra3.png" );
+	SDL_Surface* imagenCirculo = IMG_Load( "img/esfera.png" );
 
 	superficie = SDL_ConvertSurfaceFormat(imagenFiguras,SDL_PIXELFORMAT_RGB444,SDL_RLEACCEL);
 	superficieCirculo = SDL_ConvertSurfaceFormat(imagenCirculo,SDL_PIXELFORMAT_RGB444,SDL_RLEACCEL);
@@ -43,6 +43,7 @@ ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa* o) {
 	//Seteo del color
 	SDL_SetColorKey( superficieCirculo, SDL_TRUE, SDL_MapRGB( superficieCirculo->format, 255, 0, 255 ) );
 	texturaCirculo = SDL_CreateTextureFromSurface( renderer, superficieCirculo );
+	SDL_SetTextureAlphaMod( texturaCirculo, 200 );
 
 }
 
