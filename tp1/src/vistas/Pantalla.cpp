@@ -18,7 +18,8 @@ Pantalla::Pantalla(Config* config) {
 	this->fondo = nullptr;
 	this->unConfig = config;
 	this->camara={ 0, 0, anchoPx, altoPx };
-	this->zoom=1.1;
+	this->zoomout=1.01;
+	this->zoomin=0.99;
 	inicializar();
 	agregarVistas(config->getObjetos(), config->getPersonajes());
 
@@ -87,12 +88,11 @@ void Pantalla::cambiar(std::vector<Evento>* ListaDeEventos){
 
 	for (unsigned i = 0; i < ListaDeEventos->size(); i++) {
 		if (ListaDeEventos->at(i).getTecla() == TECLA_MAS) {
-			camara.w = camara.w / zoom;
-			camara.h = camara.h / zoom;
+			this->Zoom(camara.x,camara.y,zoomin,&camara);
 		}
+
 		if (ListaDeEventos->at(i).getTecla() == TECLA_MENOS) {
-			camara.w = camara.w * zoom;
-			camara.h = camara.h * zoom;
+			this->Zoom(camara.x,camara.y,zoomout,&camara);
 		}
 	}
 
@@ -116,19 +116,6 @@ void Pantalla::cambiar(std::vector<Evento>* ListaDeEventos){
 
 	personaje.x = v.x-camara.x;
 	personaje.y = v.y-camara.y;
-
-/*
-	for (unsigned i = 0; i < ListaDeEventos->size(); i++) {
-		if (ListaDeEventos->at(i).getTecla() == TECLA_MAS) {
-			personaje.h = personaje.h*zoom;
-			personaje.w = personaje.w*zoom;
-		}
-		if (ListaDeEventos->at(i).getTecla() == TECLA_MENOS) {
-			personaje.h = personaje.h/zoom;
-			personaje.w = personaje.w/zoom;
-		}
-	}
-*/
 
 	//Limpio la pantalla
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
@@ -170,11 +157,11 @@ int Pantalla::getAncho(){
 	return ancho;
 }
 
-void Pantalla::hacerZoom(int x, int y, float escalaAncho, float escalaAlto, SDL_Rect rectangulo){
-	rectangulo.x = x - (rectangulo.w * escalaAncho - rectangulo.w) / 2;
-	rectangulo.y = y - (rectangulo.h * escalaAlto - rectangulo.h) / 2;
-	rectangulo.w = (rectangulo.w * escalaAncho) +0.5;
-	rectangulo.h = (rectangulo.h * escalaAlto) +0.5;
+void Pantalla::Zoom(int x, int y, float zoom, SDL_Rect* rectangulo){
+	rectangulo->x = x - (rectangulo->w * zoom - rectangulo->w) / 2;
+	rectangulo->y = y - (rectangulo->h * zoom - rectangulo->h) / 2;
+	rectangulo->w = (rectangulo->w * zoom);
+	rectangulo->h = (rectangulo->h * zoom);
 }
 
 Pantalla::~Pantalla() {

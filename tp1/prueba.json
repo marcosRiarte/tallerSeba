@@ -18,7 +18,7 @@
                                 "tipo": "circulo",
                                 "x": 720,
                                 "y": -100,
-                                "diametro": 20,
+                                "diametro": 100,
                                 "color": "#0000FF",
                                 "rot": 0,
                                 "masa": 100,
