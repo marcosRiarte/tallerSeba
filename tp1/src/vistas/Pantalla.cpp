@@ -69,11 +69,57 @@ void Pantalla::agregarVistas(std::vector<ObjetoMapa*> objetos, std::vector<Perso
 
 
 void Pantalla::cambiar(){
+
+	//El area de la camara
+	SDL_Rect camara = { 0, 0, anchoPx, altoPx };
+
+	//Se carga el personaje
+	Vista* vista = vistas.at(vistas.size()-1);
+
+	//obtengo la imagen ya rotada con el tamanio en dimensiones Box2D
+	SDL_Texture* textura = vista->getVista();
+
+	//La imprimo en la pantalla con la debida transformacion
+	SDL_Rect r = SDL_Rect();
+	const SDL_Rect v = vista->getVentana();
+
+	//Se centra la camara alrededor del personaje
+	camara.x = (v.x + (v.w / 2)) - anchoPx / 2;
+	camara.y = (v.y + (v.h / 2)) - altoPx / 2;
+
+
+
+	//Mantener la camara en los limites
+	if (camara.x < 0) {
+		camara.x = 0;
+	}
+	if (camara.y < 0) {
+		camara.y = 0;
+	}
+	if (camara.x > ancho - camara.w) {
+		camara.x = ancho - camara.w;
+	}
+	if (camara.y > alto - camara.h) {
+		camara.y = alto - camara.h;
+	}
+
+	r.h = v.h;
+	r.w = v.w;
+	r.x = v.x-camara.x;
+	r.y = v.y-camara.y;
+
 	//Limpio la pantalla
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderClear(renderer);
+
 	//Cargo el fondo de pantalla
-	SDL_RenderCopy(renderer, fondo, NULL, NULL);
+	SDL_Rect cuadrado = { 0, 0, camara.w, camara.h };
+
+	SDL_RenderCopy(renderer, fondo, &camara, &cuadrado);
+
+	//Cargo el personaje
+	SDL_RenderCopy(renderer, textura, NULL, &r);
+
 
 	//Se cargan los objetos
 	for(unsigned i = 0; i < vistas.size()-1; i++){
@@ -84,25 +130,14 @@ void Pantalla::cambiar(){
 		//La imprimo en la pantalla con la debida transformacion
 		SDL_Rect r = SDL_Rect();
 		const SDL_Rect v = vista->getVentana();
-		r.h = v.h*altoPx/alto;
-		r.w = v.w*anchoPx/ancho;
-		r.x = v.x*anchoPx/ancho;
-		r.y = v.y*altoPx/alto;
+
+		r.h = v.h;
+		r.w = v.w;
+		r.x = v.x-camara.x;
+		r.y = v.y-camara.y;
 		SDL_RenderCopyEx(renderer, textura, NULL, &r, -(unConfig->getObjetos().at(i)->getRotacion()), NULL, SDL_FLIP_NONE);
 	}
 
-	Vista* vista = vistas.at(vistas.size()-1);
-				//obtengo la imagen ya rotada con el tamanio en dimensiones Box2D
-				SDL_Texture* textura = vista->getVista();
-
-				//La imprimo en la pantalla con la debida transformacion
-				SDL_Rect r = SDL_Rect();
-				const SDL_Rect v = vista->getVentana();
-				r.h = v.h*altoPx/alto;
-				r.w = v.w*anchoPx/ancho;
-				r.x = v.x*anchoPx/ancho;
-				r.y = v.y*altoPx/alto;
-				SDL_RenderCopy(renderer, textura, NULL, &r);
 
 	//Se actualiza la pantalla
 	SDL_RenderPresent(renderer);
