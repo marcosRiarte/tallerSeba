@@ -86,6 +86,7 @@ void Pantalla::cambiar(std::vector<Evento>* ListaDeEventos){
 	//La imprimo en la pantalla con la debida transformacion
 	const SDL_Rect v = vista->getVentana();
 
+	/*
 	for (unsigned i = 0; i < ListaDeEventos->size(); i++) {
 		if (ListaDeEventos->at(i).getTecla() == TECLA_MAS) {
 			this->Zoom(camara.x,camara.y,zoomin,&camara);
@@ -95,7 +96,7 @@ void Pantalla::cambiar(std::vector<Evento>* ListaDeEventos){
 			this->Zoom(camara.x,camara.y,zoomout,&camara);
 		}
 	}
-
+*/
 	//Se centra la camara alrededor del personaje
 	camara.x = (v.x + (v.w / 2)) - anchoPx / 2;
 	camara.y = (v.y + (v.h / 2)) - altoPx / 2;
@@ -144,6 +145,18 @@ void Pantalla::cambiar(std::vector<Evento>* ListaDeEventos){
 		rectObjeto.y = v.y-camara.y;
 		SDL_RenderCopyEx(renderer, textura, NULL, &rectObjeto, -(unConfig->getObjetos().at(i)->getRotacion()), NULL, SDL_FLIP_NONE);
 	}
+
+	for (unsigned i = 0; i < ListaDeEventos->size(); i++) {
+			if (ListaDeEventos->at(i).getTecla() == TECLA_MAS) {
+				SDL_RenderSetLogicalSize(renderer, zoomin*anchoPx, zoomin*altoPx);
+			}
+
+			if (ListaDeEventos->at(i).getTecla() == TECLA_MENOS) {
+				SDL_RenderSetLogicalSize(renderer, zoomout*anchoPx, zoomout*altoPx);
+			}
+		}
+
+
 
 	//Se actualiza la pantalla
 	SDL_RenderPresent(renderer);
