@@ -106,7 +106,7 @@ int gameLoop(MVC* mvc) {
 		// Responsabilidades> ...
 		fin = Controlador::cambiar(&listaDeEventos);
 		mvc->escenario->cambiar(&listaDeEventos);
-		mvc->pantalla->cambiar();
+		mvc->pantalla->cambiar(&listaDeEventos);
 		SDL_Delay(10);
 	}
 

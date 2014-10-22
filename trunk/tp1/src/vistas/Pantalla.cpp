@@ -17,6 +17,7 @@ Pantalla::Pantalla(Config* config) {
 	this->renderer = nullptr;
 	this->fondo = nullptr;
 	this->unConfig = config;
+	this->camara={ 0, 0, anchoPx, altoPx };
 	inicializar();
 	agregarVistas(config->getObjetos(), config->getPersonajes());
 }
@@ -68,10 +69,7 @@ void Pantalla::agregarVistas(std::vector<ObjetoMapa*> objetos, std::vector<Perso
 }
 
 
-void Pantalla::cambiar(){
-
-	//El area de la camara
-	SDL_Rect camara = { 0, 0, anchoPx, altoPx };
+void Pantalla::cambiar(std::vector<Evento>* ListaDeEventos){
 
 	//Se carga el personaje
 	Vista* vista = vistas.at(vistas.size()-1);
@@ -80,14 +78,12 @@ void Pantalla::cambiar(){
 	SDL_Texture* textura = vista->getVista();
 
 	//La imprimo en la pantalla con la debida transformacion
-	SDL_Rect r = SDL_Rect();
+	SDL_Rect personaje = SDL_Rect();
 	const SDL_Rect v = vista->getVentana();
 
 	//Se centra la camara alrededor del personaje
 	camara.x = (v.x + (v.w / 2)) - anchoPx / 2;
 	camara.y = (v.y + (v.h / 2)) - altoPx / 2;
-
-
 
 	//Mantener la camara en los limites
 	if (camara.x < 0) {
@@ -103,22 +99,22 @@ void Pantalla::cambiar(){
 		camara.y = alto - camara.h;
 	}
 
-	r.h = v.h;
-	r.w = v.w;
-	r.x = v.x-camara.x;
-	r.y = v.y-camara.y;
+	personaje.h = v.h;
+	personaje.w = v.w;
+	personaje.x = v.x-camara.x;
+	personaje.y = v.y-camara.y;
 
 	//Limpio la pantalla
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderClear(renderer);
 
-	//Cargo el fondo de pantalla
+	//Cargo el fondo de pantalla en el renderer
 	SDL_Rect cuadrado = { 0, 0, camara.w, camara.h };
 
 	SDL_RenderCopy(renderer, fondo, &camara, &cuadrado);
 
-	//Cargo el personaje
-	SDL_RenderCopy(renderer, textura, NULL, &r);
+	//Cargo el personaje en el renderer
+	SDL_RenderCopy(renderer, textura, NULL, &personaje);
 
 
 	//Se cargan los objetos
@@ -128,20 +124,18 @@ void Pantalla::cambiar(){
 		SDL_Texture* textura = vista->getVista();
 
 		//La imprimo en la pantalla con la debida transformacion
-		SDL_Rect r = SDL_Rect();
+		SDL_Rect rectObjeto = SDL_Rect();
 		const SDL_Rect v = vista->getVentana();
 
-		r.h = v.h;
-		r.w = v.w;
-		r.x = v.x-camara.x;
-		r.y = v.y-camara.y;
-		SDL_RenderCopyEx(renderer, textura, NULL, &r, -(unConfig->getObjetos().at(i)->getRotacion()), NULL, SDL_FLIP_NONE);
+		rectObjeto.h = v.h;
+		rectObjeto.w = v.w;
+		rectObjeto.x = v.x-camara.x;
+		rectObjeto.y = v.y-camara.y;
+		SDL_RenderCopyEx(renderer, textura, NULL, &rectObjeto, -(unConfig->getObjetos().at(i)->getRotacion()), NULL, SDL_FLIP_NONE);
 	}
-
 
 	//Se actualiza la pantalla
 	SDL_RenderPresent(renderer);
-
 }
 
 
@@ -150,6 +144,13 @@ int Pantalla::getAlto() {
 }
 int Pantalla::getAncho(){
 	return ancho;
+}
+
+void Pantalla::hacerZoom(int x, int y, float escalaAncho, float escalaAlto, SDL_Rect rectangulo){
+	rectangulo.x = x - (rectangulo.w * escalaAncho - rectangulo.w) / 2;
+	rectangulo.y = y - (rectangulo.h * escalaAlto - rectangulo.h) / 2;
+	rectangulo.w = (rectangulo.w * escalaAncho) +0.5;
+	rectangulo.h = (rectangulo.h * escalaAlto) +0.5;
 }
 
 Pantalla::~Pantalla() {
