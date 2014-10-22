@@ -8,6 +8,7 @@
 #include "../excepciones/SDL_Excepcion.h"
 #include "../parseo/Config.h"
 #include "../elementosJuego/personajes/Personaje.h"
+#include "../controlador/Evento.h"
 
 class Pantalla {
 private:
@@ -21,13 +22,15 @@ private:
 	SDL_Renderer* renderer;
 	SDL_Texture * fondo;
 	std::vector<Vista*> vistas;
+	SDL_Rect camara;
 	void agregarVistas(std::vector<ObjetoMapa*> objetos, std::vector<Personaje*> personajes);
 	Config* unConfig;
 public:
 	Pantalla(Config* config);
 	void inicializar() throw (SDL_Excepcion);
-	void cambiar();
+	void cambiar(std::vector<Evento>* ListaDeEventos);
 	void agregarVista(Vista* v);
+	void hacerZoom(int x, int y, float escalaAncho, float escalaAlto, SDL_Rect rectangulo);
 
 	int getAlto();
 	int getAncho();

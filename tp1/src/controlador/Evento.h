@@ -18,6 +18,8 @@ public:
 #define TECLA_DERECHA				2
 #define TECLA_ARRIBA				3
 #define TECLA_R						4
+#define TECLA_MAS					5
+#define TECLA_MENOS					6
 
 	/*	static const int teclaNada = 0;
 	 static const int teclaIzquierda = 1;
