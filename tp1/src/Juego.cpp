@@ -8,12 +8,16 @@
 #include <exception>
 #include "excepciones/MVCExcepcion.h"
 
+#include <windows.h>
+
 // Estructura del modelo
 struct MVC {
 	Escenario* escenario;
 	Pantalla* pantalla;
 	Config* config;
 };
+
+
 
 // Momentos de la ejecucion
 MVC* creacionDelModelo(const char*) throw (MVC_Excepcion);
