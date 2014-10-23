@@ -20,8 +20,8 @@ Pantalla::Pantalla(Config* config) {
 	this->fondo = nullptr;
 	this->unConfig = config;
 	this->camara={ 0, 0, anchoPx, altoPx };
-	this->zoomout=2;
-	this->zoomin=0.50;
+	this->zoomout=1.01;
+	this->zoomin=0.99;
 	inicializar();
 	agregarVistas(config->getObjetos(), config->getPersonajes());
 
@@ -141,19 +141,25 @@ void Pantalla::cambiar(std::vector<Evento>* ListaDeEventos){
 	}
 
 	for (unsigned i = 0; i < ListaDeEventos->size(); i++) {
-			if (ListaDeEventos->at(i).getTecla() == TECLA_MAS) {
-				SDL_RenderSetLogicalSize(renderer, zoomin*anchoPx*(anchoPx/altoPx), zoomin*altoPx);
-				cuadrado.w=cuadrado.w*zoomin;
-				cuadrado.h=cuadrado.h*zoomin;
+		if (ListaDeEventos->at(i).getTecla() == TECLA_MAS && altoPx1>=500) {
+			SDL_RenderSetLogicalSize(renderer,zoomin * anchoPx1 * (anchoPx1 / altoPx1), zoomin * altoPx1);
+			anchoPx1 = anchoPx * zoomin * (anchoPx1 / altoPx1);
+			altoPx1 = zoomin * altoPx1;
+			cuadrado.w = cuadrado.w * zoomin;
+			cuadrado.h = cuadrado.h * zoomin;
 
-			}
-
-			if (ListaDeEventos->at(i).getTecla() == TECLA_MENOS) {
-				SDL_RenderSetLogicalSize(renderer, zoomout*anchoPx*(anchoPx/altoPx), zoomout*altoPx);
-				cuadrado.w=cuadrado.w*zoomout;
-				cuadrado.h=cuadrado.h*zoomout;
-			}
 		}
+
+		if (ListaDeEventos->at(i).getTecla() == TECLA_MENOS && altoPx1<=altoPx) {
+			SDL_RenderSetLogicalSize(renderer,
+					zoomout * anchoPx1 * (anchoPx1 / altoPx1), zoomout * altoPx1);
+			anchoPx1 = anchoPx1 * zoomout * (anchoPx1 / altoPx1);
+			altoPx1 = zoomout * altoPx1;
+			cuadrado.w = cuadrado.w * zoomout;
+			cuadrado.h = cuadrado.h * zoomout;
+
+		}
+	}
 
 
 
