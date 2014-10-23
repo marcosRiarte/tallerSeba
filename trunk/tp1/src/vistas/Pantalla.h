@@ -36,7 +36,6 @@ public:
 	void inicializar() throw (SDL_Excepcion);
 	void cambiar(std::vector<Evento>* ListaDeEventos);
 	void agregarVista(Vista* v);
-	void Zoom(int x, int y, float zoom, SDL_Rect* rectangulo);
 	int getAlto();
 	int getAncho();
 

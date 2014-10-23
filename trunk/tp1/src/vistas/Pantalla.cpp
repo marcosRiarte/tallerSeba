@@ -140,8 +140,9 @@ void Pantalla::cambiar(std::vector<Evento>* ListaDeEventos){
 		SDL_RenderCopyEx(renderer, textura, NULL, &rectObjeto, -(unConfig->getObjetos().at(i)->getRotacion()), NULL, SDL_FLIP_NONE);
 	}
 
+
 	for (unsigned i = 0; i < ListaDeEventos->size(); i++) {
-		if (ListaDeEventos->at(i).getTecla() == TECLA_MAS && altoPx1>=500) {
+		if (ListaDeEventos->at(i).getTecla() == TECLA_MAS && zoomin * altoPx1>=250 && zoomin * anchoPx1>=500) {
 			SDL_RenderSetLogicalSize(renderer,zoomin * anchoPx1 * (anchoPx1 / altoPx1), zoomin * altoPx1);
 			anchoPx1 = anchoPx * zoomin * (anchoPx1 / altoPx1);
 			altoPx1 = zoomin * altoPx1;
@@ -150,7 +151,7 @@ void Pantalla::cambiar(std::vector<Evento>* ListaDeEventos){
 
 		}
 
-		if (ListaDeEventos->at(i).getTecla() == TECLA_MENOS && altoPx1<=altoPx) {
+		if (ListaDeEventos->at(i).getTecla() == TECLA_MENOS && altoPx1<=alto && anchoPx1<=ancho) {
 			SDL_RenderSetLogicalSize(renderer,
 					zoomout * anchoPx1 * (anchoPx1 / altoPx1), zoomout * altoPx1);
 			anchoPx1 = anchoPx1 * zoomout * (anchoPx1 / altoPx1);
@@ -173,13 +174,6 @@ int Pantalla::getAlto() {
 }
 int Pantalla::getAncho(){
 	return ancho;
-}
-
-void Pantalla::Zoom(int x, int y, float zoom, SDL_Rect* rectangulo){
-	rectangulo->x = x - (rectangulo->w * zoom - rectangulo->w) / 2;
-	rectangulo->y = y - (rectangulo->h * zoom - rectangulo->h) / 2;
-	rectangulo->w = (rectangulo->w * zoom);
-	rectangulo->h = (rectangulo->h * zoom);
 }
 
 Pantalla::~Pantalla() {
