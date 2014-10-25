@@ -1,0 +1,21 @@
+Figuras Geométricas:
+---------------------------------
++ Poligonos (de 3 a 6 lados)
+	- radio
+	- cant. de lados
++ Rectangulo
+	- alto
+	- ancho
++ Circulos
+	- radio
++ Paralelogramo
+	- base
+	- altura
+	- angulo ( < 45 grados )
++ Trapecio
+	- base 
+	- altura
+	- angulo 1 ( < 45 grados )
+	- angulo 2 ( < 45 grados )
+	
+	
