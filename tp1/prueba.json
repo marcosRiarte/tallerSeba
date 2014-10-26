@@ -24,6 +24,16 @@
                                 "masa": 100,
                                 "estatico": false
                         },
+                         {
+                                "tipo": "circulo",
+                                "x": 500,
+                                "y": -100,
+                                "diametro": 100,
+                                "color": "#0000FF",
+                                "rot": 0,
+                                "masa": 100,
+                                "estatico": false
+                        },
                         {
                                 "tipo": "poligonoo",
                                 "x": 50,
@@ -41,6 +51,45 @@
                                 "y": -550,
                                 "ancho": 192,
                                 "alto": 20,
+                                "color": "J00FF00",
+                                "rot": 0,
+                                "masa": 500000,
+                                "estatico": true
+                        },
+                                                {
+                                "tipo": "trapecio",
+                                "x": 800,
+                                "y": -550,
+                                "alfa": 45,
+                                "beta": 60,
+                                "base": 200,
+                                "altura": 50,
+                                "color": "J00FF00",
+                                "rot": 0,
+                                "masa": 500000,
+                                "estatico": true
+                        },
+                                                                        {
+                                "tipo": "poligono",
+                                "x": 940,
+                                "y": -490,
+                                "lados": 6,
+                                "escala": 80,
+                                "base": 200,
+                                "altura": 50,
+                                "color": "J00FF00",
+                                "rot": 0,
+                                "masa": 500000,
+                                "estatico": true
+                        },
+                        {
+                                "tipo": "paralelogramo",
+                                "x": 1100,
+                                "y": -550,
+                                "alfa": 45,
+                                "beta": 60,
+                                "base": 200,
+                                "altura": 100,
                                 "color": "J00FF00",
                                 "rot": 0,
                                 "masa": 500000,
