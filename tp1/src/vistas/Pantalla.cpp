@@ -94,7 +94,7 @@ void Pantalla::cambiar(std::vector<Evento>* ListaDeEventos){
 	const SDL_Rect v = vista->getVentana();
 
 	//Se centra la camara alrededor del personaje
-	camara.x = (v.x + (v.w / 2)) - altoPx / 2;
+	camara.x = (v.x + (v.w / 2)) - (altoPx*relacionAspecto) / 2;
 	camara.y = (v.y + (v.h / 2)) - altoPx / 2;
 
 	//Mantener la camara en los limites
