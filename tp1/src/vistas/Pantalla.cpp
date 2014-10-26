@@ -11,7 +11,7 @@ Pantalla::Pantalla(Config* config) {
 	this->anchoPx = config->getAnchoPx();
 	this->altoPx1 = config->getAltoPx();
 	this->anchoPx1 = config->getAnchoPx();
-	this->relacionAspecto = (config->getAnchoPx()/config->getAltoPx());
+	relacionAspecto = (anchoPx1/altoPx1);
 	this->alto = config->getAlto();
 	this->ancho = config->getAncho();
 	this->dirImg = config->getFondo();

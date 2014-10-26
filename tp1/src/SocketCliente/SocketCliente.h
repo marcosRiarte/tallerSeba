@@ -1,5 +1,3 @@
-
-
 #ifndef SOCKET_H_
 #define SOCKET_H_
 
