@@ -14,8 +14,8 @@ class Pantalla {
 private:
 	int altoPx;
 	int anchoPx;
-	int altoPx1;
-	int anchoPx1;
+	float altoPx1;
+	float anchoPx1;
 	float relacionAspecto;
 	int alto;
 	int ancho;
