@@ -11,6 +11,7 @@ Pantalla::Pantalla(Config* config) {
 	this->anchoPx = config->getAnchoPx();
 	this->altoPx1 = config->getAltoPx();
 	this->anchoPx1 = config->getAnchoPx();
+	this->relacionAspecto = (config->getAnchoPx()/config->getAltoPx());
 	this->alto = config->getAlto();
 	this->ancho = config->getAncho();
 	this->dirImg = config->getFondo();
@@ -93,7 +94,7 @@ void Pantalla::cambiar(std::vector<Evento>* ListaDeEventos){
 	const SDL_Rect v = vista->getVentana();
 
 	//Se centra la camara alrededor del personaje
-	camara.x = (v.x + (v.w / 2)) - anchoPx / 2;
+	camara.x = (v.x + (v.w / 2)) - altoPx / 2;
 	camara.y = (v.y + (v.h / 2)) - altoPx / 2;
 
 	//Mantener la camara en los limites
@@ -141,26 +142,29 @@ void Pantalla::cambiar(std::vector<Evento>* ListaDeEventos){
 
 
 	for (unsigned i = 0; i < ListaDeEventos->size(); i++) {
-		if (ListaDeEventos->at(i).getTecla() == TECLA_MAS && zoomin * altoPx>=250 && zoomin * anchoPx>=500) {
-			SDL_RenderSetLogicalSize(renderer,zoomin * anchoPx * (ancho / alto), zoomin * altoPx);
-			anchoPx = anchoPx * zoomin * (ancho / alto);
-			altoPx = zoomin * altoPx;
-			camara.w=camara.w*zoomin* (ancho / alto);
-			camara.h=camara.h*zoomin;
-			cuadrado.w=cuadrado.w*zoomin* (ancho / alto);
-			cuadrado.h=cuadrado.h*zoomin;
+		if (ListaDeEventos->at(i).getTecla() == TECLA_MAS && zoomin * altoPx>=altoPx1/4 && zoomin* (relacionAspecto) * anchoPx>=anchoPx1/4) {
+			altoPx=zoomin *altoPx + 0.5;
+			anchoPx = altoPx* (relacionAspecto) + 0.5;
+			SDL_RenderSetLogicalSize(renderer,anchoPx, altoPx);
 
+			camara.h=camara.h*zoomin+ 0.5;
+			camara.w=camara.h * (relacionAspecto)+ 0.5;
+
+			cuadrado.h=cuadrado.h*zoomin+ 0.5;
+			cuadrado.w=cuadrado.h* (relacionAspecto)+ 0.5;
 		}
 
-		if (ListaDeEventos->at(i).getTecla() == TECLA_MENOS && altoPx<=altoPx1*2 && anchoPx<=anchoPx1*2) {
-			SDL_RenderSetLogicalSize(renderer,
-			zoomout * anchoPx * (ancho / alto), zoomout * altoPx);
-			anchoPx = anchoPx * zoomout * (ancho / alto);
-			altoPx = zoomout * altoPx;
-			camara.w=camara.w*zoomout* (ancho / alto);
-			camara.h=camara.h*zoomout;
-			cuadrado.w=cuadrado.w*zoomout* (ancho / alto);
-			cuadrado.h=cuadrado.h*zoomout;
+		if (ListaDeEventos->at(i).getTecla() == TECLA_MENOS && altoPx<=altoPx1 && anchoPx<=anchoPx1) {
+			altoPx=zoomout *altoPx+0.5;
+			anchoPx = altoPx* (relacionAspecto)+0.5;
+			SDL_RenderSetLogicalSize(renderer,anchoPx, altoPx);
+
+			camara.h=camara.h*zoomout+0.5;
+			camara.w=camara.h* (relacionAspecto)+0.5;
+
+			cuadrado.h=cuadrado.h*zoomout+0.5;
+			cuadrado.w=cuadrado.h* (relacionAspecto)+0.5;
+
 		}
 	}
 

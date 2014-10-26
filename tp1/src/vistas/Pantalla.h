@@ -16,6 +16,7 @@ private:
 	int anchoPx;
 	int altoPx1;
 	int anchoPx1;
+	float relacionAspecto;
 	int alto;
 	int ancho;
 	int numeroDeCuadro;
