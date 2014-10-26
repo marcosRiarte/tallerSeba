@@ -142,23 +142,20 @@ void Pantalla::cambiar(std::vector<Evento>* ListaDeEventos){
 
 
 	for (unsigned i = 0; i < ListaDeEventos->size(); i++) {
-		if (ListaDeEventos->at(i).getTecla() == TECLA_MAS && zoomin * altoPx1>=250 && zoomin * anchoPx1>=500) {
-			SDL_RenderSetLogicalSize(renderer,zoomin * anchoPx1 * (anchoPx1 / altoPx1), zoomin * altoPx1);
-			anchoPx1 = anchoPx * zoomin * (anchoPx1 / altoPx1);
-			altoPx1 = zoomin * altoPx1;
-			cuadrado.w = cuadrado.w * zoomin;
-			cuadrado.h = cuadrado.h * zoomin;
+		if (ListaDeEventos->at(i).getTecla() == TECLA_MAS && zoomin * altoPx>=250 && zoomin * anchoPx>=500) {
+			SDL_RenderSetLogicalSize(renderer,zoomin * anchoPx * (anchoPx1 / altoPx1), zoomin * altoPx);
+			anchoPx = anchoPx * zoomin * (anchoPx1 / altoPx1);
+			altoPx = zoomin * altoPx;
 
 		}
 
-		if (ListaDeEventos->at(i).getTecla() == TECLA_MENOS && altoPx1<=alto && anchoPx1<=ancho) {
+		if (ListaDeEventos->at(i).getTecla() == TECLA_MENOS && altoPx<=alto && anchoPx<=ancho) {
 			SDL_RenderSetLogicalSize(renderer,
-					zoomout * anchoPx1 * (anchoPx1 / altoPx1), zoomout * altoPx1);
-			anchoPx1 = anchoPx1 * zoomout * (anchoPx1 / altoPx1);
-			altoPx1 = zoomout * altoPx1;
+			zoomout * anchoPx * (anchoPx1 / altoPx1), zoomout * altoPx);
+			anchoPx = anchoPx * zoomout * (anchoPx / altoPx);
+			altoPx = zoomout * altoPx;
 			cuadrado.w = cuadrado.w * zoomout;
 			cuadrado.h = cuadrado.h * zoomout;
-
 		}
 	}
 
