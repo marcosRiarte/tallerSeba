@@ -154,7 +154,7 @@ void Pantalla::cambiar(std::vector<Evento>* ListaDeEventos){
 			cuadrado.w=cuadrado.h* (relacionAspecto)+ 0.5;
 		}
 
-		if (ListaDeEventos->at(i).getTecla() == TECLA_MENOS && altoPx<=altoPx1 && anchoPx<=anchoPx1) {
+		if (ListaDeEventos->at(i).getTecla() == TECLA_MENOS && altoPx<=alto && anchoPx<=ancho) {
 			altoPx=zoomout *altoPx+0.5;
 			anchoPx = altoPx* (relacionAspecto)+0.5;
 			SDL_RenderSetLogicalSize(renderer,anchoPx, altoPx);
