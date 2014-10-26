@@ -116,7 +116,6 @@ void Pantalla::cambiar(std::vector<Evento>* ListaDeEventos){
 	//Limpio la pantalla
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderClear(renderer);
-
 	//Cargo el fondo de pantalla en el renderer
 	SDL_RenderCopy(renderer, fondo, &camara, &cuadrado);
 
@@ -143,19 +142,25 @@ void Pantalla::cambiar(std::vector<Evento>* ListaDeEventos){
 
 	for (unsigned i = 0; i < ListaDeEventos->size(); i++) {
 		if (ListaDeEventos->at(i).getTecla() == TECLA_MAS && zoomin * altoPx>=250 && zoomin * anchoPx>=500) {
-			SDL_RenderSetLogicalSize(renderer,zoomin * anchoPx * (anchoPx1 / altoPx1), zoomin * altoPx);
-			anchoPx = anchoPx * zoomin * (anchoPx1 / altoPx1);
+			SDL_RenderSetLogicalSize(renderer,zoomin * anchoPx * (ancho / alto), zoomin * altoPx);
+			anchoPx = anchoPx * zoomin * (ancho / alto);
 			altoPx = zoomin * altoPx;
+			camara.w=camara.w*zoomin* (ancho / alto);
+			camara.h=camara.h*zoomin;
+			cuadrado.w=cuadrado.w*zoomin* (ancho / alto);
+			cuadrado.h=cuadrado.h*zoomin;
 
 		}
 
-		if (ListaDeEventos->at(i).getTecla() == TECLA_MENOS && altoPx<=alto && anchoPx<=ancho) {
+		if (ListaDeEventos->at(i).getTecla() == TECLA_MENOS && altoPx<=altoPx1*2 && anchoPx<=anchoPx1*2) {
 			SDL_RenderSetLogicalSize(renderer,
-			zoomout * anchoPx * (anchoPx1 / altoPx1), zoomout * altoPx);
-			anchoPx = anchoPx * zoomout * (anchoPx / altoPx);
+			zoomout * anchoPx * (ancho / alto), zoomout * altoPx);
+			anchoPx = anchoPx * zoomout * (ancho / alto);
 			altoPx = zoomout * altoPx;
-			cuadrado.w = cuadrado.w * zoomout;
-			cuadrado.h = cuadrado.h * zoomout;
+			camara.w=camara.w*zoomout* (ancho / alto);
+			camara.h=camara.h*zoomout;
+			cuadrado.w=cuadrado.w*zoomout* (ancho / alto);
+			cuadrado.h=cuadrado.h*zoomout;
 		}
 	}
 
