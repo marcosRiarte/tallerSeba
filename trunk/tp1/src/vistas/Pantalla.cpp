@@ -32,7 +32,6 @@ Pantalla::Pantalla(Config* config) {
 
 	//Cargo el fondo de pantalla en el renderer
 	cuadrado = { 0, 0, anchoPx, altoPx };
-
 }
 
 /**
