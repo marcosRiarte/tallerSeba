@@ -99,7 +99,7 @@ RedServidor::RedServidor() {
 bool RedServidor::aceptarCliente(unsigned int & id)
 {
     // si el cliente esta esperando, acepta la conexión y crea el socket
-    SocketCliente = accept(SocketEscuchar,NULL,NULL);
+    SocketCliente = accept(SocketEscuchar,nullptr,nullptr);
 
     if (SocketCliente != INVALID_SOCKET)
     {
@@ -110,10 +110,9 @@ bool RedServidor::aceptarCliente(unsigned int & id)
         // inserta un nuevo cliente en la tabla de id de sesiones
         sesiones.insert( std::pair<unsigned int, SOCKET>(id, SocketCliente) );
 
-        return true;
+        return 0;
     }
-
-    return false;
+        return 1;
 }
 
 RedServidor::~RedServidor() {
