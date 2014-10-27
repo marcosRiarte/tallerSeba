@@ -1,5 +1,6 @@
 #include "JuegoServidor.h"
 #include "JuegoCliente.h"
+
 // para multi-threading
 #include <process.h>
 
@@ -16,13 +17,13 @@ int main()
 	servidor = new JuegoServidor();
 
 	// crea hilo con un argumento arbitrario para la función correr
-	_beginthread(serverLoop, 0, NULL);
+	_beginthread(serverLoop, 0, (void*)12);
 
 	// Inicia el cliente
 	cliente = new JuegoCliente();
 
 	clientLoop();
-
+	return 0;
 }
 
 void serverLoop(void * arg)
@@ -30,14 +31,17 @@ void serverLoop(void * arg)
     while(true)
     {
         servidor->actualizar();
+        _endthread();
     }
 }
 
 void clientLoop()
 {
-    while(true)
+    /*while(true)
     {
         //hacer las cosas del juego
-       //mas tarde va a correr cliente->actualizar();
+       // mas adelante..cliente->actualizar();
+    	return;
     }
+*/
 }

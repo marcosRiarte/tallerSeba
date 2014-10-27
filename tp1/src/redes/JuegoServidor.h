@@ -4,8 +4,8 @@
 
 class JuegoServidor {
 public:
-	JuegoServidor();
-	virtual ~JuegoServidor();
+	JuegoServidor(void);
+	virtual ~JuegoServidor(void);
 
 	void actualizar();
 
