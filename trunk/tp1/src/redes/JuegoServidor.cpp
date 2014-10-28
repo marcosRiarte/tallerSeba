@@ -21,9 +21,8 @@ void JuegoServidor::actualizar() {
     {
         std::cout<<"el cliente "<< id_cliente << " se conectó al servidor"<<"\n";
         id_cliente++;
-        recibirDeClientes();
     }
-
+    recibirDeClientes();
 }
 
 void JuegoServidor::recibirDeClientes()
