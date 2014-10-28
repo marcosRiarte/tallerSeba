@@ -99,22 +99,25 @@ RedServidor::RedServidor() {
 // acepta nuevas conexiones
 bool RedServidor::aceptarCliente(unsigned int & id)
 {
-    // si el cliente esta esperando, acepta la conexión y crea el socket
-    SocketCliente = accept(SocketEscuchar,nullptr,nullptr);
+		// si el cliente esta esperando, acepta la conexión y crea el socket
+		SocketCliente = accept(SocketEscuchar, 0,0);
 
-    if (SocketCliente != INVALID_SOCKET)
-    {
-        //Deshabilita el nagle en la conexión del cliente
-        char value = 1;
-        setsockopt( SocketCliente, IPPROTO_TCP, TCP_NODELAY, &value, sizeof( value ) );
+	 if (SocketCliente != INVALID_SOCKET)
+	    {
+	        //Deshabilita el Nagle
+	        char value = 1;
+	        setsockopt( SocketCliente, IPPROTO_TCP, TCP_NODELAY, &value, sizeof( value ) );
 
-        // inserta un nuevo cliente en la tabla de id de sesiones
-        sesiones.insert( std::pair<unsigned int, SOCKET>(id, SocketCliente) );
+	        // inserta al cliente en la tabla de clientes
+	        sesiones.insert( std::pair<unsigned int, SOCKET>(id, SocketCliente) );
 
-        return true;
-    }
-        return false;
+	        return true;
+	    }
+
+	 return false;
 }
+
+
 
 RedServidor::~RedServidor() {
 	// TODO Auto-generated destructor stub

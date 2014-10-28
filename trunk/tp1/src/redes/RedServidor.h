@@ -1,10 +1,3 @@
-/*
- * RedServidor.h
- *
- *  Created on: 27/10/2014
- *      Author: Seba
- */
-
 #ifndef REDSERVIDOR_H_
 #define REDSERVIDOR_H_
 

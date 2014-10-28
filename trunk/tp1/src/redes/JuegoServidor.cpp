@@ -20,7 +20,6 @@ void JuegoServidor::actualizar() {
     if(red->aceptarCliente(id_cliente))
     {
         std::cout<<"el cliente "<< id_cliente << " se conectó al servidor"<<"\n";
-
         id_cliente++;
     }
     recibirDeClientes();
@@ -55,13 +54,13 @@ void JuegoServidor::recibirDeClientes()
                 case INIT_CONNECTION:
 
                     std::cout<<"el servidor recibió el paquete init del cliente"<<"\n";
-
+                    enviarPaquetesAccion();
                     break;
 
                 case ACTION_EVENT:
 
                 	 std::cout<<"el servidor recibió el paquete de accion del cliente"<<"\n";
-
+                     enviarPaquetesAccion();
                     break;
 
                 default:
