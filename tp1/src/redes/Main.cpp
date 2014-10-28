@@ -19,16 +19,15 @@ int main() {
 
 	_beginthread(serverLoop, 0, (void*) 12);
 
-	// Inicia el cliente
-	cliente = new JuegoCliente();
-
 	clientLoop();
 
+	return 0;
 }
 
 void serverLoop(void * arg) {
 
 	while (true){
+
 		servidor->actualizar();
 	}
 }
@@ -36,6 +35,9 @@ void serverLoop(void * arg) {
 void clientLoop() {
 
 	while (true) {
+		// Inicia el cliente
+		cliente = new JuegoCliente();
+
 		//hacer las cosas del juego
 		cliente->actualizar();
 	}

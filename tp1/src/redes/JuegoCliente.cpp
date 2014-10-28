@@ -6,7 +6,8 @@
  */
 
 #include "JuegoCliente.h"
-
+#include <string>
+#include <iostream>
 
 JuegoCliente::JuegoCliente() {
 	red = new RedCliente();
@@ -47,7 +48,7 @@ void JuegoCliente::actualizar()
     }
 
     int i = 0;
-    while (i < (unsigned int)data_length)
+    while (i < (int)data_length)
     {
         packet.deserialize(&(network_data[i]));
         i += sizeof(Packet);
@@ -56,7 +57,7 @@ void JuegoCliente::actualizar()
 
             case ACTION_EVENT:
 
-                printf("client received action event packet from server\n");
+                std::cout<<"el cliente recibió el paquete de accion del cliente"<<"\n";
 
                 enviarPaquetesAccion();
 
