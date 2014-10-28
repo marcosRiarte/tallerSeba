@@ -9,7 +9,7 @@ public:
 	JuegoServidor(void);
 	virtual ~JuegoServidor(void);
 	void recibirDeClientes();
-	void actualizar();
+	bool actualizar();
 	void enviarPaquetesAccion();
 private:
 

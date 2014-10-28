@@ -5,7 +5,7 @@
 #include <process.h>
 
 void serverLoop(void *);
-void clientLoop(void);
+void clientLoop(void *);
 
 JuegoServidor * servidor;
 JuegoCliente * cliente;
@@ -14,30 +14,26 @@ int main() {
 
 	// Inicia el servidor
 	servidor = new JuegoServidor();
-
+	// Inicia el cliente
+	cliente = new JuegoCliente();
 	// crea hilo con un argumento arbitrario para la función correr
 
 	_beginthread(serverLoop, 0, (void*) 12);
 
-	clientLoop();
+	_beginthread(clientLoop, 0, (void*) 12);
 
-	return 0;
 }
 
 void serverLoop(void * arg) {
 
-	while (true){
-
+	while (true) {
 		servidor->actualizar();
 	}
 }
 
-void clientLoop() {
+void clientLoop(void * arg) {
 
 	while (true) {
-		// Inicia el cliente
-		cliente = new JuegoCliente();
-
 		//hacer las cosas del juego
 		cliente->actualizar();
 	}
