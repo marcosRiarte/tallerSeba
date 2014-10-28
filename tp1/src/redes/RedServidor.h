@@ -38,6 +38,9 @@ public:
 	RedServidor(void);
 	virtual ~RedServidor(void);
 
+	// recibir datos entrantes
+	    int recibirDatos(unsigned int client_id, char * recvbuf);
+
 	 // Socket para escuchar nuevas conexiones
 	    SOCKET SocketEscuchar;
 
@@ -52,6 +55,9 @@ public:
 
 	    // aceptar nuevas conexiones
 	    bool aceptarCliente(unsigned int & id);
+
+	    // enviar datos a todos los clientes
+	       void enviarATodos(char * packets, int totalSize);
 };
 
 #endif /* REDSERVIDOR_H_ */

@@ -8,6 +8,7 @@
 #include "RedServidor.h"
 #include <string>
 #include <iostream>
+#include "DatosRed.h"
 
 RedServidor::RedServidor() {
 
@@ -110,12 +111,45 @@ bool RedServidor::aceptarCliente(unsigned int & id)
         // inserta un nuevo cliente en la tabla de id de sesiones
         sesiones.insert( std::pair<unsigned int, SOCKET>(id, SocketCliente) );
 
-        return 0;
+        return true;
     }
-        return 1;
+        return false;
 }
 
 RedServidor::~RedServidor() {
 	// TODO Auto-generated destructor stub
 }
 
+int RedServidor::recibirDatos(unsigned int client_id, char * recvbuf){
+    if( sesiones.find(client_id) != sesiones.end() )
+    {
+        SOCKET currentSocket = sesiones[client_id];
+        resultado = ServiciosRed::recibirMensaje(currentSocket, recvbuf, MAX_PACKET_SIZE);
+        if (resultado == 0)
+        {
+            std::cout<<"Conexion cerrada"<<"\n";
+            closesocket(currentSocket);
+        }
+        return resultado;
+    }
+    return 0;
+}
+
+void RedServidor::enviarATodos(char * packets, int totalSize)
+{
+    SOCKET currentSocket;
+    std::map<unsigned int, SOCKET>::iterator iter;
+    int iSendResult;
+
+    for (iter = sesiones.begin(); iter != sesiones.end(); iter++)
+    {
+        currentSocket = iter->second;
+        iSendResult = ServiciosRed::enviarMensaje(currentSocket, packets, totalSize);
+
+        if (iSendResult == SOCKET_ERROR)
+        {
+            std::cout<<"archivo enviado con error"<< WSAGetLastError()<<"\n";
+            closesocket(currentSocket);
+        }
+    }
+}

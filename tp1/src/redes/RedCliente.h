@@ -37,7 +37,7 @@ public:
 	virtual ~RedCliente(void);
     // para chequeo de errores
     int resultado;
-
+    int recibirPaquetes(char *);
     // socket para el cliente
     SOCKET ConectarSocket;
 
