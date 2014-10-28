@@ -15,17 +15,15 @@ JuegoServidor::~JuegoServidor() {
 
 }
 
-bool JuegoServidor::actualizar() {
+void JuegoServidor::actualizar() {
     // tomar nuevos clientes
     if(red->aceptarCliente(id_cliente))
     {
         std::cout<<"el cliente "<< id_cliente << " se conectó al servidor"<<"\n";
         id_cliente++;
         recibirDeClientes();
-        return true;
     }
 
-    return false;
 }
 
 void JuegoServidor::recibirDeClientes()
