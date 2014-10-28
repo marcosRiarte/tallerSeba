@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string>
 #include <iostream>
+#include "DatosRed.h"
 
 RedCliente::RedCliente(void) {
 
@@ -94,6 +95,22 @@ RedCliente::RedCliente(void) {
 	    char value = 1;
 	    setsockopt( ConectarSocket, IPPROTO_TCP, TCP_NODELAY, &value, sizeof( value ) );
 }
+
+int RedCliente::recibirPaquetes(char *recvbuf)
+{
+    resultado = ServiciosRed::recibirMensaje(ConectarSocket, recvbuf, MAX_PACKET_SIZE);
+
+    if ( resultado == 0 )
+    {
+        printf("Connection closed\n");
+        closesocket(ConectarSocket);
+        WSACleanup();
+        exit(1);
+    }
+
+    return resultado;
+}
+
 
 RedCliente::~RedCliente() {
 	// TODO Auto-generated destructor stub
