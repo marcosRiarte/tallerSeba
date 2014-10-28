@@ -57,7 +57,7 @@ void JuegoCliente::actualizar()
 
             case ACTION_EVENT:
 
-                std::cout<<"el cliente recibió el paquete de accion del cliente"<<"\n";
+                std::cout<<"el cliente recibió el paquete de accion del servidor"<<"\n";
 
                 enviarPaquetesAccion();
 
