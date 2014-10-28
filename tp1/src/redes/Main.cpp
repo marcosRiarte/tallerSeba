@@ -14,8 +14,10 @@ int main() {
 
 	// Inicia el servidor
 	servidor = new JuegoServidor();
+
 	// Inicia el cliente
 	cliente = new JuegoCliente();
+
 	// crea hilo con un argumento arbitrario para la función correr
 
 	_beginthread(serverLoop, 0, (void*) 12);
