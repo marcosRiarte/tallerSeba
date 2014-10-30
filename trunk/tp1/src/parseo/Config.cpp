@@ -130,6 +130,12 @@ std::vector<Personaje*> Config::getPersonajes() {
 	return personajes;
 }
 
+
+void Config::setPersonajes(){
+
+	personajes.push_back(CreadorObjetos::CrearPersonaje(100,-100));
+
+}
 int Config::getAltoPx() {
 	return altoPx;
 }

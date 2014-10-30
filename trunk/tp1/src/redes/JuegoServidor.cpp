@@ -8,13 +8,13 @@
 #include "../controlador/Controlador.h"
 
 #include <windows.h>
-
 // Estructura del modelo
 struct MVC {
 	Escenario* escenario;
 	Pantalla* pantalla;
 	Config* config;
 };
+
 
 // Momentos de la ejecucion
 MVC* creacionDelModelo(const char*) throw (MVC_Excepcion);
@@ -121,7 +121,7 @@ void JuegoServidor::actualizar() {
         std::cout<<"el cliente "<< id_cliente << " se conectó al servidor"<<"\n";
         id_cliente++;
     }
-   // recibirDeClientes();
+    recibirDeClientes();
 }
 
 void JuegoServidor::recibirDeClientes()
@@ -154,6 +154,7 @@ void JuegoServidor::recibirDeClientes()
 
                     std::cout<<"el servidor recibió el paquete init del cliente"<<"\n";
                     enviarPaquetesAccion();
+                    //mvc->config->setPersonajes();
                     break;
 
                 case ACTION_EVENT:
