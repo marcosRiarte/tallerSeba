@@ -21,6 +21,7 @@ public:
 	Config(std::string nombre) throw (Config_Excepcion);
 	std::vector<ObjetoMapa*> getObjetos();
 	std::vector<Personaje*> getPersonajes();
+	void setPersonajes();
 	int getAltoPx();
 	int getAnchoPx();
 	int getAlto();

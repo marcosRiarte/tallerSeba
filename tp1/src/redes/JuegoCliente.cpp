@@ -21,6 +21,8 @@ JuegoCliente::JuegoCliente() {
 	    packet.serialize(packet_data);
 
 	    ServiciosRed::enviarMensaje(red->ConectarSocket, packet_data, packet_size);
+
+
 }
 
 void JuegoCliente::enviarPaquetesAccion(){
