@@ -11,6 +11,7 @@ void clientLoop(void);
 
 JuegoServidor * servidor;
 JuegoCliente * cliente;
+JuegoCliente * cliente2;
 
 int main() {
 
@@ -19,6 +20,7 @@ int main() {
 
 	// Inicia el cliente
 	cliente = new JuegoCliente();
+	cliente2 = new JuegoCliente();
 
 	// crea hilo con un argumento arbitrario para la función correr
 	unsigned int myCounter = 0;
@@ -47,7 +49,7 @@ void clientLoop() {
 
 	while (true) {
 		//hacer las cosas del juego
-		cliente->actualizar();
+		//cliente->actualizar();
 	}
 
 }
