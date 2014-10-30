@@ -2,8 +2,24 @@
 #define JUEGOSERVIDOR_H_
 #include "RedServidor.h"
 #include "DatosRed.h"
+#include <iostream>
+#include "../excepciones/MVCExcepcion.h"
+#include <stdio.h>
+#include <exception>
 
 
+/*
+#include <string>
+
+#include "../vistas/Pantalla.h"
+#include "../escenario/Escenario.h"
+#include "../parseo/Config.h"
+#include "../Constantes.h"
+#include "../controlador/Controlador.h"
+#include <stdio.h>
+#include <exception>
+#include "../excepciones/MVCExcepcion.h"
+*/
 class JuegoServidor {
 public:
 	JuegoServidor(void);
