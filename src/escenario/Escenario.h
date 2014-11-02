@@ -13,7 +13,7 @@ class Escenario {
 private:
 	std::vector<Personaje*> personajes;
 	std::vector<ObjetoMapa*> objetos;
-	MyContactListener* cuentaPasos;
+	std::vector<MyContactListener*> vectorCuentaPasos;
 	b2World* mundo;
 
 public:
@@ -26,9 +26,10 @@ public:
 	/*
 	 * Toma los eventos de entrada, aplica los cambios al mundo y pone a los personajes
 	 *  en sus nuevas posiciones
+	 *  Recibe un vector con la lista de eventos y uno con el id del personaje al que
+	 *  pertencen, cada pos i debe tener correlacion entre los vectores.
 	 */
-
-	void cambiar(std::vector<Evento>* ListaDeEventos);
+	void cambiar(std::vector<std::vector<Evento>*> vectorDeListaDeEventos, std::vector<int> vectorDeID);
 
 	~Escenario();
 };

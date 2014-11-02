@@ -99,13 +99,15 @@ void ayuda() {
 
 // Ejecuta el modelo
 int gameLoop(MVC* mvc) {
-	std::vector<Evento> listaDeEventos = std::vector<Evento>();
+// hacer un vector de uno de esto...
+	std::vector<Evento>* listaDeEventos = std::vector<Evento>();
 
 	int fin = CONTINUAR;
 	while (FIN_DEL_JUEGO != fin && REINICIAR != fin) {
 		// Responsabilidades> ...
-		fin = Controlador::cambiar(&listaDeEventos);
-		mvc->escenario->cambiar(&listaDeEventos);
+		fin = Controlador::cambiar(listaDeEventos);
+		// el vector tmb va a tener un solo es un vect de uno
+		mvc->escenario->cambiar(listaDeEventos,vectorConID);
 		mvc->pantalla->cambiar();
 		SDL_Delay(10);
 	}
