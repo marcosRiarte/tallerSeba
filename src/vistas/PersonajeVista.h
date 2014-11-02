@@ -31,7 +31,6 @@ private:
 
 public:
 	PersonajeVista(SDL_Renderer* r, Personaje* p);
-	int getIDdelPersonaje();
 	SDL_Texture* getVista();
 	SDL_Rect getVentana();
 	virtual ~PersonajeVista();

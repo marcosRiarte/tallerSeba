@@ -8,6 +8,7 @@
 #include "../excepciones/SDL_Excepcion.h"
 #include "../parseo/Config.h"
 #include "PersonajeVista.h"
+#include "../controlador/Evento.h"
 
 class Pantalla {
 private:
@@ -32,13 +33,20 @@ private:
 	 * La pantalla se va a centrar sobre el personaje principal para habilitar
 	 * 	el zoom.
 	 */
-	PersonajeVista* personajePrincipal;
+	Personaje* personajePrincipal;
+
+	float zoom;
+	float maxZoom;
+	SDL_Rect zoomClip;
 
 	std::vector<Vista*> crearVistas(std::vector<ObjetoMapa*> objetos, std::vector<Personaje*> personajes);
+	Personaje* seleccionarPersonajePrincipal(std::vector<Personaje*> personajes, int IDPersonajePrincipal);
+	float getMaxZoom();
+	void setZoomClip(std::vector<Evento> eventos);
 
 public:
 	Pantalla(Config* config, int IDPersonajePrincipal);
-	void cambiar();
+	void cambiar(std::vector<Evento> eventos);
 
 	int getAlto();
 	int getAncho();

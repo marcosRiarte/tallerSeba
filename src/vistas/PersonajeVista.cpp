@@ -162,10 +162,6 @@ SDL_Rect PersonajeVista::getVentana() {
 	return ventana;
 }
 
-int PersonajeVista::getIDdelPersonaje(){
-	return personaje->getID();
-}
-
 PersonajeVista::~PersonajeVista() {
 	SDL_DestroyTexture(textura);
 	SDL_DestroyTexture(contenedorDeSprites);

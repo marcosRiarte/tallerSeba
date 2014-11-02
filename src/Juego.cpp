@@ -70,7 +70,7 @@ MVC* creacionDelModelo(const char* direccionDeLaConfiguracion) throw (MVC_Excepc
 	//Se crea la pantalla
 	try {
 		//TODO - se hardcodea el numero del personaje
-		mvc->pantalla = new Pantalla(mvc->config, 1);
+		mvc->pantalla = new Pantalla(mvc->config, mvc->config->getPersonajes().at(0)->getID());
 	} catch (SDL_Excepcion&) {
 		throw MVC_Excepcion("No se pudo crear la pantalla \n");
 	}
@@ -99,16 +99,21 @@ void ayuda() {
 
 // Ejecuta el modelo
 int gameLoop(MVC* mvc) {
-// hacer un vector de uno de esto...
-	std::vector<Evento>* listaDeEventos = std::vector<Evento>();
+	std::vector<Evento> eventosMundo = std::vector<Evento>();
+	std::vector<Evento> eventosPantalla = std::vector<Evento>();
+
+	// FRAN: hacer un vector de uno de esto...
+	std::vector<std::vector<Evento>*> vectorEventosMundo;
+	std::vector<int> vectorIDPersonajes;
+	vectorIDPersonajes.push_back(mvc->config->getPersonajes().at(0)->getID());
+	vectorEventosMundo.push_back(&eventosMundo);
 
 	int fin = CONTINUAR;
 	while (FIN_DEL_JUEGO != fin && REINICIAR != fin) {
 		// Responsabilidades> ...
-		fin = Controlador::cambiar(listaDeEventos);
-		// el vector tmb va a tener un solo es un vect de uno
-		mvc->escenario->cambiar(listaDeEventos,vectorConID);
-		mvc->pantalla->cambiar();
+		fin = Controlador::cambiar(&eventosMundo, &eventosPantalla);
+		mvc->escenario->cambiar(vectorEventosMundo, vectorIDPersonajes);
+		mvc->pantalla->cambiar(eventosPantalla);
 		SDL_Delay(10);
 	}
 

@@ -3,6 +3,12 @@
 #include <math.h>
 #include <exception>
 
+int ElementosJuego::cantidadDeInstancias = 1;
+
+int ElementosJuego::getID(){
+	return this->ID;
+}
+
 /*
  * Devuelve la densidad del elemento
  */

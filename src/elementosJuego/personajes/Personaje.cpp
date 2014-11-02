@@ -3,10 +3,7 @@
 
 #include<iostream>
 
-int Personaje::cantidadDeInstancias = 1;
-
 Personaje::Personaje(Pos posicion) {
-	this->cantidadDeInstancias++;
 	pos = posicion;
 	rot = 0;
 	linkAMundo = nullptr;
@@ -89,7 +86,7 @@ bool Personaje::esCirculo() {
 }
 
 int Personaje::getID(){
-	return ID;
+	return 0;//ID;
 }
 
 Personaje::~Personaje() {
