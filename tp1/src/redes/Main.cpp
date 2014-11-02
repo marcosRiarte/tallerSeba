@@ -4,7 +4,6 @@
 // para multi-threading
 #include <windows.h>
 #include <stdio.h>
-#include <process.h>
 
 DWORD WINAPI serverLoop(void *);
 void clientLoop(void);
