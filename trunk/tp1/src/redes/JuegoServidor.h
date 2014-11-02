@@ -3,9 +3,6 @@
 #include "RedServidor.h"
 #include "DatosRed.h"
 #include <iostream>
-#include "../excepciones/MVCExcepcion.h"
-#include <stdio.h>
-#include <exception>
 
 
 /*

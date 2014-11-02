@@ -1,0 +1,110 @@
+Sat Nov 01 23:29:26 2014 - Warning - El tipo poligonoo no es un tipo de objeto válido, se crea rectangulo por defecto
+Sat Nov 01 23:29:26 2014 - Warning - El color #FFJ0FF no representa una sintáxis válida, se crea color por defecto
+Sat Nov 01 23:29:26 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sat Nov 01 23:29:26 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sat Nov 01 23:29:26 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sat Nov 01 23:29:26 2014 - Warning - 
+Sat Nov 01 23:29:26 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sat Nov 01 23:29:26 2014 - Debug - Se parsearon: 10 objetos
+Sat Nov 01 23:29:26 2014 - Error - Se superpone
+Sat Nov 01 23:29:26 2014 - Debug - Se creo la física Box2D con ancho: 2048 unidades, alto 1200 unidades y 10 objetos
+Sat Nov 01 23:29:27 2014 - Debug - Se creo la pantalla con ancho: 2048 unidades y alto 1200 unidades
+Sat Nov 01 23:29:29 2014 - Warning - El tipo poligonoo no es un tipo de objeto válido, se crea rectangulo por defecto
+Sat Nov 01 23:29:29 2014 - Warning - El color #FFJ0FF no representa una sintáxis válida, se crea color por defecto
+Sat Nov 01 23:29:29 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sat Nov 01 23:29:29 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sat Nov 01 23:29:29 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sat Nov 01 23:29:29 2014 - Warning - 
+Sat Nov 01 23:29:29 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sat Nov 01 23:29:29 2014 - Debug - Se parsearon: 10 objetos
+Sat Nov 01 23:29:29 2014 - Error - Se superpone
+Sat Nov 01 23:29:29 2014 - Debug - Se creo la física Box2D con ancho: 2048 unidades, alto 1200 unidades y 10 objetos
+Sat Nov 01 23:29:30 2014 - Debug - Se creo la pantalla con ancho: 2048 unidades y alto 1200 unidades
+Sun Nov 02 09:21:43 2014 - Warning - El tipo poligonoo no es un tipo de objeto válido, se crea rectangulo por defecto
+Sun Nov 02 09:21:43 2014 - Warning - El color #FFJ0FF no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 09:21:43 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 09:21:43 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 09:21:43 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 09:21:43 2014 - Warning - 
+Sun Nov 02 09:21:43 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 09:21:43 2014 - Debug - Se parsearon: 10 objetos
+Sun Nov 02 09:21:43 2014 - Error - Se superpone
+Sun Nov 02 09:21:43 2014 - Debug - Se creo la física Box2D con ancho: 2048 unidades, alto 1200 unidades y 10 objetos
+Sun Nov 02 09:21:46 2014 - Debug - Se creo la pantalla con ancho: 2048 unidades y alto 1200 unidades
+Sun Nov 02 11:25:22 2014 - Warning - El tipo poligonoo no es un tipo de objeto válido, se crea rectangulo por defecto
+Sun Nov 02 11:25:22 2014 - Warning - El color #FFJ0FF no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 11:25:22 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 11:25:22 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 11:25:22 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 11:25:22 2014 - Warning - 
+Sun Nov 02 11:25:22 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 11:25:22 2014 - Debug - Se parsearon: 10 objetos
+Sun Nov 02 11:25:22 2014 - Error - Se superpone
+Sun Nov 02 11:25:22 2014 - Debug - Se creo la física Box2D con ancho: 2048 unidades, alto 1200 unidades y 10 objetos
+Sun Nov 02 11:25:23 2014 - Debug - Se creo la pantalla con ancho: 2048 unidades y alto 1200 unidades
+Sun Nov 02 12:49:16 2014 - Warning - El tipo poligonoo no es un tipo de objeto válido, se crea rectangulo por defecto
+Sun Nov 02 12:49:16 2014 - Warning - El color #FFJ0FF no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 12:49:16 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 12:49:16 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 12:49:16 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 12:49:16 2014 - Warning - 
+Sun Nov 02 12:49:16 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 12:49:16 2014 - Debug - Se parsearon: 10 objetos
+Sun Nov 02 12:49:16 2014 - Error - Se superpone
+Sun Nov 02 12:49:16 2014 - Debug - Se creo la física Box2D con ancho: 2048 unidades, alto 1200 unidades y 10 objetos
+Sun Nov 02 12:49:17 2014 - Debug - Se creo la pantalla con ancho: 2048 unidades y alto 1200 unidades
+Sun Nov 02 12:49:51 2014 - Warning - El tipo poligonoo no es un tipo de objeto válido, se crea rectangulo por defecto
+Sun Nov 02 12:49:51 2014 - Warning - El color #FFJ0FF no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 12:49:51 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 12:49:51 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 12:49:51 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 12:49:51 2014 - Warning - 
+Sun Nov 02 12:49:51 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 12:49:51 2014 - Debug - Se parsearon: 10 objetos
+Sun Nov 02 12:49:51 2014 - Error - Se superpone
+Sun Nov 02 12:49:51 2014 - Debug - Se creo la física Box2D con ancho: 2048 unidades, alto 1200 unidades y 10 objetos
+Sun Nov 02 12:49:51 2014 - Debug - Se creo la pantalla con ancho: 2048 unidades y alto 1200 unidades
+Sun Nov 02 15:20:50 2014 - Warning - El tipo poligonoo no es un tipo de objeto válido, se crea rectangulo por defecto
+Sun Nov 02 15:20:50 2014 - Warning - El color #FFJ0FF no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 15:20:50 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 15:20:50 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 15:20:50 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 15:20:50 2014 - Warning - 
+Sun Nov 02 15:20:50 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 15:20:50 2014 - Debug - Se parsearon: 10 objetos
+Sun Nov 02 15:20:50 2014 - Error - Se superpone
+Sun Nov 02 15:20:50 2014 - Debug - Se creo la física Box2D con ancho: 2048 unidades, alto 1200 unidades y 10 objetos
+Sun Nov 02 15:20:57 2014 - Debug - Se creo la pantalla con ancho: 2048 unidades y alto 1200 unidades
+Sun Nov 02 15:21:55 2014 - Warning - El tipo poligonoo no es un tipo de objeto válido, se crea rectangulo por defecto
+Sun Nov 02 15:21:55 2014 - Warning - El color #FFJ0FF no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 15:21:55 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 15:21:55 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 15:21:55 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 15:21:55 2014 - Warning - 
+Sun Nov 02 15:21:55 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 15:21:55 2014 - Debug - Se parsearon: 10 objetos
+Sun Nov 02 15:21:55 2014 - Error - Se superpone
+Sun Nov 02 15:21:55 2014 - Debug - Se creo la física Box2D con ancho: 2048 unidades, alto 1200 unidades y 10 objetos
+Sun Nov 02 15:21:56 2014 - Debug - Se creo la pantalla con ancho: 2048 unidades y alto 1200 unidades
+Sun Nov 02 15:27:30 2014 - Warning - El tipo poligonoo no es un tipo de objeto válido, se crea rectangulo por defecto
+Sun Nov 02 15:27:30 2014 - Warning - El color #FFJ0FF no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 15:27:30 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 15:27:30 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 15:27:30 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 15:27:30 2014 - Warning - 
+Sun Nov 02 15:27:30 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 15:27:30 2014 - Debug - Se parsearon: 10 objetos
+Sun Nov 02 15:27:30 2014 - Error - Se superpone
+Sun Nov 02 15:27:30 2014 - Debug - Se creo la física Box2D con ancho: 2048 unidades, alto 1200 unidades y 10 objetos
+Sun Nov 02 15:27:30 2014 - Debug - Se creo la pantalla con ancho: 2048 unidades y alto 1200 unidades
+Sun Nov 02 15:28:23 2014 - Warning - El tipo poligonoo no es un tipo de objeto válido, se crea rectangulo por defecto
+Sun Nov 02 15:28:23 2014 - Warning - El color #FFJ0FF no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 15:28:23 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 15:28:23 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 15:28:23 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 15:28:23 2014 - Warning - 
+Sun Nov 02 15:28:23 2014 - Warning - El color J00FF00 no representa una sintáxis válida, se crea color por defecto
+Sun Nov 02 15:28:23 2014 - Debug - Se parsearon: 10 objetos
+Sun Nov 02 15:28:23 2014 - Error - Se superpone
+Sun Nov 02 15:28:23 2014 - Debug - Se creo la física Box2D con ancho: 2048 unidades, alto 1200 unidades y 10 objetos
+Sun Nov 02 15:28:23 2014 - Debug - Se creo la pantalla con ancho: 2048 unidades y alto 1200 unidades
