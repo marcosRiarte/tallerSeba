@@ -26,11 +26,9 @@ public:
 	};
 
 private:
-	static int cantidadDeInstancias;
 	int ancho;
 	int alto;
 	Estado estado;
-	const int ID = cantidadDeInstancias;
 	void crearContorno();
 	void calcularArea();
 

@@ -6,8 +6,9 @@
 /* Se eliminan los eventos de la lista y se lo completa con los nuevos
  * Obtenidos por el teclado.
  */
-int Controlador::cambiar(std::vector<Evento>* listaEventos) {
-	listaEventos->clear();
+int Controlador::cambiar(std::vector<Evento>* eventosMundo, std::vector<Evento>* eventosPantalla) {
+	eventosMundo->clear();
+	eventosPantalla->clear();
 
 	SDL_Event event;
 	SDL_PollEvent(&event);
@@ -15,13 +16,13 @@ int Controlador::cambiar(std::vector<Evento>* listaEventos) {
 
 	if (((event.key.keysym.sym == SDLK_KP_PLUS) || (event.key.keysym.sym ==SDLK_PLUS)) && !state[SDL_SCANCODE_KP_MINUS]){
 				Evento mas = Evento(5);
-				listaEventos->push_back(mas);
+				eventosPantalla->push_back(mas);
 				return CONTINUAR;
 	}
 
 	if (((event.key.keysym.sym == SDLK_KP_MINUS) || (event.key.keysym.sym ==SDLK_MINUS)) && !state[SDL_SCANCODE_KP_PLUS]){
 			Evento menos = Evento(6);
-			listaEventos->push_back(menos);
+			eventosPantalla->push_back(menos);
 			return CONTINUAR;
 	}
 
@@ -29,16 +30,16 @@ int Controlador::cambiar(std::vector<Evento>* listaEventos) {
 		if (state[SDL_SCANCODE_RIGHT] && state[SDL_SCANCODE_UP]) {
 			Evento der = Evento(2);
 			Evento arriba = Evento(3);
-			listaEventos->push_back(der);
-			listaEventos->push_back(arriba);
+			eventosMundo->push_back(der);
+			eventosMundo->push_back(arriba);
 			return CONTINUAR;
 		} else if (state[SDL_SCANCODE_RIGHT]) {
 			Evento der = Evento(2);
-			listaEventos->push_back(der);
+			eventosMundo->push_back(der);
 			return CONTINUAR;
 		} else {
 			Evento izq = Evento(1);
-			listaEventos->push_back(izq);
+			eventosMundo->push_back(izq);
 			return CONTINUAR;
 		}
 
@@ -48,17 +49,17 @@ int Controlador::cambiar(std::vector<Evento>* listaEventos) {
 		if (state[SDL_SCANCODE_LEFT] && state[SDL_SCANCODE_UP]) {
 			Evento izq = Evento(1);
 			Evento arriba = Evento(3);
-			listaEventos->push_back(izq);
-			listaEventos->push_back(arriba);
+			eventosMundo->push_back(izq);
+			eventosMundo->push_back(arriba);
 			return CONTINUAR;
 
 		} else if (state[SDL_SCANCODE_LEFT]) {
 			Evento izq = Evento(1);
-			listaEventos->push_back(izq);
+			eventosMundo->push_back(izq);
 			return CONTINUAR;
 		} else {
 			Evento der = Evento(2);
-			listaEventos->push_back(der);
+			eventosMundo->push_back(der);
 			return CONTINUAR;
 		}
 	}
@@ -67,26 +68,26 @@ int Controlador::cambiar(std::vector<Evento>* listaEventos) {
 
 		if (state[SDL_SCANCODE_LEFT] && state[SDL_SCANCODE_UP]){
 			Evento arriba = Evento(3);
-			listaEventos->push_back(arriba);
+			eventosMundo->push_back(arriba);
 			return CONTINUAR;
 
 		} else if (state[SDL_SCANCODE_LEFT]) {
 			Evento izq = Evento(1);
 			Evento arriba = Evento(3);
-			listaEventos->push_back(izq);
-			listaEventos->push_back(arriba);
+			eventosMundo->push_back(izq);
+			eventosMundo->push_back(arriba);
 			return CONTINUAR;
 		} else if (state[SDL_SCANCODE_RIGHT]) {
 			Evento der = Evento(2);
 			Evento arriba = Evento(3);
-			listaEventos->push_back(der);
-			listaEventos->push_back(arriba);
+			eventosMundo->push_back(der);
+			eventosMundo->push_back(arriba);
 			return CONTINUAR;
 
 		}else{
 
 		Evento arriba = Evento(3);
-		listaEventos->push_back(arriba);
+		eventosMundo->push_back(arriba);
 		return CONTINUAR;
 		}
 
@@ -94,31 +95,31 @@ int Controlador::cambiar(std::vector<Evento>* listaEventos) {
 
 	else if (event.key.keysym.sym == SDLK_r && (state[SDL_SCANCODE_R])) {
 		Evento reset = Evento(4);
-		listaEventos->push_back(reset);
+		eventosMundo->push_back(reset);
 		return REINICIAR;
 	}
 
 	if (state[SDL_SCANCODE_LEFT]){
 		Evento izq = Evento(1);
-		listaEventos->push_back(izq);
+		eventosMundo->push_back(izq);
 		return CONTINUAR;
 	}
 
 	if (state[SDL_SCANCODE_RIGHT]){
 		Evento der = Evento(2);
-		listaEventos->push_back(der);
+		eventosMundo->push_back(der);
 		return CONTINUAR;
 	}
 
 	if (state[SDL_SCANCODE_KP_PLUS]){
 			Evento mas = Evento(5);
-			listaEventos->push_back(mas);
+			eventosPantalla->push_back(mas);
 			return CONTINUAR;
 	}
 
 	if (state[SDL_SCANCODE_KP_MINUS]){
 			Evento menos = Evento(6);
-			listaEventos->push_back(menos);
+			eventosPantalla->push_back(menos);
 			return CONTINUAR;
 	}
 
@@ -127,7 +128,7 @@ int Controlador::cambiar(std::vector<Evento>* listaEventos) {
 	}
 
 	Evento nada= Evento(0);
-	listaEventos->push_back(nada);
+	eventosMundo->push_back(nada);
 	return CONTINUAR;
 }
 

@@ -24,7 +24,18 @@ protected:
 	virtual void crearContorno() = 0;
 	virtual void calcularArea() = 0;
 
+	static int cantidadDeInstancias;
+	const int ID = cantidadDeInstancias;
+
+	ElementosJuego(){
+		this->cantidadDeInstancias++;
+	}
+
 public:
+	/*
+	 * Devuelve el ID del objeto. Que es lo mismo que su DNI
+	 */
+	int getID();
 
 	/*
 	 * Devuelve verdadero si el objeto no se puede mover

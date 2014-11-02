@@ -215,10 +215,10 @@ void CrearElementos(b2World* mundo, std::vector<ElementosJuego*>* elementos, boo
 				sensorFix.isSensor = true;
 				sensorFix.shape = &sensorForma;
 				b2Fixture* footSensorFixture = elemento->CreateFixture(&sensorFix);
-				footSensorFixture->SetUserData((void*) elemento->getID());
+				footSensorFixture->SetUserData((void*) elementos->at(i)->getID());
 
 				// Se agrega al mundo el listener para los contactos del personaje
-				MyContactListener* cuentaPasos = new MyContactListener(elemento->getID());
+				MyContactListener* cuentaPasos = new MyContactListener(elementos->at(i)->getID());
 				mundo->SetContactListener(cuentaPasos);
 				// Se agrega al vector
 				vectorCuentaPasos->push_back(cuentaPasos);
