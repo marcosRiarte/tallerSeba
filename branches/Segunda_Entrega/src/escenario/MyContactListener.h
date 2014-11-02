@@ -5,12 +5,13 @@
 
 class MyContactListener : public b2ContactListener  {
 	public:
-		MyContactListener();
+		MyContactListener(int newID);
 		void BeginContact(b2Contact* contact);
 
 		void EndContact(b2Contact* contact);
 
 		int numFootContacts;
+		int ID;
   };
 
 
