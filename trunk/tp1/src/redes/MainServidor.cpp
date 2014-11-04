@@ -1,5 +1,4 @@
 #include "../escenario/Escenario.h"
-#include "../vistas/Pantalla.h"
 #include "../parseo/Config.h"
 #include "../Constantes.h"
 #include "../controlador/Controlador.h"
@@ -17,7 +16,6 @@ DWORD WINAPI serverLoop(void *);
 // Estructura del modelo
 struct MVC {
 	Escenario* escenario;
-	Pantalla* pantalla;
 	Config* config;
 };
 
@@ -85,19 +83,6 @@ MVC* creacionDelModelo(const char* direccionDeLaConfiguracion) throw (MVC_Excepc
 	//Se inicializa SDL
 	Controlador::iniciarSDL();
 
-	//Se crea la pantalla
-		try {
-			mvc->pantalla = new Pantalla(mvc->config);
-		} catch (SDL_Excepcion&) {
-			throw MVC_Excepcion("No se pudo crear la pantalla \n");
-		}
-
-		//Se loguea la creación de pantalla
-		snprintf(msg, 1000,
-				"Se creo la pantalla con ancho: %d unidades y alto %d unidades",
-				mvc->pantalla->getAncho(), mvc->pantalla->getAlto());
-		loguer->loguear(msg, Log::LOG_DEB);
-
 	return mvc;
 }
 
@@ -110,7 +95,6 @@ int gameLoop(MVC* mvc) {
 		// Responsabilidades> ...
 		fin = Controlador::cambiar(&listaDeEventos);
 		mvc->escenario->cambiar(&listaDeEventos);
-		mvc->pantalla->cambiar(&listaDeEventos);
 		SDL_Delay(10);
 	}
 
@@ -120,7 +104,6 @@ int gameLoop(MVC* mvc) {
 // Libera la memoria
 void terminar(MVC* mvc){
 	delete mvc->escenario;
-	delete mvc->pantalla;
 	delete mvc->config;
 	delete mvc;
 	SDL_Quit();

@@ -1,7 +1,6 @@
 #include "JuegoServidor.h"
 #include <string>
 #include <windows.h>
-
 unsigned int JuegoServidor::id_cliente;
 
 JuegoServidor::JuegoServidor() {
