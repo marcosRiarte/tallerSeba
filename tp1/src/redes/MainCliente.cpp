@@ -98,7 +98,6 @@ int gameLoop(MVC* mvc) {
 	while (FIN_DEL_JUEGO != fin && REINICIAR != fin) {
 		// Responsabilidades> ...
 		fin = Controlador::cambiar(&listaDeEventos);
-
 		mvc->pantalla->cambiar(&listaDeEventos);
 		SDL_Delay(10);
 	}
