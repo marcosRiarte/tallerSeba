@@ -80,7 +80,7 @@
 						</tool>
 					</fileInfo>
 					<sourceEntries>
-						<entry excluding="src/redes/MainServidor.cpp|src/redes/MainCliente.cpp|src/redes/Main.cpp|src/Juego.cpp|src/SocketServidor/main.cpp|src/SocketCliente/main.cpp|test/Tests.cpp|rsc/TestBed/Framework/Main.cpp|src/parseo/prueba.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="src/redes/MainServidor.cpp|src/redes/MainCliente.cpp|src/Juego.cpp|src/SocketServidor/main.cpp|src/SocketCliente/main.cpp|test/Tests.cpp|rsc/TestBed/Framework/Main.cpp|src/parseo/prueba.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

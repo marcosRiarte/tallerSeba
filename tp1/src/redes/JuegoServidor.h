@@ -2,6 +2,7 @@
 #define JUEGOSERVIDOR_H_
 #include "RedServidor.h"
 #include "DatosRed.h"
+#include "../parseo/Config.h"
 #include <iostream>
 
 
