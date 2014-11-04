@@ -1,7 +1,6 @@
 #include "../escenario/Escenario.h"
 #include "../parseo/Config.h"
 #include "../Constantes.h"
-#include "../controlador/Controlador.h"
 #include <iostream>
 #include <stdio.h>
 #include <exception>
@@ -80,9 +79,6 @@ MVC* creacionDelModelo(const char* direccionDeLaConfiguracion) throw (MVC_Excepc
 			mvc->config->getObjetos().size());
 	loguer->loguear(msg, Log::LOG_DEB);
 
-	//Se inicializa SDL
-	Controlador::iniciarSDL();
-
 	return mvc;
 }
 
@@ -92,8 +88,6 @@ int gameLoop(MVC* mvc) {
 	listaDeEventos = std::vector<Evento>();
 	int fin = CONTINUAR;
 	while (FIN_DEL_JUEGO != fin && REINICIAR != fin) {
-		// Responsabilidades> ...
-		fin = Controlador::cambiar(&listaDeEventos);
 		mvc->escenario->cambiar(&listaDeEventos);
 		SDL_Delay(10);
 	}
