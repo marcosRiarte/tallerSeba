@@ -138,7 +138,7 @@ int RedServidor::recibirDatos(unsigned int client_id, char * recvbuf){
     return 0;
 }
 
-void RedServidor::enviarATodos(char * packets, int totalSize)
+int RedServidor::enviarATodos(char * packets, int totalSize)
 {
     SOCKET currentSocket;
     std::map<unsigned int, SOCKET>::iterator iter;
@@ -153,6 +153,10 @@ void RedServidor::enviarATodos(char * packets, int totalSize)
         {
             std::cout<<"archivo enviado con error"<< WSAGetLastError()<<"\n";
             closesocket(currentSocket);
+            return -1;
         }
+
+    	std::cout<<"Archivo enviado exitosamente!"<<"\n";
     }
+	return 1;
 }

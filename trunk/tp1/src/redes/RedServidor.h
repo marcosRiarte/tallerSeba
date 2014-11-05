@@ -6,7 +6,7 @@
 #include "ServiciosRed.h"
 #include <ws2tcpip.h>
 #include <map>
-#define DEFAULT_BUFLEN 512
+#define DEFAULT_BUFLEN 10000
 #define DEFAULT_PORT "6881"
 
 
@@ -50,7 +50,7 @@ public:
 	    bool aceptarCliente(unsigned int & id);
 
 	    // enviar datos a todos los clientes
-	       void enviarATodos(char * packets, int totalSize);
+	       int enviarATodos(char * packets, int totalSize);
 };
 
 #endif /* REDSERVIDOR_H_ */
