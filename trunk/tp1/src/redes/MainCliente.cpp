@@ -35,11 +35,13 @@ int main(int argc, char* argv[]) {
 unsigned int myCounter = 0;
 	DWORD myThreadID;
 	HANDLE myHandle = CreateThread(0, 0, clientLoop, &myCounter, 0, &myThreadID);
-
+	std::string dir = PATH_LOG;
+	std::string dirArchivo = dir.append("recuperarTexto.json");
+	const char* direc = dirArchivo.c_str();
 	int fin = REINICIAR;
 		while (FIN_DEL_JUEGO != fin) {
 			try {
-				MVC* mvc = creacionDelModelo("prueba.json");
+				MVC* mvc = creacionDelModelo(direc);
 				fin = gameLoop(mvc);
 				CloseHandle(myHandle);
 				terminar(mvc);
