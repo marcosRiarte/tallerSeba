@@ -18,7 +18,6 @@ struct MVC {
 	Config* config;
 };
 
-
 // Momentos de la ejecucion
 MVC* creacionDelModelo(const char*) throw (MVC_Excepcion);
 int gameLoop(MVC*);

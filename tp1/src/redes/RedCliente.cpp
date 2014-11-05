@@ -9,7 +9,9 @@
 #include <stdlib.h>
 #include <string>
 #include <iostream>
+#include <fstream>
 #include "DatosRed.h"
+#include "../Constantes.h"
 
 RedCliente::RedCliente(void) {
 
@@ -98,7 +100,14 @@ RedCliente::RedCliente(void) {
 
 int RedCliente::recibirPaquetes(char *recvbuf)
 {
-    resultado = ServiciosRed::recibirMensaje(ConectarSocket, recvbuf, MAX_PACKET_SIZE);
+    resultado = ServiciosRed::recibirMensaje(ConectarSocket, recvbuf, sizeof(recvbuf));
+    std::string str(recvbuf);
+    std::cout<<str;
+    std::string dir = PATH_LOG;
+    	std::string archivo = dir.append("recuperarTexto.txt");
+        std::ofstream salida(archivo, std::ios::app);
+        salida<<str;
+    	salida.close();
 
     if ( resultado == 0 )
     {

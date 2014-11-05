@@ -40,39 +40,11 @@ void JuegoCliente::enviarPaquetesAccion(){
 
 void JuegoCliente::actualizar()
 {
-    Packet packet;
-    int data_length = red->recibirPaquetes(network_data);
-
-    if (data_length <= 0)
-    {
-        //no data recieved
-        return;
+    char mensaje_cliente[10000]="";
+    while((red->recibirPaquetes(mensaje_cliente)) < 0 ){
     }
+ }
 
-    int i = 0;
-    while (i < (int)data_length)
-    {
-        packet.deserialize(&(network_data[i]));
-        i += sizeof(Packet);
-
-        switch (packet.packet_type) {
-
-            case ACTION_EVENT:
-
-                std::cout<<"el cliente recibió el paquete de accion del servidor"<<"\n";
-
-                enviarPaquetesAccion();
-
-                break;
-
-            default:
-
-                printf("error in packet types\n");
-
-                break;
-        }
-    }
-}
 
 JuegoCliente::~JuegoCliente() {
 	// TODO Auto-generated destructor stub

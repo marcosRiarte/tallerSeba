@@ -24,7 +24,7 @@ extern "C" {
 #endif
 
 // Tamanio del buffer
-#define DEFAULT_BUFLEN 512
+#define DEFAULT_BUFLEN 10000
 // puerto a usar para las conexiones
 #define DEFAULT_PORT "6881"
 

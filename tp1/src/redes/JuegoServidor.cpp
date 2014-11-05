@@ -29,17 +29,17 @@ void JuegoServidor::recibirDeClientes()
 {
     Packet packet;
 
-    // go through all clients
+    // recorre todos los clientes
     std::map<unsigned int, SOCKET>::iterator iter;
 
     for(iter = red->sesiones.begin(); iter != red->sesiones.end(); iter++)
     {
-        // get data for that client
+        // toma los datos del cliente
         int data_length = red->recibirDatos(iter->first, network_data);
 
         if (data_length <= 0)
         {
-            //no data recieved
+            //no recibió ningún dato
             continue;
         }
 
@@ -77,16 +77,38 @@ void JuegoServidor::recibirDeClientes()
 
 void JuegoServidor::enviarPaquetesAccion()
 {
-    // send action packet
-    const unsigned int packet_size = sizeof(Packet);
-    char packet_data[packet_size];
+	FILE *pf;
+	int fsize;
+	char buffer[10000];
 
-    Packet packet;
-    packet.packet_type = ACTION_EVENT;
+	pf = fopen("prueba.txt", "rb");
+	if (pf == NULL) {
+		printf("archivo no encontrado!\n");
+	} else {
+		printf("archivo encontrado %s\n", "prueba.json");
 
-    packet.serialize(packet_data);
+		fseek(pf, 0, SEEK_END);
+		fsize = ftell(pf);
+		rewind(pf);
 
-    red->enviarATodos(packet_data,packet_size);
+		std::cout<<"El archivo contiene "<<fsize<<" bytes!\n";
+		printf("Enviando el archivo...\n");
+	}
+
+
+		// Leer los datos en buffer.
+		int bytes_leidos = fread(buffer, 1, sizeof(buffer), pf);
+		if (bytes_leidos == 0) // Terminamos de leer del archivo
+
+
+		if (bytes_leidos < 0) {
+			printf("ERROR leyendo el archivo\n");
+		}
+
+		if (bytes_leidos > 0) {
+			red->enviarATodos(buffer,bytes_leidos);
+		}
+
 }
 
 
