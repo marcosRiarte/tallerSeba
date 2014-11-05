@@ -81,7 +81,7 @@ void JuegoServidor::enviarPaquetesAccion()
 	int fsize;
 	char buffer[10000];
 
-	pf = fopen("prueba.txt", "rb");
+	pf = fopen("prueba.json", "rb");
 	if (pf == NULL) {
 		printf("archivo no encontrado!\n");
 	} else {
