@@ -104,7 +104,7 @@ int RedCliente::recibirPaquetes(char *recvbuf)
     std::string str(recvbuf);
     std::cout<<str;
     std::string dir = PATH_LOG;
-    	std::string archivo = dir.append("recuperarTexto.txt");
+    	std::string archivo = dir.append("recuperarTexto.json");
         std::ofstream salida(archivo, std::ios::app);
         salida<<str;
     	salida.close();
