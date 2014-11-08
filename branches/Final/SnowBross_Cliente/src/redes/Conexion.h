@@ -24,6 +24,7 @@ private:
 public:
 	Conexion();
 	PaqueteACliente recibir();
+	void enviar(PaqueteAServidor p);
 	virtual ~Conexion();
 };
 
