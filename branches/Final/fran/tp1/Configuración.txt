@@ -1,0 +1,32 @@
+Configuracion:
+-----------------------------------------------------------------
+1| Abrir Eclipse y realizar un "Check out as" y elegimos "C++ Proyect" (seleccionando a "MinGW C++") desde SVN.
+
+Para poder usar las librer�as SDL y Box2D:
+
+2| Pararse sobre el proyecto e ir a "Properties" --> "C/C++ General" --> "Path and Symbols"
+3| En la solapa "includes" --> Add y elegimos la carpeta "rsc" de nuestro proyecto.
+4| En la solapa "Libraries" --> Add 
+	4.1| Escribimos "mingw32", y ponemos "Apply"
+	4.2| Escribimos "SDL2main", y ponemos "Apply"
+	4.3| Escribimos "SDL2", y ponemos "Apply"
+	4.4| Escribimos "SDL2_image", y ponemos "Apply"
+	4.5| Escribimos "opengl32", y ponemos "Apply"
+	4.6| Escribimos "glaux", y ponemos "Apply"
+	4.7| Escribimos "gdi32", y ponemos "Apply"
+	4.8| Escribimos "winmm", y ponemos "Apply"
+	4.9| Escribimos "glu32", y ponemos "Apply"
+5| En la solapa "Libraries Paths" --> Add y elegimos la carpeta "lib" de nuestro proyecto y le damos "Ok".
+
+Para poder usar C++ 11:
+
+6| Pararse sobre el proyecto e ir a "Properties" --> "C/C++ Build" --> "Settings" --> "GCC C++ Compiler" --> "Miscellaneous" y agregamos al final de "Other Flags" lo siguiente: " -std=c++11", y damos "Ok".
+7| Pararse sobre el proyecto e ir a "Properties" --> "C/C++ Build" --> "Settings" --> "GCC C++ Linker" --> "Miscellaneous" y agregamos al final de "Linker Flags" lo siguiente: " -std=c++11", y damos "Ok".
+8| Pararse sobre el proyecto e ir a "Properties" --> "C/C++ General" --> "Preprocessor Include Path, Macros,etc." --> "Providers" --> "CDT GCC Built-in Compiler Settings MinGW", deseleccionamos la opci�n "use global provider shared between projects" y agregamos al final de "Command to get compiler specs:" lo siguiente: " -std=c++11", y damos "Ok".
+
+9| Compilamos y corremos el programa de prueba. Tiene que aparecer una ventanita, luego cerrarse y aparecer numeros en consola ya que es un mix entre el Hello World de Box2D y un ejemplo básico de SDL2.
+
+Observaciones:
+----------------------------------------------------------------
+*- A modo de aclaracion, la carpeta SDL2 de nuestro proyecto tiene lo que se puede bajar de la pagina oficial (version 2.0.3) excepto por un archivo el "SDL_Platform.h" que lo sobreescribí con el mismo archivo de la versión mas nueva (SDL Mercurial o 2.0.4). Esto lo hice así porque la versión """"estable"""" no es tan estable y tiene un bug que se soluciona haciendo eso (se puede googlear en la wiki de SDL, ingresando "winapifamily.h...bla bla bla").
+*- Para correr el TestBed hay que descomentar el Main.cpp dentro del directorio TestBed/Framework, recompilar y darle "Run"
