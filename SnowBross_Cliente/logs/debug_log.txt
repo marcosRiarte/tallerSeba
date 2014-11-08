@@ -1,0 +1,4 @@
+Sat Nov 08 03:34:54 2014 - Error - No se encontró imagen de fondo
+Sat Nov 08 15:53:49 2014 - Debug - Ventana creada:
+	Alto(px): X	Alto(un):ô
+	Ancho(px): ÿ	Ancho(un): 
