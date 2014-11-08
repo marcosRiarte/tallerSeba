@@ -50,6 +50,25 @@ PaqueteACliente Conexion::recibir(){
 	return paquete;
 }
 
+void Conexion::enviar(PaqueteAServidor p){
+
+	char buffer[sizeof(PaqueteAServidor)];
+
+	p.serialize(buffer);
+
+	int bytesEnviados = send(sock, buffer, sizeof(PaqueteAServidor), 0);
+
+	if (bytesEnviados == -1) {
+		std::cout << "Fallo el envio.";
+		throw;
+	}
+
+	if (bytesEnviados == sizeof(PaqueteAServidor))
+		std::cout << "Envio exitoso.";
+	else
+		std::cout << "Se enviaron: " << bytesEnviados << "bytes, RARO!";
+}
+
 Conexion::~Conexion() {
 	// TODO Auto-generated destructor stub
 }
