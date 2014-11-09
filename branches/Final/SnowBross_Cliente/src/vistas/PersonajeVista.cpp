@@ -127,6 +127,10 @@ void PersonajeVista::setPos(Pos posicion){
 	personaje.setPos(posicion);
 }
 
+void PersonajeVista::setEstado(Personaje::Estado estado){
+	personaje.setEstado(estado);
+}
+
 SDL_Texture* PersonajeVista::getVista() {
 	Personaje::Estado estadoActual = personaje.getEstado();
 

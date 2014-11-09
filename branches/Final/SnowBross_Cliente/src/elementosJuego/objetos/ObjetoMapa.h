@@ -9,6 +9,7 @@ class ObjetoMapa: public ElementosJuego {
 protected:
 	float rot;
 	bool estatico;
+	bool circulo;
 	long color;
 	std::vector<Pos> vertices = std::vector<Pos>();
 
@@ -27,7 +28,7 @@ public:
 	/*
 	 * Devuelve verdadero si el objeto es un circulo
 	 */
-	virtual bool esCirculo();
+	 bool esCirculo();
 
 	/*
 	 * Getter y setter para el color del objeto
