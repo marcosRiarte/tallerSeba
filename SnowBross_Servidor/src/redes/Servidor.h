@@ -4,16 +4,24 @@
 #include<winsock2.h>
 
 #include "Paquetes.h"
+#include "../excepciones/Servidor_Excepcion.h"
+
+#define MAX_CANTIDAD_CONEXIONES 5
+#define PUERTO 9999
 
 class Servidor {
 private:
 	static WSADATA wsa;
-	static SOCKET sock;
+	static SOCKET sockfd;
 	static struct sockaddr_in local;
 	static int len;
 
+	Servidor();
 public:
-	static void iniciar();
+	static unsigned int conexionesEstablecidas;
+	static SOCKET sock[MAX_CANTIDAD_CONEXIONES];
+
+	static void iniciar(unsigned int cantidadConexiones) throw (Servidor_Excepcion);
 	static PaqueteAServidor recibir();
 	static void enviar(PaqueteACliente p);
 	virtual ~Servidor();
