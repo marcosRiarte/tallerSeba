@@ -1,8 +1,15 @@
-#include "Conexion.h"
 #include <iostream>
 #include <string>
 
-Conexion::Conexion() {
+#include "Cliente.h"
+#include "../Constantes.h"
+
+WSADATA Cliente::wsa;
+SOCKET Cliente::sock;
+struct hostent* Cliente::host;
+struct sockaddr_in Cliente::direc;
+
+void Cliente::iniciar() throw (Cliente_Excepcion){
 	//Inicializamos
 	WSAStartup(MAKEWORD(2, 2), &wsa);
 
@@ -15,12 +22,12 @@ Conexion::Conexion() {
 	 * 	- SOCK_STREAM define el tipo de paquetes para tcp.
 	 * 	- IPPROTOTCP define el protocolo tcp.
 	 */
+	loguer->loguear("Creando el socket...", Log::LOG_DEB);
 	sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-
-	if (sock == -1) {
-		std::cout << "Error al crear el socket";
-		throw;
+	if (sock < 0) {
+		throw Cliente_Excepcion("No se pudo crear el socket.");
 	}
+	loguer->loguear("Se creo el socket", Log::LOG_DEB);
 
 	//Definimos la dirección a conectar que hemos recibido desde el gethostbyname
 	//y decimos que el puerto al que deberá conectar es el 9999 con el protocolo ipv4
@@ -31,44 +38,40 @@ Conexion::Conexion() {
 	memset(direc.sin_zero, 0, 8);
 
 	//Intentamos establecer la conexión
+	loguer->loguear("Conectandose...", Log::LOG_DEB);
 	int conex = connect(sock, (sockaddr *) &direc, sizeof(sockaddr));
-	if (conex == -1) {
-		std::cout << "No se ha podido conectar\n";
-		throw;
+	if (conex < 0) {
+		throw Cliente_Excepcion("No se pudo establecer la conexion.");
 	}
-
-	std::cout << "Se pudo establecer la conexion\n";
+	loguer->loguear("Se establecio la conexion!!", Log::LOG_DEB);
 }
 
-PaqueteACliente Conexion::recibir(){
+PaqueteACliente Cliente::recibir() throw (Cliente_Excepcion){
 	char buffer[sizeof(PaqueteACliente)];
-	bytesRecibidos = 0;
-	while ((bytesRecibidos != -1) && (bytesRecibidos != sizeof(PaqueteACliente))){
+	unsigned int bytesRecibidos = 0;
+	while ((!bytesRecibidos < 0) && (bytesRecibidos != sizeof(PaqueteACliente))){
 		bytesRecibidos = recv(sock, buffer, sizeof(PaqueteACliente), 0);
 	}
+	if(bytesRecibidos < 0)
+		throw Cliente_Excepcion("Fallo la recepcion del paquete. Se perdió la conexion.");
+	PaqueteACliente paquete;
 	paquete.deserialize(buffer);
 	return paquete;
 }
 
-void Conexion::enviar(PaqueteAServidor p){
-
+void Cliente::enviar(PaqueteAServidor p) throw (Cliente_Excepcion){
 	char buffer[sizeof(PaqueteAServidor)];
-
 	p.serialize(buffer);
-
 	int bytesEnviados = send(sock, buffer, sizeof(PaqueteAServidor), 0);
-
-	if (bytesEnviados == -1) {
-		std::cout << "Fallo el envio.";
-		throw;
+	if (bytesEnviados < 0) {
+		throw Cliente_Excepcion("Error en el envio del paquete. Se perdio la conexion");
 	}
-
 	if (bytesEnviados == sizeof(PaqueteAServidor))
-		std::cout << "Envio exitoso.";
+		loguer->loguear("Se envio un paquete al servidor", Log::LOG_DEB);
 	else
-		std::cout << "Se enviaron: " << bytesEnviados << "bytes, RARO!";
+		loguer->loguear("Se envio un paquete a medias??", Log::LOG_WAR);
 }
 
-Conexion::~Conexion() {
+Cliente::~Cliente() {
 	// TODO Auto-generated destructor stub
 }
