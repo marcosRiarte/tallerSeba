@@ -26,7 +26,7 @@ DWORD WINAPI enviarEventos(LPVOID param) {
 	PaqueteAServidor paquete;
 	paquete.tipoPaquete = TipoPaquete::ACTUALIZACION;
 
-	bool fin = false;
+	int fin = CONTINUAR;
 
 	// Guarda los cambio en teclado que sirven para pantalla en memoria
 	// y envia los que sirven para escenario al sever
