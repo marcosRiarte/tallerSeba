@@ -18,7 +18,7 @@ struct PaqueteObjeto {
 	unsigned int y;
 	unsigned int rotacion;
 	bool esEstatico;
-	long color;
+	unsigned long color;
 	unsigned cantidadVertices;
 	unsigned int vx[6];
 	unsigned int vy[6];

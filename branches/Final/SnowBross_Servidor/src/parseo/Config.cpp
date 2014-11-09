@@ -130,23 +130,62 @@ int Config::getAncho() {
 
 PaqueteACliente Config::crearPaqueteInicial(){
 	PaqueteACliente paquete;
-	PaqueteInicial p;
 
-	p.alto = alto_un;
-	p.ancho = ancho_un;
-	p.altoPx = altoPx;
-	p.anchoPx = anchoPx;
-/*
-	Personaje* personaje = personajes.at(0);
-
-	p.personajePrincipal.id = personaje->getID();
-	p.personajePrincipal.x = personaje->getPos().getX();
-	p.personajePrincipal.y = personaje->getPos().getY();
-	p.personajePrincipal.estado = personaje->getEstado();
-
-	paquete.paqueteInicial = p;
 	paquete.tipoPaquete = TipoPaquete::CONEXION_INICIAL;
-*/
+
+	//Seteo los datos de la pantalla
+	PaqueteInicial pInicial;
+
+	pInicial.alto = alto_un;
+	pInicial.ancho = ancho_un;
+	pInicial.altoPx = altoPx;
+	pInicial.anchoPx = anchoPx;
+
+	//TODO - Ver si esto funciona...no es lo más recomendable
+	pInicial.IDPersonajePrincipal = personajes.at(personajes.size()-1)->getID();
+
+	paquete.paqueteInicial = pInicial;
+
+
+	for (unsigned i = 0; i < personajes.size(); i++) {
+		Personaje* personaje = personajes.at(0);
+
+		PaquetePersonaje pPersonaje;
+		pPersonaje.id = personaje->getID();
+		pPersonaje.x = personaje->getPos().getX();
+		//Importante! Hay que mandar las posiciones, siempre positivas.
+		pPersonaje.y = personaje->getPos().ySimetrico().getY();
+		pPersonaje.estado = personaje->getEstado();
+
+		paquete.paquetePersonaje[i] = pPersonaje;
+	}
+		paquete.contadorPersonaje = personajes.size();
+
+	for (unsigned i = 0; i < objetosMapa.size(); i++){
+		ObjetoMapa* objeto = objetosMapa.at(i);
+
+		PaqueteObjeto pObjeto;
+		pObjeto.id = objeto->getID();
+		pObjeto.x = objeto->getPos().getX();
+		//Importante! Hay que mandar las posiciones, siempre positivas.
+		pObjeto.y = objeto->getPos().ySimetrico().getY();
+		pObjeto.color = objeto->getColor();
+		pObjeto.esEstatico = objeto->esEstatico();
+		pObjeto.rotacion = objeto->getRotacion();
+
+		std::vector<Pos> contorno = objeto->getContorno();
+		pObjeto.cantidadVertices = contorno.size();
+		for (unsigned i = 0; i < contorno.size(); i++){
+			Pos pos = contorno.at(i);
+			pObjeto.vx[i] = pos.getX();
+			//Importante! Hay que mandar las posiciones, siempre positivas.
+			pObjeto.vy[i] = pos.ySimetrico().getY();
+		}
+
+		paquete.paqueteObjeto[i] =  pObjeto;
+	}
+		paquete.contadorObjetos = objetosMapa.size();
+
 	return paquete;
 }
 
