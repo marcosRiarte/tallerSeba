@@ -42,7 +42,7 @@ DWORD WINAPI enviarEventos(LPVOID param) {
 			Cliente::enviar(paquete);
 		}catch(Cliente_Excepcion &e){
 			loguer->loguear(e.what(), Log::LOG_ERR);
-			exit -1;
+			throw &e; //TODO - Si no se hace nada con la excepcion, habria que sacar este try catch y ponerlo en una capa mas arriba
 		}
 	}
 
@@ -53,7 +53,7 @@ DWORD WINAPI enviarEventos(LPVOID param) {
 		Cliente::enviar(paquete);
 	}catch(Cliente_Excepcion &e){
 		loguer->loguear(e.what(), Log::LOG_ERR);
-		exit -1;
+		throw &e; //TODO - Si no se hace nada con la excepcion, habria que sacar este try catch y ponerlo en una capa mas arriba
 	}
 	return 0;
 }
@@ -67,13 +67,14 @@ DWORD WINAPI recibirDatos(LPVOID param) {
 	// Se recorre los datos recibidos cambiando rot y pos y dsp se muestra.
 	while (true) {
 //		paquete = datos->conexion->recibir(); TODO - Fran! se borra?
-		try{
+		try {
 			paquete = Cliente::recibir();
-		}catch(Cliente_Excepcion &e){
+		} catch (Cliente_Excepcion &e) {
 			loguer->loguear(e.what(), Log::LOG_ERR);
-			exit -1;
+			throw &e; //TODO - Si no se hace nada con la excepcion, habria que sacar este try catch y ponerlo en una capa mas arriba
 		}
-		if (paquete.tipoPaquete == TipoPaquete::ACTUALIZACION) {
+		switch (paquete.tipoPaquete) {
+		case (TipoPaquete::ACTUALIZACION): {
 			for (unsigned int j = 0; j < paquete.contadorPersonaje; j++) {
 				datos->pantalla->cambiarPersonaje(paquete.paquetePersonaje[j]);
 			}
@@ -82,25 +83,29 @@ DWORD WINAPI recibirDatos(LPVOID param) {
 			}
 			datos->pantalla->cambiar(*(datos->eventosPantalla));
 			SDL_Delay(20);
-		} else if (paquete.tipoPaquete == TipoPaquete::FINALIZACION) {
+			break;
+		}
+		case (TipoPaquete::FINALIZACION): {
 			datos->Termino = true;
+			break;
+		}
 		}
 	}
-
 	return 0;
 }
 
 int main(int argc, char** argv) {
 	PDATOS datos;
 //	datos->conexion = new Conexion(); TODO - Fran! se borra?
+	Cliente::iniciar();
 	datos->eventosPantalla = new std::vector<Evento>();
 //	PaqueteACliente paqueteRecibido = datos->conexion->recibir(); TODO - Fran! se borra?
 	PaqueteACliente paqueteRecibido;
 	try{
-		PaqueteACliente paqueteRecibido = Cliente::recibir();
+		paqueteRecibido = Cliente::recibir();
 	}catch(Cliente_Excepcion &e){
 		loguer->loguear(e.what(), Log::LOG_ERR);
-		exit -1;
+		return -1;
 	}
 	if (paqueteRecibido.tipoPaquete == TipoPaquete::CONEXION_INICIAL){
 		Controlador::iniciarSDL();
