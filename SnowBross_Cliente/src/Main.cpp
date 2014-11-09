@@ -9,68 +9,77 @@
 #include <windows.h>
 
 // Estructura para comunicarse entre hilos
-struct Datos {
+typedef struct Datos {
 	std::vector<Evento>* eventosPantalla;
 	Conexion* conexion;
 	Pantalla* pantalla;
-	bool* Termino;
-};
+	bool Termino;
+} DATOS, *PDATOS;;
 
 // Hilo que envia los eventos de entrada en teclado
 DWORD WINAPI enviarEventos(LPVOID param) {
-	Datos datos = (Datos) param;
+	PDATOS datos;
+	datos = (PDATOS) param;
 	std::vector<Evento> eventosMundo = std::vector<Evento>();
 
 	PaqueteAServidor paquete;
-	paquete.tipoPaquete = Paquetes::CONEXION_INICIAL;
+	paquete.tipoPaquete = TipoPaquete::ACTUALIZACION;
+
+	bool fin = false;
 
 	// Guarda los cambio en teclado que sirven para pantalla en memoria
 	// y envia los que sirven para escenario al sever
 	// Este while maneja la salida del cliente
 	while (FIN_DEL_JUEGO != fin && !datos->Termino) {
-		fin = Controlador::cambiar(&eventosMundo, datos.eventosPantalla);
+		fin = Controlador::cambiar(&eventosMundo, datos->eventosPantalla);
 		paquete.contador = eventosMundo.size();
-		for (int j = 0; j < contador; j++) {
+		for (unsigned int j = 0; j < paquete.contador; j++) {
 			paquete.eventos[j] = eventosMundo.at(j).getTecla();
 		}
-		datos.conexion->enviar(paquete);
+		datos->conexion->enviar(paquete);
 	}
 
 	// Avisa al servidor q el cliente se cerro
-	paquete.tipoPaquete = Paquetes::FINALIZACION;
-	datos.conexion->enviar(paquete);
+	paquete.tipoPaquete = TipoPaquete::FINALIZACION;
+	datos->conexion->enviar(paquete);
+
+	return 0;
 }
 
 // Hilo que recibe los datos de los cambios en el escenario y los muestra
 DWORD WINAPI recibirDatos(LPVOID param) {
-	Datos datos = (Datos) param;
+	PDATOS datos;
+	datos = (PDATOS) param;
+
 	PaqueteACliente paquete;
 	// Se recorre los datos recibidos cambiando rot y pos y dsp se muestra.
 	while (true) {
-		paquete = datos.conexion->recibir());
-		if (paquete.tipoPaquete == Paquetes::ACTUALIZACION) {
-			for (int j = 0; j < paquete.contadorPersonaje; j++) {
-				pantalla.cambiarPersonaje(paquete.paquetePersonaje[j]);
+		paquete = datos->conexion->recibir();
+		if (paquete.tipoPaquete == TipoPaquete::ACTUALIZACION) {
+			for (unsigned int j = 0; j < paquete.contadorPersonaje; j++) {
+				datos->pantalla->cambiarPersonaje(paquete.paquetePersonaje[j]);
 			}
-			for (int j = 0; j < paquete.contadorObjetos; j++) {
-				pantalla.cambiarPersonaje(paquete.paqueteObjeto[j]);
+			for (unsigned int j = 0; j < paquete.contadorObjetos; j++) {
+				datos->pantalla->cambiarObjetoMapa(paquete.paqueteObjeto[j]);
 			}
-			pantalla.cambiar(datos.eventosPantalla);
+			datos->pantalla->cambiar(*(datos->eventosPantalla));
 			SDL_Delay(20);
-		} else if (paquete.tipoPaquete == Paquetes::FINALIZACION) {
+		} else if (paquete.tipoPaquete == TipoPaquete::FINALIZACION) {
 			datos->Termino = true;
 		}
 	}
+
+	return 0;
 }
 
 int main(int argc, char** argv) {
-	Datos datos;
-	datos.conexion = new Conexion();
-	std::vector<Evento>* eventosPantalla = new std::vector<Evento>();
-	PaqueteACliente paqueteRecibido = datos.conexion.recibir();
+	PDATOS datos;
+	datos->conexion = new Conexion();
+	datos->eventosPantalla = new std::vector<Evento>();
+	PaqueteACliente paqueteRecibido = datos->conexion->recibir();
 	if (paqueteRecibido.tipoPaquete == TipoPaquete::CONEXION_INICIAL){
 		Controlador::iniciarSDL();
-		datos.pantalla = new Pantalla(paqueteRecibido);
+		datos->pantalla = new Pantalla(paqueteRecibido);
 		//Comente esto pq no tngo ni idea q hace aca
 		/*
 		while(true){
@@ -84,14 +93,15 @@ int main(int argc, char** argv) {
 	HANDLE hiloRecibeDatos = CreateThread(0, 0, recibirDatos, &datos, 0, 0);
 
 	// Espera a que el cliente quiera salir del juego
-	hiloEnviaEventos.join();
+	WaitForSingleObject(hiloEnviaEventos, INFINITE);
 
 	// Cierra el cliente
 	CloseHandle(hiloEnviaEventos);
 	CloseHandle(hiloRecibeDatos);
-	delete datos.pantalla;
-	delete datos.conexion;
-	delete datos.eventosPantalla;
+	delete datos->pantalla;
+	delete datos->conexion;
+	delete datos->eventosPantalla;
+	delete datos;
 	SDL_Quit();
 
 	return 0;
