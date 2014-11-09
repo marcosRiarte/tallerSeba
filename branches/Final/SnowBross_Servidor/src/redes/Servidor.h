@@ -23,7 +23,7 @@ public:
 
 	static void iniciar(unsigned int cantidadConexiones) throw (Servidor_Excepcion);
 	static PaqueteAServidor recibir();
-	static void enviar(PaqueteACliente p);
+	static void enviar(SOCKET socketDest, PaqueteACliente p) throw (Servidor_Excepcion);
 	virtual ~Servidor();
 };
 
