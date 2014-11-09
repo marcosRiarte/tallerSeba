@@ -37,7 +37,6 @@ DWORD WINAPI enviarEventos(LPVOID param) {
 		for (unsigned int j = 0; j < paquete.contador; j++) {
 			paquete.eventos[j] = eventosMundo.at(j).getTecla();
 		}
-//		datos->conexion->enviar(paquete); TODO - Fran! se borra?
 		try{
 			Cliente::enviar(paquete);
 		}catch(Cliente_Excepcion &e){
@@ -48,7 +47,6 @@ DWORD WINAPI enviarEventos(LPVOID param) {
 
 	// Avisa al servidor q el cliente se cerro
 	paquete.tipoPaquete = TipoPaquete::FINALIZACION;
-//	datos->conexion->enviar(paquete);	TODO - Fran! se borra?
 	try{
 		Cliente::enviar(paquete);
 	}catch(Cliente_Excepcion &e){
@@ -66,7 +64,6 @@ DWORD WINAPI recibirDatos(LPVOID param) {
 	PaqueteACliente paquete;
 	// Se recorre los datos recibidos cambiando rot y pos y dsp se muestra.
 	while (true) {
-//		paquete = datos->conexion->recibir(); TODO - Fran! se borra?
 		try {
 			paquete = Cliente::recibir();
 		} catch (Cliente_Excepcion &e) {
@@ -96,10 +93,8 @@ DWORD WINAPI recibirDatos(LPVOID param) {
 
 int main(int argc, char** argv) {
 	PDATOS datos;
-//	datos->conexion = new Conexion(); TODO - Fran! se borra?
 	Cliente::iniciar();
 	datos->eventosPantalla = new std::vector<Evento>();
-//	PaqueteACliente paqueteRecibido = datos->conexion->recibir(); TODO - Fran! se borra?
 	PaqueteACliente paqueteRecibido;
 	try{
 		paqueteRecibido = Cliente::recibir();
@@ -123,7 +118,6 @@ int main(int argc, char** argv) {
 	CloseHandle(hiloEnviaEventos);
 	CloseHandle(hiloRecibeDatos);
 	delete datos->pantalla;
-//	delete datos->conexion; TODO - Fran! se borra?
 	delete datos->eventosPantalla;
 	delete datos;
 	SDL_Quit();
