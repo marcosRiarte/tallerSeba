@@ -1,10 +1,10 @@
 {
         "escenario": 
         {
-                "alto_px": 600,
+                "alto_px": 800,
                 "ancho_px": 1024,
-                "alto_un": 1200,
-                "ancho_un": 2048,
+                "alto_un": 500,
+                "ancho_un": 800,
                 "imagen_fondo": "img/terreno.png",
                 "personaje": 
                 {
@@ -35,7 +35,7 @@
                                 "estatico": false
                         },
                         {
-                                "tipo": "poligonoo",
+                                "tipo": "poligono",
                                 "x": 50,
                                 "y": -50,
                                 "lados": 3,
