@@ -49,7 +49,7 @@ void Cliente::iniciar() throw (Cliente_Excepcion){
 PaqueteACliente Cliente::recibir() throw (Cliente_Excepcion){
 	char buffer[sizeof(PaqueteACliente)];
 	unsigned int bytesRecibidos = 0;
-	while ((!bytesRecibidos < 0) && (bytesRecibidos != sizeof(PaqueteACliente))){
+	while ((bytesRecibidos >= 0) && (bytesRecibidos < sizeof(PaqueteACliente))){
 		bytesRecibidos = recv(sock, buffer, sizeof(PaqueteACliente), 0);
 	}
 	if(bytesRecibidos < 0)
