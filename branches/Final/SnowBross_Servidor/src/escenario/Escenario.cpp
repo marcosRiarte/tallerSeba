@@ -16,6 +16,14 @@
 #include <Box2D/Box2D.h>
 #include <Math.h>
 
+std::vector<Personaje*> Escenario::getPersonajes() {
+	return personajes;
+}
+std::vector<ObjetoMapa*> Escenario::getObjetos() {
+	return objetos;
+}
+
+
 /// Devuelve el AABB para todas las figuras de un cuerpo dado.
 b2AABB GetBodyAABB( const b2Body* body )
 {

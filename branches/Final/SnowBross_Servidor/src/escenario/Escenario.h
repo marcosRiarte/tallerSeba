@@ -31,6 +31,9 @@ public:
 	 */
 	void cambiar(std::vector<std::vector<Evento>*> vectorDeListaDeEventos, std::vector<int> vectorDeID);
 
+	std::vector<Personaje*> getPersonajes();
+	std::vector<ObjetoMapa*> getObjetos();
+
 	~Escenario();
 };
 
