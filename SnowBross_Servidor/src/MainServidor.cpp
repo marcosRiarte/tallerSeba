@@ -1,18 +1,19 @@
 #include "parseo/Config.h"
 #include "escenario/Escenario.h"
 #include "redes/Servidor.h"
-#include "excepciones/ConfigExcepcion.h"
-#include "excepciones/MVCExcepcion.h"
-
 #include <iostream>
 #include <string.h>
 #include <windows.h>
+
+#include "excepciones/ConfigExcepcion.h"
+#include "excepciones/MVCExcepcion.h"
+#include "Constantes.h"
+
 
 int main(int argc, char** argv) {
 
 	Config* configuracion;
 	Escenario* escenario;
-	Servidor* servidor;
 
 	//Creo el Config a partir del json
 	try {
@@ -25,8 +26,14 @@ int main(int argc, char** argv) {
 	escenario = new Escenario(configuracion);
 
 	//Creo el servidor
-	Servidor::iniciar();
+	unsigned int cantidadDeClientes = 1;
+	try{
+		Servidor::iniciar(cantidadDeClientes);
+	}catch(Servidor_Excepcion &e){
+		loguer->loguear(e.what(), Log::LOG_ERR);
+	}
 
+/*
 	//Cuando hay una conexion creo un paquete inicial y lo mando
 	PaqueteAServidor pRecibido = servidor->recibir();
 	if (pRecibido.tipoPaquete == TipoPaquete::CONEXION_INICIAL) {
@@ -36,5 +43,5 @@ int main(int argc, char** argv) {
 	while(true){
 		Sleep(10000);
 	}
-
+*/
 }
