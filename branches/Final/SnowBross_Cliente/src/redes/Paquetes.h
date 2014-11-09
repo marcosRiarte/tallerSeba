@@ -10,6 +10,7 @@
 enum TipoPaquete {
     CONEXION_INICIAL = 0,
     ACTUALIZACION = 1,
+    FINALIZACION = 2,
 };
 
 struct PaqueteObjeto {
