@@ -9,11 +9,111 @@
 #include "excepciones/MVCExcepcion.h"
 #include "Constantes.h"
 
+// Estructuras para comunicarse entre hilos
+typedef struct RDatos {
+	std::vector<std::vector<Evento>*>* vectorDeListaDeEventos;
+	std::vector<int>* vectorDeID;
+	int numeroDeSock;
+	int personajeID;
+} RDATOS, *PRDATOS;
+
+// Estructuras para comunicarse entre hilos
+typedef struct EDatos {
+	std::vector<std::vector<Evento>*>* vectorDeListaDeEventos;
+	std::vector<int>* vectorDeID;
+	Escenario* escenario;
+	int cantDeClientes;
+} EDATOS, *PEDATOS;
+
+// Hilo que envia los eventos de entrada en teclado
+DWORD WINAPI enviarDatos(LPVOID param) {
+	PEDATOS datos;
+	datos = (PEDATOS) param;
+
+	PaqueteACliente paquete;
+	paquete.tipoPaquete = TipoPaquete::ACTUALIZACION;
+
+	// No se con q condicion cerrar el server, dsp le pongo corte
+	while(true) {
+		Sleep(30);
+		// Si se enviaron suficientes eventos se vacian las listas
+		if (datos->vectorDeListaDeEventos->size() > 0.8*datos->cantDeClientes) {
+			datos->escenario->cambiar(*(datos->vectorDeListaDeEventos),*(datos->vectorDeID));
+			// Esto no deberia perder memoria, pero si se pierde memoria en algun lugar ver aca
+			datos->vectorDeListaDeEventos->clear();
+			datos->vectorDeID->clear();
+
+			// Se arma el paquete para enviar
+			std::vector<Personaje*> personajes = datos->escenario->getPersonajes();
+			paquete.contadorPersonaje = personajes.size();
+			for (unsigned int j = 0; j < personajes.size(); j++) {
+				paquete.paquetePersonaje[j].estado = personajes.at(j)->getEstado();
+				paquete.paquetePersonaje[j].id = personajes.at(j)->getID();
+				Pos pos = personajes.at(j)->getPos();
+				paquete.paquetePersonaje[j].x = pos.getX();
+				paquete.paquetePersonaje[j].y = pos.getY();
+			}
+			std::vector<ObjetoMapa*> objetos = datos->escenario->getObjetos();
+			paquete.contadorObjetos = objetos.size();
+			for (unsigned int j = 0; j < objetos.size(); j++) {
+				// TODO el de personajes lo pude hacer, pero esto no entiendo mucho si los necesitas todos
+				// y q significa cada uno.
+				/*paquete.paqueteObjeto[j].cantidadVertices = ;
+				paquete.paqueteObjeto[j].color = ;
+				paquete.paqueteObjeto[j].esEstatico = ;
+				paquete.paqueteObjeto[j].id = ;
+				paquete.paqueteObjeto[j].rotacion = ;
+				paquete.paqueteObjeto[j].vx = ;
+				paquete.paqueteObjeto[j].vy = ;
+				paquete.paqueteObjeto[j].x = ;
+				paquete.paqueteObjeto[j].y = ;*/
+			}
+
+			// Se envia a todos los clientes
+			for(int i=0; i<datos->cantDeClientes; i++ ) {
+				Servidor::enviar(Servidor::sock[i],paquete);
+			}
+		}
+	}
+
+	return 0;
+}
+
+// Hilo que recibe los datos de los cambios en el escenario y los muestra
+DWORD WINAPI recibirDatos(LPVOID param) {
+	PRDATOS datos;
+	datos = (PRDATOS) param;
+
+	PaqueteAServidor paquete;
+	// Se recorre los datos recibidos cambiando rot y pos y dsp se muestra.
+	while (true) {
+		// Nose si esto va a tener sentido dsp.
+		paquete = Servidor::recibir(Servidor::sock[datos->numeroDeSock]);
+
+		switch (paquete.tipoPaquete) {
+		case (TipoPaquete::ACTUALIZACION): {
+			std::vector<Evento>* vectEventos = new std::vector<Evento>;
+			for (unsigned int j = 0; j < paquete.contador; j++) {
+				Evento evento = Evento(paquete.eventos[j]);
+				vectEventos->push_back(evento);
+			}
+			datos->vectorDeID->push_back(datos->personajeID);
+			datos->vectorDeListaDeEventos->push_back(vectEventos);
+			break;
+		}
+		case (TipoPaquete::FINALIZACION): {
+			// No se que hacer si se desconecta...
+			break;
+		}
+		}
+	}
+	return 0;
+}
 
 int main(int argc, char** argv) {
 
 	Config* configuracion;
-	Escenario* escenario;
+	Escenario* esc;
 
 	//Creo el Config a partir del json
 	try {
@@ -23,7 +123,7 @@ int main(int argc, char** argv) {
 	}
 
 	//Creo el Escenario
-	escenario = new Escenario(configuracion);
+	esc = new Escenario(configuracion);
 
 	//Creo el servidor
 	unsigned int cantidadDeClientes = 1;
@@ -38,8 +138,32 @@ int main(int argc, char** argv) {
 		loguer->loguear(e.what(), Log::LOG_ERR);
 		return -1;
 	}
+
+	// Se crea el vector con hilos para los clientes
+	std::vector<int>* vDeID = new std::vector<int>();
+	std::vector<std::vector<Evento>*>* vDeListaDeEventos = new std::vector<std::vector<Evento>*>();
+	HANDLE  vectorDeHilos[cantidadDeClientes];
+	for(unsigned int i=0; i<cantidadDeClientes; i++ ) {
+		PRDATOS datos;
+		datos->vectorDeID = vDeID;
+		datos->vectorDeListaDeEventos = vDeListaDeEventos;
+		// Esto esta hecho asi, pq no se de q manera puedo poner el mismo numero de sock al id de personaje
+		// TODO
+		datos->numeroDeSock = i;
+		datos->personajeID = i;
+		vectorDeHilos[i] = CreateThread(0, 0, recibirDatos, datos, 0, 0);
+	}
+
+	PEDATOS datos;
+	datos->vectorDeID = vDeID;
+	datos->vectorDeListaDeEventos = vDeListaDeEventos;
+	datos->cantDeClientes = cantidadDeClientes;
+	datos->escenario = esc;
+	HANDLE hiloEnviaDatos = CreateThread(0, 0, enviarDatos, datos, 0, 0);
+
+
 	//TODO - Borrar - Solo sirve para que el programa no se cierre y poder asi testear 
-	while(true){
+/*.0	while(true){
 		PaqueteACliente pEnviar;
 		pEnviar.tipoPaquete = TipoPaquete::ACTUALIZACION;
 		pEnviar.contadorObjetos = 0;
@@ -50,5 +174,15 @@ int main(int argc, char** argv) {
 			//loguer->loguear(e.what(), Log::LOG_DEB);
 		}
 
+	}*/
+
+
+	delete vDeID;
+	delete vDeListaDeEventos;
+	delete esc;
+	delete configuracion;
+	for(unsigned int i=0; i<cantidadDeClientes; i++ ) {
+		CloseHandle(vectorDeHilos[i]);
 	}
+	CloseHandle(hiloEnviaDatos);
 }

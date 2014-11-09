@@ -10,6 +10,7 @@
 enum TipoPaquete {
     CONEXION_INICIAL = 0,
     ACTUALIZACION = 1,
+    FINALIZACION = 2,
 };
 
 struct PaqueteObjeto {
@@ -59,10 +60,10 @@ struct PaqueteAServidor {
 	unsigned int eventos[5];
 	unsigned int contador;
 	void serialize(char * data) {
-		memcpy(data, this, sizeof(PaqueteACliente));
+		memcpy(data, this, sizeof(PaqueteAServidor));
 	}
 	void deserialize(char * data) {
-		memcpy(this, data, sizeof(PaqueteACliente));
+		memcpy(this, data, sizeof(PaqueteAServidor));
 	}
 };
 
