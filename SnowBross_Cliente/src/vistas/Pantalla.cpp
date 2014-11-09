@@ -60,23 +60,63 @@ Pantalla::Pantalla(PaqueteACliente configuracion) {
 }
 
 void Pantalla::agregarPersonaje(PaquetePersonaje paquete){
+
 	//Creo el personaje
 	Pos p = Pos(paquete.x, paquete.y);
 	Personaje personaje = Personaje(p);
 	personaje.setID(paquete.id);
 	personaje.setEstado(paquete.estado);
+
 	//Creo la vista con el personaje creado y lo guardo en el vector de personajes.
 	PersonajeVista* vista = new PersonajeVista(renderer, personaje);
 	personajes.push_back(vista);
+
 }
 
-//TODO - FALTAAAAAAAAAAAAAAAAAAAAAA!!!!!
 void Pantalla::agregarObjetoMapa(PaqueteObjeto paquete){
+
 	//Creo el objeto
-	Pos p = Pos(paquete.x, paquete.y);
-	//ObjetoMapa objeto = ObjetoMapa( esEstatico, std::string color, Pos pos_cm, int rotacion, int masa, std::vector<Pos> contorno);
+	unsigned int id= paquete.id;
+	Pos pos = Pos(paquete.x, paquete.y);
+	bool estatico = paquete.esEstatico;
+	unsigned long color = paquete.color;
+	unsigned int rot = paquete.rotacion;
+	std::vector<Pos> contorno = std::vector<Pos>();
+	for (unsigned  i = 0; i < paquete.cantidadVertices; i++){
+		Pos posAux = Pos (paquete.vx[i], paquete.vy[i]);
+		contorno.push_back(posAux);
+	}
+	ObjetoMapa objeto = ObjetoMapa(estatico, color, pos, rot, contorno);
+	objeto.setID(id);
+
+	//Creo la vista con el objeto creado y lo guardo en el vector de objetos.
+	ObjetoMapaVista* vista = new ObjetoMapaVista(renderer, objeto);
+	objetos.push_back(vista);
 }
 
+void Pantalla::cambiarPersonaje(PaquetePersonaje paquete){
+	for (unsigned i = 0; i < personajes.size(); i++) {
+		PersonajeVista* pVista = personajes.at(i);
+		if (pVista->getID() == paquete.id){
+			pVista->setPos(Pos(paquete.x, paquete.y));
+			pVista->setEstado(paquete.estado);
+			return;
+		}
+	}
+	agregarPersonaje(paquete);
+}
+
+void Pantalla::cambiarObjetoMapa(PaqueteObjeto paquete){
+	for (unsigned i = 0; i < objetos.size(); i++) {
+			ObjetoMapaVista* oVista = objetos.at(i);
+			if (oVista->getID() == paquete.id){
+				oVista->setPos(Pos(paquete.x, paquete.y));
+				oVista->setRotacion(paquete.rotacion);
+				return;
+			}
+		}
+	agregarObjetoMapa(paquete);
+}
 
 void Pantalla::cambiar(std::vector<Evento> eventos){
 	//El target del renderer será la textura auxiliar tVentana de la cual luego se eligirá que parte de la misma imprimir

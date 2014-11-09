@@ -39,6 +39,7 @@ long stringToHexa(std::string s){
 
 ObjetoMapa::ObjetoMapa(){
 	estatico = true;
+	circulo = false;
 	color = 0;
 	pos = Pos();
 	rot = 0;
@@ -46,6 +47,10 @@ ObjetoMapa::ObjetoMapa(){
 }
 
 ObjetoMapa::ObjetoMapa(bool esEstatico, long lColor, Pos pos_cm, int rotacion, std::vector<Pos> contorno) {
+	if (contorno.size() == 1)
+		circulo= true;
+	else
+		circulo = false;
 	estatico = esEstatico;
 	color = lColor;
 	pos = new Pos(pos_cm);

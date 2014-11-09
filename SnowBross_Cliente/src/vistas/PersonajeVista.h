@@ -38,6 +38,7 @@ public:
 	SDL_Rect getVentana();
 	Pos getPos();
 	void setPos(Pos posicion);
+	void setEstado(Personaje::Estado estado);
 	virtual ~PersonajeVista();
 };
 
