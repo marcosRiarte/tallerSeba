@@ -1,17 +1,18 @@
+#include <windows.h>
 #include <winsock2.h>
-#include "redes/Conexion.h"
+#include <iostream>
+#include <string>
+
+#include "redes/Cliente.h"
 #include "redes/Paquetes.h"
 #include "vistas/Pantalla.h"
 #include "controlador/Controlador.h"
 #include "Constantes.h"
-#include <iostream>
-#include <string>
-#include <windows.h>
 
 // Estructura para comunicarse entre hilos
 typedef struct Datos {
 	std::vector<Evento>* eventosPantalla;
-	Conexion* conexion;
+//	Conexion* conexion;
 	Pantalla* pantalla;
 	bool Termino;
 } DATOS, *PDATOS;;
@@ -36,13 +37,24 @@ DWORD WINAPI enviarEventos(LPVOID param) {
 		for (unsigned int j = 0; j < paquete.contador; j++) {
 			paquete.eventos[j] = eventosMundo.at(j).getTecla();
 		}
-		datos->conexion->enviar(paquete);
+//		datos->conexion->enviar(paquete); TODO - Fran! se borra?
+		try{
+			Cliente::enviar(paquete);
+		}catch(Cliente_Excepcion &e){
+			loguer->loguear(e.what(), Log::LOG_ERR);
+			exit -1;
+		}
 	}
 
 	// Avisa al servidor q el cliente se cerro
 	paquete.tipoPaquete = TipoPaquete::FINALIZACION;
-	datos->conexion->enviar(paquete);
-
+//	datos->conexion->enviar(paquete);	TODO - Fran! se borra?
+	try{
+		Cliente::enviar(paquete);
+	}catch(Cliente_Excepcion &e){
+		loguer->loguear(e.what(), Log::LOG_ERR);
+		exit -1;
+	}
 	return 0;
 }
 
@@ -54,7 +66,13 @@ DWORD WINAPI recibirDatos(LPVOID param) {
 	PaqueteACliente paquete;
 	// Se recorre los datos recibidos cambiando rot y pos y dsp se muestra.
 	while (true) {
-		paquete = datos->conexion->recibir();
+//		paquete = datos->conexion->recibir(); TODO - Fran! se borra?
+		try{
+			paquete = Cliente::recibir();
+		}catch(Cliente_Excepcion &e){
+			loguer->loguear(e.what(), Log::LOG_ERR);
+			exit -1;
+		}
 		if (paquete.tipoPaquete == TipoPaquete::ACTUALIZACION) {
 			for (unsigned int j = 0; j < paquete.contadorPersonaje; j++) {
 				datos->pantalla->cambiarPersonaje(paquete.paquetePersonaje[j]);
@@ -74,18 +92,19 @@ DWORD WINAPI recibirDatos(LPVOID param) {
 
 int main(int argc, char** argv) {
 	PDATOS datos;
-	datos->conexion = new Conexion();
+//	datos->conexion = new Conexion(); TODO - Fran! se borra?
 	datos->eventosPantalla = new std::vector<Evento>();
-	PaqueteACliente paqueteRecibido = datos->conexion->recibir();
+//	PaqueteACliente paqueteRecibido = datos->conexion->recibir(); TODO - Fran! se borra?
+	PaqueteACliente paqueteRecibido;
+	try{
+		PaqueteACliente paqueteRecibido = Cliente::recibir();
+	}catch(Cliente_Excepcion &e){
+		loguer->loguear(e.what(), Log::LOG_ERR);
+		exit -1;
+	}
 	if (paqueteRecibido.tipoPaquete == TipoPaquete::CONEXION_INICIAL){
 		Controlador::iniciarSDL();
 		datos->pantalla = new Pantalla(paqueteRecibido);
-		//Comente esto pq no tngo ni idea q hace aca
-		/*
-		while(true){
-			pantalla.cambiar(std::vector<Evento>());
-			SDL_Delay(20);
-		}*/
 	}
 
 	//gameloop
@@ -99,7 +118,7 @@ int main(int argc, char** argv) {
 	CloseHandle(hiloEnviaEventos);
 	CloseHandle(hiloRecibeDatos);
 	delete datos->pantalla;
-	delete datos->conexion;
+//	delete datos->conexion; TODO - Fran! se borra?
 	delete datos->eventosPantalla;
 	delete datos;
 	SDL_Quit();
