@@ -15,7 +15,7 @@ typedef struct Datos {
 //	Conexion* conexion;
 	Pantalla* pantalla;
 	bool Termino;
-} DATOS, *PDATOS;;
+} DATOS, *PDATOS;
 
 // Hilo que envia los eventos de entrada en teclado
 DWORD WINAPI enviarEventos(LPVOID param) {
@@ -113,8 +113,8 @@ int main(int argc, char** argv) {
 	}
 
 	//gameloop
-	HANDLE hiloEnviaEventos = CreateThread(0, 0, enviarEventos, &datos, 0, 0);
-	HANDLE hiloRecibeDatos = CreateThread(0, 0, recibirDatos, &datos, 0, 0);
+	HANDLE hiloEnviaEventos = CreateThread(0, 0, enviarEventos, datos, 0, 0);
+	HANDLE hiloRecibeDatos = CreateThread(0, 0, recibirDatos, datos, 0, 0);
 
 	// Espera a que el cliente quiera salir del juego
 	WaitForSingleObject(hiloEnviaEventos, INFINITE);
