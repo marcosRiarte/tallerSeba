@@ -22,7 +22,7 @@ public:
 	static SOCKET sock[MAX_CANTIDAD_CONEXIONES];
 
 	static void iniciar(unsigned int cantidadConexiones) throw (Servidor_Excepcion);
-	static PaqueteAServidor recibir();
+	static PaqueteAServidor recibir(SOCKET sockSrc);
 	static void enviar(SOCKET socketDest, PaqueteACliente p) throw (Servidor_Excepcion);
 	virtual ~Servidor();
 };

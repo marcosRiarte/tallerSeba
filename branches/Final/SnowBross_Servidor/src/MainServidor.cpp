@@ -40,6 +40,15 @@ int main(int argc, char** argv) {
 	}
 	//TODO - Borrar - Solo sirve para que el programa no se cierre y poder asi testear 
 	while(true){
-		Sleep(10000);
+		PaqueteACliente pEnviar;
+		pEnviar.tipoPaquete = TipoPaquete::ACTUALIZACION;
+		pEnviar.contadorObjetos = 0;
+		pEnviar.contadorPersonaje = 0;
+		try{
+			Servidor::enviar(Servidor::sock[0], pEnviar);
+		}catch(Servidor_Excepcion &e){
+			//loguer->loguear(e.what(), Log::LOG_DEB);
+		}
+
 	}
 }
