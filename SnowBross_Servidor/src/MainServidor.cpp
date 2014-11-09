@@ -32,16 +32,14 @@ int main(int argc, char** argv) {
 	}catch(Servidor_Excepcion &e){
 		loguer->loguear(e.what(), Log::LOG_ERR);
 	}
-
-/*
-	//Cuando hay una conexion creo un paquete inicial y lo mando
-	PaqueteAServidor pRecibido = servidor->recibir();
-	if (pRecibido.tipoPaquete == TipoPaquete::CONEXION_INICIAL) {
-		Servidor::enviar(configuracion->crearPaqueteInicial());
+	try{
+		Servidor::enviar(Servidor::sock[0], configuracion->crearPaqueteInicial());
+	}catch(Servidor_Excepcion &e){
+		loguer->loguear(e.what(), Log::LOG_ERR);
+		return -1;
 	}
-
+	//TODO - Borrar - Solo sirve para que el programa no se cierre y poder asi testear 
 	while(true){
 		Sleep(10000);
 	}
-*/
 }

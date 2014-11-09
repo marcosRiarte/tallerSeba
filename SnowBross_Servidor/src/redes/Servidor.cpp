@@ -59,24 +59,21 @@ void Servidor::iniciar(unsigned int cantidadConexiones) throw (Servidor_Excepcio
 	loguer->loguear("Se establecieron todas las conexiones.", Log::LOG_DEB);
 }
 
-void Servidor::enviar(PaqueteACliente p) {
-/*
+void Servidor::enviar(SOCKET sockDest, PaqueteACliente p) throw (Servidor_Excepcion) {
 	char buffer [sizeof(PaqueteACliente)];
 
 	p.serialize(buffer);
 
-	int bytesEnviados = send(sock, buffer, sizeof(PaqueteACliente), 0);
+	int bytesEnviados = send(sockDest, buffer, sizeof(PaqueteACliente), 0);
 
-	if (bytesEnviados == -1){
-		std::cout << "Fallo el envio.";
-		throw;
+	if (bytesEnviados < 0){
+		throw Servidor_Excepcion("Fallo el envio del paquete.");
 	}
 
 	if (bytesEnviados == sizeof(PaqueteACliente))
-		std::cout << "Envio exitoso.";
+		loguer->loguear("Envio exitoso.", Log::LOG_DEB);
 	else
-		std::cout << "Se enviaron: " << bytesEnviados << "bytes, RARO!";
-*/
+		loguer->loguear("Se envio, pero paquete incompleto??.", Log::LOG_WAR);
 }
 
 PaqueteAServidor Servidor::recibir() {
