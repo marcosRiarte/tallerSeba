@@ -32,6 +32,7 @@ DWORD WINAPI enviarEventos(LPVOID param) {
 	// y envia los que sirven para escenario al sever
 	// Este while maneja la salida del cliente
 	while (FIN_DEL_JUEGO != fin && !datos->Termino) {
+		Sleep(30);
 		fin = Controlador::cambiar(&eventosMundo, datos->eventosPantalla);
 		paquete.contador = eventosMundo.size();
 		for (unsigned int j = 0; j < paquete.contador; j++) {
@@ -64,6 +65,7 @@ DWORD WINAPI recibirDatos(LPVOID param) {
 	PaqueteACliente paquete;
 	// Se recorre los datos recibidos cambiando rot y pos y dsp se muestra.
 	while (true) {
+		Sleep(10);
 		try {
 			paquete = Cliente::recibir();
 		} catch (Cliente_Excepcion &e) {
@@ -92,7 +94,7 @@ DWORD WINAPI recibirDatos(LPVOID param) {
 }
 
 int main(int argc, char** argv) {
-	PDATOS datos;
+	PDATOS datos = new Datos();
 	Cliente::iniciar();
 	datos->eventosPantalla = new std::vector<Evento>();
 	PaqueteACliente paqueteRecibido;
