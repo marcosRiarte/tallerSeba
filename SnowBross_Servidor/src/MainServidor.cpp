@@ -49,26 +49,29 @@ DWORD WINAPI enviarDatos(LPVOID param) {
 			for (unsigned int j = 0; j < personajes.size(); j++) {
 				paquete.paquetePersonaje[j].estado = personajes.at(j)->getEstado();
 				paquete.paquetePersonaje[j].id = personajes.at(j)->getID();
-				Pos pos = personajes.at(j)->getPos();
+				Pos pos = personajes.at(j)->getPos().ySimetrico();
 				paquete.paquetePersonaje[j].x = pos.getX();
 				paquete.paquetePersonaje[j].y = pos.getY();
 			}
 			std::vector<ObjetoMapa*> objetos = datos->escenario->getObjetos();
 			paquete.contadorObjetos = objetos.size();
 			for (unsigned int j = 0; j < objetos.size(); j++) {
-				// TODO el de personajes lo pude hacer, pero esto no entiendo mucho si los necesitas todos
-				// y q significa cada uno.
-				/*paquete.paqueteObjeto[j].cantidadVertices = ;
-				paquete.paqueteObjeto[j].color = ;
-				paquete.paqueteObjeto[j].esEstatico = ;
-				paquete.paqueteObjeto[j].id = ;
-				paquete.paqueteObjeto[j].rotacion = ;
-				paquete.paqueteObjeto[j].vx = ;
-				paquete.paqueteObjeto[j].vy = ;
-				paquete.paqueteObjeto[j].x = ;
-				paquete.paqueteObjeto[j].y = ;*/
+				ObjetoMapa* o = objetos.at(j);
+				Pos p = o->getPos().ySimetrico();
+				std::vector<Pos> contorno = o->getContorno();
+				paquete.paqueteObjeto[j].id = o->getID();
+				paquete.paqueteObjeto[j].x = p.getX();
+				paquete.paqueteObjeto[j].y = p.getY();
+				paquete.paqueteObjeto[j].cantidadVertices = contorno.size();
+				for(unsigned k = 0; k < contorno.size(); k++){
+					Pos pAux = contorno.at(k).ySimetrico();
+					paquete.paqueteObjeto[j].vx[k] = pAux.getX();
+					paquete.paqueteObjeto[j].vy[k] = pAux.getY();
+				}
+				paquete.paqueteObjeto[j].color = o->getColor();
+				paquete.paqueteObjeto[j].esEstatico = o->esEstatico();
+				paquete.paqueteObjeto[j].rotacion = o->getRotacion();
 			}
-
 			// Se envia a todos los clientes
 			for(int i=0; i<datos->cantDeClientes; i++ ) {
 				Servidor::enviar(Servidor::sock[i],paquete);
@@ -162,19 +165,6 @@ int main(int argc, char** argv) {
 	HANDLE hiloEnviaDatos = CreateThread(0, 0, enviarDatos, datos, 0, 0);
 
 
-	//TODO - Borrar - Solo sirve para que el programa no se cierre y poder asi testear 
-/*.0	while(true){
-		PaqueteACliente pEnviar;
-		pEnviar.tipoPaquete = TipoPaquete::ACTUALIZACION;
-		pEnviar.contadorObjetos = 0;
-		pEnviar.contadorPersonaje = 0;
-		try{
-			Servidor::enviar(Servidor::sock[0], pEnviar);
-		}catch(Servidor_Excepcion &e){
-			//loguer->loguear(e.what(), Log::LOG_DEB);
-		}
-
-	}*/
 
 	WaitForSingleObject(hiloEnviaDatos, INFINITE);
 
