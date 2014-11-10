@@ -26,9 +26,9 @@ typedef struct EDatos {
 } EDATOS, *PEDATOS;
 
 // Hilo que envia los eventos de entrada en teclado
-DWORD WINAPI enviarDatos(LPVOID param) {
-	PEDATOS datos;
-	datos = (PEDATOS) param;
+DWORD WINAPI enviarDatos(void * param) {
+	EDatos* datos;
+	datos = (EDatos*) param;
 
 	PaqueteACliente paquete;
 	paquete.tipoPaquete = TipoPaquete::ACTUALIZACION;
@@ -83,13 +83,21 @@ DWORD WINAPI enviarDatos(LPVOID param) {
 }
 
 // Hilo que recibe los datos de los cambios en el escenario y los muestra
-DWORD WINAPI recibirDatos(LPVOID param) {
-	PRDATOS datos;
-	datos = (PRDATOS) param;
+DWORD WINAPI recibirDatos(void * param) {
+	RDatos* datos;
+	datos = (RDatos*) param;
+
+	std::vector<std::vector<Evento>*>* vectorDeListaDeEventosA = datos->vectorDeListaDeEventos;
+	std::vector<int>* vectorDeIDA = datos->vectorDeID;
+	int numeroDeSockA = datos->numeroDeSock;
+	int personajeIDA = datos->personajeID;
+
+
 
 	PaqueteAServidor paquete;
 	// Se recorre los datos recibidos cambiando rot y pos y dsp se muestra.
 	while (true) {
+		Sleep(30);
 		// Nose si esto va a tener sentido dsp.
 		paquete = Servidor::recibir(Servidor::sock[datos->numeroDeSock]);
 
@@ -146,18 +154,28 @@ int main(int argc, char** argv) {
 	std::vector<int>* vDeID = new std::vector<int>();
 	std::vector<std::vector<Evento>*>* vDeListaDeEventos = new std::vector<std::vector<Evento>*>();
 	HANDLE  vectorDeHilos[cantidadDeClientes];
+
+	RDatos* rdatos = new RDatos();
+	rdatos->vectorDeID = vDeID;
+	rdatos->vectorDeListaDeEventos = vDeListaDeEventos;
+	rdatos->numeroDeSock = 0;
+	rdatos->personajeID = 0;
+	vectorDeHilos[0] = CreateThread(0, 0, recibirDatos, rdatos, 0, 0);
+
+
+	/*
 	for(unsigned int i=0; i<cantidadDeClientes; i++ ) {
-		PRDATOS datos = new RDatos();
-		datos->vectorDeID = vDeID;
-		datos->vectorDeListaDeEventos = vDeListaDeEventos;
+		PRDATOS rdatos = new RDatos();
+		rdatos->vectorDeID = vDeID;
+		rdatos->vectorDeListaDeEventos = vDeListaDeEventos;
 		// Esto esta hecho asi, pq no se de q manera puedo poner el mismo numero de sock al id de personaje
 		// TODO
-		datos->numeroDeSock = i;
-		datos->personajeID = i;
-		vectorDeHilos[i] = CreateThread(0, 0, recibirDatos, datos, 0, 0);
-	}
+		rdatos->numeroDeSock = i;
+		rdatos->personajeID = i;
+		vectorDeHilos[i] = CreateThread(0, 0, recibirDatos, rdatos, 0, 0);
+	}*/
 
-	PEDATOS datos = new EDatos();
+	EDatos* datos = new EDatos();
 	datos->vectorDeID = vDeID;
 	datos->vectorDeListaDeEventos = vDeListaDeEventos;
 	datos->cantDeClientes = cantidadDeClientes;
