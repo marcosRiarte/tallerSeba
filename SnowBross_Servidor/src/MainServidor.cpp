@@ -144,7 +144,7 @@ int main(int argc, char** argv) {
 	std::vector<std::vector<Evento>*>* vDeListaDeEventos = new std::vector<std::vector<Evento>*>();
 	HANDLE  vectorDeHilos[cantidadDeClientes];
 	for(unsigned int i=0; i<cantidadDeClientes; i++ ) {
-		PRDATOS datos;
+		PRDATOS datos = new RDatos();
 		datos->vectorDeID = vDeID;
 		datos->vectorDeListaDeEventos = vDeListaDeEventos;
 		// Esto esta hecho asi, pq no se de q manera puedo poner el mismo numero de sock al id de personaje
@@ -154,7 +154,7 @@ int main(int argc, char** argv) {
 		vectorDeHilos[i] = CreateThread(0, 0, recibirDatos, datos, 0, 0);
 	}
 
-	PEDATOS datos;
+	PEDATOS datos = new EDatos();
 	datos->vectorDeID = vDeID;
 	datos->vectorDeListaDeEventos = vDeListaDeEventos;
 	datos->cantDeClientes = cantidadDeClientes;
@@ -176,6 +176,7 @@ int main(int argc, char** argv) {
 
 	}*/
 
+	WaitForSingleObject(hiloEnviaDatos, INFINITE);
 
 	delete vDeID;
 	delete vDeListaDeEventos;
