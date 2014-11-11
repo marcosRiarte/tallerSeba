@@ -2,6 +2,7 @@
 #include "escenario/Escenario.h"
 #include "redes/Servidor.h"
 #include <iostream>
+#include <sstream>
 #include <string.h>
 #include <windows.h>
 
@@ -23,6 +24,7 @@ typedef struct EDatos {
 	std::vector<int>* vectorDeID;
 	Escenario* escenario;
 	int cantDeClientes;
+	bool cambio;
 } EDATOS, *PEDATOS;
 
 // Hilo que envia los eventos de entrada en teclado
@@ -36,40 +38,42 @@ DWORD WINAPI enviarDatos(void * param) {
 	// No se con q condicion cerrar el server, dsp le pongo corte
 	while (true) {
 		Sleep(30);
-
-		// Se arma el paquete para enviar
-		std::vector<Personaje*> personajes = datos->escenario->getPersonajes();
-		paquete.contadorPersonaje = personajes.size();
-		for (unsigned int j = 0; j < personajes.size(); j++) {
-			paquete.paquetePersonaje[j].estado = personajes.at(j)->getEstado();
-			paquete.paquetePersonaje[j].id = personajes.at(j)->getID();
-			Pos pos = personajes.at(j)->getPos().ySimetrico();
-			paquete.paquetePersonaje[j].x = pos.getX();
-			paquete.paquetePersonaje[j].y = pos.getY();
-		}
-		std::vector<ObjetoMapa*> objetos = datos->escenario->getObjetos();
-		paquete.contadorObjetos = objetos.size();
-		for (unsigned int j = 0; j < objetos.size(); j++) {
-			ObjetoMapa* o = objetos.at(j);
-			Pos p = o->getPos().ySimetrico();
-			std::vector<Pos> contorno = o->getContorno();
-			paquete.paqueteObjeto[j].id = o->getID();
-			paquete.paqueteObjeto[j].x = p.getX();
-			paquete.paqueteObjeto[j].y = p.getY();
-			paquete.paqueteObjeto[j].cantidadVertices = contorno.size();
-			for (unsigned k = 0; k < contorno.size(); k++) {
-				Pos pAux = contorno.at(k).ySimetrico();
-				paquete.paqueteObjeto[j].vx[k] = pAux.getX();
-				paquete.paqueteObjeto[j].vy[k] = pAux.getY();
+		if (datos->cambio) {
+			// Se arma el paquete para enviar
+			std::vector<Personaje*> personajes = datos->escenario->getPersonajes();
+			paquete.contadorPersonaje = personajes.size();
+			for (unsigned int j = 0; j < personajes.size(); j++) {
+				paquete.paquetePersonaje[j].estado = personajes.at(j)->getEstado();
+				paquete.paquetePersonaje[j].id = personajes.at(j)->getID();
+				Pos pos = personajes.at(j)->getPos().ySimetrico();
+				paquete.paquetePersonaje[j].x = pos.getX();
+				paquete.paquetePersonaje[j].y = pos.getY();
 			}
-			paquete.paqueteObjeto[j].color = o->getColor();
-			paquete.paqueteObjeto[j].esEstatico = o->esEstatico();
-			paquete.paqueteObjeto[j].rotacion = o->getRotacion();
-		}
+			std::vector<ObjetoMapa*> objetos = datos->escenario->getObjetos();
+			paquete.contadorObjetos = objetos.size();
+			for (unsigned int j = 0; j < objetos.size(); j++) {
+				ObjetoMapa* o = objetos.at(j);
+				Pos p = o->getPos().ySimetrico();
+				std::vector<Pos> contorno = o->getContorno();
+				paquete.paqueteObjeto[j].id = o->getID();
+				paquete.paqueteObjeto[j].x = p.getX();
+				paquete.paqueteObjeto[j].y = p.getY();
+				paquete.paqueteObjeto[j].cantidadVertices = contorno.size();
+				for (unsigned k = 0; k < contorno.size(); k++) {
+					Pos pAux = contorno.at(k).ySimetrico();
+					paquete.paqueteObjeto[j].vx[k] = pAux.getX();
+					paquete.paqueteObjeto[j].vy[k] = pAux.getY();
+				}
+				paquete.paqueteObjeto[j].color = o->getColor();
+				paquete.paqueteObjeto[j].esEstatico = o->esEstatico();
+				paquete.paqueteObjeto[j].rotacion = o->getRotacion();
+			}
 
-		// Se envia a todos los clientes
-		for (int i = 0; i < datos->cantDeClientes; i++) {
-			Servidor::enviar(Servidor::sock[i], paquete);
+			// Se envia a todos los clientes
+			for (int i = 0; i < datos->cantDeClientes; i++) {
+				Servidor::enviar(Servidor::sock[i], paquete);
+			}
+			datos->cambio = false;
 		}
 	}
 
@@ -84,10 +88,13 @@ DWORD WINAPI recibirDatos(void * param) {
 	PaqueteAServidor paquete;
 	// Se recorre los datos recibidos cambiando rot y pos y dsp se muestra.
 	while (true) {
-		Sleep(30);
+		Sleep(2);
 		// Nose si esto va a tener sentido dsp.
-		paquete = Servidor::recibir(Servidor::sock[datos->numeroDeSock]);
-
+		try{
+			paquete = Servidor::recibir(Servidor::sock[datos->numeroDeSock]);
+		}catch(Servidor_Excepcion &e){
+			loguer->loguear(e.what(), Log::LOG_ERR);
+		}
 		switch (paquete.tipoPaquete) {
 		case (TipoPaquete::ACTUALIZACION): {
 			std::vector<Evento>* vectEventos = new std::vector<Evento>;
@@ -109,6 +116,21 @@ DWORD WINAPI recibirDatos(void * param) {
 }
 
 int main(int argc, char** argv) {
+	if (argc < 2){
+		std::cout << "Debe ingresar la cantidad de usuarios que participaran del juego.";
+		return -1;
+	}
+
+	int cantidadDeClientes;
+	try{
+		std::istringstream(argv[1]) >> cantidadDeClientes;
+		if ((cantidadDeClientes > MAX_CANTIDAD_CONEXIONES) || (cantidadDeClientes < 1)){
+			std::cout << "Debe ingresar una cantidad de usuarios mayor o igual a 1 y menor que " << MAX_CANTIDAD_CONEXIONES;
+			return -1;
+		}
+	}catch(std::exception &e){
+		return -1;
+	}
 
 	Config* configuracion;
 	Escenario* esc;
@@ -124,7 +146,6 @@ int main(int argc, char** argv) {
 	esc = new Escenario(configuracion);
 
 	//Creo el servidor
-	unsigned int cantidadDeClientes = 1;
 	try{
 		Servidor::iniciar(cantidadDeClientes);
 	}catch(Servidor_Excepcion &e){
@@ -143,7 +164,7 @@ int main(int argc, char** argv) {
 	HANDLE  vectorDeHilos[cantidadDeClientes];
 	PRDATOS rdatos[cantidadDeClientes];
 
-	for(unsigned int i=0; i<cantidadDeClientes; i++ ) {
+	for (unsigned int i = 0; i < cantidadDeClientes; i++) {
 		rdatos[i] = new RDatos();
 		rdatos[i]->vectorDeID = vDeID;
 		rdatos[i]->vectorDeListaDeEventos = vDeListaDeEventos;
@@ -159,18 +180,18 @@ int main(int argc, char** argv) {
 	datos->vectorDeListaDeEventos = vDeListaDeEventos;
 	datos->cantDeClientes = cantidadDeClientes;
 	datos->escenario = esc;
+	datos->cambio = false;
 	HANDLE hiloEnviaDatos = CreateThread(0, 0, enviarDatos, datos, 0, 0);
 
 	while (true) {
-		Sleep(30);
+		Sleep(10);
 		// TODO ver como se vacian las listas
-		esc->cambiar(*(datos->vectorDeListaDeEventos),	*(datos->vectorDeID));
+		esc->cambiar(*(datos->vectorDeListaDeEventos), *(datos->vectorDeID));
+		datos->cambio = true;
 		// Esto no deberia perder memoria, pero si se pierde memoria en algun lugar ver aca
 		datos->vectorDeListaDeEventos->clear();
 		datos->vectorDeID->clear();
 	}
-
-	WaitForSingleObject(hiloEnviaDatos, INFINITE);
 
 	delete vDeID;
 	delete vDeListaDeEventos;
