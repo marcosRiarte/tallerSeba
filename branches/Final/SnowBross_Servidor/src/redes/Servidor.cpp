@@ -69,12 +69,6 @@ void Servidor::enviar(SOCKET sockDest, PaqueteACliente p) throw (Servidor_Excepc
 	if (bytesEnviados < 0){
 		throw Servidor_Excepcion("Fallo el envio del paquete.");
 	}
-/*
-	if (bytesEnviados == sizeof(PaqueteACliente))
-		loguer->loguear("Envio exitoso.", Log::LOG_DEB);
-	else
-		loguer->loguear("Se envio, pero paquete incompleto??.", Log::LOG_WAR);
-*/
 }
 
 PaqueteAServidor Servidor::recibir(SOCKET sockSrc) {
@@ -84,6 +78,8 @@ PaqueteAServidor Servidor::recibir(SOCKET sockSrc) {
 	while ((bytesRecibidos >= 0) && (bytesRecibidos < sizeof(PaqueteAServidor))) {
 		bytesRecibidos = recv(sockSrc, buffer, sizeof(PaqueteAServidor), 0);
 	}
+	if(bytesRecibidos < 0)
+		throw Servidor_Excepcion("Se perdio la conexion con el socket");
 	paquete.deserialize(buffer);
 
 	return paquete;
