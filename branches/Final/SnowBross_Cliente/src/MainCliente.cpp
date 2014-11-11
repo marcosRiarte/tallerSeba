@@ -12,9 +12,9 @@
 // Estructura para comunicarse entre hilos
 typedef struct Datos {
 	std::vector<Evento>* eventosPantalla;
-//	Conexion* conexion;
+	std::vector<Evento>* eventosMundo;
 	Pantalla* pantalla;
-	bool Termino;
+	bool termino;
 } DATOS, *PDATOS;
 
 // Hilo que envia los eventos de entrada en teclado
@@ -26,15 +26,12 @@ DWORD WINAPI enviarEventos(LPVOID param) {
 	PaqueteAServidor paquete;
 	paquete.tipoPaquete = TipoPaquete::ACTUALIZACION;
 
-	int fin = CONTINUAR;
-
 	// Guarda los cambio en teclado que sirven para pantalla en memoria
 	// y envia los que sirven para escenario al sever
 	// Este while maneja la salida del cliente
-	while (FIN_DEL_JUEGO != fin && !datos->Termino) {
+	while (true) {
 		Sleep(30);
-		fin = Controlador::cambiar(&eventosMundo, datos->eventosPantalla);
-		paquete.contador = eventosMundo.size();
+		paquete.contador = datos->eventosMundo->size();
 		for (unsigned int j = 0; j < paquete.contador; j++) {
 			paquete.eventos[j] = eventosMundo.at(j).getTecla();
 		}
@@ -80,12 +77,10 @@ DWORD WINAPI recibirDatos(LPVOID param) {
 			for (unsigned int j = 0; j < paquete.contadorObjetos; j++) {
 				datos->pantalla->cambiarObjetoMapa(paquete.paqueteObjeto[j]);
 			}
-			datos->pantalla->cambiar(*(datos->eventosPantalla));
-			SDL_Delay(20);
 			break;
 		}
 		case (TipoPaquete::FINALIZACION): {
-			datos->Termino = true;
+			datos->termino = true;
 			break;
 		}
 		}
@@ -97,7 +92,9 @@ int main(int argc, char** argv) {
 	PDATOS datos = new Datos();
 	Cliente::iniciar();
 	datos->eventosPantalla = new std::vector<Evento>();
+	datos->eventosMundo = new std::vector<Evento>();
 	PaqueteACliente paqueteRecibido;
+	Pantalla *pantalla;
 	try{
 		paqueteRecibido = Cliente::recibir();
 	}catch(Cliente_Excepcion &e){
@@ -113,14 +110,24 @@ int main(int argc, char** argv) {
 	HANDLE hiloEnviaEventos = CreateThread(0, 0, enviarEventos, datos, 0, 0);
 	HANDLE hiloRecibeDatos = CreateThread(0, 0, recibirDatos, datos, 0, 0);
 
-	// Espera a que el cliente quiera salir del juego
-	WaitForSingleObject(hiloEnviaEventos, INFINITE);
+	int fin = CONTINUAR;
+
+	// Guarda los cambio en teclado y cambia la pantalla
+	// Este while maneja la salida del cliente
+	while (FIN_DEL_JUEGO != fin && !datos->termino) {
+		Sleep(30);
+		fin = Controlador::cambiar(datos->eventosMundo, datos->eventosPantalla);
+		datos->pantalla->cambiar(*(datos->eventosPantalla));
+	}
+
+
 
 	// Cierra el cliente
 	CloseHandle(hiloEnviaEventos);
 	CloseHandle(hiloRecibeDatos);
 	delete datos->pantalla;
 	delete datos->eventosPantalla;
+	delete datos->eventosMundo;
 	delete datos;
 	SDL_Quit();
 
