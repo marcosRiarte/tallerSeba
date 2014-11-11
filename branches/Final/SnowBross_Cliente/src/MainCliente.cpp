@@ -21,7 +21,6 @@ typedef struct Datos {
 DWORD WINAPI enviarEventos(LPVOID param) {
 	PDATOS datos;
 	datos = (PDATOS) param;
-	std::vector<Evento> eventosMundo = std::vector<Evento>();
 
 	PaqueteAServidor paquete;
 	paquete.tipoPaquete = TipoPaquete::ACTUALIZACION;
@@ -33,7 +32,7 @@ DWORD WINAPI enviarEventos(LPVOID param) {
 		Sleep(30);
 		paquete.contador = datos->eventosMundo->size();
 		for (unsigned int j = 0; j < paquete.contador; j++) {
-			paquete.eventos[j] = eventosMundo.at(j).getTecla();
+			paquete.eventos[j] = datos->eventosMundo->at(j).getTecla();
 		}
 		try{
 			Cliente::enviar(paquete);
@@ -94,7 +93,6 @@ int main(int argc, char** argv) {
 	datos->eventosPantalla = new std::vector<Evento>();
 	datos->eventosMundo = new std::vector<Evento>();
 	PaqueteACliente paqueteRecibido;
-	Pantalla *pantalla;
 	try{
 		paqueteRecibido = Cliente::recibir();
 	}catch(Cliente_Excepcion &e){
@@ -119,8 +117,6 @@ int main(int argc, char** argv) {
 		fin = Controlador::cambiar(datos->eventosMundo, datos->eventosPantalla);
 		datos->pantalla->cambiar(*(datos->eventosPantalla));
 	}
-
-
 
 	// Cierra el cliente
 	CloseHandle(hiloEnviaEventos);
