@@ -29,7 +29,7 @@ DWORD WINAPI enviarEventos(LPVOID param) {
 	// y envia los que sirven para escenario al sever
 	// Este while maneja la salida del cliente
 	while (true) {
-		Sleep(30);
+		Sleep(10);
 		paquete.contador = datos->eventosMundo->size();
 		for (unsigned int j = 0; j < paquete.contador; j++) {
 			paquete.eventos[j] = datos->eventosMundo->at(j).getTecla();
