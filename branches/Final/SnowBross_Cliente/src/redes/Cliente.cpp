@@ -66,12 +66,12 @@ void Cliente::enviar(PaqueteAServidor p) throw (Cliente_Excepcion){
 	if (bytesEnviados < 0) {
 		throw Cliente_Excepcion("Error en el envio del paquete. Se perdio la conexion");
 	}
-	if (bytesEnviados == sizeof(PaqueteAServidor))
+/*	if (bytesEnviados == sizeof(PaqueteAServidor))
 		loguer->loguear("Se envio un paquete al servidor", Log::LOG_DEB);
 	else
 		loguer->loguear("Se envio un paquete a medias??", Log::LOG_WAR);
+*/
 }
-
 Cliente::~Cliente() {
 	// TODO Auto-generated destructor stub
 }
