@@ -13,8 +13,8 @@
 
 class Pantalla {
 private:
-	int alto;
-	int ancho;
+	float alto;
+	float ancho;
 	SDL_Window* ventana;
 	SDL_Renderer* renderer;
 	SDL_Texture * fondo;

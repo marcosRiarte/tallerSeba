@@ -8,6 +8,9 @@ protected:
 	SDL_Renderer* renderer;
 	SDL_Texture* textura;
 	SDL_Rect ventana;
+	SDL_Texture* texturaCirculo;
+	SDL_Surface *superficie;
+	SDL_Surface *superficieCirculo;
 	unsigned int ID = 0;
 	virtual void setID() = 0;
 public:

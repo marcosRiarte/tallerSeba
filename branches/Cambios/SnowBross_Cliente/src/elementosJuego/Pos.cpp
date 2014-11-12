@@ -30,6 +30,12 @@ Pos::Pos(const Pos* p) {
 float Pos::getNorma() {
 	return sqrt(x * x + y * y);
 }
+/*
+ * @return posición simétrica a this respecto del eje Y.
+ */
+Pos Pos::ySimetrico() {
+	return Pos(x, -y);
+}
 
 /*
  * @param p posición desde la cual se mide la distancia.

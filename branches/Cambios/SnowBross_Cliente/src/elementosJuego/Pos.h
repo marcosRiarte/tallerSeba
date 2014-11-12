@@ -13,6 +13,7 @@ public:
 	int getY();
 	float getNorma();
 	float getDistancia(Pos p);
+	Pos ySimetrico();
 	virtual ~Pos();
 };
 

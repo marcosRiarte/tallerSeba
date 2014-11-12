@@ -1,6 +1,10 @@
 #include <SDL2/SDL2_gfxPrimitives.h>
 #include "ObjetoMapaVista.h"
 #include <math.h>
+//TODO INCLUIR
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL2_rotozoom.h>
+//TODO FIN
 
 ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa o) {
 	objeto = o;
@@ -26,6 +30,19 @@ ObjetoMapaVista::ObjetoMapaVista(SDL_Renderer* r, ObjetoMapa o) {
 	//Se crea la textura y sobre la cual se va a trabajar
 	textura = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_UNKNOWN, SDL_TEXTUREACCESS_TARGET, ventana.w, ventana.h);
 
+	//TODO INCLUIR
+	//Se crean las otras texturas
+		SDL_Surface* imagenFiguras = SDL_LoadBMP("img/tablones1.bmp");
+		SDL_Surface* imagenCirculo = IMG_Load( "img/esfera.png" );
+
+		superficie = SDL_ConvertSurfaceFormat(imagenFiguras,SDL_PIXELFORMAT_RGB444,SDL_RLEACCEL);
+		superficieCirculo = SDL_ConvertSurfaceFormat(imagenCirculo,SDL_PIXELFORMAT_RGB444,SDL_RLEACCEL);
+		textura = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_UNKNOWN, SDL_TEXTUREACCESS_TARGET, ventana.w, ventana.h);
+		//Seteo del color
+		SDL_SetColorKey( superficieCirculo, SDL_TRUE, SDL_MapRGB( superficieCirculo->format, 255, 0, 255 ) );
+		texturaCirculo = SDL_CreateTextureFromSurface( renderer, superficieCirculo );
+		SDL_SetTextureAlphaMod( texturaCirculo, 125 );
+		//TODO FIN
 }
 
 void ObjetoMapaVista::setID(){
@@ -55,6 +72,9 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 
 	//Obtengo los vértices, transformando cada vertice en su simétrico respecto del eje Y
 	std::vector<Pos> vertices = objeto.getContorno();
+	for (unsigned i = 0; i < vertices.size(); i++) {
+		vertices.at(i) = vertices.at(i).ySimetrico();
+	}
 
 	int cantVertices = vertices.size();
 
@@ -70,13 +90,16 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 	//Se dibuja la figura segun su tipo (taxonomía: circulo, no-circulo)
 	//Si es circulo
 	if (objeto.esCirculo()) {
-		Pos p = vertices.at(0);
-		int radio = p.getNorma();
-		double angulo = atan2(p.getY(), p.getX());
-		int x = (radio / 2) * cos(angulo - objeto.getRotacion() * M_PI / 180) + radio;
-		int y = (radio / 2) * sin(angulo - objeto.getRotacion() * M_PI / 180) + radio;
-		filledCircleColor(renderer, radio, radio, radio, color);
-		filledCircleColor(renderer, x, y, radio / 4, color + 0xF0F0F0);
+		//Se pone a la textura como target del render
+		SDL_SetRenderTarget(renderer, texturaCirculo);
+
+		//Se pinta con pixeles transparentes a la textura
+		SDL_SetTextureBlendMode(texturaCirculo, SDL_BLENDMODE_BLEND);
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+		SDL_RenderClear(renderer);
+		//Se modifica el target del renderer para que ahora apunte a la ventana (valor por defecto)
+		SDL_SetRenderTarget(renderer, tTargetDelRendererOriginal);
+		return texturaCirculo;
 	}
 	//Si no es circulo
 	else {
@@ -89,7 +112,10 @@ SDL_Texture* ObjetoMapaVista::getVista() {
 			vx[i] = p.getNorma() * cos(angulo - objeto.getRotacion() * M_PI / 180) + centroVentana.getX();
 			vy[i] = p.getNorma() * sin(angulo - objeto.getRotacion() * M_PI / 180) + centroVentana.getY();
 		}
-		filledPolygonColor(renderer, vx, vy, cantVertices, color);
+//TODO INCLUIR
+		//texturedPolygon(renderer, vx, vy, cantVertices, color);
+		texturedPolygon(renderer, vx, vy, cantVertices,superficie, 30,30);
+//TODO FIN
 	}
 
 	//Se modifica el target del renderer para que ahora apunte al target que tenía el renderer antes de ser utilizado acá.
