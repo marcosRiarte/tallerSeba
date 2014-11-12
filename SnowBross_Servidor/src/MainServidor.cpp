@@ -5,6 +5,7 @@
 #include <sstream>
 #include <string.h>
 #include <windows.h>
+#include <SDL2/SDL.h>
 
 #include "excepciones/ConfigExcepcion.h"
 #include "excepciones/MVCExcepcion.h"
@@ -16,6 +17,7 @@ typedef struct RDatos {
 	std::vector<int>* vectorDeID;
 	int numeroDeSock;
 	int personajeID;
+	SDL_sem *sem;
 } RDATOS, *PRDATOS;
 
 // Estructuras para comunicarse entre hilos
@@ -25,6 +27,7 @@ typedef struct EDatos {
 	Escenario* escenario;
 	int cantDeClientes;
 	bool cambio;
+	SDL_sem *sem;
 } EDATOS, *PEDATOS;
 
 // Hilo que envia los eventos de entrada en teclado
@@ -38,6 +41,7 @@ DWORD WINAPI enviarDatos(void * param) {
 	// No se con q condicion cerrar el server, dsp le pongo corte
 	while (true) {
 		Sleep(30);
+		SDL_SemWait(datos->sem);
 		if (datos->cambio) {
 			// Se arma el paquete para enviar
 			std::vector<Personaje*> personajes = datos->escenario->getPersonajes();
@@ -75,6 +79,7 @@ DWORD WINAPI enviarDatos(void * param) {
 			}
 			datos->cambio = false;
 		}
+		SDL_SemPost(datos->sem);
 	}
 
 	return 0;
@@ -90,6 +95,7 @@ DWORD WINAPI recibirDatos(void * param) {
 	while (true) {
 		Sleep(2);
 		// Nose si esto va a tener sentido dsp.
+		SDL_SemWait(datos->sem);
 		try{
 			paquete = Servidor::recibir(Servidor::sock[datos->numeroDeSock]);
 		}catch(Servidor_Excepcion &e){
@@ -111,6 +117,7 @@ DWORD WINAPI recibirDatos(void * param) {
 			break;
 		}
 		}
+		SDL_SemPost(datos->sem);
 	}
 	return 0;
 }
@@ -119,6 +126,12 @@ int main(int argc, char** argv) {
 	if (argc < 2){
 		std::cout << "Debe ingresar la cantidad de usuarios que participaran del juego.";
 		return -1;
+	}
+
+	if (SDL_Init(SDL_INIT_EVERYTHING) != 0){
+			loguer->loguear("No se pudo iniciar SDL",Log::LOG_ERR);
+			//const char* msg = ((std::string)"Error iniciando SDL: ").append(SDL_GetError()).c_str();
+			//throw new SDL_Excepcion(msg);
 	}
 
 	int cantidadDeClientes;
@@ -161,6 +174,7 @@ int main(int argc, char** argv) {
 	// Se crea el vector con hilos para los clientes
 	std::vector<int>* vDeID = new std::vector<int>();
 	std::vector<std::vector<Evento>*>* vDeListaDeEventos = new std::vector<std::vector<Evento>*>();
+	SDL_sem *my_sem = SDL_CreateSemaphore(1);
 	HANDLE  vectorDeHilos[cantidadDeClientes];
 	PRDATOS rdatos[cantidadDeClientes];
 
@@ -203,4 +217,6 @@ int main(int argc, char** argv) {
 	}
 	CloseHandle(hiloEnviaDatos);
 	delete datos;
+	SDL_DestroySemaphore(my_sem);
+	SDL_Quit();
 }
