@@ -7,6 +7,7 @@ Personaje::Personaje() {
 	alto = ALTO_PERSONAJE_UN;
 	estado.perfil = E_PERFIL::IZQUIERDA;
 	estado.accion = E_ACCION::QUIETO;
+	estado.conexion = E_CON::CONECTADO;
 }
 
 Personaje::Personaje(Pos posicion) {
@@ -15,6 +16,7 @@ Personaje::Personaje(Pos posicion) {
 	alto = ALTO_PERSONAJE_UN;
 	estado.perfil = E_PERFIL::IZQUIERDA;
 	estado.accion = E_ACCION::QUIETO;
+	estado.conexion = E_CON::CONECTADO;
 }
 
 /*
@@ -27,7 +29,9 @@ int Personaje::getAncho() {
 	return ancho;
 }
 
-
+void Personaje::setConexion(E_CON con) {
+		estado.conexion = con;
+}
 /**
  * \brief	Se setea el estado del personaje, mediante 3 taxonomias (incompletas para el juego final).
  * 			E_PERFIL: 			determina el perfil a conciderar.
