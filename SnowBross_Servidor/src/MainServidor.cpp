@@ -161,6 +161,7 @@ int main(int argc, char** argv) {
 
 	//Creo el Escenario
 	esc = new Escenario(configuracion);
+	configuracion->setObjetos(esc->getObjetos());
 
 	//Creo el servidor
 	try{

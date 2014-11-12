@@ -24,7 +24,7 @@ public:
 	int getAnchoPx();
 	int getAlto();
 	int getAncho();
-
+	void setObjetos(std::vector<ObjetoMapa*> obMap);
 	PaqueteACliente crearPaqueteInicial();
 
 	~Config();
