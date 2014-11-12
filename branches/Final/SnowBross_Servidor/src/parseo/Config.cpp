@@ -108,6 +108,10 @@ std::vector<ObjetoMapa*> Config::getObjetos() {
 	return objetosMapa;
 }
 
+void Config::setObjetos(std::vector<ObjetoMapa*> obMap) {
+	objetosMapa = obMap;
+}
+
 std::vector<Personaje*> Config::getPersonajes() {
 	return personajes;
 }
