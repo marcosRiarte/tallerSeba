@@ -12,6 +12,7 @@ Personaje::Personaje(Pos posicion) {
 	masa = MASA_PERSONAJE;
 	estado.perfil = E_PERFIL::IZQUIERDA;
 	estado.accion = E_ACCION::QUIETO;
+	estado.conexion = E_CON::CONECTADO;
 	friccion = FRICCION_DEL_PERSONAJE;
 	crearContorno();
 	calcularArea();
@@ -22,6 +23,10 @@ Personaje::Personaje(Pos posicion) {
  */
 void Personaje::calcularArea() {
 	area = alto * ancho;
+}
+
+void Personaje::setConexion(E_CON con) {
+	estado.conexion = con;
 }
 
 /*

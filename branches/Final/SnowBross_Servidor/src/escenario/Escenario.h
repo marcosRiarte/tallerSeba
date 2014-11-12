@@ -33,6 +33,7 @@ public:
 
 	std::vector<Personaje*> getPersonajes();
 	std::vector<ObjetoMapa*> getObjetos();
+	void setConectado(bool conect,int ID);
 
 	~Escenario();
 };
