@@ -97,14 +97,7 @@ DWORD WINAPI enviarDatos(void * param) {
 
 			// Se envia a todos los clientes
 			for (int i = 0; i < datos->cantDeClientes; i++) {
-				// Suma un paquete y controla si se desconecto
-				// Ver si esta identificando bien el personaje TODO
-				*(datos->vectorCuentaPaquetes.at(i)) = *(datos->vectorCuentaPaquetes.at(i))+1;
-				if (*(datos->vectorCuentaPaquetes.at(i)) > 500) {
-					datos->escenario->setConectado(false,datos->vectorDeID->at(i));
-				} else {
-					Servidor::enviar(Servidor::sock[i], paquete);
-				}
+				Servidor::enviar(Servidor::sock[i], paquete);
 			}
 			datos->cambio = false;
 		}
@@ -132,7 +125,9 @@ DWORD WINAPI recibirDatos(void * param) {
 				datos->escenario->setConectado(true,datos->personajeID);
 				*(datos->cuentaPaquetes) = 0;
 				//manda paquete inicial de nuevo
-				Servidor::enviar(Servidor::sock[0], datos->config->crearPaqueteInicial());
+				for (int i = 0; i < 4; i++) {
+				Servidor::enviar(Servidor::sock[i], datos->config->crearPaqueteInicial());
+				}
 			}
 
 		}catch(Servidor_Excepcion &e){
