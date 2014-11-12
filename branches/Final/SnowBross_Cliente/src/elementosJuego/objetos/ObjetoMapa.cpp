@@ -69,7 +69,9 @@ bool ObjetoMapa::esEstatico() {
  * Devuelve verdadero si el objeto es un circulo
  */
 bool ObjetoMapa::esCirculo() {
-	return false;
+	if (vertices.size() > 1)
+		return false;
+	return true;
 }
 
 /*
