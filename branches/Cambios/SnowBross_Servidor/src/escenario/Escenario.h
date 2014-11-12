@@ -1,5 +1,4 @@
-/*
- * Maneja la relación entre Box2D y el resto del Juego.
+/* Maneja la relación entre Box2D y el resto del Juego.
  */
 
 #ifndef ESCENARIO_H_
@@ -33,6 +32,7 @@ public:
 
 	std::vector<Personaje*> getPersonajes();
 	std::vector<ObjetoMapa*> getObjetos();
+	void setConectado(bool conect,int ID);
 
 	~Escenario();
 };

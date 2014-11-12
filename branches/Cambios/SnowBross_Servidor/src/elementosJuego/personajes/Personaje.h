@@ -14,9 +14,13 @@ public:
 	enum E_ACCION {
 		QUIETO, DESPLAZANDO, SALTANDO, CAYENDO, EMPUJANDO
 	};
+	enum E_CON {
+		CONECTADO, DESCONECTADO
+	};
 	struct Estado {
 		E_PERFIL perfil;
 		E_ACCION accion;
+		E_CON conexion;
 
 		bool operator==(const Estado& e) {
 			if (e.perfil == this->perfil && e.accion == this->accion)
@@ -57,6 +61,7 @@ public:
 	 */
 	void setEstado(E_PERFIL p, E_ACCION a);
 	void setEstado(Estado estado);
+	void setConexion(E_CON con);
 	Estado getEstado();
 
 	/*

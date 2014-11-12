@@ -10,6 +10,7 @@
 #include "excepciones/MVCExcepcion.h"
 #include "parseo/Config.h"
 #include "redes/Servidor.h"
+#include "elementosJuego/personajes/Personaje.h"
 
 // Estructuras para comunicarse entre hilos
 typedef struct RDatos {
@@ -18,6 +19,9 @@ typedef struct RDatos {
 	int numeroDeSock;
 	int personajeID;
 	SDL_sem* semaforo;
+	int* cuentaPaquetes;
+	Escenario* escenario;
+	Config* config;
 
 	void bloquear(){
 		SDL_SemWait(semaforo);
@@ -37,6 +41,7 @@ typedef struct EDatos {
 	int cantDeClientes;
 	bool cambio;
 	SDL_sem* semaforo;
+	std::vector<int*> vectorCuentaPaquetes;
 
 	void bloquear() {
 		SDL_SemWait (semaforo);
@@ -92,7 +97,14 @@ DWORD WINAPI enviarDatos(void * param) {
 
 			// Se envia a todos los clientes
 			for (int i = 0; i < datos->cantDeClientes; i++) {
-				Servidor::enviar(Servidor::sock[i], paquete);
+				// Suma un paquete y controla si se desconecto
+				// Ver si esta identificando bien el personaje TODO
+				*(datos->vectorCuentaPaquetes.at(i)) = *(datos->vectorCuentaPaquetes.at(i))+1;
+				if (*(datos->vectorCuentaPaquetes.at(i)) > 500) {
+					datos->escenario->setConectado(false,datos->vectorDeID->at(i));
+				} else {
+					Servidor::enviar(Servidor::sock[i], paquete);
+				}
 			}
 			datos->cambio = false;
 		}
@@ -114,6 +126,15 @@ DWORD WINAPI recibirDatos(void * param) {
 		// Nose si esto va a tener sentido dsp.
 		try{
 			paquete = Servidor::recibir(Servidor::sock[datos->numeroDeSock]);
+			// Resta un paquete y controla si se reconecto
+			*(datos->cuentaPaquetes) = *(datos->cuentaPaquetes)-1;
+			if (*(datos->cuentaPaquetes) > 500) {
+				datos->escenario->setConectado(true,datos->personajeID);
+				*(datos->cuentaPaquetes) = 0;
+				//manda paquete inicial de nuevo
+				Servidor::enviar(Servidor::sock[0], datos->config->crearPaqueteInicial());
+			}
+
 		}catch(Servidor_Excepcion &e){
 			loguer->loguear(e.what(), Log::LOG_ERR);
 		}
@@ -181,20 +202,22 @@ int main(int argc, char** argv) {
 	std::vector<std::vector<Evento>*>* vDeListaDeEventos = new std::vector<std::vector<Evento>*>();
 	HANDLE  vectorDeHilos[cantidadDeClientes];
 	PRDATOS rdatos[cantidadDeClientes];
+	PEDATOS datos = new EDatos();
 	SDL_sem* s = SDL_CreateSemaphore(1);
 	for (unsigned int i = 0; i < cantidadDeClientes; i++) {
+		datos->vectorCuentaPaquetes.push_back(new int);
 		rdatos[i] = new RDatos();
+		rdatos[i]->cuentaPaquetes = datos->vectorCuentaPaquetes.at(i);
+		rdatos[i]->escenario = esc;
+		rdatos[i]->config = configuracion;
 		rdatos[i]->vectorDeID = vDeID;
 		rdatos[i]->vectorDeListaDeEventos = vDeListaDeEventos;
-		// Esto esta hecho asi, pq no se de q manera puedo poner el mismo numero de sock al id de personaje
-		// TODO
 		rdatos[i]->numeroDeSock = i;
 		rdatos[i]->personajeID = i;
 		rdatos[i]->semaforo = s;
 		vectorDeHilos[i] = CreateThread(0, 0, recibirDatos, rdatos[i], 0, 0);
 	}
 
-	PEDATOS datos = new EDatos();
 	datos->vectorDeID = vDeID;
 	datos->vectorDeListaDeEventos = vDeListaDeEventos;
 	datos->cantDeClientes = cantidadDeClientes;
@@ -205,7 +228,6 @@ int main(int argc, char** argv) {
 
 	while (true) {
 		Sleep(10);
-		// TODO ver como se vacian las listas
 		datos->bloquear();
 		esc->cambiar(*(datos->vectorDeListaDeEventos), *(datos->vectorDeID));
 		datos->cambio = true;
@@ -219,6 +241,7 @@ int main(int argc, char** argv) {
 	delete vDeListaDeEventos;
 	delete esc;
 	delete configuracion;
+	datos->vectorCuentaPaquetes.clear();
 	for (unsigned int i = 0; i < cantidadDeClientes; i++) {
 		CloseHandle(vectorDeHilos[i]);
 		delete rdatos[i];
