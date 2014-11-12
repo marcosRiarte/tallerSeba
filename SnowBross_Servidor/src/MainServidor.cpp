@@ -1,15 +1,15 @@
-#include "parseo/Config.h"
-#include "escenario/Escenario.h"
-#include "redes/Servidor.h"
 #include <iostream>
+#include <SDL2/SDL.h>
 #include <sstream>
 #include <string.h>
 #include <windows.h>
-#include <SDL2/SDL.h>
 
+#include "Constantes.h"
+#include "escenario/Escenario.h"
 #include "excepciones/ConfigExcepcion.h"
 #include "excepciones/MVCExcepcion.h"
-#include "Constantes.h"
+#include "parseo/Config.h"
+#include "redes/Servidor.h"
 
 // Estructuras para comunicarse entre hilos
 typedef struct RDatos {
@@ -17,7 +17,16 @@ typedef struct RDatos {
 	std::vector<int>* vectorDeID;
 	int numeroDeSock;
 	int personajeID;
-	SDL_sem *sem;
+	SDL_sem* semaforo;
+
+	void bloquear(){
+		SDL_SemWait(semaforo);
+	}
+
+	void desbloquear(){
+		SDL_SemPost(semaforo);
+	}
+
 } RDATOS, *PRDATOS;
 
 // Estructuras para comunicarse entre hilos
@@ -27,7 +36,15 @@ typedef struct EDatos {
 	Escenario* escenario;
 	int cantDeClientes;
 	bool cambio;
-	SDL_sem *sem;
+	SDL_sem* semaforo;
+
+	void bloquear() {
+		SDL_SemWait (semaforo);
+	}
+
+	void desbloquear() {
+		SDL_SemPost (semaforo);
+	}
 } EDATOS, *PEDATOS;
 
 // Hilo que envia los eventos de entrada en teclado
@@ -41,7 +58,7 @@ DWORD WINAPI enviarDatos(void * param) {
 	// No se con q condicion cerrar el server, dsp le pongo corte
 	while (true) {
 		Sleep(30);
-		SDL_SemWait(datos->sem);
+		datos->bloquear();
 		if (datos->cambio) {
 			// Se arma el paquete para enviar
 			std::vector<Personaje*> personajes = datos->escenario->getPersonajes();
@@ -79,7 +96,7 @@ DWORD WINAPI enviarDatos(void * param) {
 			}
 			datos->cambio = false;
 		}
-		SDL_SemPost(datos->sem);
+		datos->desbloquear();
 	}
 
 	return 0;
@@ -95,7 +112,6 @@ DWORD WINAPI recibirDatos(void * param) {
 	while (true) {
 		Sleep(2);
 		// Nose si esto va a tener sentido dsp.
-		SDL_SemWait(datos->sem);
 		try{
 			paquete = Servidor::recibir(Servidor::sock[datos->numeroDeSock]);
 		}catch(Servidor_Excepcion &e){
@@ -108,8 +124,10 @@ DWORD WINAPI recibirDatos(void * param) {
 				Evento evento = Evento(paquete.eventos[j]);
 				vectEventos->push_back(evento);
 			}
+			datos->bloquear();
 			datos->vectorDeID->push_back(datos->personajeID);
 			datos->vectorDeListaDeEventos->push_back(vectEventos);
+			datos->desbloquear();
 			break;
 		}
 		case (TipoPaquete::FINALIZACION): {
@@ -117,42 +135,28 @@ DWORD WINAPI recibirDatos(void * param) {
 			break;
 		}
 		}
-		SDL_SemPost(datos->sem);
 	}
 	return 0;
 }
 
 int main(int argc, char** argv) {
-	if (argc < 2){
-		std::cout << "Debe ingresar la cantidad de usuarios que participaran del juego.";
-		return -1;
-	}
-
-	if (SDL_Init(SDL_INIT_EVERYTHING) != 0){
-			loguer->loguear("No se pudo iniciar SDL",Log::LOG_ERR);
-			//const char* msg = ((std::string)"Error iniciando SDL: ").append(SDL_GetError()).c_str();
-			//throw new SDL_Excepcion(msg);
-	}
-
-	int cantidadDeClientes;
-	try{
-		std::istringstream(argv[1]) >> cantidadDeClientes;
-		if ((cantidadDeClientes > MAX_CANTIDAD_CONEXIONES) || (cantidadDeClientes < 1)){
-			std::cout << "Debe ingresar una cantidad de usuarios mayor o igual a 1 y menor que " << MAX_CANTIDAD_CONEXIONES;
-			return -1;
-		}
-	}catch(std::exception &e){
-		return -1;
-	}
 
 	Config* configuracion;
 	Escenario* esc;
+
+	unsigned int cantidadDeClientes = 1;
 
 	//Creo el Config a partir del json
 	try {
 		configuracion = new Config("prueba.json");
 	} catch (Config_Excepcion&) {
 		throw MVC_Excepcion("No se pudo parsear el archivo .json");
+	}
+
+	if (SDL_Init(SDL_INIT_EVERYTHING) != 0){
+			loguer->loguear("No se pudo iniciar SDL",Log::LOG_ERR);
+			//const char* msg = ((std::string)"Error iniciando SDL: ").append(SDL_GetError()).c_str();
+			//throw new SDL_Excepcion(msg);
 	}
 
 	//Creo el Escenario
@@ -174,10 +178,9 @@ int main(int argc, char** argv) {
 	// Se crea el vector con hilos para los clientes
 	std::vector<int>* vDeID = new std::vector<int>();
 	std::vector<std::vector<Evento>*>* vDeListaDeEventos = new std::vector<std::vector<Evento>*>();
-	SDL_sem *my_sem = SDL_CreateSemaphore(1);
 	HANDLE  vectorDeHilos[cantidadDeClientes];
 	PRDATOS rdatos[cantidadDeClientes];
-
+	SDL_sem* s = SDL_CreateSemaphore(1);
 	for (unsigned int i = 0; i < cantidadDeClientes; i++) {
 		rdatos[i] = new RDatos();
 		rdatos[i]->vectorDeID = vDeID;
@@ -186,6 +189,7 @@ int main(int argc, char** argv) {
 		// TODO
 		rdatos[i]->numeroDeSock = i;
 		rdatos[i]->personajeID = i;
+		rdatos[i]->semaforo = s;
 		vectorDeHilos[i] = CreateThread(0, 0, recibirDatos, rdatos[i], 0, 0);
 	}
 
@@ -195,28 +199,32 @@ int main(int argc, char** argv) {
 	datos->cantDeClientes = cantidadDeClientes;
 	datos->escenario = esc;
 	datos->cambio = false;
+	datos->semaforo = s;
 	HANDLE hiloEnviaDatos = CreateThread(0, 0, enviarDatos, datos, 0, 0);
 
 	while (true) {
 		Sleep(10);
 		// TODO ver como se vacian las listas
+		datos->bloquear();
 		esc->cambiar(*(datos->vectorDeListaDeEventos), *(datos->vectorDeID));
 		datos->cambio = true;
 		// Esto no deberia perder memoria, pero si se pierde memoria en algun lugar ver aca
 		datos->vectorDeListaDeEventos->clear();
 		datos->vectorDeID->clear();
+		datos->desbloquear();
 	}
 
 	delete vDeID;
 	delete vDeListaDeEventos;
 	delete esc;
 	delete configuracion;
-	for(unsigned int i=0; i<cantidadDeClientes; i++ ) {
+	for (unsigned int i = 0; i < cantidadDeClientes; i++) {
 		CloseHandle(vectorDeHilos[i]);
 		delete rdatos[i];
 	}
 	CloseHandle(hiloEnviaDatos);
 	delete datos;
-	SDL_DestroySemaphore(my_sem);
+	SDL_DestroySemaphore(datos->semaforo);
 	SDL_Quit();
+	return 0;
 }
