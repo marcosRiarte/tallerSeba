@@ -104,11 +104,12 @@ DWORD WINAPI recibirDatos(LPVOID param) {
 }
 
 int main(int argc, char** argv) {
+	Controlador::iniciarSDL();
 	Cliente::iniciar();
 	PaqueteACliente paqueteRecibido;
-	Controlador::iniciarSDL();
 	PDATOS datos = new Datos();
 
+	//Conexion Inicial y creación de la pantalla
 	try{
 		paqueteRecibido = Cliente::recibir();
 	}catch(Cliente_Excepcion &e){
@@ -117,6 +118,9 @@ int main(int argc, char** argv) {
 	}
 	if (paqueteRecibido.tipoPaquete == TipoPaquete::CONEXION_INICIAL){
 		datos->pantalla = new Pantalla(paqueteRecibido);
+	}else{
+		loguer->loguear("No se recibio el paquete inicial.", Log::LOG_ERR);
+		throw Cliente_Excepcion("No se recibio el paquete inicial.");
 	}
 
 	datos->eventosPantalla = new std::vector<Evento>();
