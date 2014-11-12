@@ -15,6 +15,7 @@ typedef struct Datos {
 	std::vector<Evento>* eventosMundo;
 	Pantalla* pantalla;
 	bool termino;
+	SDL_sem *sem;
 } DATOS, *PDATOS;
 
 // Hilo que envia los eventos de entrada en teclado
@@ -30,10 +31,14 @@ DWORD WINAPI enviarEventos(LPVOID param) {
 	// Este while maneja la salida del cliente
 	while (true) {
 		Sleep(10);
+
+		SDL_SemWait(datos->sem);
 		paquete.contador = datos->eventosMundo->size();
 		for (unsigned int j = 0; j < paquete.contador; j++) {
 			paquete.eventos[j] = datos->eventosMundo->at(j).getTecla();
 		}
+		SDL_SemPost(datos->sem);
+
 		try{
 			Cliente::enviar(paquete);
 		}catch(Cliente_Excepcion &e){
@@ -68,6 +73,8 @@ DWORD WINAPI recibirDatos(LPVOID param) {
 			loguer->loguear(e.what(), Log::LOG_ERR);
 			throw &e; //TODO - Si no se hace nada con la excepcion, habria que sacar este try catch y ponerlo en una capa mas arriba
 		}
+
+		SDL_SemWait(datos->sem);
 		switch (paquete.tipoPaquete) {
 		case (TipoPaquete::ACTUALIZACION): {
 			for (unsigned int j = 0; j < paquete.contadorPersonaje; j++) {
@@ -83,16 +90,17 @@ DWORD WINAPI recibirDatos(LPVOID param) {
 			break;
 		}
 		}
+		SDL_SemPost(datos->sem);
 	}
 	return 0;
 }
 
 int main(int argc, char** argv) {
-	PDATOS datos = new Datos();
 	Cliente::iniciar();
-	datos->eventosPantalla = new std::vector<Evento>();
-	datos->eventosMundo = new std::vector<Evento>();
 	PaqueteACliente paqueteRecibido;
+	Controlador::iniciarSDL();
+	PDATOS datos = new Datos();
+
 	try{
 		paqueteRecibido = Cliente::recibir();
 	}catch(Cliente_Excepcion &e){
@@ -100,9 +108,12 @@ int main(int argc, char** argv) {
 		return -1;
 	}
 	if (paqueteRecibido.tipoPaquete == TipoPaquete::CONEXION_INICIAL){
-		Controlador::iniciarSDL();
 		datos->pantalla = new Pantalla(paqueteRecibido);
 	}
+
+	datos->eventosPantalla = new std::vector<Evento>();
+	datos->eventosMundo = new std::vector<Evento>();
+	datos->sem = SDL_CreateSemaphore(1);
 
 	//gameloop
 	HANDLE hiloEnviaEventos = CreateThread(0, 0, enviarEventos, datos, 0, 0);
