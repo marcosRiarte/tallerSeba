@@ -16,13 +16,14 @@
 #include <Box2D/Box2D.h>
 #include <Math.h>
 
+#define M_PI    3.14159265358979323846264338327950288   /* pi */
+
 std::vector<Personaje*> Escenario::getPersonajes() {
 	return personajes;
 }
 std::vector<ObjetoMapa*> Escenario::getObjetos() {
 	return objetos;
 }
-
 
 /// Devuelve el AABB para todas las figuras de un cuerpo dado.
 b2AABB GetBodyAABB( const b2Body* body )
@@ -371,6 +372,16 @@ void Escenario::cambiar(std::vector<std::vector<Evento>*> vectorDeListaDeEventos
 	// Actualiza el estado de los personajes
 	for (unsigned i = 0; i < personajes.size(); i++) {
 		ActualizarEstado(personajes.at(i),vectorCuentaPasos.at(i));
+	}
+}
+
+// Setea el estado de ese personaje conectado o no.
+void Escenario::setConectado(bool conect,int ID) {
+	int posDelPersonaje = getPosPersonaje(personajes,ID);
+	if (conect) {
+		personajes.at(posDelPersonaje)->setConexion(Personaje::E_CON::CONECTADO);
+	} else {
+		personajes.at(posDelPersonaje)->setConexion(Personaje::E_CON::DESCONECTADO);
 	}
 }
 
